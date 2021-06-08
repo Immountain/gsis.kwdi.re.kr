@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WjFestivityScheduleLangDAO">
+
+    <select id="selectFestivityScheduleLang"
+            parameterType="wj.com.cms.wj.festivity.vo.WjFestivityScheduleLangVO"
+            resultType="wj.com.cms.wj.festivity.vo.WjFestivityScheduleLangVO">
+        SELECT
+             FSL.FESTIVITY_ID
+            ,FSL.SCHEDULE_SNO
+            ,FSL.LANG_CODE
+            ,FSL.SCHEDULE_TITLE
+            ,FSL.SCHEDULE_PROGRAM
+            ,FSL.SCHEDULE_PLACE
+            ,FSL.REG_ID
+            ,FSL.REG_DT
+            ,FSL.MOD_ID
+            ,FSL.MOD_DT
+        FROM WJ_FESTIVITY_SCHEDULE_LANG FSL
+        WHERE 1=1
+            AND FSL.FESTIVITY_ID = #{festivityId}
+            AND FSL.SCHEDULE_SNO = #{scheduleSno}
+            AND FSL.LANG_CODE = #{langCode}
+    </select>
+
+    <select id="selectFestivityScheduleLangTotalCount"
+            parameterType="wj.com.cms.wj.festivity.vo.WjFestivityScheduleLangVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM WJ_FESTIVITY_SCHEDULE_LANG FSL
+        WHERE 1=1
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(festivityId)">
+            AND FSL.FESTIVITY_ID = #{festivityId}
+        </if>
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(langCode)">
+            AND FSL.LANG_CODE = #{langCode}
+        </if>
+
+    </select>
+
+    <select id="selectFestivityScheduleLangList"
+            parameterType="wj.com.cms.wj.festivity.vo.WjFestivityScheduleLangVO"
+            resultType="wj.com.cms.wj.festivity.vo.WjFestivityScheduleLangVO">
+        SELECT
+             FSL.FESTIVITY_ID
+            ,FSL.SCHEDULE_SNO
+            ,FSL.LANG_CODE
+            ,FSL.SCHEDULE_TITLE
+            ,FSL.SCHEDULE_PROGRAM
+            ,FSL.SCHEDULE_PLACE
+            ,FSL.REG_ID
+            ,FSL.REG_DT
+            ,FSL.MOD_ID
+            ,FSL.MOD_DT
+        FROM WJ_FESTIVITY_SCHEDULE_LANG FSL
+        WHERE 1=1
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(festivityId)">
+            AND FSL.FESTIVITY_ID = #{festivityId}
+        </if>
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(langCode)">
+            AND FSL.LANG_CODE = #{langCode}
+        </if>
+
+        LIMIT #{recordCountPerPage} OFFSLET #{firstIndex}
+    </select>
+
+    <insert id="insertFestivityScheduleLang">
+		<![CDATA[
+        INSERT INTO  WJ_FESTIVITY_SCHEDULE_LANG (
+             FESTIVITY_ID
+            ,SCHEDULE_SNO
+            ,LANG_CODE
+            ,SCHEDULE_TITLE
+            ,SCHEDULE_PROGRAM
+            ,SCHEDULE_PLACE
+            ,REG_ID
+            ,REG_DT
+        ) VALUES (
+             #{festivityId}
+            ,#{scheduleSno}
+            ,#{langCode}
+            ,#{scheduleTitle}
+            ,#{scheduleProgram}
+            ,#{schedulePlace}
+            ,#{regId}
+            ,NOW()
+                 )
+        ]]>
+	</insert>
+
+    <update id="updateFestivityScheduleLang">
+        UPDATE WJ_FESTIVITY_SCHEDULE_LANG SET
+             FESTIVITY_ID = #{festivityId}
+            ,SCHEDULE_SNO = #{scheduleSno}
+            ,LANG_CODE = #{langCode}
+            ,SCHEDULE_TITLE = #{scheduleTitle}
+            ,SCHEDULE_PROGRAM = #{scheduleProgram}
+            ,SCHEDULE_PLACE = #{schedulePlace}
+            ,MOD_ID = #{modId}
+            ,MOD_DT = NOW()
+        WHERE  1=1
+          AND FESTIVITY_ID = #{festivityId}
+          AND SCHEDULE_SNO = #{scheduleSno}
+          AND LANG_CODE = #{langCode}
+
+    </update>
+</mapper>

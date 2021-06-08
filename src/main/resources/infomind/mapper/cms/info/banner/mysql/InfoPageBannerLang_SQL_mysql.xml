@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoPageBannerLangDAO">
+
+    <select id="selectPageBannerLang"
+            parameterType="infomind.com.cms.info.banner.vo.InfoPageBannerLangVO"
+            resultType="infomind.com.cms.info.banner.vo.InfoPageBannerLangVO">
+		SELECT
+              IPBL.PAGE_BANNER_ID
+            , IPBL.LANG_CODE
+            , IPBL.TITLE
+            , IPBL.MEMO
+            , IPBL.CONTENT_INFO
+            , IPBL.REG_ID
+            , IPBL.REG_DT
+            , IPBL.MOD_ID
+            , IPBL.MOD_DT
+		FROM INFO_PAGE_BANNER_LANG IPBL
+		WHERE 1=1
+		AND IPBL.PAGE_BANNER_ID = #{pageBannerId}
+		AND IPBL.LANG_CODE = #{langCode}
+	</select>
+
+    <select id="selectPageBannerLangTotalCount"
+            parameterType="infomind.com.cms.info.banner.vo.InfoPageBannerLangVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_PAGE_BANNER_LANG IPBL
+        WHERE 1=1
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pageBannerId) or @org.apache.commons.lang3.StringUtils@isNotEmpty(langCode)">
+            AND IPBL.PAGE_BANNER_ID = #{pageBannerId}
+        </if>
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(langCode)">
+            AND IPBL.LANG_CODE = #{langCode}
+        </if>
+
+    </select>
+
+    <select id="selectPageBannerLangList"
+            parameterType="infomind.com.cms.info.banner.vo.InfoPageBannerLangVO"
+            resultType="infomind.com.cms.info.banner.vo.InfoPageBannerLangVO">
+        SELECT
+              IPBL.PAGE_BANNER_ID
+            , IPBL.LANG_CODE
+            , IPBL.TITLE
+            , IPBL.MEMO
+            , IPBL.CONTENT_INFO
+            , IPBL.REG_ID
+            , IPBL.REG_DT
+            , IPBL.MOD_ID
+            , IPBL.MOD_DT
+        FROM INFO_PAGE_BANNER_LANG IPBL
+        WHERE 1=1
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pageBannerId)">
+            AND IPBL.PAGE_BANNER_ID = #{pageBannerId}
+        </if>
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(langCode)">
+            AND IPBL.LANG_CODE = #{langCode}
+        </if>
+
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+    <insert id="insertPageBannerLang">
+		<![CDATA[
+            INSERT INTO  INFO_PAGE_BANNER_LANG (
+                  PAGE_BANNER_ID
+                , LANG_CODE
+                , TITLE
+                , MEMO
+                , CONTENT_INFO
+                , REG_ID
+                , REG_DT
+                , MOD_ID
+                , MOD_DT
+            ) VALUES (
+                  #{pageBannerId}
+                , #{langCode}
+                , #{title}
+                , #{memo}
+                , #{contentInfo}
+                , #{regId}
+                , NOW()
+                , #{modId}
+                , NOW()
+            )
+        ]]>
+	</insert>
+
+    <update id="updatePageBannerLang">
+        UPDATE INFO_PAGE_BANNER_LANG SET
+              PAGE_BANNER_ID = #{pageBannerId}
+            , LANG_CODE = #{langCode}
+            , TITLE = #{title}
+            , MEMO = #{memo}
+            , CONTENT_INFO = #{contentInfo}
+            , MOD_ID = #{modId}
+            , MOD_DT = NOW()
+        WHERE  1=1
+        AND PAGE_BANNER_ID = #{pageBannerId}
+        AND LANG_CODE = #{langCode}
+	</update>
+</mapper>

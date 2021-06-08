@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoEntrprsManageDAO">
+
+    <resultMap id="stplatMap" type="infomind.com.cms.uss.umt.vo.InfoStplatVO">
+        <result property="useStplatId" column="USE_STPLAT_ID"/>
+        <result property="useStplatCn" column="USE_STPLAT_CN"/>
+        <result property="infoProvdAgeCn" column="INFO_PROVD_AGRE_CN"/>
+    </resultMap>
+
+    <insert id="insertEntrprs_S">
+
+        INSERT INTO COMTNENTRPRSMBER
+        (   ESNTL_ID                      ,
+            ENTRPRS_MBER_ID               ,
+            CMPNY_NM                     ,
+            ZIP                          ,
+            ADRES                        ,
+            DETAIL_ADRES                 ,
+            APPLCNT_NM                   ,
+            SBSCRB_DE                    ,
+            ENTRPRS_MBER_STTUS           ,
+            ENTRPRS_MBER_PASSWORD        ,
+            ENTRPRS_MBER_PASSWORD_HINT   ,
+            ENTRPRS_MBER_PASSWORD_CNSR   ,
+            AREA_NO                      ,
+            ENTRPRS_MIDDLE_TELNO         ,
+            ENTRPRS_END_TELNO            ,
+            MBTLNUM                      ,
+            APPLCNT_EMAIL_ADRES          ,
+            JTP_ORGAN_CD                 ,
+            JTP_CLOUD_ID                 )
+        VALUES (
+                   #{uniqId},
+                   #{entrprsmberId},
+                   #{cmpnyNm},
+                   '1',
+                   '1',
+                   '1',
+                   #{cmpnyNm},
+                   sysdate(),
+                   #{entrprsMberSttus},
+                   #{entrprsMberPassword},
+                   '1',
+                   '1',
+                   #{areaNo},
+                   #{entrprsMiddleTelno},
+                   #{entrprsEndTelno},
+                   concat(#{startMoblno},'-',#{middleMoblno},'-',#{endMoblno}),
+                   #{applcntEmailAdres},
+                   #{jtpOrganCd},
+                   #{jtpCloudId}        )
+
+    </insert>
+
+    <delete id="deleteEntrprs_S">
+
+        DELETE FROM COMTNENTRPRSMBER
+        WHERE ESNTL_ID=#{delId}
+
+    </delete>
+
+    <select id="selectEntrprs_S" resultType="infomind.com.cms.uss.umt.vo.InfoEntrprsManageVO">
+
+        SELECT
+            ESNTL_ID                     uniqId,
+            'USR02'                      userTy,
+            ENTRPRS_MBER_ID              entrprsmberId,
+            APPLCNT_NM                   applcntNm,
+            ENTRPRS_MIDDLE_TELNO         entrprsMiddleTelno,
+            SUBSTRING_INDEX(MBTLNUM, '-', 1) startMoblno,
+            SUBSTRING_INDEX(SUBSTRING_INDEX(MBTLNUM, '-', 2), '-', -1) middleMoblno,
+            SUBSTRING_INDEX(SUBSTRING_INDEX(MBTLNUM, '-', 3), '-', -1) endMoblno,
+            SBSCRB_DE                    sbscrbDe,
+            ENTRPRS_MBER_STTUS           entrprsMberSttus,
+            ENTRPRS_MBER_PASSWORD        entrprsMberPassword,
+            ENTRPRS_END_TELNO            entrprsEndTelno,
+            AREA_NO                      areaNo,
+            APPLCNT_EMAIL_ADRES          applcntEmailAdres,
+            LOCK_AT        				 lockAt,
+            GROUP_ID
+        FROM COMTNENTRPRSMBER A
+        WHERE ESNTL_ID=#{uniqId}
+
+    </select>
+
+    <update id="updateEntrprs_S">
+
+        UPDATE COMTNENTRPRSMBER
+        SET
+            ENTRPRS_MBER_ID              = #{entrprsmberId},
+            APPLCNT_NM                   = #{applcntNm},
+            AREA_NO                      = #{areaNo},
+            ENTRPRS_MIDDLE_TELNO         = #{entrprsMiddleTelno},
+            ENTRPRS_END_TELNO            = #{entrprsEndTelno},
+            MBTLNUM                      = concat(#{startMoblno},'-',#{middleMoblno},'-',#{endMoblno}),
+            JTP_ORGAN_CD                 = #{jtpOrganCd},
+            JTP_CLOUD_ID                 = #{jtpCloudId},
+            ENTRPRS_MBER_STTUS           = #{entrprsMberSttus},
+            APPLCNT_EMAIL_ADRES          = #{applcntEmailAdres},
+            GROUP_ID                     = #{groupId}
+
+        WHERE ESNTL_ID=#{uniqId}
+
+    </update>
+
+    <select id="selectStplat_S" resultMap="stplatMap">
+
+        SELECT
+            USE_STPLAT_ID           ,
+            USE_STPLAT_CN           ,
+            INFO_PROVD_AGRE_CN
+        FROM COMTNSTPLATINFO
+        WHERE USE_STPLAT_ID=#{stplatId}
+
+    </select>
+
+    <update id="updatePassword_S">
+
+        UPDATE COMTNENTRPRSMBER
+        SET
+            ENTRPRS_MBER_PASSWORD   =  #{entrprsMberPassword}
+        WHERE  ESNTL_ID  = #{uniqId}
+
+    </update>
+
+    <select id="selectPassword_S" resultType="infomind.com.cms.uss.umt.vo.InfoEntrprsManageVO">
+
+        SELECT
+            ENTRPRS_MBER_PASSWORD          entrprsMberPassword
+        FROM    COMTNENTRPRSMBER
+        WHERE   ESNTL_ID=#{uniqId}
+
+    </select>
+
+    <select id="selectEntrprsMberList" resultType="egovMap">
+        SELECT
+        uniqId
+        , userTy
+        , userId
+        , applcntNm
+        , emailAdres
+        , areaNo
+        , middleTelno
+        , endTelno
+        , startMoblno
+        , middleMoblno
+        , endMoblno
+        , groupId, sttus, sbscrbDe
+        , lockAt
+        ,  (select xd.GROUP_NM
+                from    comtnauthorgroupinfo xd
+                where   1           =1
+                and     xd.GROUP_ID =a.groupId
+
+            ) as groupNm
+        FROM(
+        SELECT
+        ESNTL_ID               uniqId,
+        'USR02'               userTy,
+        ENTRPRS_MBER_ID        userId,
+        APPLCNT_NM            applcntNm,
+        APPLCNT_EMAIL_ADRES   emailAdres,
+        AREA_NO               areaNo,
+        ENTRPRS_MIDDLE_TELNO  middleTelno,
+        ENTRPRS_END_TELNO     endTelno,
+        SUBSTRING_INDEX(MBTLNUM, '-', 1) startMoblno,
+        SUBSTRING_INDEX(SUBSTRING_INDEX(MBTLNUM, '-', 2), '-', -1) middleMoblno,
+        SUBSTRING_INDEX(SUBSTRING_INDEX(MBTLNUM, '-', 3), '-', -1) endMoblno,
+        GROUP_ID              groupId,
+        ENTRPRS_MBER_STTUS    sttus,
+        SBSCRB_DE             sbscrbDe,
+        LOCK_AT               lockAt
+
+        FROM    COMTNENTRPRSMBER A
+        ) A
+        WHERE 1=1
+        <if test='sbscrbSttus != null and sbscrbSttus neq "0" and sbscrbSttus neq ""'>
+            AND sttus LIKE  #{sbscrbSttus}
+        </if>
+        <if test="@egovframework.com.cmm.util.EgovMybaitsUtil@isNotEmpty(searchKeyword)">
+            <if test="searchCondition == 0">AND
+                userId LIKE '%' #{searchKeyword} '%'
+            </if>
+            <if test="searchCondition == 1">AND
+                applcntNm LIKE '%' #{searchKeyword} '%'
+            </if>
+        </if>
+
+        ORDER BY sbscrbDe DESC
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+
+    <select id="selectEntrprsMberListTotCnt" resultType="int">
+        SELECT COUNT(1) totcnt
+        FROM(
+        SELECT
+        ESNTL_ID               uniqId,
+        'USR02'               userTy,
+        ENTRPRS_MBER_ID        userId,
+        CMPNY_NM              cmpnyNm,
+        APPLCNT_EMAIL_ADRES   emailAdres,
+        AREA_NO               areaNo,
+        ENTRPRS_MIDDLE_TELNO  middleTelno,
+        ENTRPRS_END_TELNO     endTelno,
+        SUBSTRING_INDEX(MBTLNUM, '-', 1) startMoblno,
+        SUBSTRING_INDEX(SUBSTRING_INDEX(MBTLNUM, '-', 2), '-', -1) middleMoblno,
+        SUBSTRING_INDEX(SUBSTRING_INDEX(MBTLNUM, '-', 3), '-', -1) endMoblno,
+
+        GROUP_ID              groupId,
+
+        ENTRPRS_MBER_STTUS    sttus,
+        SBSCRB_DE             sbscrbDe,
+        LOCK_AT               lockAt ,
+        APPLCNT_NM          as applcntNm
+        FROM    COMTNENTRPRSMBER A
+        ) A
+        WHERE 1=1
+        <if test='sbscrbSttus != null and sbscrbSttus neq "0" and sbscrbSttus neq ""'>
+            AND sttus LIKE  #{sbscrbSttus}
+        </if>
+        <if test="@egovframework.com.cmm.util.EgovMybaitsUtil@isNotEmpty(searchKeyword)">
+            <if test="searchCondition == 0">AND
+                userId LIKE '%' #{searchKeyword} '%'
+            </if>
+            <if test="searchCondition == 1">AND
+                applcntNm LIKE '%' #{searchKeyword} '%'
+            </if>
+        </if>
+
+    </select>
+
+    <update id="updateLockIncorrect">
+        UPDATE COMTNENTRPRSMBER
+        SET  LOCK_AT = NULL
+          ,  LOCK_CNT  = NULL
+          ,  LOCK_LAST_PNTTM = NULL
+        WHERE  ESNTL_ID  = #{uniqId}
+    </update>
+
+
+    <select id="selectEntrprsMberPopupList" resultType="egovMap">
+        <![CDATA[
+SELECT A.ENTRPRS_MBER_ID
+     , A.ESNTL_ID
+     , A.APPLCNT_NM
+     , A.JTP_ORGAN_CD
+     , FN_ORGAN_NM(A.JTP_ORGAN_CD) AS ORGAN_NM
+     , A.JTP_CLOUD_ID
+     , FN_CLOUD_NM(A.JTP_CLOUD_ID) AS CLOUD_NM
+     , A.ZEUS_ID
+  FROM COMTNENTRPRSMBER A
+ WHERE 1=1
+   AND A.ENTRPRS_MBER_STTUS = 'P' /*회원승인상태*/
+    ]]>
+
+        <if test="schJtpOrganCd != null and schJtpOrganCd != ''">
+            <![CDATA[
+   AND A.JTP_ORGAN_CD = #{schJtpOrganCd}
+	]]>
+        </if>
+
+        <if test="schJtpCloudId != null and schJtpCloudId != ''">
+            <![CDATA[
+   AND A.JTP_CLOUD_ID = #{schJtpCloudId}
+	]]>
+        </if>
+
+        <if test="@egovframework.com.cmm.util.EgovMybaitsUtil@isNotEmpty(searchKeyword)">
+            <if test="searchCondition == 0">
+                <![CDATA[
+            AND A.ENTRPRS_MBER_ID = #{searchKeyword}
+        ]]>
+            </if>
+
+            <if test="searchCondition == 1">
+                <![CDATA[
+           AND A.APPLCNT_NM LIKE CONCAT('%', #{searchKeyword}, '%')
+        ]]>
+            </if>
+        </if>
+
+        <![CDATA[
+ ORDER BY A.ENTRPRS_MBER_ID
+ LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    ]]>
+    </select>
+
+
+    <select id="selectEntrprsMberPopupListTotCnt" resultType="int">
+        <![CDATA[
+SELECT COUNT(A.ENTRPRS_MBER_ID) AS CNT
+  FROM COMTNENTRPRSMBER A
+ WHERE 1=1
+   AND A.ENTRPRS_MBER_STTUS = 'P' /*회원승인상태*/
+    ]]>
+
+        <if test="schJtpOrganCd != null and schJtpOrganCd != ''">
+            <![CDATA[
+   AND A.JTP_ORGAN_CD = #{schJtpOrganCd}
+	]]>
+        </if>
+
+        <if test="schJtpCloudId != null and schJtpCloudId != ''">
+            <![CDATA[
+   AND A.JTP_CLOUD_ID = #{schJtpCloudId}
+	]]>
+        </if>
+
+        <if test="@egovframework.com.cmm.util.EgovMybaitsUtil@isNotEmpty(searchKeyword)">
+            <if test="searchCondition == 0">
+                <![CDATA[
+            AND A.ENTRPRS_MBER_ID = #{searchKeyword}
+        ]]>
+            </if>
+
+            <if test="searchCondition == 1">
+                <![CDATA[
+           AND A.APPLCNT_NM LIKE CONCAT('%', #{searchKeyword}, '%')
+        ]]>
+            </if>
+        </if>
+    </select>
+
+    <insert id="insertUserAUthorCode">
+
+        INSERT INTO COMTNEMPLYRSCRTYESTBS (
+                                            SCRTY_DTRMN_TRGET_ID
+                                          , MBER_TY_CODE
+                                          , AUTHOR_CODE
+        ) VALUES (
+                     #{uniqId}
+                 , #{mberTyCode}
+                 , #{authorCode}
+
+                 )
+
+
+    </insert>
+
+</mapper>

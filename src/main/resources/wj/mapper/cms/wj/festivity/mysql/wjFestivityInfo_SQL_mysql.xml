@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WjFestivityInfoDAO">
+
+    <select id="selectFestivityInfo"
+            parameterType="wj.com.cms.wj.festivity.vo.WjFestivityInfoVO"
+            resultType="wj.com.cms.wj.festivity.vo.WjFestivityInfoVO">
+        SELECT
+             FI.FESTIVITY_ID
+            ,FI.FESTIVITY_NM
+            ,FI.FESTIVITY_NEMO
+            ,FI.PAGE_STR_DAY
+            ,FI.PAGE_END_DAY
+            ,FI.FESTIVITY_STR_DAY
+            ,FI.FESTIVITY_END_DAY
+            ,FI.FESTIVITY_IMAGE
+            ,FI.LAT AS latitude
+            ,FI.`LONG` AS longitude
+            ,FI.ORDER_CNT
+            ,FI.USE_YN
+            ,FI.DELETE_YN
+            ,FI.REG_ID
+            ,FI.REG_DT
+            ,FI.MOD_ID
+            ,FI.MOD_DT
+            ,FI.FESTIVITY_YEAR
+        FROM WJ_FESTIVITY_INFO FI
+        WHERE 1=1
+          AND FI.FESTIVITY_ID =#{festivityId}
+    </select>
+    <select id="selectFestivityInfoTotalCount"
+        parameterType="wj.com.cms.wj.festivity.vo.WjFestivityInfoVO"
+        resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM WJ_FESTIVITY_INFO FI
+        WHERE 1=1
+        AND FI.DELETE_YN = 'N'
+        <if test="searchCondition == 0">AND
+            FI.FESTIVITY_ID LIKE CONCAT('%' , #{searchKeyword}, '%')
+        </if>
+        <if test="searchCondition == 1">AND
+            FI.FESTIVITY_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
+        </if>
+
+    </select>
+    <select id="selectFestivityInfoList"
+        parameterType="wj.com.cms.wj.festivity.vo.WjFestivityInfoVO"
+        resultType="wj.com.cms.wj.festivity.vo.WjFestivityInfoVO">
+        SELECT
+             FI.FESTIVITY_ID
+            ,FI.FESTIVITY_NM
+            ,FI.FESTIVITY_NEMO
+            ,FI.PAGE_STR_DAY
+            ,FI.PAGE_END_DAY
+            ,FI.FESTIVITY_STR_DAY
+            ,FI.FESTIVITY_END_DAY
+            ,FI.FESTIVITY_IMAGE
+            ,FI.LAT AS latitude
+            ,FI.`LONG` AS longitude
+            ,FI.ORDER_CNT
+            ,FI.USE_YN
+            ,FI.DELETE_YN
+            ,FI.REG_ID
+            ,FI.REG_DT
+            ,FI.MOD_ID
+            ,FI.MOD_DT
+            ,FI.FESTIVITY_YEAR
+        FROM WJ_FESTIVITY_INFO FI
+        WHERE 1=1
+            AND FI.DELETE_YN = 'N'
+        <if test="searchCondition == 0">AND
+            FI.FESTIVITY_ID LIKE CONCAT('%' , #{searchKeyword}, '%')
+        </if>
+        <if test="searchCondition == 1">AND
+            FI.FESTIVITY_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
+        </if>
+        order by FI.REG_DT desc
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+    <insert id="insertFestivityInfo">
+        <![CDATA[
+            INSERT INTO WJ_FESTIVITY_INFO(
+                 FESTIVITY_ID
+                ,FESTIVITY_NM
+                ,FESTIVITY_NEMO
+                ,PAGE_STR_DAY
+                ,PAGE_END_DAY
+                ,FESTIVITY_STR_DAY
+                ,FESTIVITY_END_DAY
+                ,FESTIVITY_IMAGE
+                ,LAT
+                ,`LONG`
+                ,ORDER_CNT
+                ,USE_YN
+                ,DELETE_YN
+                ,REG_ID
+                ,REG_DT
+                ,FESTIVITY_YEAR
+
+            ) VALUES (
+                 #{festivityId}
+                ,#{festivityNm}
+                ,#{festivityNemo}
+                ,REPLACE(#{pageStrDay},'-','')
+                ,REPLACE(#{pageEndDay},'-','')
+                ,REPLACE(#{festivityStrDay},'-','')
+                ,REPLACE(#{festivityEndDay},'-','')
+                ,#{festivityImage}
+                ,#{latitude}
+                ,#{longitude}
+                ,#{orderCnt}
+                ,#{useYn}
+                ,'N'
+                ,#{regId}
+                ,NOW()
+                ,#{festivityYear}
+                     )
+        ]]>
+    </insert>
+    <update id="updateFestivityInfo">
+        UPDATE WJ_FESTIVITY_INFO SET
+                 FESTIVITY_ID =#{festivityId}
+                ,FESTIVITY_NM =#{festivityNm}
+                ,FESTIVITY_NEMO =#{festivityNemo}
+                ,PAGE_STR_DAY =REPLACE(#{pageStrDay},'-','')
+                ,PAGE_END_DAY =REPLACE(#{pageEndDay},'-','')
+                ,FESTIVITY_STR_DAY =REPLACE(#{festivityStrDay},'-','')
+                ,FESTIVITY_END_DAY =REPLACE(#{festivityEndDay},'-','')
+                ,FESTIVITY_IMAGE =#{festivityImage}
+                ,LAT =#{latitude}
+                ,`LONG` =#{longitude}
+                ,ORDER_CNT =#{orderCnt}
+                ,USE_YN =#{useYn}
+                ,MOD_ID =#{modId}
+                ,MOD_DT =NOW()
+                ,FESTIVITY_YEAR = #{festivityYear}
+        WHERE FESTIVITY_ID = #{festivityId}
+    </update>
+
+    <update id="deleteFestivityInfo">
+        UPDATE WJ_FESTIVITY_INFO SET
+            DELETE_YN = 'Y'
+        WHERE 1=1
+        AND FESTIVITY_ID = #{festivityId}
+    </update>
+
+    <select id="selectFestivityInfoSearchList"
+            parameterType="wj.com.cms.wj.festivity.vo.WjFestivityInfoVO"
+            resultType="wj.com.cms.wj.festivity.vo.WjFestivityInfoVO">
+        SELECT
+        FI.FESTIVITY_ID
+        ,FI.FESTIVITY_NM
+        ,FI.FESTIVITY_NEMO
+        ,FI.PAGE_STR_DAY
+        ,FI.PAGE_END_DAY
+        ,FI.FESTIVITY_STR_DAY
+        ,FI.FESTIVITY_END_DAY
+        ,FI.FESTIVITY_IMAGE
+        ,FI.LAT AS latitude
+        ,FI.`LONG` AS longitude
+        ,FI.ORDER_CNT
+        ,FI.USE_YN
+        ,FI.DELETE_YN
+        ,FI.REG_ID
+        ,FI.REG_DT
+        ,FI.MOD_ID
+        ,FI.MOD_DT
+        ,FI.FESTIVITY_YEAR
+        FROM WJ_FESTIVITY_INFO FI
+        WHERE 1=1
+        AND FI.DELETE_YN = 'N'
+        order by FI.REG_DT desc
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+</mapper>

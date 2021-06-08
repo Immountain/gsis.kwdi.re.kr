@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoAuthorManageDAO">
+
+    <resultMap id="author" type="infomind.com.cms.sec.ram.vo.InfoAuthorManageVO">
+        <result property="authorCode" column="AUTHOR_CODE"/>
+        <result property="authorNm" column="AUTHOR_NM"/>
+        <result property="authorDc" column="AUTHOR_DC"/>
+        <result property="authorCreatDe" column="AUTHOR_CREAT_DE"/>
+    </resultMap>
+
+    <select id="selectInfoAuthorList" parameterType="infomind.com.cms.sec.ram.vo.InfoAuthorManageVO" resultMap="author">
+            SELECT
+                    AUTHOR_CODE
+                   ,AUTHOR_NM
+                   ,AUTHOR_DC
+                   ,AUTHOR_CREAT_DE
+
+              FROM COMTNAUTHORINFO
+             WHERE 1=1
+        and AUTHOR_CODE not in('IS_AUTHENTICATED_FULLY','IS_AUTHENTICATED_REMEMBERED','IS_AUTHENTICATED_ANONYMOUSLY')
+            <if test="searchCondition == 1">AND
+                AUTHOR_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
+            </if>
+            ORDER BY AUTHOR_CREAT_DE DESC
+            LIMIT #{recordCountPerPage} OFFSET #{firstIndex}      
+    </select>
+
+    <insert id="insertInfoAuthor" parameterType="infomind.com.cms.sec.ram.vo.InfoAuthorManageVO">
+
+        INSERT INTO COMTNAUTHORINFO
+        ( AUTHOR_CODE
+        , AUTHOR_NM
+        , AUTHOR_DC
+        , AUTHOR_CREAT_DE )
+        VALUES ( #{authorCode}
+               , #{authorNm}
+               , #{authorDc}
+               , now())
+
+    </insert>
+
+    <update id="updateInfoAuthor" parameterType="infomind.com.cms.sec.ram.vo.InfoAuthorManageVO">
+
+        UPDATE COMTNAUTHORINFO
+        SET AUTHOR_NM=#{authorNm}
+          , AUTHOR_DC=#{authorDc}
+        WHERE AUTHOR_CODE=#{authorCode}
+
+    </update>
+
+    <delete id="deleteInfoAuthor">
+
+        DELETE FROM COMTNAUTHORINFO
+        WHERE AUTHOR_CODE=#{authorCode}
+
+    </delete>
+
+    <select id="selectInfoAuthor" resultMap="author">
+
+        SELECT AUTHOR_CODE, AUTHOR_NM, AUTHOR_DC, AUTHOR_CREAT_DE
+        FROM COMTNAUTHORINFO
+        WHERE AUTHOR_CODE=#{authorCode}
+
+    </select>
+
+    <select id="selectInfoAuthorListTotCnt" parameterType="infomind.com.cms.sec.ram.vo.InfoAuthorManageVO" resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM COMTNAUTHORINFO
+        WHERE 1=1
+        and AUTHOR_CODE not in('IS_AUTHENTICATED_FULLY','IS_AUTHENTICATED_REMEMBERED','IS_AUTHENTICATED_ANONYMOUSLY')
+        <if test="searchCondition == 1">AND
+            AUTHOR_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
+        </if>
+    </select>
+
+    <select id="selectInfoAuthorAllList" parameterType="infomind.com.cms.sec.ram.vo.InfoAuthorManageVO" resultMap="author">
+        SELECT
+            AUTHOR_CODE, AUTHOR_NM, AUTHOR_DC, AUTHOR_CREAT_DE
+        FROM COMTNAUTHORINFO
+        where 1=1
+        and AUTHOR_CODE not in('IS_AUTHENTICATED_FULLY','IS_AUTHENTICATED_REMEMBERED','IS_AUTHENTICATED_ANONYMOUSLY')
+    </select>
+
+
+</mapper>

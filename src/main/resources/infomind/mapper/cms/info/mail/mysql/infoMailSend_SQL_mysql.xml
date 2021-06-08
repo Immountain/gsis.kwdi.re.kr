@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoMailSendDAO">
+
+    <select id="select"
+            parameterType="infomind.com.cms.info.mail.vo.InfoMailSendVO"
+            resultType="infomind.com.cms.info.mail.vo.InfoMailSendVO">
+        SELECT
+              IMS.MAIL_SEND_ID
+            , IMS.MAIL_FROM
+            , IMS.MAIL_TO
+            , IMS.MAIL_CC
+            , IMS.MAIL_SUBJECT
+            , IMS.MAIL_CONTENT
+            , IMS.MAIL_SEND_DT
+            , IMS.MAIL_SEND_TYPE
+            , IMS.MAIL_ERROR_MSG
+        FROM INFO_MAIL_SEND IMS
+        WHERE 1=1
+        AND IMS.MAIL_SEND_ID = #{mailSendId}
+    </select>
+
+    <select id="selectTotalCount"
+        parameterType="infomind.com.cms.info.mail.vo.InfoMailSendVO"
+        resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_MAIL_SEND IMS
+        WHERE 1=1
+    </select>
+
+    <select id="selectList"
+        parameterType="infomind.com.cms.info.mail.vo.InfoMailSendVO"
+        resultType="infomind.com.cms.info.mail.vo.InfoMailSendVO">
+        SELECT
+              IMS.MAIL_SEND_ID
+            , IMS.MAIL_FROM
+            , IMS.MAIL_TO
+            , IMS.MAIL_CC
+            , IMS.MAIL_SUBJECT
+            , IMS.MAIL_CONTENT
+            , IMS.MAIL_SEND_DT
+            , IMS.MAIL_SEND_TYPE
+            , IMS.MAIL_ERROR_MSG
+        FROM INFO_MAIL_SEND IMS
+        WHERE 1=1
+
+        ORDER BY IMS.MAIL_SEND_DT DESC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO INFO_MAIL_SEND(
+              MAIL_FROM
+            , MAIL_TO
+            , MAIL_CC
+            , MAIL_SUBJECT
+            , MAIL_CONTENT
+            , MAIL_SEND_DT
+            , MAIL_SEND_TYPE
+            , MAIL_ERROR_MSG
+        ) VALUES (
+              #{mailFrom}
+            , #{mailTo}
+            , #{mailCc}
+            , #{mailSubject}
+            , #{mailContent}
+            , NOW()
+            , #{mailSendType}
+            , #{mailErrorMsg}
+        )
+    </insert>
+    <update id="update">
+        UPDATE INFO_MAIL_SEND SET
+              MAIL_FROM = #{mailFrom}
+            , MAIL_TO = #{mailTo}
+            , MAIL_CC = #{mailCc}
+            , MAIL_SUBJECT = #{mailSubject}
+            , MAIL_CONTENT = #{mailContent}
+            , MAIL_SEND_DT = #{mailSendDt}
+        WHERE 1=1
+        AND MAIL_SEND_ID = #{mailSendId}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM INFO_MAIL_SEND
+        WHERE MAIL_SEND_ID = #{mailSendId}
+    </delete>
+
+    <select id="selectComUserList" resultType="infomind.com.ext.vo.ComvUserMasterVO">
+        SELECT CUSER.*
+        FROM COMVNUSERMASTER CUSER
+        WHERE 1=1
+    </select>
+
+</mapper>

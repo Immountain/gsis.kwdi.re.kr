@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoPageSatisfactionDAO">
+
+    <select id="selectPageSatisfaction"
+            parameterType="infomind.com.cms.info.page.vo.InfoPageSatisfactionVO"
+            resultType="infomind.com.cms.info.page.vo.InfoPageSatisfactionVO">
+		SELECT
+                    IPS.SATISFACTIONSNO
+                    IPS.SITE_MEMUID
+                    IPS.URL
+                    IPS.TITLE
+                    IPS.MENO
+                    IPS.SCORE
+                    IPS.DELETEYN
+                    IPS.REGDT
+                    IPS.REGID
+                    IPS.REGIP
+                    IPS.MODDT
+                    IPS.MODID
+                    IPS.MODIP
+ 		FROM INFO_PAGE_SATISFACTION IPS
+		WHERE 1=1
+
+	</select>
+
+    <select id="selectPageSatisfactionTotalCount"
+            parameterType="infomind.com.cms.info.page.vo.InfoPageSatisfactionVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_PAGE_SATISFACTION IPS
+        WHERE 1=1
+    </select>
+
+    <select id="selectPageSatisfactionList"
+            parameterType="infomind.com.cms.info.page.vo.InfoPageSatisfactionVO"
+            resultType="infomind.com.cms.info.page.vo.InfoPageSatisfactionVO">
+
+        SELECT
+                IPS.SATISFACTIONSNO
+                IPS.SITE_MEMUID
+                IPS.URL
+                IPS.TITLE
+                IPS.MENO
+                IPS.SCORE
+                IPS.DELETEYN
+                IPS.REGDT
+                IPS.REGID
+                IPS.REGIP
+                IPS.MOD_DT
+                IPS.MODID
+                IPS.MODIP
+        FROM INFO_PAGE_SATISFACTION IPS
+        WHERE 1=1
+        order by A.REG_DT desc
+		LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+
+
+    </select>
+
+    <insert id="insertPageSatisfaction">
+		<![CDATA[
+            INSERT INTO INFO_PAGE_SATISFACTION (
+                    SATISFACTION_SNO
+                    ,SITE_MEMU_ID
+                    ,URL
+                    ,TITLE
+                    ,MENO
+                    ,SCORE
+                    ,DELETE_YN
+                    ,REG_DT
+                    ,REG_ID
+                    ,REG_IP
+                    ,MOD_DT
+                    ,MOD_ID
+                    ,MOD_IP
+            ) VALUES (
+                  #{satisfactionSno}
+                    ,#{site_memuId}
+                    ,#{url}
+                    ,#{title}
+                    ,#{meno}
+                    ,#{score}
+                    ,#{deleteYn}
+                    ,SYSDATE
+                    ,#{regId}
+                    ,#{regIp}
+                    ,SYSDATE
+                    ,#{modId}
+                    ,#{modIp}
+            )
+        ]]>
+	</insert>
+</mapper>

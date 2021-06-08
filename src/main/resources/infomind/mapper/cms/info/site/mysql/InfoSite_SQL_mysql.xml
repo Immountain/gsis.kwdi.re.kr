@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoSiteDAO">
+
+    <resultMap id="InfoSite" type="infomind.com.cms.info.site.vo.InfoSiteVO" autoMapping="true">
+        <association property="lang" autoMapping="true" javaType="infomind.com.ext.vo.CodeSearchVO"/>
+    </resultMap>
+
+    <select id="selectInfoSite"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteVO"
+            resultMap="InfoSite">
+		SELECT
+             A.SITE_ID
+            ,A.HOST
+            ,A.DEBUG_HOST
+            ,A.SUB_PATH
+            ,A.THEME
+            ,A.MAIN_SITE_YN
+            ,A.INDEX_PAGE
+            ,A.LAYOUT
+            ,A.LANG_CD
+            ,A.USE_YN
+            ,A.REG_ID
+            ,A.REG_DT
+            ,A.MOD_ID
+            ,A.MOD_DT
+
+	        ,CDC.CODE_ID
+	        ,CDC.CODE
+	        ,CDC.CODE_NM
+
+ 		FROM INFO_SITE A
+		LEFT OUTER JOIN COMTCCMMNDETAILCODE CDC ON CDC.CODE_ID = 'LANG_CD' AND CDC.CODE = A.LANG_CD
+		WHERE 1=1
+		AND A.SITE_ID = #{siteId}
+	</select>
+
+    <select id="selectInfoSiteTotalCount"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteVO"
+            resultType="int">
+        SELECT COUNT(*) AS cnt
+        FROM INFO_SITE A
+        LEFT OUTER JOIN COMTCCMMNDETAILCODE CDC ON CDC.CODE_ID = 'LANG_CD' AND CDC.CODE = A.LANG_CD
+        WHERE 1=1
+        <if test="searchCondition == 1">	<![CDATA[	AND
+        A.SITE_ID LIKE CONCAT('%' , #{searchKeyword} , '%')	]]>
+        </if>
+        <if test="searchCondition == 2">	<![CDATA[	AND
+			A.HOST LIKE CONCAT('%' , #{searchKeyword} , '%')	]]>
+        </if>
+    </select>
+
+    <select id="selectSiteList"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteVO"
+            resultMap="InfoSite">
+
+        /* 구현 Sql */
+        SELECT
+             A.SITE_ID
+            ,A.HOST
+            ,A.DEBUG_HOST
+            ,A.SUB_PATH
+            ,A.THEME
+            ,A.MAIN_SITE_YN
+            ,A.INDEX_PAGE
+            ,A.LAYOUT
+            ,A.LANG_CD
+            ,A.USE_YN
+            ,A.REG_ID
+            ,A.REG_DT
+            ,A.MOD_ID
+            ,A.MOD_DT
+            /** CUSTOM */
+            ,(CASE  A.USE_YN when 'Y' THEN '사용' else '사용안함' end ) as USE_YN_NM
+            ,(CASE  A.MAIN_SITE_YN when 'Y' THEN '사용' else '사용안함' end ) as MAIN_SITE_YN_NM
+
+            ,CDC.CODE_ID
+            ,CDC.CODE
+            ,CDC.CODE_NM
+
+        FROM INFO_SITE A
+        LEFT OUTER JOIN COMTCCMMNDETAILCODE CDC ON CDC.CODE_ID = 'LANG_CD' AND CDC.CODE = A.LANG_CD
+        WHERE 1=1
+
+        <if test="searchCondition == 1">	<![CDATA[	AND
+			A.SITE_ID LIKE CONCAT('%' , #{searchKeyword} , '%')	]]>
+        </if>
+        <if test="searchCondition == 2">	<![CDATA[	AND
+			A.HOST LIKE CONCAT('%' , #{searchKeyword} , '%')	]]>
+        </if>
+
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+    <insert id="insertSite">
+		<![CDATA[
+            INSERT INTO INFO_SITE (
+                 SITE_ID
+                ,HOST
+                ,DEBUG_HOST
+                ,SUB_PATH
+                ,THEME
+                ,MAIN_SITE_YN
+                ,INDEX_PAGE
+                ,LANG_CD
+                ,LAYOUT
+                ,USE_YN
+                ,REG_ID
+                ,REG_DT
+                ,MOD_ID
+                ,MOD_DT
+
+            ) VALUES (
+                 #{siteId}
+                ,#{host}
+                ,#{debugHost}
+                ,#{subPath}
+                ,#{theme}
+                ,#{mainSiteYn}
+                ,#{indexPage}
+                ,#{langCd}
+                ,#{layout}
+                ,#{useYn}
+                ,#{regId}
+                ,SYSDATE()
+                ,#{modId}
+                ,SYSDATE()
+            )
+        ]]>
+    </insert>
+        <update id="updateSite">
+            UPDATE INFO_SITE
+             SET
+                 SITE_ID=#{siteId}
+                ,HOST=#{host}
+                ,DEBUG_HOST=#{debugHost}
+                ,SUB_PATH=#{subPath}
+                ,THEME=#{theme}
+                ,MAIN_SITE_YN=#{mainSiteYn}
+                ,INDEX_PAGE=#{indexPage}
+                ,LAYOUT=#{layout}
+                ,LANG_CD=#{langCd}
+                ,USE_YN=#{useYn}
+                ,REG_ID=#{regId}
+                ,MOD_ID=#{modId}
+                ,MOD_DT=SYSDATE()
+
+            WHERE  1=1
+              AND SITE_ID = #{siteId}
+        </update>
+
+</mapper>

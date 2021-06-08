@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SiteMyPageDAO">
+
+
+    <resultMap id="stplatMap" type="infomind.com.cms.uss.umt.vo.InfoStplatVO">
+        <result property="useStplatId" column="USE_STPLAT_ID"/>
+        <result property="useStplatCn" column="USE_STPLAT_CN"/>
+        <result property="infoProvdAgeCn" column="INFO_PROVD_AGRE_CN"/>
+    </resultMap>
+
+
+
+    <select id="checkUserId" resultType="int">
+
+   SELECT COUNT(1) usedCnt
+        FROM  (
+
+                       SELECT EMPLYR_ID userId
+                       FROM    COMTNEMPLYRINFO
+                       UNION ALL
+                       SELECT ENTRPRS_MBER_ID userId
+                       FROM   COMTNENTRPRSMBER
+                       UNION ALL
+                       SELECT MBER_ID userId
+                       FROM   COMTNGNRLMBER
+               )
+               A
+        WHERE  userId = #{userId}
+    </select>
+
+
+    <insert id="insertMber">
+
+            INSERT INTO COMTNGNRLMBER
+                (
+                    ESNTL_ID          ,
+                    MBER_ID          ,
+                    MBER_NM          ,
+                    PASSWORD         ,
+                    PASSWORD_HINT    ,
+                    PASSWORD_CNSR    ,
+                    IHIDNUM          ,
+                    SEXDSTN_CODE     ,
+                    ZIP              ,
+                    ADRES            ,
+                    AREA_NO          ,
+                    MBER_STTUS       ,
+                    DETAIL_ADRES     ,
+                    END_TELNO        ,
+                    MBTLNUM      ,
+                    GROUP_ID         ,
+                    MBER_FXNUM       ,
+                    MBER_EMAIL_ADRES ,
+                    MIDDLE_TELNO     ,
+                    SBSCRB_DE        )
+              VALUES(
+                    #{uniqId},
+                    #{mberId},
+                    #{mberNm},
+                    #{password},
+                    #{passwordHint},
+                    #{passwordCnsr},
+                    #{ihidnum},
+                    #{sexdstnCode},
+                    #{zip},
+                    #{adres},
+                    #{areaNo},
+                    #{mberSttus},
+                    #{detailAdres},
+                    #{endTelno},
+                    #{moblphonNo},
+                    #{groupId},
+                    #{mberFxnum},
+                    #{mberEmailAdres},
+                    #{middleTelno},
+                    sysdate  )
+
+    </insert>
+
+    <insert id="insertUserAUthorCode">
+
+            INSERT INTO COMTNEMPLYRSCRTYESTBS (
+                      SCRTY_DTRMN_TRGET_ID
+                      , MBER_TY_CODE
+                      , AUTHOR_CODE
+                      ) VALUES (
+                        #{uniqId}
+                      , #{mberTyCode}
+                      , #{authorCode}
+
+                      )
+
+
+    </insert>
+
+
+
+    <update id="updatePassword">
+
+            UPDATE COMTNGNRLMBER
+            SET
+                   PASSWORD   =  #{password}
+            WHERE  ESNTL_ID  = #{uniqId}
+
+    </update>
+
+
+
+    <update id="updateMber">
+
+            UPDATE COMTNGNRLMBER
+            SET MBER_ID          = #{mberId},
+                MBER_NM          = #{mberNm},
+                PASSWORD_HINT    = #{passwordHint},
+                PASSWORD_CNSR    = #{passwordCnsr},
+                IHIDNUM          = #{ihidnum},
+                SEXDSTN_CODE     = #{sexdstnCode},
+                ZIP              = #{zip},
+                ADRES            = #{adres},
+                AREA_NO          = #{areaNo},
+                MBER_STTUS       = #{mberSttus},
+                DETAIL_ADRES     = #{detailAdres},
+                END_TELNO        = #{endTelno},
+                MBTLNUM      = #{moblphonNo},
+                GROUP_ID         = #{groupId},
+                MBER_FXNUM       = #{mberFxnum},
+                MBER_EMAIL_ADRES = #{mberEmailAdres},
+                MIDDLE_TELNO     = #{middleTelno}
+            WHERE ESNTL_ID=#{uniqId}
+
+    </update>
+
+
+    <select id="selectPassword" resultType="egovframework.com.uss.umt.service.MberManageVO">
+
+            SELECT
+                    PASSWORD          password
+            FROM    COMTNGNRLMBER
+            WHERE   ESNTL_ID=#{uniqId}
+
+    </select>
+
+
+    <select id="selectStplat" resultMap="stplatMap">
+
+            SELECT
+                USE_STPLAT_ID           ,
+                USE_STPLAT_CN           ,
+                INFO_PROVD_AGRE_CN
+            FROM COMTNSTPLATINFO
+            WHERE USE_STPLAT_ID=#{stplatId}
+
+    </select>
+
+
+    <select id="selectMber" resultType="egovframework.com.uss.umt.service.MberManageVO">
+
+            SELECT
+                ESNTL_ID          uniqId,
+                'USR01'          userTy,
+                MBER_ID          mberId,
+                MBER_NM          mberNm,
+                PASSWORD         password,
+                PASSWORD_HINT    passwordHint,
+                PASSWORD_CNSR    passwordCnsr,
+                IHIDNUM          ihidnum,
+                SEXDSTN_CODE     sexdstnCode,
+                ZIP              zip,
+                ADRES            adres,
+                AREA_NO          areaNo,
+                MBER_STTUS       mberSttus,
+                DETAIL_ADRES     detailAdres,
+                END_TELNO        endTelno,
+                MBTLNUM      moblphonNo,
+                GROUP_ID         groupId,
+                MBER_FXNUM       mberFxnum,
+                MBER_EMAIL_ADRES mberEmailAdres,
+                MIDDLE_TELNO     middleTelno,
+                SBSCRB_DE        sbscrbDe,
+                LOCK_AT          lockAt
+            FROM COMTNGNRLMBER
+            WHERE ESNTL_ID=#{uniqId}
+
+    </select>
+
+</mapper>

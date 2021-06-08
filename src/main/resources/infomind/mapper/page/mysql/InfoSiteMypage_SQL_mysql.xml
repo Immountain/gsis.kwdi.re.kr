@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SiteMyPageDAO">
+
+
+    <resultMap id="stplatMap" type="infomind.com.cms.uss.umt.vo.InfoStplatVO">
+        <result property="useStplatId" column="USE_STPLAT_ID"/>
+        <result property="useStplatCn" column="USE_STPLAT_CN"/>
+        <result property="infoProvdAgeCn" column="INFO_PROVD_AGRE_CN"/>
+    </resultMap>
+
+
+
+    <select id="checkUserId" resultType="int">
+
+   SELECT COUNT(1) usedCnt
+        FROM  (
+
+                       SELECT EMPLYR_ID userId
+                       FROM    COMTNEMPLYRINFO
+                       UNION ALL
+                       SELECT ENTRPRS_MBER_ID userId
+                       FROM   COMTNENTRPRSMBER
+                       UNION ALL
+                       SELECT MBER_ID userId
+                       FROM   COMTNGNRLMBER
+               )
+               A
+        WHERE  userId = #{userId}
+    </select>
+
+
+    <insert id="insertMber">
+
+            INSERT INTO COMTNGNRLMBER
+                (
+                    ESNTL_ID          ,
+                    MBER_ID          ,
+                    MBER_NM          ,
+                    PASSWORD         ,
+                    PASSWORD_HINT    ,
+                    PASSWORD_CNSR    ,
+                    IHIDNUM          ,
+                    SEXDSTN_CODE     ,
+                    ZIP              ,
+                    ADRES            ,
+                    AREA_NO          ,
+                    MBER_STTUS       ,
+                    DETAIL_ADRES     ,
+                    END_TELNO        ,
+                    MBTLNUM      ,
+                    GROUP_ID         ,
+                    MBER_FXNUM       ,
+                    MBER_EMAIL_ADRES ,
+                    MIDDLE_TELNO     ,
+                    SBSCRB_DE       ,
+                    JTP_ORGAN_CD ,
+                    DI,
+                    ZEUS_CERTI_YN,
+                    ZEUS_ID
+
+                     )
+              VALUES(
+                    #{uniqId},
+                    #{mberId},
+                    #{mberNm},
+                    #{password},
+                    #{passwordHint},
+                    #{passwordCnsr},
+                    #{ihidnum},
+                    #{sexdstnCode},
+                    #{zip},
+                    #{adres},
+                    #{areaNo},
+                    #{mberSttus},
+                    #{detailAdres},
+                    #{endTelno},
+                    #{moblphonNo},
+                    #{groupId},
+                    #{mberFxnum},
+                    #{mberEmailAdres},
+                    #{middleTelno},
+                    SYSDATE()  ,
+                    #{jtpOrganCd},
+                    #{di},
+                    #{zeusCertiYn},
+                    #{zeusId}
+
+                    )
+
+    </insert>
+
+    <insert id="insertMberHis">
+
+            INSERT INTO COMTNGNRLMBER_HIS
+                (
+                    ESNTL_ID          ,
+                    MBER_ID          ,
+                    MBER_NM          ,
+                    PASSWORD         ,
+                    PASSWORD_HINT    ,
+                    PASSWORD_CNSR    ,
+                    IHIDNUM          ,
+                    SEXDSTN_CODE     ,
+                    ZIP              ,
+                    ADRES            ,
+                    AREA_NO          ,
+                    MBER_STTUS       ,
+                    DETAIL_ADRES     ,
+                    END_TELNO        ,
+                    MBTLNUM      ,
+                    GROUP_ID         ,
+                    MBER_FXNUM       ,
+                    MBER_EMAIL_ADRES ,
+                    MIDDLE_TELNO     ,
+                    SBSCRB_DE       ,
+                    JTP_ORGAN_CD ,
+                    DI ,
+                    MOD_TYPE,
+                    REG_DT,
+                    ZEUS_CERTI_YN,
+                    ZEUS_ID
+
+                     )
+              VALUES(
+                    #{uniqId},
+                    #{mberId},
+                    #{mberNm},
+                    #{password},
+                    #{passwordHint},
+                    #{passwordCnsr},
+                    #{ihidnum},
+                    #{sexdstnCode},
+                    #{zip},
+                    #{adres},
+                    #{areaNo},
+                    #{mberSttus},
+                    #{detailAdres},
+                    #{endTelno},
+                    #{moblphonNo},
+                    #{groupId},
+                    #{mberFxnum},
+                    #{mberEmailAdres},
+                    #{middleTelno},
+                    SYSDATE()  ,
+                    #{jtpOrganCd},
+                    #{di},
+                    #{modType},
+                    SYSDATE(),
+                    #{zeusCertiYn},
+                    #{zeusId}
+
+                    )
+
+    </insert>
+
+
+
+    <insert id="insertEntrprs">
+
+            INSERT INTO COMTNENTRPRSMBER
+                (   ESNTL_ID                      ,
+                    ENTRPRS_MBER_ID               ,
+                    ENTRPRS_SE_CODE              ,
+                    BIZRNO                       ,
+                    JURIRNO                      ,
+                    CMPNY_NM                     ,
+                    CXFC                         ,
+                    ZIP                          ,
+                    ADRES                        ,
+                    ENTRPRS_MIDDLE_TELNO         ,
+                    FXNUM                        ,
+                    INDUTY_CODE                  ,
+                    APPLCNT_NM                   ,
+                    SBSCRB_DE                    ,
+                    ENTRPRS_MBER_STTUS           ,
+                    ENTRPRS_MBER_PASSWORD        ,
+                    ENTRPRS_MBER_PASSWORD_HINT   ,
+                    ENTRPRS_MBER_PASSWORD_CNSR   ,
+                    GROUP_ID                     ,
+                    DETAIL_ADRES                 ,
+                    ENTRPRS_END_TELNO            ,
+                    AREA_NO                      ,
+                    APPLCNT_EMAIL_ADRES          ,
+                    APPLCNT_IHIDNUM,
+                    MBTLNUM,
+                    JTP_ORGAN_CD ,
+                    DI,
+                    JTP_CLOUD_ID,
+                    ZEUS_CERTI_YN,
+                    ZEUS_ID
+                    )
+            VALUES (
+                    #{uniqId},
+                    #{entrprsmberId},
+                    #{entrprsSeCode},
+                    #{bizrno},
+                    #{jurirno},
+	                #{cmpnyNm},
+	                #{cxfc},
+	                #{zip},
+	                #{adres},
+	                #{entrprsMiddleTelno},
+	                #{fxnum},
+	                #{indutyCode},
+	                #{applcntNm},
+	                SYSDATE(),
+	                #{entrprsMberSttus},
+	                #{entrprsMberPassword},
+	                #{entrprsMberPasswordHint},
+	                #{entrprsMberPasswordCnsr},
+	                #{groupId},
+	                #{detailAdres},
+	                #{entrprsEndTelno},
+	                #{areaNo},
+	                #{applcntEmailAdres},
+	                #{applcntIhidnum}        ,
+	                #{mbtlnum},
+	                #{jtpOrganCd},
+	                #{di},
+	                #{jtpCloudId},
+                    #{zeusCertiYn},
+                    #{zeusId}
+
+
+	                )
+
+    </insert>
+
+
+
+    <insert id="insertUserAUthorCode">
+
+            INSERT INTO COMTNEMPLYRSCRTYESTBS (
+                      SCRTY_DTRMN_TRGET_ID
+                      , MBER_TY_CODE
+                      , AUTHOR_CODE
+                      ) VALUES (
+                        #{uniqId}
+                      , #{mberTyCode}
+                      , #{authorCode}
+
+                      )
+
+
+    </insert>
+
+
+
+    <update id="updatePassword">
+
+            UPDATE COMTNGNRLMBER
+            SET
+                   PASSWORD   =  #{password}
+            WHERE  ESNTL_ID  = #{uniqId}
+
+    </update>
+
+
+
+    <update id="updateMber" parameterType="infomind.com.cms.uss.umt.vo.InfoMberManageVO">
+
+        UPDATE COMTNGNRLMBER
+            SET
+
+                MBER_EMAIL_ADRES = #{mberEmailAdres},
+                AREA_NO          = #{areaNo},
+                MIDDLE_TELNO     = #{middleTelno},
+                END_TELNO        = #{endTelno},
+                ZEUS_CERTI_YN    = #{zeusCertiYn},
+                ZEUS_ID          = #{zeusId},
+                JTP_ORGAN_CD     =#{jtpOrganCd}
+
+       WHERE ESNTL_ID=#{uniqId}
+  </update>
+
+
+    <update id="updateEntMber" parameterType="infomind.com.cms.uss.umt.vo.InfoEntrprsManageVO">
+
+        UPDATE COMTNENTRPRSMBER
+            SET
+
+                APPLCNT_EMAIL_ADRES = #{applcntEmailAdres},
+                AREA_NO          = #{areaNo},
+                ENTRPRS_MIDDLE_TELNO     = #{entrprsMiddleTelno},
+                ENTRPRS_END_TELNO        = #{entrprsEndTelno},
+                ZEUS_CERTI_YN    = #{zeusCertiYn},
+                ZEUS_ID          = #{zeusId}
+       WHERE ESNTL_ID=#{uniqId}
+  </update>
+
+
+    <select id="selectPassword" resultType="infomind.com.cms.uss.umt.vo.InfoMberManageVO">
+
+            SELECT
+                    PASSWORD          password
+            FROM    COMTNGNRLMBER
+            WHERE   ESNTL_ID=#{uniqId}
+
+    </select>
+
+
+    <select id="selectStplat" resultMap="stplatMap">
+
+            SELECT
+                USE_STPLAT_ID           ,
+                USE_STPLAT_CN           ,
+                INFO_PROVD_AGRE_CN
+            FROM COMTNSTPLATINFO
+            WHERE USE_STPLAT_ID=#{stplatId}
+
+    </select>
+
+
+    <select id="selectMber" resultType="infomind.com.site.vo.SiteJoinVO">
+
+           SELECT
+                ESNTL_ID         as uniqId,
+                'USR01'          as userTy,
+                'GNR'            as type,
+                MBER_ID          as id,
+                MBER_NM          as name,
+                PASSWORD         as passwd,
+                ZIP              as zip,
+                ADRES            as addr,
+                DETAIL_ADRES     as detailAdres,
+                AREA_NO          as tel1,
+                MIDDLE_TELNO	 as tel2,
+                END_TELNO        as tel3,
+             	MBER_EMAIL_ADRES as email,
+                MBTLNUM          as moblphonNo,
+                ZEUS_CERTI_YN    AS zeusCertiYn,
+                ZEUS_ID          AS zeusId,
+                A.JTP_ORGAN_CD   as jtpOrganCd ,
+                B.ORGAN_NM       as orgNm
+            FROM COMTNGNRLMBER A
+                    LEFT JOIN ORGAN_MST B
+               ON A.JTP_ORGAN_CD =B.JTP_ORGAN_CD
+            WHERE ESNTL_ID=#{uniqId}
+
+    </select>
+
+
+    <select id="selectEntMber" resultType="infomind.com.site.vo.SiteJoinVO">
+
+                SELECT  ESNTL_ID              AS uniqId,
+                        'USR02'               AS userTy,
+                        'ENT'                 AS type,
+                         ENTRPRS_MBER_ID      AS id,
+                         APPLCNT_EMAIL_ADRES  AS email,
+                         APPLCNT_NM           AS NAME,
+                         ENTRPRS_MBER_PASSWORD AS passwd,
+                         ZIP				  AS zip,
+                         ADRES				  AS addr,
+                         DETAIL_ADRES         AS detailAdres,
+                         AREA_NO              AS tel1,
+                         ENTRPRS_MIDDLE_TELNO AS tel2,
+                         ENTRPRS_END_TELNO    AS tel3,
+                         MBTLNUM              AS moblphonNo,
+                         BIZRNO               AS orgCode,
+                         CMPNY_NM             AS orgNm,
+                         JTP_ORGAN_CD         AS jtpOrganCd,
+                         ZEUS_CERTI_YN        AS zeusCertiYn,
+                         ZEUS_ID              AS zeusId,
+                         JTP_CLOUD_ID        as jtpCloudId
+            FROM COMTNENTRPRSMBER
+            WHERE ESNTL_ID=#{uniqId}
+
+    </select>
+
+
+    <select id="getSiteUserIdFind" parameterType="infomind.com.site.vo.SiteUserVO" resultType="infomind.com.site.vo.SiteUserVO">
+
+
+
+          SELECT   B.ESNTL_ID
+                            ,A.EMAILL as EMAIL
+                            ,A.USER_ID
+                            ,A.KOR_NAME as USER_NM
+                            ,B.PASSWORD
+             FROM WJ_JEJU_PEOPLE A
+                ,COMTNGNRLMBER B
+            WHERE 1=1
+            AND A.USER_ID =B.MBER_ID
+            AND A.KOR_NAME =#{userNm}
+            AND A.EMAILL =#{email}
+
+    </select>
+
+    <select id="getSiteUserPwFind" parameterType="infomind.com.site.vo.SiteUserVO" resultType="infomind.com.site.vo.SiteUserVO">
+
+           SELECT   B.ESNTL_ID
+                            ,A.EMAILL as EMAIL
+                            ,A.USER_ID
+                            ,A.KOR_NAME as USER_NM
+                            ,B.PASSWORD
+             FROM WJ_JEJU_PEOPLE A
+                ,COMTNGNRLMBER B
+            WHERE 1=1
+            AND A.USER_ID =B.MBER_ID
+            AND A.KOR_NAME =#{userNm}
+            AND A.EMAILL =#{email}
+            AND A.USER_ID =#{userId}
+    </select>
+
+
+    <select id="getSiteUserPwChangeFind" parameterType="infomind.com.site.vo.SiteUserVO" resultType="infomind.com.site.vo.SiteUserVO">
+
+            SELECT   ESNTL_ID
+                    ,EMAIL
+                    ,PHONE_NO
+                    ,USER_ID
+                    ,USER_NM
+                    ,PASSWORD
+                    ,USER_SE
+              from (
+              SELECT ESNTL_ID AS ESNTL_ID
+
+                      , APPLCNT_EMAIL_ADRES AS EMAIL
+                      , MBTLNUM             AS PHONE_NO
+                      , ENTRPRS_MBER_ID     as USER_ID
+                      , APPLCNT_NM          as USER_NM
+                      , ENTRPRS_MBER_PASSWORD            as PASSWORD
+                      ,  'ENT'            as         USER_SE
+                 FROM COMTNENTRPRSMBER
+                 UNION ALL
+                 SELECT ESNTL_ID AS ESNTL_ID
+                      , MBER_EMAIL_ADRES    AS EMAIL
+                      , MBTLNUM             AS PHONE_NO
+                      , MBER_ID				as USER_ID
+                      , MBER_NM             as USER_NM
+                      , PASSWORD            as PASSWORD
+                      , 'GNR'            as         USER_SE
+                 FROM COMTNGNRLMBER
+                 ) A
+                where 1=1
+                and PASSWORD =#{password}
+                and ESNTL_ID =#{esntlId}
+
+    </select>
+
+
+    <select id="getSiteUserAllFind" parameterType="infomind.com.site.vo.SiteUserVO" resultType="infomind.com.site.vo.SiteUserVO">
+
+          select ESNTL_ID
+              ,USER_ID
+              ,PASSWORD
+              ,USER_NM
+              ,USER_ZIP
+              ,USER_ADRES
+              ,USER_EMAIL
+              ,GROUP_ID
+              ,USER_SE
+              ,ORGNZT_ID
+              ,JTP_ORGAN_CD
+              ,MBTLNUM
+        from temp_user a
+        where 1=1
+        and ESNTL_ID =#{esntlId}
+
+
+
+    </select>
+
+
+
+
+    <update id="getUpdateUserPwEnt">
+
+        update COMTNENTRPRSMBER
+            set ENTRPRS_MBER_PASSWORD =#{password}
+            where 1=1
+            and ENTRPRS_MBER_ID=#{userId}
+
+
+    </update>
+
+
+    <update id="getUpdateUserPwUsr">
+
+        update COMTNGNRLMBER
+            set PASSWORD =#{password}
+            where 1=1
+            and MBER_ID=#{userId}
+
+
+    </update>
+
+
+
+
+
+    <select id="getDiCount" parameterType="String" resultType="int">
+       SELECT  	  count(*) as cnt
+              from (
+              SELECT ESNTL_ID AS ESNTL_ID
+
+                      , APPLCNT_EMAIL_ADRES AS EMAIL
+                      , MBTLNUM             AS PHONE_NO
+                      , ENTRPRS_MBER_ID     as USER_ID
+                      , APPLCNT_NM          as USER_NM
+                      , ENTRPRS_MBER_PASSWORD            as PASSWORD
+                      ,  'ENT'            as         USER_SE
+                      , DI
+                 FROM COMTNENTRPRSMBER
+                 UNION ALL
+                 SELECT ESNTL_ID AS ESNTL_ID
+                      , MBER_EMAIL_ADRES    AS EMAIL
+                      , MBTLNUM             AS PHONE_NO
+                      , MBER_ID				as USER_ID
+                      , MBER_NM             as USER_NM
+                      , PASSWORD            as PASSWORD
+                      , 'GNR'            as         USER_SE
+                      , DI
+                 FROM COMTNGNRLMBER
+                 ) A
+                where 1=1
+                and A.DI =#{di}
+
+
+    </select>
+
+</mapper>

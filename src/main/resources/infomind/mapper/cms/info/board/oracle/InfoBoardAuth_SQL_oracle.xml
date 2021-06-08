@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoBoardAuthDAO">
+
+    <resultMap id="boardAuthConfigMap" type="infomind.com.cms.info.board.vo.InfoBoardAuthConfigVO" autoMapping="true">
+        <id property="authTypeId" column="AUTH_TYPE_ID"/>
+        <result property="boardId" column="BOARD_ID"/>
+        <result property="authType" column="AUTH_TYPE"/>
+        <collection property="auths" ofType="infomind.com.cms.info.board.vo.InfoBoardAuthVO" autoMapping="true"/>
+    </resultMap>
+
+    <select id="selectBoardAuthConfigMap"
+            resultMap="boardAuthConfigMap"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardAuthVO">
+        SELECT
+            AUTH.BOARD_AUTH_ID,
+            AUTH.BOARD_ID,
+            AUTH.AUTH_TYPE,
+            AUTH.AUTH_TYPE_ID,
+            AUTH.AUTH_ACCESS
+        FROM (
+            SELECT
+               IBA.BOARD_AUTH_ID AS BOARD_AUTH_ID,
+               NVL(IBA.BOARD_ID, IB.BOARD_ID) AS BOARD_ID,
+               NVL(IBA.AUTH_TYPE, AT.AUTH_TYPE) AS AUTH_TYPE,
+               NVL(IBA.AUTH_TYPE_ID, AT.AUTH_TYPE) AS AUTH_TYPE_ID,
+               NVL(IBA.AUTH_ACCESS, AA.AUTH_ACCESS) AS AUTH_ACCESS
+            FROM
+            INFO_BOARD IB
+
+            FULL OUTER JOIN ( -- 코드테이블로 변경예정
+                SELECT 'list' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'read' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'write' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'comment' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'reply' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'notice' AS AUTH_ACCESS FROM DUAL
+            ) AA ON 1=1
+
+            FULL OUTER JOIN ( -- 코드테이블로 변경예정
+                SELECT 'common_login' AS AUTH_TYPE FROM DUAL UNION
+                SELECT 'common_not_login' AS AUTH_TYPE FROM DUAL
+            ) AT ON 1=1
+
+            FULL OUTER JOIN INFO_BOARD_AUTH IBA
+                ON IBA.BOARD_ID = IB.BOARD_ID
+                AND IBA.AUTH_ACCESS = AA.AUTH_ACCESS
+                AND IBA.AUTH_TYPE = AT.AUTH_TYPE
+        ) AUTH
+        WHERE 1=1
+        AND BOARD_ID = #{boardId}
+        ORDER BY BOARD_ID, AUTH_TYPE, AUTH_TYPE_ID, AUTH_ACCESS
+    </select>
+
+    <delete id="deleteBoardAuthConfig" parameterType="java.lang.String">
+        DELETE FROM INFO_BOARD_AUTH
+        WHERE 1=1
+        AND BOARD_ID = #{boardId}
+    </delete>
+
+    <select id="selectBoardAuth"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardAuthVO"
+            resultType="infomind.com.cms.info.board.vo.InfoBoardAuthVO">
+		SELECT
+            IBA.BOARD_AUTH_ID,
+            IBA.BOARD_ID,
+            IBA.AUTH_TYPE,
+            IBA.AUTH_TYPE_ID,
+            IBA.AUTH_ACCESS,
+            IBA.REG_ID,
+            IBA.REG_DT
+		FROM INFO_BOARD_AUTH IBA
+		WHERE 1=1
+		AND IBA.BOARD_AUTH_ID = #{boardAuthId}
+	</select>
+
+    <select id="selectBoardAuthTotalCount"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardAuthVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_BOARD_AUTH IBA
+        <if test="searchCondition == 1">
+            <![CDATA[	AND
+                IBA.BOARD_AUTH_ID LIKE '%' || #{searchKeyword} || '%'
+            ]]>
+        </if>
+
+        WHERE 1=1
+    </select>
+
+    <select id="selectBoardAuthList"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardAuthVO"
+            resultType="infomind.com.cms.info.board.vo.InfoBoardAuthVO">
+        SELECT *
+        FROM (
+            SELECT ROWNUM RNUM, ALL_LIST.*
+            FROM (
+            /* 구현 Sql */
+            SELECT
+                IBA.BOARD_AUTH_ID,
+                IBA.BOARD_ID,
+                IBA.AUTH_TYPE,
+                IBA.AUTH_TYPE_ID,
+                IBA.AUTH_ACCESS,
+                IBA.REG_ID,
+                IBA.REG_DT
+            FROM INFO_BOARD_AUTH IBA
+            WHERE 1=1
+
+            <if test="searchCondition == 1">    <![CDATA[	AND
+                IBA.BOARD_AUTH_ID LIKE '%' || #{searchKeyword} || '%'	]]>
+            </if>
+
+        /* 구현 Sql */
+            ) ALL_LIST
+        )
+        WHERE RNUM <![CDATA[  > ]]> #{firstIndex}
+        AND   RNUM <![CDATA[ <= ]]> #{firstIndex} + #{recordCountPerPage}
+    </select>
+
+    <insert id="insertBoardAuth">
+		<![CDATA[
+            INSERT INTO  INFO_BOARD_AUTH (
+                BOARD_AUTH_ID,
+                BOARD_ID,
+                AUTH_TYPE,
+                AUTH_TYPE_ID,
+                AUTH_ACCESS,
+                REG_ID,
+                REG_DT
+            ) VALUES (
+                #{boardAuthId},
+                #{boardId},
+                #{authType},
+                #{authTypeId},
+                #{authAccess},
+                #{regId},
+                SYSDATE
+            )
+        ]]>
+	</insert>
+
+    <update id="updateBoardAuth">
+        UPDATE INFO_BOARD_AUTH SET
+            BOARD_AUTH_ID = #{boardAuthId},
+            BOARD_ID = #{boardId},
+            AUTH_TYPE = #{authType},
+            AUTH_TYPE_ID = #{authTypeId},
+            AUTH_ACCESS = #{authAccess}
+
+        WHERE  1=1
+        AND BOARD_AUTH_ID = #{boardAuthId}
+	</update>
+
+
+
+    <select id="selectBoardAuthInfo"  parameterType="infomind.com.cms.info.board.vo.InfoBoardAuthVO"  resultType="infomind.com.cms.info.board.vo.InfoBoardAuthVO">
+
+        SELECT  nvl(SUM( CASE AUTH_ACCESS when 'comment' THEN 1 ELSE 0 end ),0)  AS COMMENT_YN
+               ,nvl(SUM( CASE AUTH_ACCESS when 'list' THEN 1 ELSE 0 end ) ,0)    AS LIST_YN
+               ,nvl(SUM( CASE AUTH_ACCESS when 'read' THEN 1 ELSE 0 end ) ,0)     AS READ_YN
+               ,nvl(SUM( CASE AUTH_ACCESS when 'reply' THEN 1 ELSE 0 end ) ,0)    AS REPLY_YN
+               ,nvl(SUM( CASE AUTH_ACCESS when 'write' THEN 1 ELSE 0 end )  ,0)   AS WRITE_YN
+               ,nvl(SUM( CASE AUTH_ACCESS when 'notice' THEN 1 ELSE 0 end ) ,0)   AS NOTICE_YN
+              ,nvl(SUM( CASE AUTH_ACCESS when 'modify' THEN 1 ELSE 0 end ) ,0)   AS MODIFY_YN
+        FROM (
+              SELECT BOARD_ID
+                    ,AUTH_ACCESS
+              FROM INFO_BOARD_AUTH
+              WHERE 1=1
+              AND BOARD_ID =#{boardId}
+              AND AUTH_TYPE =#{commonNotLogin}
+              UNION
+                    SELECT BOARD_ID
+                    ,AUTH_ACCESS
+              FROM INFO_BOARD_AUTH
+              WHERE 1=1
+              AND BOARD_ID =#{boardId}
+              AND AUTH_TYPE =#{commonLogin}
+              UNION
+              SELECT BOARD_ID
+                    ,AUTH_ACCESS
+              FROM INFO_BOARD_AUTH
+              WHERE 1=1
+              AND BOARD_ID =#{boardId}
+              AND AUTH_TYPE ='group'
+              AND  AUTH_TYPE_ID =#{group}
+              UNION
+              SELECT BOARD_ID
+                    ,AUTH_ACCESS
+              FROM INFO_BOARD_AUTH
+              WHERE 1=1
+              AND BOARD_ID =#{boardId}
+              AND AUTH_TYPE ='orgnzt'
+              AND  AUTH_TYPE_ID =#{orgnzt}
+              UNION
+              SELECT BOARD_ID
+                      ,'modify' AS AUTH_ACCESS
+                FROM INFO_BOARD_ITEM
+                WHERE 1=1
+                AND ITEM_ID=#{itemId}
+                AND REG_ID =#{regId}
+
+
+
+        )WHERE 1=1
+
+
+
+
+
+
+    </select>
+
+</mapper>

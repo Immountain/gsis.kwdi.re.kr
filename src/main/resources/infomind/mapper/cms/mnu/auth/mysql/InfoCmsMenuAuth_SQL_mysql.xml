@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoCmsMenuAuthDAO">
+
+    <resultMap id="menuAuthConfigMap" type="infomind.com.cms.mnu.auth.vo.InfoCmsMenuAuthConfigVO" autoMapping="true">
+        <id property="authTypeId" column="AUTH_TYPE_ID"/>
+        <result property="cmsMemuId" column="CMS_MEMU_ID"/>
+        <result property="authType" column="AUTH_TYPE"/>
+        <result property="authTypeIdNm" column="AUTH_TYPE_ID_NM"/>
+        <collection property="auths" ofType="infomind.com.cms.mnu.auth.vo.InfoCmsMenuAuthVO" autoMapping="true"/>
+    </resultMap>
+
+    <select id="selectCmsMenuAuthConfigMap"
+            resultMap="menuAuthConfigMap"
+            parameterType="infomind.com.cms.mnu.auth.vo.InfoCmsMenuAuthVO">
+        SELECT
+            AUTH.CMS_MEMU_AUTH_ID,
+            AUTH.CMS_MEMU_ID,
+            AUTH.AUTH_TYPE,
+            AUTH.AUTH_TYPE_ID,
+            AUTH.AUTH_ACCESS,
+            FN_AUTH_TYPE_ID_NM(AUTH.AUTH_TYPE, AUTH.AUTH_TYPE_ID) as AUTH_TYPE_ID_NM
+        FROM (
+            SELECT
+                ICMA.CMS_MEMU_AUTH_ID AS CMS_MEMU_AUTH_ID,
+                IFNULL(ICMA.CMS_MEMU_ID, ISM.MENU_NO) AS CMS_MEMU_ID,
+                ICMA.AUTH_TYPE,
+                ICMA.AUTH_TYPE_ID,
+                IFNULL(ICMA.AUTH_ACCESS, AA.AUTH_ACCESS) AS AUTH_ACCESS
+            FROM COMTNMENUINFO ISM
+
+            LEFT JOIN (
+                SELECT 'list' AS AUTH_ACCESS UNION
+                SELECT 'read' AS AUTH_ACCESS UNION
+                SELECT 'write' AS AUTH_ACCESS UNION
+                SELECT 'modify' AS AUTH_ACCESS UNION
+                SELECT 'delete' AS AUTH_ACCESS UNION
+                SELECT 'organ' AS AUTH_ACCESS UNION
+                SELECT 'cloud' AS AUTH_ACCESS
+            ) AA ON 1=1
+
+            LEFT JOIN INFO_CMS_MENU_AUTH ICMA
+                ON ICMA.CMS_MEMU_ID = ISM.MENU_NO
+                AND ICMA.AUTH_ACCESS = AA.AUTH_ACCESS
+        ) AUTH
+        WHERE 1=1
+            AND CMS_MEMU_ID = #{cmsMemuId}
+            AND AUTH_TYPE IS NOT NULL
+        ORDER BY CMS_MEMU_ID, AUTH_TYPE, AUTH_TYPE_ID, AUTH_ACCESS
+    </select>
+
+    <select id="selectCmsMenuAuthInfo"  parameterType="infomind.com.cms.mnu.auth.vo.InfoCmsMenuAuthVO"  resultType="infomind.com.cms.mnu.auth.vo.InfoCmsMenuAuthVO">
+
+        SELECT
+            IFNULL(SUM( CASE AUTH_ACCESS when 'list' THEN 1 ELSE 0 end ) ,0)    AS LIST_YN
+             ,IFNULL(SUM( CASE AUTH_ACCESS when 'write' THEN 1 ELSE 0 end )  ,0)   AS WRITE_YN
+             ,IFNULL(SUM( CASE AUTH_ACCESS when 'read' THEN 1 ELSE 0 end ) ,0)     AS READ_YN
+             ,IFNULL(SUM( CASE AUTH_ACCESS when 'modify' THEN 1 ELSE 0 end ) ,0)   AS MODIFY_YN
+             ,IFNULL(SUM( CASE AUTH_ACCESS when 'delete' THEN 1 ELSE 0 end ) ,0)   AS DELETE_YN
+             ,IFNULL(SUM( CASE AUTH_ACCESS when 'organ' THEN 1 ELSE 0 end ) ,0)   AS ORGAN_ALL_YN
+             ,IFNULL(SUM( CASE AUTH_ACCESS when 'cloud' THEN 1 ELSE 0 end ) ,0)   AS CLOUD_ALL_YN
+
+        FROM (
+
+                 SELECT CMS_MEMU_ID
+                      ,AUTH_ACCESS
+                 FROM INFO_CMS_MENU_AUTH
+                 WHERE 1=1
+                   AND CMS_MEMU_ID =#{cmsMemuId}
+                   AND AUTH_TYPE ='group'
+                   AND  AUTH_TYPE_ID =#{group}
+                 UNION
+                 SELECT CMS_MEMU_ID
+                      ,AUTH_ACCESS
+                 FROM INFO_CMS_MENU_AUTH
+                 WHERE 1=1
+                   AND CMS_MEMU_ID =#{cmsMemuId}
+                   AND AUTH_TYPE ='orgnzt'
+                   AND AUTH_TYPE_ID =#{orgnzt}
+                 UNION
+                 SELECT CMS_MEMU_ID
+                      ,AUTH_ACCESS
+                 FROM INFO_CMS_MENU_AUTH
+                 WHERE 1=1
+                   AND CMS_MEMU_ID =#{cmsMemuId}
+                   AND AUTH_TYPE ='role'
+                  AND AUTH_TYPE_ID =(
+
+                      SELECT AUTHOR_CODE
+                        FROM COMTNEMPLYRSCRTYESTBS
+                        WHERE 1=1
+                        AND SCRTY_DTRMN_TRGET_ID=#{user}
+
+                   )
+                 UNION
+                 SELECT CMS_MEMU_ID
+                      ,AUTH_ACCESS
+                 FROM INFO_CMS_MENU_AUTH
+                 WHERE 1=1
+                   AND CMS_MEMU_ID =#{cmsMemuId}
+                   AND AUTH_TYPE ='user'
+                   AND AUTH_TYPE_ID =#{user}
+             ) a WHERE 1=1
+
+    </select>
+
+    <insert id="insertCmsMenuAuth">
+		<![CDATA[
+            INSERT INTO  INFO_CMS_MENU_AUTH (
+                    CMS_MEMU_AUTH_ID
+                    ,CMS_MEMU_ID
+                    ,AUTH_TYPE
+                    ,AUTH_TYPE_ID
+                    ,AUTH_ACCESS
+                    ,REG_ID
+                    ,REG_DT
+            ) VALUES (
+                     #{cmsMemuAuthId}
+                    ,#{cmsMemuId}
+                    ,#{authType}
+                    ,#{authTypeId}
+                    ,#{authAccess}
+                    ,#{regId}
+                    ,SYSDATE()
+            )
+        ]]>
+	</insert>
+
+
+    <update id="updateCmsMenuAuth">
+        UPDATE INFO_SITE_MENU_AUTH
+         SET
+              CMS_MEMU_ID = #{cmsMemuId}
+            , AUTH_TYPE = #{authType}
+            , AUTH_TYPE_ID = #{authTypeId}
+            , AUTH_ACCESS = #{authTypeId}
+            , REG_ID = #{regId}
+            , REG_DT = SYSDATE
+        WHERE  1=1
+        AND CMS_MEMU_AUTH_ID = #{cmsMemuAuthId}
+	</update>
+
+
+
+    <delete id="deleteCmsMenuAuthConfig" parameterType="java.lang.String">
+        DELETE FROM INFO_CMS_MENU_AUTH
+        WHERE 1=1
+      AND CMS_MEMU_ID = #{cmsMemuId}
+    </delete>
+
+
+
+
+</mapper>

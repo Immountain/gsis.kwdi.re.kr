@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+	수정일          수정자                          수정내용
+  ===========      ========    =================================================
+  2020.10.07		양진혁  	 	최초
+--><!--Converted at: Wed May 11 15:50:36 KST 2016-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="InfoCmmnClCodeManageDAO">
+
+	<resultMap id="cmmnClCode" type="infomind.com.cms.ccm.ccc.vo.InfoCmmnClCode">
+
+	</resultMap>
+
+
+
+	<select id="selectCmmnClCodeList" parameterType="infomind.com.cms.ccm.ccc.vo.InfoCmmnClCode" resultType="infomind.com.cms.ccm.ccc.vo.InfoCmmnClCode">
+		
+		<![CDATA[
+			SELECT  *
+			  FROM  (
+			SELECT ROWNUM RNUM, ALL_LIST.*
+			  FROM  (
+			/* 구현 Sql */
+			SELECT  CL_CODE
+			     ,  CL_CODE_NM
+			     ,  USE_AT
+			  FROM  COMTCCMMNCLCODE
+			 WHERE  1 = 1
+		]]>
+			<if test="searchCondition == 1">	<![CDATA[	AND
+				CL_CODE LIKE '%' || #{searchKeyword} || '%'	]]>
+			</if>
+			<if test="searchCondition == 2">	<![CDATA[	AND
+				CL_CODE_NM LIKE '%' || #{searchKeyword} || '%'	]]>
+			</if>
+			<if test="searchCondition == 3">	<![CDATA[	AND
+				USE_AT        = 'Y'	]]>
+			</if>
+		
+			/* 구현 Sql */
+			<![CDATA[
+				    ) ALL_LIST
+				    )
+			 WHERE  RNUM  > #{firstIndex}
+			   AND  RNUM <= #{firstIndex} + #{recordCountPerPage}
+			   ]]>
+		
+	</select>
+
+	<select id="selectCmmnClCodeListTotCnt" parameterType="infomind.com.cms.ccm.ccc.vo.InfoCmmnClCode" resultType="int">
+		
+		<![CDATA[
+			SELECT  COUNT(*) totcnt
+			  FROM  COMTCCMMNCLCODE
+			 WHERE  1 = 1
+		]]>
+		
+			<if test="searchCondition == 1">	<![CDATA[	AND
+				CL_CODE LIKE '%' || #{searchKeyword} || '%'	]]>
+			</if>
+			<if test="searchCondition == 2">	<![CDATA[	AND
+				CL_CODE_NM LIKE '%' || #{searchKeyword} || '%'	]]>
+			</if>
+	</select>
+
+	<select id="selectCmmnClCodeDetail" parameterType="infomind.com.cms.ccm.ccc.vo.InfoCmmnClCode" resultType="infomind.com.cms.ccm.ccc.vo.InfoCmmnClCode">
+		
+		<![CDATA[
+            SELECT  CL_CODE    clCode
+			     ,  CL_CODE_NM clCodeNm
+                 ,  CL_CODE_DC clCodeDc
+                 ,  USE_AT     useAt
+              FROM  COMTCCMMNCLCODE
+             WHERE  CL_CODE    = #{clCode}
+             ]]>
+		
+	</select>
+
+	<insert id="insertCmmnClCode">
+		
+		<![CDATA[
+		    INSERT
+		      INTO  COMTCCMMNCLCODE
+		         (  CL_CODE
+		         ,  CL_CODE_NM
+		         ,  CL_CODE_DC
+		         ,  USE_AT
+		         ,  FRST_REGIST_PNTTM
+		         ,  FRST_REGISTER_ID
+		         ,  LAST_UPDT_PNTTM
+		         ,  LAST_UPDUSR_ID
+		         )
+		    VALUES
+		         (  #{clCode}
+		         ,  #{clCodeNm}
+		         ,  #{clCodeDc}
+		         ,  #{useAt}
+		         ,  sysdate
+		         ,  #{frstRegisterId}
+		         ,  sysdate
+		         ,  #{frstRegisterId}
+		         )
+		         ]]>
+		
+	</insert>
+
+	<update id="updateCmmnClCode">
+		
+		<![CDATA[
+            UPDATE  COMTCCMMNCLCODE
+               SET  CL_CODE_NM        = #{clCodeNm}
+                 ,  CL_CODE_DC        = #{clCodeDc}
+                 ,  USE_AT            = #{useAt}
+                 ,  LAST_UPDT_PNTTM = sysdate
+                 ,  LAST_UPDUSR_ID    = #{lastUpdusrId}
+             WHERE  CL_CODE           = #{clCode}
+             ]]>
+		
+	</update>
+
+	<delete id="deleteCmmnClCode">
+		
+		<![CDATA[
+            UPDATE  COMTCCMMNCLCODE
+               SET  USE_AT  = 'N'
+             WHERE  CL_CODE = #{clCode}
+             ]]>
+		
+	</delete>
+
+
+	<select id="selectCmmnClCodeAllList" parameterType="infomind.com.cms.ccm.ccc.vo.InfoCmmnClCode" resultType="infomind.com.cms.ccm.ccc.vo.InfoCmmnClCode">
+
+		/* 구현 Sql */
+		SELECT  CL_CODE  as clCode
+		,  CL_CODE_NM	 as clCodeNm
+		,  USE_AT		 as useAt
+		FROM  COMTCCMMNCLCODE
+		WHERE  1 = 1
+
+
+	  	<if test="searchCondition == 1">	<![CDATA[	AND
+				CL_CODE LIKE '%' || #{searchKeyword} || '%'	]]>
+		</if>
+		<if test="searchCondition == 2">	<![CDATA[	AND
+				CL_CODE_NM LIKE '%' || #{searchKeyword} || '%'	]]>
+		</if>
+
+		<if test="searchUseYn != null and searchUseYn != ''">
+			<![CDATA[	AND	USE_AT        = #{searchUseYn}	]]>
+
+		</if>
+
+
+
+
+	</select>
+
+</mapper>

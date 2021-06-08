@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoPageBannerDAO">
+
+    <select id="selectPageBanner"
+            parameterType="infomind.com.cms.info.banner.vo.InfoPageBannerVO"
+            resultType="infomind.com.cms.info.banner.vo.InfoPageBannerVO">
+		SELECT
+              IPB.PAGE_BANNER_ID
+            , IPB.SITE_MEMU_ID
+            , IPB.FESTIVITY_ID
+            , IPB.TITME
+            , IPB.MEMO
+            , IPB.ATCH_FILE_ID
+            , IPB.PAGE_BANNER_URL
+            , IPB.USE_YN
+            , IPB.DELETE_YN
+            , IPB.REG_ID
+            , IPB.REG_DT
+            , IPB.MOD_ID
+            , IPB.MOD_DT
+		FROM INFO_PAGE_BANNER IPB
+		WHERE 1=1
+		AND IPB.PAGE_BANNER_ID =#{pageBannerId}
+	</select>
+
+    <select id="selectPageBannerTotalCount"
+            parameterType="infomind.com.cms.info.banner.vo.InfoPageBannerVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_PAGE_BANNER IPB
+        WHERE 1=1
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pageBannerId)">
+            AND IPB.PAGE_BANNER_ID = #{pageBannerId}
+        </if>
+
+    </select>
+
+    <select id="selectPageBannerList"
+            parameterType="infomind.com.cms.info.banner.vo.InfoPageBannerVO"
+            resultType="infomind.com.cms.info.banner.vo.InfoPageBannerVO">
+        SELECT
+              IPB.PAGE_BANNER_ID
+            , IPB.SITE_MEMU_ID
+            , IPB.FESTIVITY_ID
+            , IPB.TITME
+            , IPB.MEMO
+            , IPB.ATCH_FILE_ID
+            , IPB.PAGE_BANNER_URL
+            , IPB.USE_YN
+            , IPB.DELETE_YN
+            , IPB.REG_ID
+            , IPB.REG_DT
+            , IPB.MOD_ID
+            , IPB.MOD_DT
+        FROM INFO_PAGE_BANNER IPB
+        WHERE 1=1
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pageBannerId)">
+            AND IPB.PAGE_BANNER_ID = #{pageBannerId}
+        </if>
+
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+    <insert id="insertPageBanner">
+		<![CDATA[
+            INSERT INTO  INFO_PAGE_BANNER (
+                  PAGE_BANNER_ID
+                , SITE_MEMU_ID
+                , FESTIVITY_ID
+                , TITME
+                , MEMO
+                , ATCH_FILE_ID
+                , PAGE_BANNER_URL
+                , USE_YN
+                , DELETE_YN
+                , REG_ID
+                , REG_DT
+                , MOD_ID
+                , MOD_DT
+            ) VALUES (
+                  #{pageBannerId}
+                , #{siteMemuId}
+                , #{festivityId}
+                , #{titme}
+                , #{memo}
+                , #{atchFileId}
+                , #{pageBannerUrl}
+                , #{useYn}
+                , #{deleteYn}
+                , #{regId}
+                , NOW()
+                , #{modId}
+                , NOW()
+            )
+        ]]>
+	</insert>
+
+    <update id="updatePageBanner">
+        UPDATE INFO_PAGE_BANNER SET
+              PAGE_BANNER_ID = #{pageBannerId}
+            , SITE_MEMU_ID = #{siteMemuId}
+            , FESTIVITY_ID = #{festivityId}
+            , TITME = #{titme}
+            , MEMO = #{memo}
+            , ATCH_FILE_ID = #{atchFileId}
+            , PAGE_BANNER_URL = #{pageBannerUrl}
+            , USE_YN = #{useYn}
+            , DELETE_YN = #{deleteYn}
+            , MOD_ID = #{modId}
+            , MOD_DT = NOW()
+        WHERE  1=1
+        AND PAGE_BANNER_ID = #{pageBannerId}
+	</update>
+</mapper>

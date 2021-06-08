@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+
+    <!--서브-->
+    <definition name="layouts-ax5ui-tiles" template="/WEB-INF/jsp/infomind/layout/ax5ui/ax5ui-layouts.jsp">
+        <put-attribute name="inhead"    	value="/WEB-INF/jsp/infomind/layout/ax5ui/ax5ui-inhead.jsp" />
+        <put-attribute name="content"   	value="" />
+    </definition>
+
+
+    <!--modal-->
+    <definition name="layouts-ax5uimodal-tiles" template="/WEB-INF/jsp/infomind/layout/modal/ax5uimodal/ax5uimodal-layouts.jsp">
+        <put-attribute name="inhead"    	value="/WEB-INF/jsp/infomind/layout/modal/ax5uimodal/ax5uimodal-inhead.jsp" />
+        <put-attribute name="content"   	value="" />
+    </definition>
+
+
+
+    <!--서브설정-->
+    <definition name="*.ax5ui" extends="layouts-ax5ui-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}.jsp" />
+    </definition>
+    <definition name="*/*.ax5ui" extends="layouts-ax5ui-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}.jsp" />
+    </definition>
+    <definition name="*/*/*.ax5ui" extends="layouts-ax5ui-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+    </definition>
+    <definition name="*/*/*/*.ax5ui" extends="layouts-ax5ui-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*.ax5ui" extends="layouts-ax5ui-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*/*.ax5ui" extends="layouts-ax5ui-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*/*/*.ax5ui" extends="layouts-ax5ui-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}/{7}.jsp" />
+    </definition>
+
+
+    <!--modal-->
+    <definition name="*.axmodal" extends="layouts-ax5uimodal-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}.jsp" />
+    </definition>
+    <definition name="*/*.axmodal" extends="layouts-ax5uimodal-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}.jsp" />
+    </definition>
+    <definition name="*/*/*.axmodal" extends="layouts-ax5uimodal-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+    </definition>
+    <definition name="*/*/*/*.axmodal" extends="layouts-ax5uimodal-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*.axmodal" extends="layouts-ax5uimodal-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*/*.axmodal" extends="layouts-ax5uimodal-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*/*/*.axmodal" extends="layouts-ax5uimodal-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}/{7}.jsp" />
+    </definition>
+
+
+
+
+
+</tiles-definitions>

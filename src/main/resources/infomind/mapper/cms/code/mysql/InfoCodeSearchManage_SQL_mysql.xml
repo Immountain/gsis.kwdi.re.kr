@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CodeSearchDAO">
+
+
+
+
+	<select id="selectComtccmmnclcodeList" parameterType="infomind.com.ext.vo.CodeSearchVO" resultType="infomind.com.ext.vo.CodeSearchVO">
+
+			SELECT CL_CODE     as code
+				  ,CL_CODE_NM  as codeNm
+			FROM COMTCCMMNCLCODE
+	</select>
+
+
+
+
+	<select id="selectComtccmmncodeList" parameterType="infomind.com.ext.vo.CodeSearchVO" resultType="infomind.com.ext.vo.CodeSearchVO">
+
+			SELECT CODE_ID   as code
+				 ,CODE_ID_NM as codeNm
+			FROM COMTCCMMNCODE
+			WHERE 1=1
+			AND CL_CODE=#{clCode}
+			ORDER BY CODE_ID
+	</select>
+
+	<select id="selectComtccmmndetailcodeList" parameterType="infomind.com.ext.vo.CodeSearchVO" resultType="infomind.com.ext.vo.CodeSearchVO">
+
+			SELECT CODE    as code
+				 ,CODE_NM  as codeNm
+			FROM COMTCCMMNDETAILCODE
+			WHERE 1=1
+			AND CODE_ID = #{codeId}
+			AND USE_AT = 'Y'
+			ORDER BY IFNULL(SORT_NO, 999), CODE
+	</select>
+
+
+
+	<select id="getComtccmmndetailcodePidList" parameterType="infomind.com.ext.vo.CodeSearchVO" resultType="infomind.com.ext.vo.CodeSearchVO">
+
+
+				select CODE			as code
+					 ,CODE_NM		as codeNm
+				from (
+					select CODE
+						  ,CODE_NM
+					from comtccmmndetailcode
+					where 1=1
+					and CODE_ID = #{codeId}
+					and CODE=#{code}
+					union all
+					select CODE
+						  ,CODE_NM
+					from comtccmmndetailcode
+					where 1=1
+					and CODE_ID = #{codeId}
+					and CODE=#{code} +#{pId}
+				) a
+	</select>
+
+
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+	<mvc:interceptors>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="infomind.com.cmm.interceptor.InCmsInterceptor" />
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/cms/**/*.do" />
+			<bean class="infomind.com.cmm.interceptor.CmsIpAuthInterceptor" />
+		</mvc:interceptor>
+
+		<!-- 인포마인드 CMS Interceptors -->
+		<mvc:interceptor>
+			<mvc:mapping path="/cms/*/*/*/*.do" />
+			<mvc:mapping path="/cms/*/*/*.do" />
+			<mvc:mapping path="/cms/*/*.do" />
+			<bean class="infomind.com.cmm.interceptor.CmsInterceptor" />
+		</mvc:interceptor>
+
+		<!-- 인포마인드 게시판 Interceptors -->
+		<mvc:interceptor>
+			<mvc:mapping path="/board/*/*/*.do" />
+			<mvc:mapping path="/board/*/*.do" />
+			<bean class="infomind.com.cmm.interceptor.BoardInterceptor" />
+		</mvc:interceptor>
+
+		<!-- 인포마인드 페이지 Interceptors -->
+		<mvc:interceptor>
+			<mvc:mapping path="/page/**" />
+			<mvc:mapping path="/*/page/**" />
+			<bean class="infomind.com.cmm.interceptor.PageInterceptor" />
+		</mvc:interceptor>
+
+	</mvc:interceptors>
+
+</beans>

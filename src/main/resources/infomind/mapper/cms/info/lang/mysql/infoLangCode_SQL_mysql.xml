@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoLangCodeDAO">
+
+    <select id="selectLangCode"
+            parameterType="infomind.com.cms.info.lang.vo.InfoLangCodeVO"
+            resultType="infomind.com.cms.info.lang.vo.InfoLangCodeVO">
+        SELECT
+             LC.CODE_ID
+            ,LC.CODE
+            ,LC.LANG_CODE
+            ,LC.CODE_NM
+            ,LC.REG_DT
+            ,LC.REG_ID
+            ,LC.MOD_DT
+            ,LC.MOD_ID
+        FROM INFO_LANG_CODE LC
+        WHERE 1=1
+          AND LC.CODE_ID =#{codeId}
+          AND LC.CODE = #{code}
+          AND LC.LANG_CODE = #{langCode}
+    </select>
+    <select id="selectLangCodeTotalCount"
+        parameterType="infomind.com.cms.info.lang.vo.InfoLangCodeVO"
+        resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_LANG_CODE LC
+        WHERE 1=1
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(festivityNm)">
+            AND LC.CODE_ID = #{codeId}
+            AND LC.CODE = #{code}
+            AND LC.LANG_CODE=#{langCode}
+        </if>
+
+    </select>
+    <select id="selectLangCodeList"
+        parameterType="infomind.com.cms.info.lang.vo.InfoLangCodeVO"
+        resultType="infomind.com.cms.info.lang.vo.InfoLangCodeVO">
+        SELECT
+             LC.CODE_ID
+            ,LC.CODE
+            ,LC.LANG_CODE
+            ,LC.CODE_NM
+            ,LC.REG_DT
+            ,LC.REG_ID
+            ,LC.MOD_DT
+            ,LC.MOD_ID
+        FROM INFO_LANG_CODE LC
+        WHERE 1=1
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(festivityNm)">
+            AND LC.CODE_ID = #{codeId}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(festivityNm)">
+            AND LC.LANG_CODE = #{langCode}
+        </if>
+        order by LC.REG_DT desc
+    </select>
+
+    <insert id="insertLangCode">
+        <![CDATA[
+            INSERT INTO INFO_LANG_CODE(
+                 CODE_ID
+                ,CODE
+                ,LANG_CODE
+                ,CODE_NM
+                ,REG_DT
+                ,REG_ID
+            ) VALUES (
+                 #{codeId}
+                ,#{code}
+                ,#{langCode}
+                ,#{codeNm}
+                ,NOW()
+                ,#{regId}
+                     )
+        ]]>
+    </insert>
+    <update id="updateLangCode">
+        UPDATE INFO_LANG_CODE SET
+             CODE_ID = #{codeId}
+            ,CODE = #{code}
+            ,LANG_CODE = #{langCode}
+            ,CODE_NM = #{codeNm}
+            ,MOD_DT = NOW()
+            ,MOD_ID = #{modId}
+        WHERE 1=1
+        AND CODE_ID = #{codeId}
+        AND CODE = #{code}
+        AND LANG_CODE = #{langCode}
+    </update>
+</mapper>

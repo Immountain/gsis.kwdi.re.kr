@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoSiteVisitDAO">
+    <resultMap id="UserLogVO" type="infomind.com.cms.info.site.vo.InfoSiteVisitVO">
+        <result property="id" column="ID"/>
+        <result property="ip" column="IP"/>
+        <result property="tempVdate" column="V_DATE"/>
+        <result property="os" column="OS"/>
+        <result property="browser" column="BROWSER"/>
+        <result property="userAgent" column="USER_AGENT"/>
+        <result property="siteId" column="SITE_ID"/>
+        <result property="browserS" column="BROWSER_S"/>
+        <result property="loc" column="LOC"/>
+        <result property="visitType" column="VISIT_TYPE"/>
+        <result property="pageType" column="PAGE_TYPE"/>
+        <result property="targetId" column="TARGET_ID"/>
+        <result property="siteUrl" column="SITE_URL"/>
+        <result property="refererUrl" column="REFERER_URL"/>
+        <result property="isDeviec" column="IS_DEVIEC"/>
+    </resultMap>
+
+    <select id="selectSiteVisit"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteVisitVO"
+            resultMap="UserLogVO">
+		SELECT
+                      ISV.ID
+                     ,ISV.IP
+                     ,ISV.V_DATE
+                     ,ISV.OS
+                     ,ISV.BROWSER
+                     ,ISV.USER_AGENT
+                     ,ISV.SITE_ID
+                     ,ISV.BROWSER_S
+                     ,ISV.LOC
+                     ,ISV.VISIT_TYPE
+                     ,ISV.PAGE_TYPE
+                     ,ISV.TARGET_ID
+                     ,ISV.SITE_URL
+                     ,ISV.REFERER_URL
+ 		FROM INFO_SITE_VISIT ISV
+		WHERE 1=1
+		AND ISV.ID = #{id}
+	</select>
+
+    <select id="selectSiteVisitTotalCount"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteVisitVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_SITE_VISIT ISV
+        WHERE 1=1
+        <if test="searchKeyword != null and searchKeyword != ''">	<![CDATA[	AND
+					ISV.SITE_URL LIKE CONCAT ('%', #{searchKeyword},'%') ]]>
+        </if>
+        <if test="strDay != null and strDay != ''">	<![CDATA[	AND
+					ISV.V_DATE BETWEEN STR_TO_DATE(CONCAT(#{strDay},' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+														AND STR_TO_DATE(CONCAT(#{endDay},' 23:59:59'), '%Y-%m-%d %H:%i:%s') ]]>
+        </if>
+    </select>
+
+    <select id="selectSiteVisitList"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteVisitVO"
+            resultMap="UserLogVO">
+
+        /* 구현 Sql */
+        SELECT
+         ISV.ID
+        ,ISV.IP
+        ,ISV.V_DATE
+        ,ISV.OS
+        ,ISV.BROWSER
+        ,ISV.USER_AGENT
+        ,ISV.SITE_ID
+        ,ISV.BROWSER_S
+        ,ISV.LOC
+        ,ISV.VISIT_TYPE
+        ,ISV.PAGE_TYPE
+        ,ISV.TARGET_ID
+        ,ISV.SITE_URL
+        ,ISV.REFERER_URL
+        FROM INFO_SITE_VISIT ISV
+        WHERE 1=1
+        <if test="searchKeyword != null and searchKeyword != ''">	<![CDATA[	AND
+					ISV.SITE_URL LIKE CONCAT ('%', #{searchKeyword},'%') ]]>
+        </if>
+        <if test="strDay != null and strDay != ''">	<![CDATA[	AND
+					ISV.V_DATE BETWEEN STR_TO_DATE(CONCAT(#{strDay},' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+														AND STR_TO_DATE(CONCAT(#{endDay},' 23:59:59'), '%Y-%m-%d %H:%i:%s') ]]>
+        </if>
+        order by ISV.V_DATE desc
+        LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+    <insert id="insertSiteVisit">
+		<![CDATA[
+            INSERT INTO INFO_SITE_VISIT (
+                    ID
+                    ,IP
+                    ,V_DATE
+                    ,OS
+                    ,BROWSER
+                    ,USER_AGENT
+                    ,SITE_ID
+                    ,BROWSER_S
+                    ,LOC
+                    ,VISIT_TYPE
+                    ,PAGE_TYPE
+                    ,TARGET_ID
+                    ,SITE_URL
+                    ,REFERER_URL
+                    ,IS_DEVIEC
+            ) VALUES (
+                  #{id}
+                , #{ip}
+                , SYSDATE()
+                , #{os}
+                , #{browser}
+                , #{userAgent}
+                , #{siteId}
+                , #{browserS}
+                , #{loc}
+                , #{visitType}
+                 ,#{pageType}
+                , #{targetId}
+                , #{siteUrl}
+                , #{refererUrl}
+                , #{isDeviec}
+
+            )
+        ]]>
+	</insert>
+</mapper>

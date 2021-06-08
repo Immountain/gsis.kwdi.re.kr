@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WjMainDashBoardDAO">
+    
+    <select id="getWeekDaySiteMain"   parameterType="wj.com.cms.wj.main.vo.WjMainDashBoardVO" resultType="wj.com.cms.wj.main.vo.WjMainDashBoardVO">
+        SELECT
+               TARGET_ID
+             , SITE_NM
+             , VISIT_COUNT
+             , VISIT_DAY
+        FROM (
+                 SELECT TARGET_ID
+                      , CONCAT(ISI.HOST, '/', ISI.SUB_PATH) AS SITE_NM
+                      , COUNT(*)                      AS    VISIT_COUNT
+                      , DATE_FORMAT(V_DATE, '%Y%m%d') AS    VISIT_DAY
+                 FROM INFO_SITE_VISIT SV
+                          INNER JOIN INFO_SITE ISI ON ISI.SITE_ID = SV.SITE_ID
+                 WHERE 1 = 1
+                   AND V_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -7 DAY) AND NOW()
+                   AND SV.PAGE_TYPE = 'main'
+                 GROUP BY TARGET_ID, DATE_FORMAT(V_DATE, '%Y%m%d'), ISI.HOST, ISI.SUB_PATH
+             ) A
+        WHERE 1 = 1
+        ORDER BY VISIT_DAY ASC, TARGET_ID ASC
+    </select>
+
+
+    <select id="getPeopleCountSiteMain"   parameterType="wj.com.cms.wj.main.vo.WjMainDashBoardVO" resultType="wj.com.cms.wj.main.vo.WjMainDashBoardVO">
+
+
+
+            select a.LANG_CODE         as langCode
+                  ,IFNULL(a.yearCnt,0) as yearCnt
+                  ,IFNULL(b.monthCnt,0) as monthCnt
+                  ,IFNULL(c.dayCnt,0) as dayCnt
+            from (
+
+            select LANG_CODE
+                  ,count(*) as yearCnt
+            from wj_jeju_people a
+            where 1=1
+             and date_format(REG_DT,'%Y') =DATE_FORMAT(NOW(), '%Y')
+            group by date_format(REG_DT,'%Y'),LANG_CODE
+
+
+            ) a left join (
+                select LANG_CODE
+                      ,count(*) as monthCnt
+
+                from wj_jeju_people a
+                where 1=1
+                 and date_format(REG_DT,'%Y%m') =DATE_FORMAT(NOW(), '%Y%m')
+                group by date_format(REG_DT,'%Y%m'),LANG_CODE
+            )b
+            on a.LANG_CODE =b.LANG_CODE
+            left join
+            (
+            select LANG_CODE
+                  ,count(*) as dayCnt
+
+            from wj_jeju_people a
+            where 1=1
+             and date_format(REG_DT,'%Y%m%d') =DATE_FORMAT(NOW(), '%Y%m%d')
+
+            group by date_format(REG_DT,'%Y%m%d'),LANG_CODE
+            )c
+            on a.LANG_CODE =c.LANG_CODE
+            where 1=1
+
+
+
+
+    </select>
+
+</mapper>

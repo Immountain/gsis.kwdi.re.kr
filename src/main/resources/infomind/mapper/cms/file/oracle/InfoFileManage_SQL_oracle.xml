@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoFileDAO">
+
+
+
+	<select id="getMaxFileSN" parameterType="infomind.com.file.vo.InfoFileDetailVO" resultType="java.lang.Integer">
+
+			SELECT NVL(MAX(FILE_SN),0)+1 AS FILE_SN
+			FROM INFO_FILE_DETAIL
+			WHERE ATCH_FILE_ID =  #{atchFileId}
+
+	</select>
+
+	<select id="getOneFileSN" parameterType="infomind.com.file.vo.InfoFileDetailVO" resultType="java.lang.Integer">
+
+			SELECT NVL(MAX(FILE_SN),0) AS FILE_SN
+			FROM INFO_FILE_DETAIL
+			WHERE ATCH_FILE_ID =  #{atchFileId}
+			and TEMP_YN ='N'
+			and DELETE_YN ='N'
+
+	</select>
+
+
+
+	<insert id="insertInfoFileDetail">
+
+		    INSERT
+		      INTO  INFO_FILE_DETAIL
+		         (
+		             ATCH_FILE_ID
+					,FILE_SN
+					,FILE_STRE_COURS
+					,STRE_FILE_NM
+					,ORIGNL_FILE_NM
+					,FILE_EXTSN
+					,FILE_CN
+					,FILE_SIZE
+					,WIDTH
+					,HEIGHT
+					,REG_DT
+					,MOD_DT
+					,REG_ID
+					,MOD_ID
+					,DELETE_YN
+					,TEMP_YN
+					,PRIX_FIXE
+		         )
+		    VALUES
+		         (
+		             #{atchFileId}
+					,#{fileSn}
+					,#{fileStreCours}
+					,#{streFileNm}
+					,#{orignlFileNm}
+					,#{fileExtsn}
+					,#{fileCn}
+					,#{fileSize}
+					,#{width}
+					,#{height}
+					,sysdate
+					,sysdate
+					,#{regId}
+					,#{modId}
+					,'N'
+					,#{tempYn}
+					,#{prixFixe}
+		         )
+
+
+	</insert>
+
+
+	<update id="deleteInfoFileDetail">
+
+			update INFO_FILE_DETAIL
+			set DELETE_YN ='Y'
+			where 1=1
+			and ATCH_FILE_ID =#{atchFileId}
+			and FILE_SN =#{fileSn}
+
+
+	</update>
+
+
+	<select id="selectInfoFileList" parameterType="infomind.com.file.vo.InfoFileDetailVO" resultType="infomind.com.file.vo.InfoFileDetailVO">
+
+		SELECT
+			 ATCH_FILE_ID
+			,FILE_SN
+			,FILE_STRE_COURS
+			,STRE_FILE_NM
+			,ORIGNL_FILE_NM
+			,FILE_EXTSN
+			,FILE_CN
+			,FILE_SIZE
+			,WIDTH
+			,HEIGHT
+			,REG_DT
+			,MOD_DT
+			,REG_ID
+			,MOD_ID
+			,DELETE_YN
+			,TEMP_YN
+	  	FROM INFO_FILE_DETAIL
+	  	where 1=1
+		AND ATCH_FILE_ID =#{atchFileId}
+		and DELETE_YN='N'
+		and TEMP_YN ='N'
+	</select>
+
+
+	<select id="selectInfoFileTempList" parameterType="infomind.com.file.vo.InfoFileDetailVO" resultType="infomind.com.file.vo.InfoFileDetailVO">
+
+		SELECT
+			 ATCH_FILE_ID
+			,FILE_SN
+			,FILE_STRE_COURS
+			,STRE_FILE_NM
+			,ORIGNL_FILE_NM
+			,FILE_EXTSN
+			,FILE_CN
+			,FILE_SIZE
+			,WIDTH
+			,HEIGHT
+			,REG_DT
+			,MOD_DT
+			,REG_ID
+			,MOD_ID
+			,DELETE_YN
+			,TEMP_YN
+	  	FROM INFO_FILE_DETAIL
+	  	where 1=1
+		AND ATCH_FILE_ID =#{atchFileId}
+		and DELETE_YN='N'
+
+
+
+	</select>
+
+	<select id="getFileInf" parameterType="infomind.com.file.vo.InfoFileDetailVO" resultType="infomind.com.file.vo.InfoFileDetailVO">
+
+		SELECT
+			 ATCH_FILE_ID
+			,FILE_SN
+			,FILE_STRE_COURS
+			,STRE_FILE_NM
+			,ORIGNL_FILE_NM
+			,FILE_EXTSN
+			,FILE_CN
+			,FILE_SIZE
+			,WIDTH
+			,HEIGHT
+			,REG_DT
+			,MOD_DT
+			,REG_ID
+			,MOD_ID
+			,DELETE_YN
+			,TEMP_YN
+	  	FROM INFO_FILE_DETAIL
+	  	where 1=1
+		AND ATCH_FILE_ID =#{atchFileId}
+		and FILE_SN =#{fileSn}
+		and DELETE_YN='N'
+
+	</select>
+
+
+	<select id="getFileThumbnailInf" parameterType="infomind.com.file.vo.InfoFileDetailVO" resultType="infomind.com.file.vo.InfoFileDetailVO">
+
+			SELECT
+					 ATCH_FILE_ID
+					,FILE_SN
+					,FILE_STRE_COURS
+					,STRE_FILE_NM
+					,ORIGNL_FILE_NM
+					,FILE_EXTSN
+					,FILE_CN
+					,FILE_SIZE
+					,WIDTH
+					,HEIGHT
+					,REG_DT
+					,MOD_DT
+					,REG_ID
+					,MOD_ID
+	  	FROM INFO_FILE_THUMBNAIL
+	  	where 1=1
+      	  AND ATCH_FILE_ID =#{atchFileId}
+		  and FILE_SN =#{fileSn}
+		  AND WIDTH=#{width}
+		  AND HEIGHT=#{height}
+
+	</select>
+
+	
+	
+	<update id="updateInfoFileDetail">
+
+		update INFO_FILE_DETAIL
+			set FILE_STRE_COURS =#{fileStreCours}
+			   ,TEMP_YN ='N'
+			   ,MOD_ID =#{modId}
+			   ,MOD_DT =sysdate
+		where 1=1
+		and ATCH_FILE_ID =#{atchFileId}
+		and FILE_SN =#{fileSn}
+
+
+
+
+
+	</update>
+
+
+
+	<insert id="insertInfoFileThumbnail">
+
+		    INSERT
+		      INTO  INFO_FILE_THUMBNAIL
+		         (
+		             ATCH_FILE_ID
+					,FILE_SN
+					,WIDTH
+					,HEIGHT
+					,FILE_STRE_COURS
+					,STRE_FILE_NM
+					,ORIGNL_FILE_NM
+					,FILE_EXTSN
+					,FILE_CN
+					,FILE_SIZE
+					,REG_DT
+					,MOD_DT
+					,REG_ID
+					,MOD_ID
+
+				)
+		    VALUES
+		         (
+		             #{atchFileId}
+					,#{fileSn}
+					,#{width}
+					,#{height}
+					,#{fileStreCours}
+					,#{streFileNm}
+					,#{orignlFileNm}
+					,#{fileExtsn}
+					,#{fileCn}
+					,#{fileSize}
+					,sysdate
+					,sysdate
+					,#{regId}
+					,#{modId}
+		         )
+	</insert>
+
+	
+	<delete id="deleteInfoFileThumbnail">
+
+		DELETE FROM INFO_FILE_THUMBNAIL
+		WHERE 1=1
+		AND ATCH_FILE_ID =#{atchFileId}
+		AND FILE_SN =#{fileSn}
+
+
+	</delete>
+
+
+
+	<select id="getFileImageId" parameterType="infomind.com.file.vo.InfoFileDetailVO" resultType="infomind.com.file.vo.InfoFileDetailVO">
+
+		SELECT
+				   A.IMAGE_ID
+				   ,A.IMAGE_NM
+				   ,A.IMAGE  as imageGb
+				   ,A.IMAGE_DC
+				   ,ATCH_FILE_ID
+				   ,FILE_SN
+				   ,FILE_STRE_COURS
+				   ,STRE_FILE_NM
+				   ,ORIGNL_FILE_NM
+				   ,FILE_EXTSN
+				   ,FILE_CN
+				   ,FILE_SIZE
+			FROM INFO_PAGE_IMAGE_GROUP A
+			   ,INFO_FILE_DETAIL B
+			WHERE 1=1
+			AND A.IMAGE_FILE =B.ATCH_FILE_ID
+			AND A.IMAGE_ID =#{imageId}
+			AND B.DELETE_YN ='N'
+			AND B.TEMP_YN ='N'
+			<![CDATA[
+			AND rownum=1
+			   ]]>
+	</select>
+
+	<select id="getFileThumbnailImageId" parameterType="infomind.com.file.vo.InfoFileDetailVO" resultType="infomind.com.file.vo.InfoFileDetailVO">
+
+		SELECT
+				   A.IMAGE_ID
+				   ,A.IMAGE_NM
+				   ,A.IMAGE  as imageGb
+				   ,A.IMAGE_DC
+				   ,ATCH_FILE_ID
+				   ,FILE_SN
+				   ,FILE_STRE_COURS
+				   ,STRE_FILE_NM
+				   ,ORIGNL_FILE_NM
+				   ,FILE_EXTSN
+				   ,FILE_CN
+				   ,FILE_SIZE
+			FROM INFO_PAGE_IMAGE_GROUP A
+			   ,INFO_FILE_THUMBNAIL B
+			WHERE 1=1
+			AND A.IMAGE_FILE =B.ATCH_FILE_ID
+			AND A.IMAGE_ID =#{imageId}
+			AND B.WIDTH =#{width}
+      		AND B.HEIGHT=#{height}
+			<![CDATA[
+			AND rownum=1
+			   ]]>
+	</select>
+
+
+
+
+</mapper>

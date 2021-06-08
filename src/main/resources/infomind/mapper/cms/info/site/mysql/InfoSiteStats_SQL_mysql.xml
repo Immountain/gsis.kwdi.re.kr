@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoSiteStatsDAO">
+
+
+
+
+    <select id="getSiteMenuStats" parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+
+
+          SELECT COUNT(*) AS cnt
+              ,SITE_MEMU_NM  AS titleName
+        FROM (
+        SELECT B.SITE_MEMU_NM
+              ,A.V_DATE
+              ,A.BROWSER_S
+        FROM INFO_SITE_VISIT A
+           ,INFO_SITE_MENU B
+        WHERE 1=1
+        AND    A.SITE_URL =B.URL
+         AND DATE_FORMAT(A.V_DATE,'%Y%m%d')  BETWEEN CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'0101') AND  CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'1231')
+          and B.MENU_TYPE not in('top')
+        )A
+        GROUP BY SITE_MEMU_NM
+        ORDER BY CNT DESC
+    </select>
+
+    <select id="getSiteMenuBrowserStats" parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+
+        SELECT COUNT(*) AS CNT
+            ,BROWSER_S  AS titleName
+            FROM (
+                SELECT B.SITE_MEMU_NM
+                      ,A.V_DATE
+                      ,A.BROWSER_S
+                FROM INFO_SITE_VISIT A
+                ,INFO_SITE_MENU B
+                WHERE 1=1
+                AND    A.SITE_URL =B.URL
+                 AND DATE_FORMAT(A.V_DATE,'%Y%m%d') BETWEEN CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'0101') AND  CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'1231')
+                  and B.MENU_TYPE not in('top')
+            )A
+            GROUP BY BROWSER_S
+            ORDER BY CNT DESC
+
+    </select>
+
+    <select id="getSiteMenuDayStats" parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+
+        SELECT COUNT(*) AS CNT
+              ,V_DATE  AS titleName
+        FROM (
+        SELECT B.SITE_MEMU_NM
+              ,A.BROWSER_S
+              ,DATE_FORMAT(A.V_DATE,'%Y%M%D') AS V_DATE
+        FROM INFO_SITE_VISIT A
+           ,INFO_SITE_MENU B
+        WHERE 1=1
+        AND    A.SITE_URL =B.URL
+         AND DATE_FORMAT(A.V_DATE,'%Y%m%d') BETWEEN CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'0101') AND  CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'1231')
+          and B.MENU_TYPE not in('top')
+        )A
+        GROUP BY V_DATE
+        ORDER BY V_DATE ASC
+
+
+    </select>
+
+
+    <select id="getSiteMenuMonthStats" parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+
+        SELECT COUNT(*) AS CNT
+              ,V_DATE  AS titleName
+        FROM (
+        SELECT B.SITE_MEMU_NM
+              ,A.BROWSER_S
+              ,DATE_FORMAT(A.V_DATE,'%M') AS V_DATE
+        FROM INFO_SITE_VISIT A
+           ,INFO_SITE_MENU B
+        WHERE 1=1
+        AND    A.SITE_URL =B.URL
+        AND DATE_FORMAT(A.V_DATE,'%Y%m%d') BETWEEN CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'0101') AND  CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'1231')
+         and B.MENU_TYPE not in('top')
+        )A
+        GROUP BY V_DATE
+        ORDER BY V_DATE ASC
+
+
+    </select>
+
+
+    <select id="getSiteMenuYearStats" parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+
+      SELECT COUNT(*) AS CNT
+              ,V_DATE  AS titleName
+        FROM (
+        SELECT B.SITE_MEMU_NM
+              ,A.BROWSER_S
+          ,DATE_FORMAT(A.V_DATE,'%Y') AS V_DATE
+        FROM INFO_SITE_VISIT A
+           ,INFO_SITE_MENU B
+        WHERE 1=1
+        AND    A.SITE_URL =B.URL
+         and B.MENU_TYPE not in('top')
+        )A
+        GROUP BY V_DATE
+        ORDER BY V_DATE ASC
+
+
+    </select>
+
+
+    <select id="getSiteMenuTotYear" parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+
+        select  b.SITE_MEMU_NM
+                ,b.SITE_MEMU_TILE
+                ,a.cnt
+        from (
+
+                select SITE_ID
+                    ,SITE_URL
+                    ,count(*) as cnt
+                from INFO_SITE_VISIT a
+                where 1=1
+                AND DATE_FORMAT(A.V_DATE,'%Y%m%d')  BETWEEN CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'0101') AND  CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'1231')
+                and a.PAGE_TYPE not in('main')
+                group by SITE_ID
+                ,SITE_URL
+
+        )a ,(
+                select a.URL
+                    ,a.SITE_MEMU_NM
+                    ,a.SITE_MEMU_TILE
+                    ,b.MENU_GROUP_ID
+                    ,b.MENU_GROUP_NM
+                    ,b.SITE_ID
+                from info_site_menu a
+                ,info_site_menu_group b
+                where 1=1
+                and a.MENU_TYPE not in('top')
+                and a.MENU_GROUP_ID =b.MENU_GROUP_ID
+
+        ) b
+        where 1=1
+        and a.SITE_URL =b.url
+        and a.SITE_ID =b.SITE_ID
+        and a.SITE_ID =#{siteId}
+        order by cnt desc
+
+
+
+
+
+    </select>
+
+
+</mapper>

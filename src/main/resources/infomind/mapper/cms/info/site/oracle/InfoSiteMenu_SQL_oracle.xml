@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoSiteMenuDAO">
+
+
+    <select id="selectSiteMenuInfo"  parameterType="infomind.com.cms.info.site.vo.InfoSiteMenuVO" resultType="infomind.com.cms.info.site.vo.InfoSiteMenuVO">
+		SELECT
+                         ISM.SITE_MEMU_ID
+                    ,    ISM.SITE_MEMU_NM
+                    ,    ISM.SITE_MEMU_TILE
+                    ,    ISM.SLUG
+                    ,    ISM.URL
+                    ,    ISM.DEPTH
+                    ,    ISM.ORD
+                    ,    ISM.MENU_GROUP_ID
+                    ,    ISM.MENU_TYPE
+                    ,    ISM.MENU_PAGE
+                    ,    ISM.SITE_MEMU_IMAGE
+                    ,    ISM.ATTR
+                    ,    ISM.TARGET
+                    ,    ISM.CLASS1
+                    ,    ISM.CLASS2
+                    ,    ISM.CLASS3
+                    ,    ISM.LAYOUT
+                    ,    ISM.USE_GRADE
+                    ,    ISM.TEMP01
+                    ,    ISM.TEMP02
+                    ,    ISM.TEMP03
+                    ,    ISM.TEMP04
+                    ,    ISM.TEMP05
+                    ,    ISM.LOGIN_YN
+                    ,    ISM.VIEW_YN
+                    ,    ISM.USE_YN
+                    ,    ISM.REG_ID
+                    ,    ISM.REG_DT
+                    ,    ISM.MOD_ID
+                    ,    ISM.MOD_DT
+                    ,    ISM.PARENT_ID
+                    ,    ISM.GRADE_PERSON
+                    ,    ISM.GRADE_DEPART
+                    ,    ISM.AUTH_YN
+		FROM INFO_SITE_MENU ISM
+		WHERE 1=1
+		AND ISM.SITE_MEMU_ID = #{siteMemuId}
+
+    </select>
+
+
+    <select id="selectSiteParentMenuList"  parameterType="infomind.com.cms.info.site.vo.InfoSiteMenuVO" resultType="infomind.com.cms.info.site.vo.InfoSiteMenuVO">
+
+      	SELECT
+                         ISM.SITE_MEMU_ID
+                    ,    ISM.SITE_MEMU_NM
+                    ,    ISM.SITE_MEMU_TILE
+                    ,    ISM.SLUG
+                    ,    ISM.URL
+                    ,    ISM.DEPTH
+                    ,    ISM.ORD
+                    ,    ISM.MENU_GROUP_ID
+                    ,    ISM.MENU_TYPE
+                    ,    ISM.MENU_PAGE
+                    ,    ISM.SITE_MEMU_IMAGE
+                    ,    ISM.ATTR
+                    ,    ISM.TARGET
+                    ,    ISM.CLASS1
+                    ,    ISM.CLASS2
+                    ,    ISM.CLASS3
+                    ,    ISM.LAYOUT
+                    ,    ISM.USE_GRADE
+                    ,    ISM.TEMP01
+                    ,    ISM.TEMP02
+                    ,    ISM.TEMP03
+                    ,    ISM.TEMP04
+                    ,    ISM.TEMP05
+                    ,    ISM.LOGIN_YN
+                    ,    ISM.VIEW_YN
+                    ,    ISM.USE_YN
+                    ,    ISM.REG_ID
+                    ,    ISM.REG_DT
+                    ,    ISM.MOD_ID
+                    ,    ISM.MOD_DT
+                    ,    ISM.PARENT_ID
+                    ,    ISM.GRADE_PERSON
+                    ,    ISM.GRADE_DEPART
+                    ,    ISM.AUTH_YN
+		FROM INFO_SITE_MENU ISM
+		WHERE 1=1
+		AND PARENT_ID =#{parentId}
+    </select>
+
+
+
+
+
+
+
+
+
+<insert id="insertSiteMenu">
+<![CDATA[
+            INSERT INTO INFO_SITE_MENU (
+                         SITE_MEMU_ID
+                        ,SITE_MEMU_NM
+                        ,SITE_MEMU_TILE
+                        ,SLUG
+                        ,URL
+                        ,DEPTH
+                        ,ORD
+                        ,MENU_GROUP_ID
+                        ,MENU_TYPE
+                        ,MENU_PAGE
+                        ,SITE_MEMU_IMAGE
+                        ,ATTR
+                        ,TARGET
+                        ,CLASS1
+                        ,CLASS2
+                        ,CLASS3
+                        ,LAYOUT
+                        ,USE_GRADE
+                        ,TEMP01
+                        ,TEMP02
+                        ,TEMP03
+                        ,TEMP04
+                        ,TEMP05
+                        ,LOGIN_YN
+                        ,VIEW_YN
+                        ,USE_YN
+                        ,REG_ID
+                        ,REG_DT
+                        ,MOD_ID
+                        ,MOD_DT
+                        ,PARENT_ID
+                        ,GRADE_PERSON
+                        ,GRADE_DEPART
+                        ,AUTH_YN
+            ) VALUES (
+                         #{siteMemuId}
+                    ,    #{siteMemuNm}
+                    ,    #{siteMemuTile}
+                    ,    #{slug}
+                    ,    #{url}
+                    ,    #{depth}
+                    ,    nvl(#{ord},0)
+                    ,    #{menuGroupId}
+                    ,    #{menuType}
+                    ,    #{menuPage}
+                    ,    #{siteMemuImage}
+                    ,    #{attr}
+                    ,    #{target}
+                    ,    #{class1}
+                    ,    #{class2}
+                    ,    #{class3}
+                    ,    #{layout}
+                    ,    #{useGrade}
+                    ,    #{temp01}
+                    ,    #{temp02}
+                    ,    #{temp03}
+                    ,    #{temp04}
+                    ,    #{temp05}
+                    ,    #{loginYn}
+                    ,    #{viewYn}
+                    ,    #{useYn}
+                    ,    #{regId}
+                    ,    SYSDATE
+                    ,    #{modId}
+                    ,    SYSDATE
+                    ,    #{parentId}
+                    ,    #{gradePerson}
+                    ,    #{gradeDepart}
+                    ,    #{authYn}
+
+
+            )
+        ]]>
+	</insert>
+
+    <update id="updateSiteMenu">
+
+      UPDATE INFO_SITE_MENU
+      set
+        SITE_MEMU_NM      =#{siteMemuNm}
+        ,SITE_MEMU_TILE   =#{siteMemuTile}
+        ,SLUG             =#{slug}
+        ,URL              =#{url}
+        ,DEPTH            =#{depth}
+        ,ORD              =nvl(#{ord},0)
+        ,MENU_GROUP_ID    =#{menuGroupId}
+        ,MENU_TYPE        =#{menuType}
+        ,MENU_PAGE        =#{menuPage}
+        ,SITE_MEMU_IMAGE  =#{siteMemuImage}
+        ,ATTR             =#{attr}
+        ,TARGET           =#{target}
+        ,CLASS1           =#{class1}
+        ,CLASS2           =#{class2}
+        ,CLASS3           =#{class3}
+        ,LAYOUT           =#{layout}
+        ,USE_GRADE        =#{useGrade}
+        ,TEMP01           =#{temp01}
+        ,TEMP02           =#{temp02}
+        ,TEMP03           =#{temp03}
+        ,TEMP04           =#{temp04}
+        ,TEMP05           =#{temp05}
+        ,LOGIN_YN         =#{loginYn}
+        ,VIEW_YN          =#{viewYn}
+        ,USE_YN           =#{useYn}
+        ,MOD_ID           =#{modId}
+        ,MOD_DT           =SYSDATE
+        ,PARENT_ID        =#{parentId}
+        ,GRADE_PERSON     =#{gradePerson}
+        ,GRADE_DEPART     =#{gradeDepart}
+        ,AUTH_YN          =#{authYn}
+    where 1=1
+    and   SITE_MEMU_ID =#{siteMemuId}
+
+
+
+    </update>
+
+
+
+
+    <select id="selectSiteAllMenuList"  parameterType="infomind.com.cms.info.site.vo.InfoSiteMenuVO" resultType="infomind.com.cms.info.site.vo.InfoSiteMenuVO">
+
+      	SELECT
+                         ISM.SITE_MEMU_ID
+                    ,    ISM.SITE_MEMU_NM
+                    ,    ISM.SITE_MEMU_TILE
+                    ,    ISM.SLUG
+                    ,    ISM.URL
+                    ,    ISM.DEPTH
+                    ,    ISM.ORD
+                    ,    ISM.MENU_GROUP_ID
+                    ,    ISM.MENU_TYPE
+                    ,    ISM.MENU_PAGE
+                    ,    ISM.SITE_MEMU_IMAGE
+                    ,    ISM.ATTR
+                    ,    ISM.TARGET
+                    ,    ISM.CLASS1
+                    ,    ISM.CLASS2
+                    ,    ISM.CLASS3
+                    ,    ISM.LAYOUT
+                    ,    ISM.USE_GRADE
+                    ,    ISM.TEMP01
+                    ,    ISM.TEMP02
+                    ,    ISM.TEMP03
+                    ,    ISM.TEMP04
+                    ,    ISM.TEMP05
+                    ,    ISM.LOGIN_YN
+                    ,    ISM.VIEW_YN
+                    ,    ISM.USE_YN
+                    ,    ISM.REG_ID
+                    ,    ISM.REG_DT
+                    ,    ISM.MOD_ID
+                    ,    ISM.MOD_DT
+                    ,    ISM.PARENT_ID
+                    ,    ISM.GRADE_PERSON
+                    ,    ISM.GRADE_DEPART
+                    ,    (select LAYOUT_TYPE from INFO_LAYOUT_INFO where 1=1 and LAYOUT_ID =ISM.LAYOUT) as LAYOUT_TYPE
+                    ,    ISM.AUTH_YN
+		FROM INFO_SITE_MENU ISM
+		WHERE 1=1
+
+        <if test="@egovframework.com.cmm.util.EgovMybaitsUtil@isNotEmpty(useYn)">
+            AND USE_YN = #{useYn}
+        </if>
+    </select>
+
+
+
+
+
+
+    <select id="selectSiteMemuIdCount" parameterType="infomind.com.cms.info.site.vo.InfoSiteMenuVO" resultType="int">
+        SELECT COUNT(*) cnt
+        FROM INFO_SITE_MENU
+        WHERE 1=1
+        and SITE_MEMU_ID =#{siteMemuId}
+    </select>
+
+
+    <select id="selectSiteSlugCount" parameterType="infomind.com.cms.info.site.vo.InfoSiteMenuVO" resultType="int">
+        SELECT COUNT(*) cnt
+        FROM INFO_SITE_MENU
+        WHERE 1=1
+        and SLUG =#{slug}
+    </select>
+
+
+
+
+</mapper>

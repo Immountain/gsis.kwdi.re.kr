@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean name="InfoBoardCategoryIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="10"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="BOARD_CATEGORY_ID"/>
+    </bean>
+
+    <bean name="InfoBoardAuthIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="10"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="BOARD_AUTH_ID"/>
+    </bean>
+
+    <bean name="InfoCmsMenuAuthIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="10"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="CMS_MEMU_AUTH_ID"/>
+    </bean>
+
+    <bean name="InfoMenuAuthIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="10"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="MEMU_AUTH_ID"/>
+    </bean>
+
+
+
+    <bean name="InfoSiteVisitIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="10"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="SITE_VISIT_ID"/>
+    </bean>
+
+
+    <bean name="InfoPageContentHisIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="10"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="PAGE_HIS_SNO"/>
+    </bean>
+
+    <bean name="InfoLayoutContentHisIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="10"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="LAYOUT_HIS_SNO"/>
+    </bean>
+
+    <bean name="InfoPageBannerIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="10"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="PAGE_BANNER_ID"/>
+    </bean>
+
+    <bean name="fileDownloadSnoIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="10"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="FILE_DOWNLOAD_SNO"/>
+    </bean>
+
+    <bean name="ItemIdHisSnoIdService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource"         ref="egov.dataSource" />
+        <property name="blockSize"          value="1" />
+        <property name="table"              value="INFO_IDS"/>
+        <property name="tableNameFieldName" value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName"    value="IDGEN_NEXT_ID"/>
+        <property name="tableName"          value="ITEM_ID_HIS"/>
+    </bean>
+
+    <bean name="InfoHurt635KeySeqService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="1"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="HURT635"/>
+    </bean>
+
+    <bean name="InfoCmsVisitSeqService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="1"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="VISIT"/>
+    </bean>
+
+    <bean name="PccSmsSnoIdService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource"         ref="egov.dataSource" />
+        <property name="blockSize"          value="1" />
+        <property name="table"              value="INFO_IDS"/>
+        <property name="tableNameFieldName" value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName"    value="IDGEN_NEXT_ID"/>
+        <property name="tableName"          value="PCC_SMS_SNO"/>
+    </bean>
+
+</beans>

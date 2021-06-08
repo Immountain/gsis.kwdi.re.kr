@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoCmsLogDAO">
+	<!-- 시스템로그 맵 -->
+	<resultMap id="SysLogVO" type="infomind.com.cms.sym.log.lgm.vo.InfoSysLogVO">
+		<result property="requstId" column="REQUST_ID"/>
+		<result property="occrrncDe" column="OCCRRNC_DE"/>
+		<result property="srvcNm" column="SVC_NM"/>
+		<result property="methodNm" column="METHOD_NM"/>
+		<result property="processSeCode" column="PROCESS_SE_CODE"/>
+		<result property="processSeCodeNm" column="PROCESS_SE_CODE_NM"/>
+		<result property="processTime" column="PROCESS_TIME"/>
+		<result property="rqesterIp" column="RQESTER_IP"/>
+		<result property="rqesterId" column="RQESTER_ID"/>
+		<result property="rqsterNm" column="RQESTER_NM"/>
+	</resultMap>
+    <insert id="insertInfoCmsLog">
+		<![CDATA[
+        INSERT INTO  INFO_CMS_LOG (
+            LOG_OCCRRNC_DE,
+            LOG_URL,
+            LOG_CONTROLLER,
+            LOG_HTTP_METHOD,
+            LOG_METHOD,
+            RQESTER_ID,
+            RQESTER_IP,
+            LOG_SEARCH_LCAT_ID,
+            LOG_SEARCH_MCAT_CD,
+            LOG_SEARCH_CONDITION,
+            LOG_SEARCH_ORGAN,
+            LOG_SEARCH_KEYWORD,
+            LOG_SBSCRB_STTUS,
+            LOG_SEARCH_USE_YN,
+            LOG_SEARCH_YEAR,
+            LOG_SEARCH_ZEUS_API,
+            LOG_SEARC_ORDER,
+            LOG_MENU_TARGET_NO,
+            LOG_SEARCH_ALL_YN,
+            LOG_BOARD_ID,
+            LOG_PAGE_INDEX,
+            LOG_PAGE_UNIT,
+            LOG_PAGE_SIZE,
+            LOG_FIRST_INDEX,
+            LOG_LAST_INDEX,
+            LOG_RECORD_COUNT_PER_PAGE,
+            LOG_REG_ID,
+            LOG_MOD_ID,
+            LOG_STR_DAY,
+            LOG_END_DAY,
+            LOG_NOW_DAY,
+            LOG_CMD,
+            LOG_ALL_PARAMS,
+			LOG_PROCESS_SE_CODE,
+			LOG_PROCESS_TIME
+        ) VALUES (
+            SYSDATE(),
+            #{logUrl},
+            #{logController},
+            #{logHttpMethod},
+            #{logMethod},
+            #{rqesterId},
+            #{rqesterIp},
+            #{logSearchLcatId},
+            #{logSearchMcatCd},
+            #{logSearchCondition},
+            #{logSearchOrgan},
+            #{logSearchKeyword},
+            #{logSbscrbSttus},
+            #{logSearchUseYn},
+            #{logSearchYear},
+            #{logSearchZeusApi},
+            #{logSearcOrder},
+            #{logMenuTargetNo},
+            #{logSearchAllYn},
+            #{logBoardId},
+            #{logPageIndex},
+            #{logPageUnit},
+            #{logPageSize},
+            #{logFirstIndex},
+            #{logLastIndex},
+            #{logRecordCountPerPage},
+            #{logRegId},
+            #{logModId},
+            #{logStrDay},
+            #{logEndDay},
+            #{logNowDay},
+            #{logCmd},
+            #{logAllParams},
+            #{logProcessSeCode},
+			#{logProcessTime}
+						 )
+        ]]>
+	</insert>
+
+	<!-- 시스템 로그 상세 조회 -->
+	<select id="selectInfoCmsLog"
+			parameterType="infomind.com.cms.log.vo.InfoCmsLogVO"
+			resultType="infomind.com.cms.log.vo.InfoCmsLogVO">
+		SELECT a.CMS_LOG_SNO
+			 ,a.LOG_OCCRRNC_DE
+			 ,a.LOG_URL
+			 ,a.LOG_CONTROLLER
+			 ,a.LOG_HTTP_METHOD
+			 ,a.LOG_METHOD
+			 ,a.RQESTER_ID
+			 ,a.RQESTER_IP
+			 ,a.LOG_SEARCH_LCAT_ID
+			 ,a.LOG_SEARCH_MCAT_CD
+			 ,a.LOG_SEARCH_CONDITION
+			 ,a.LOG_SEARCH_ORGAN
+			 ,a.LOG_SEARCH_KEYWORD
+			 ,a.LOG_SBSCRB_STTUS
+			 ,a.LOG_SEARCH_USE_YN
+			 ,a.LOG_SEARCH_YEAR
+			 ,a.LOG_SEARCH_ZEUS_API
+			 ,a.LOG_SEARC_ORDER
+			 ,a.LOG_MENU_TARGET_NO
+			 ,a.LOG_SEARCH_ALL_YN
+			 ,a.LOG_BOARD_ID
+			 ,a.LOG_PAGE_INDEX
+			 ,a.LOG_PAGE_UNIT
+			 ,a.LOG_PAGE_SIZE
+			 ,a.LOG_FIRST_INDEX
+			 ,a.LOG_LAST_INDEX
+			 ,a.LOG_RECORD_COUNT_PER_PAGE
+			 ,a.LOG_REG_ID
+			 ,a.LOG_MOD_ID
+			 ,a.LOG_STR_DAY
+			 ,a.LOG_END_DAY
+			 ,a.LOG_NOW_DAY
+			 ,a.LOG_CMD
+			 ,a.LOG_ALL_PARAMS
+			 ,a.LOG_PROCESS_SE_CODE
+			 ,a.LOG_PROCESS_TIME
+			 ,b.USER_NM
+			 ,b.USER_ID
+			 ,b.JTP_ORGAN_CD
+			 ,FN_ORGAN_NM(b.JTP_ORGAN_CD) as JTP_ORGAN_CD_NM
+			 ,c.MENU_NM
+		FROM INFO_CMS_LOG a
+				 LEFT JOIN TEMP_USER b
+						   on a.RQESTER_ID =b.ESNTL_ID
+				 LEFT JOIN COMTNMENUINFO c
+						   on a.LOG_MENU_TARGET_NO =c.MENU_NO
+		where 1=1
+		  AND a.CMS_LOG_SNO =#{cmsLogSno}
+	</select>
+
+	<select id="selectInfoCmsLogTotalCount"
+			parameterType="infomind.com.cms.log.vo.InfoCmsLogVO"
+			resultType="int">
+		SELECT COUNT(*) totcnt
+		FROM INFO_CMS_LOG A
+		LEFT OUTER JOIN COMTCCMMNDETAILCODE c
+		ON A.LOG_PROCESS_SE_CODE = c.CODE
+		WHERE
+			1=1
+		<if test="searchKeyword != null and searchKeyword != ''">	<![CDATA[	AND
+					A.LOG_PROCESS_SE_CODE LIKE CONCAT ('%', #{searchKeyword},'%') ]]>
+		</if>
+		<if test="strDay != null and strDay != ''">	<![CDATA[	AND
+					A.LOG_OCCRRNC_DE BETWEEN STR_TO_DATE(CONCAT(#{strDay},' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+														AND STR_TO_DATE(CONCAT(#{endDay},' 23:59:59'), '%Y-%m-%d %H:%i:%s') ]]>
+		</if>
+	</select>
+
+	<select id="selectInfoCmsLogList"
+			parameterType="infomind.com.cms.log.vo.InfoCmsLogVO"
+			resultType="infomind.com.cms.log.vo.InfoCmsLogVO">
+
+		/* 구현 Sql */
+		SELECT a.CMS_LOG_SNO
+		,a.LOG_OCCRRNC_DE
+		,a.LOG_URL
+		,a.LOG_CONTROLLER
+		,a.LOG_HTTP_METHOD
+		,a.LOG_METHOD
+		,a.RQESTER_ID
+		,a.RQESTER_IP
+		,a.LOG_SEARCH_LCAT_ID
+		,a.LOG_SEARCH_MCAT_CD
+		,a.LOG_SEARCH_CONDITION
+		,a.LOG_SEARCH_ORGAN
+		,a.LOG_SEARCH_KEYWORD
+		,a.LOG_SBSCRB_STTUS
+		,a.LOG_SEARCH_USE_YN
+		,a.LOG_SEARCH_YEAR
+		,a.LOG_SEARCH_ZEUS_API
+		,a.LOG_SEARC_ORDER
+		,a.LOG_MENU_TARGET_NO
+		,a.LOG_SEARCH_ALL_YN
+		,a.LOG_BOARD_ID
+		,a.LOG_PAGE_INDEX
+		,a.LOG_PAGE_UNIT
+		,a.LOG_PAGE_SIZE
+		,a.LOG_FIRST_INDEX
+		,a.LOG_LAST_INDEX
+		,a.LOG_RECORD_COUNT_PER_PAGE
+		,a.LOG_REG_ID
+		,a.LOG_MOD_ID
+		,a.LOG_STR_DAY
+		,a.LOG_END_DAY
+		,a.LOG_NOW_DAY
+		,a.LOG_CMD
+		,a.LOG_ALL_PARAMS
+		,a.LOG_PROCESS_SE_CODE
+		,a.LOG_PROCESS_TIME
+		,b.USER_NM
+		,b.USER_ID
+		,b.JTP_ORGAN_CD
+		,FN_ORGAN_NM(b.JTP_ORGAN_CD) as JTP_ORGAN_CD_NM
+		,c.MENU_NM
+		FROM INFO_CMS_LOG a
+		LEFT JOIN TEMP_USER b
+		on a.RQESTER_ID =b.ESNTL_ID
+		LEFT JOIN COMTNMENUINFO c
+		on a.LOG_MENU_TARGET_NO =c.MENU_NO
+		where
+		    1=1
+		<if test="searchKeyword != null and searchKeyword != ''">	<![CDATA[	AND
+					a.LOG_PROCESS_SE_CODE LIKE CONCAT ('%', #{searchKeyword},'%') ]]>
+		</if>
+		<if test="strDay != null and strDay != ''">	<![CDATA[	AND
+					a.LOG_OCCRRNC_DE BETWEEN STR_TO_DATE(CONCAT(#{strDay},' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+														AND STR_TO_DATE(CONCAT(#{endDay},' 23:59:59'), '%Y-%m-%d %H:%i:%s') ]]>
+		</if>
+		<![CDATA[		 ORDER BY a.CMS_LOG_SNO DESC ]]>
+		LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+
+
+	</select>
+</mapper>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PccModuleDAO">
+
+
+    <insert id="insertPccSmsInfo">
+
+            INSERT INTO PCC_SMS_INFO
+                (
+                     PCC_SMS_SNO
+                    ,REQ_NUM
+                    ,DI
+                    ,NAME
+                    ,BIR_YMD
+                    ,SEX
+                    ,CI1
+                    ,CI2
+                    ,CIVERSION
+                    ,RESULT
+                    ,CER_GB
+                    ,CELL_NO
+                    ,CELL_CORP
+                    ,CER_DATE
+                    ,ADD_VER
+                    ,SRV_NO
+                    ,RETURN_URL
+                    ,RET_INFO
+                    ,MESSAGE
+                    ,EXT1
+                    ,EXT2
+                    ,EXT3
+                    ,EXT4
+                    ,EXT5
+                    ,REG_DT
+
+                     )
+              VALUES(
+                     #{pccSmsSno}
+                    ,#{reqNum}
+                    ,#{di}
+                    ,#{name}
+                    ,#{birYmd}
+                    ,#{sex}
+                    ,#{ci1}
+                    ,#{ci2}
+                    ,#{civersion}
+                    ,#{result}
+                    ,#{cerGb}
+                    ,#{cellNo}
+                    ,#{cellCorp}
+                    ,#{cerDate}
+                    ,#{addVer}
+                    ,#{srvNo}
+                    ,#{returnUrl}
+                    ,#{retInfo}
+                    ,#{message}
+                    ,#{ext1}
+                    ,#{ext2}
+                    ,#{ext3}
+                    ,#{ext4}
+                    ,#{ext5}
+                    ,SYSDATE()
+                   )
+
+    </insert>
+
+
+    <update id="updatePccSmsInfo">
+
+        UPDATE PCC_SMS_INFO
+            SET
+
+
+                     DI           =#{di}
+                    ,NAME         =#{name}
+                    ,BIR_YMD      =#{birYmd}
+                    ,SEX          =#{sex}
+                    ,CI1          =#{ci1}
+                    ,CI2          =#{ci2}
+                    ,CIVERSION    =#{civersion}
+                    ,RESULT       =#{result}
+                    ,CER_GB       =#{cerGb}
+                    ,CELL_NO      =#{cellNo}
+                    ,CELL_CORP    =#{cellCorp}
+                    ,CER_DATE     =#{cerDate}
+                    ,ADD_VER      =#{addVer}
+                    ,MESSAGE      =#{message}
+                    ,EXT1         =#{ext1}
+                    ,EXT2         =#{ext2}
+                    ,EXT3         =#{ext3}
+                    ,EXT4         =#{ext4}
+                    ,EXT5         =#{ext5}
+                    ,MOD_DT       =SYSDATE()
+       WHERE 1=1
+       AND REQ_NUM=#{reqNum}
+
+  </update>
+
+
+
+    <select id="selectPccSmsInfo" parameterType="infomind.com.snsmodule.pcc.vo.PccSmsInfoVO" resultType="infomind.com.snsmodule.pcc.vo.PccSmsInfoVO">
+
+            SELECT
+                     PCC_SMS_SNO
+                    ,REQ_NUM
+                    ,DI
+                    ,NAME
+                    ,BIR_YMD
+                    ,SEX
+                    ,CI1
+                    ,CI2
+                    ,CIVERSION
+                    ,RESULT
+                    ,CER_GB
+                    ,CELL_NO
+                    ,CELL_CORP
+                    ,CER_DATE
+                    ,ADD_VER
+                    ,SRV_NO
+                    ,RETURN_URL
+                    ,RET_INFO
+                    ,MESSAGE
+                    ,EXT1
+                    ,EXT2
+                    ,EXT3
+                    ,EXT4
+                    ,EXT5
+                    ,REG_DT
+            FROM    PCC_SMS_INFO
+            WHERE   1=1
+            AND REQ_NUM=#{reqNum}
+            AND DI =#{di}
+
+    </select>
+
+
+</mapper>

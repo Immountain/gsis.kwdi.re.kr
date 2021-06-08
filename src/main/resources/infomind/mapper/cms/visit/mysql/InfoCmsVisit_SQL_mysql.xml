@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="InfoCmsVisitDAO">
+
+	<insert id="getLogInfoCmsVisit">
+		<![CDATA[
+        INSERT INTO  INFO_CMS_VISIT (
+			 ID
+			,IP
+			,V_DATE
+			,OS
+			,BROWSER
+			,USER_AGENT
+			,VIST_USER_ID
+			,CMS_MENU_TARGET_NO
+			,BROWSER_S
+			,LOC
+			,VISIT_TYPE
+			,TARGET_ID
+			,SITE_URL
+			,REFERER_URL
+			,IS_DEVIEC
+        ) VALUES (
+			 #{id}
+			,#{ip}
+			,SYSDATE()
+			,#{os}
+			,#{browser}
+			,#{userAgent}
+			,#{vistUserId}
+			,#{cmsMenuTargetNo}
+			,#{browserS}
+			,#{loc}
+			,#{visitType}
+			,#{targetId}
+			,#{siteUrl}
+			,#{refererUrl}
+			,#{isDeviec}
+						 )
+        ]]>
+	</insert>
+
+
+</mapper>

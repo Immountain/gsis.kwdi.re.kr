@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <!--메인-->
+    <definition name="layouts-tiles" template="/WEB-INF/jsp/infomind/layout/cmmn/default-layouts.jsp">
+        <put-attribute name="nav"    	value="/WEB-INF/jsp/infomind/layout/cmmn/default-nav.jsp" />
+        <put-attribute name="inhead"    	value="/WEB-INF/jsp/infomind/layout/cmmn/default-inhead.jsp" />
+        <put-attribute name="left"    		value="/WEB-INF/jsp/infomind/layout/cmmn/default-left.jsp" />
+        <put-attribute name="javascript"    value="/WEB-INF/jsp/infomind/layout/cmmn/default-javascript.jsp" />
+        <put-attribute name="notification"   value="/WEB-INF/jsp/infomind/layout/cmmn/default-notification_scrolltotop.jsp" />
+        <put-attribute name="footer"   	value="/WEB-INF/jsp/infomind/layout/cmmn/default-footer.jsp" />
+        <put-attribute name="content"   	value="" />
+    </definition>
+
+
+
+
+    <!--메인 설정-->
+    <definition name="*.main" extends="layouts-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}.jsp" />
+    </definition>
+    <definition name="*/*.main" extends="layouts-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}.jsp" />
+    </definition>
+    <definition name="*/*/*.main" extends="layouts-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+    </definition>
+    <definition name="*/*/*/*.main" extends="layouts-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}.jsp" />
+    </definition>
+
+
+
+
+
+</tiles-definitions>

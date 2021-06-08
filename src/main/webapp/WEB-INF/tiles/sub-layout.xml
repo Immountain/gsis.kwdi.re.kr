@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+
+    <!--서브-->
+    <definition name="layouts-sub-tiles" template="/WEB-INF/jsp/infomind/layout/sub/sub-layouts.jsp">
+        <put-attribute name="inhead"    	value="/WEB-INF/jsp/infomind/layout/sub/sub-inhead.jsp" />
+        <put-attribute name="content"   	value="" />
+    </definition>
+
+
+
+
+    <!--서브설정-->
+    <definition name="*.sub" extends="layouts-sub-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}.jsp" />
+    </definition>
+    <definition name="*/*.sub" extends="layouts-sub-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}.jsp" />
+    </definition>
+    <definition name="*/*/*.sub" extends="layouts-sub-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+    </definition>
+    <definition name="*/*/*/*.sub" extends="layouts-sub-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*.sub" extends="layouts-sub-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}.jsp" />
+    </definition>
+
+    <definition name="*/*/*/*/*/*.sub" extends="layouts-sub-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*/*/*.sub" extends="layouts-sub-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}/{7}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*/*/*/*.sub" extends="layouts-sub-tiles">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}.jsp" />
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoBoardCommentDAO">
+
+
+    <insert id="insertInfoBoardComment">
+		<![CDATA[
+            INSERT INTO  INFO_BOARD_COMMENT (
+                     INFO_COMMENT_SNO
+                    ,COMMENT_TYPE
+                    ,ITEM_ID
+                    ,ID_CODE
+                    ,PARENT_ID
+                    ,TITLE
+                    ,TXT_CONTENT
+                    ,PASSWORD
+                    ,COMMENT_FILE
+                    ,SCORE
+                    ,SECRET_YN
+                    ,USE_YN
+                    ,DELETE_YN
+                    ,DELETE_TYPE
+                    ,REG_ID
+                    ,REG_DT
+                    ,MOD_ID
+                    ,MOD_DT
+            ) VALUES (
+                     #{infoCommentSno}
+                    ,#{commentType}
+                    ,#{itemId}
+                    ,#{idCode}
+                    ,#{parentId}
+                    ,#{title}
+                    ,#{txtContent}
+                    ,#{password}
+                    ,#{commentFile}
+                    ,#{score}
+                    ,#{secretYn}
+                    ,#{useYn}
+                    ,'N'
+                    ,#{deleteType}
+                    ,#{regId}
+                    ,sysdate()
+                    ,#{modId}
+                    ,sysdate()
+            )
+        ]]>
+	</insert>
+
+
+    <select id="selectInfoBoardComment" parameterType="infomind.com.cms.info.board.vo.InfoBoardCommentVO"  resultType="infomind.com.cms.info.board.vo.InfoBoardCommentVO">
+	SELECT
+                     A.INFO_COMMENT_SNO
+                    ,A.COMMENT_TYPE
+                    ,A.ITEM_ID
+                    ,A.ID_CODE
+                    ,A.PARENT_ID
+                    ,A.TITLE
+                    ,A.TXT_CONTENT
+                    ,A.PASSWORD
+                    ,A.COMMENT_FILE
+                    ,A.SCORE
+                    ,A.SECRET_YN
+                    ,A.USE_YN
+                    ,A.DELETE_YN
+                    ,A.DELETE_TYPE
+                    ,A.REG_ID
+                    ,A.REG_DT
+                    ,A.MOD_ID
+                    ,A.MOD_DT
+                    ,DATE_FORMAT(A.REG_DT,'%Y') AS REG_DT_YYYY
+                    ,DATE_FORMAT(A.REG_DT,'%m') AS REG_DT_MM
+                    ,DATE_FORMAT(A.REG_DT,'%d') AS REG_DT_DD
+        FROM INFO_BOARD_COMMENT A
+        WHERE 1=1
+        and A.ITEM_ID =#{itemId}
+	</select>
+
+
+    <update id="deleteInfoBoardComment">
+
+
+        UPDATE INFO_BOARD_COMMENT
+        SET DELETE_YN ='Y'
+        WHERE 1=1
+        AND INFO_COMMENT_SNO =#{infoCommentSno}
+
+    </update>
+
+
+</mapper>

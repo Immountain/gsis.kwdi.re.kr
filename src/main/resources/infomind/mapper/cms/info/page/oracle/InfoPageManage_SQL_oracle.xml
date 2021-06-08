@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoPageInfoDAO">
+
+
+
+
+
+
+	<select id="selectPageInfoList" parameterType="infomind.com.cms.info.page.vo.InfoPageInfoVO" resultType="infomind.com.cms.info.page.vo.InfoPageInfoVO">
+
+		<![CDATA[
+			SELECT  *
+			  FROM  (
+			SELECT ROWNUM RNUM, ALL_LIST.*
+			  FROM  (
+			/* 구현 Sql */
+			SELECT   A.PAGE_ID
+					,A.LAYOUT_ID
+					,A.PAGE_NM
+					,A.PAGE_URL
+					,A.MOD_TYPE
+					,A.USE_YN
+					,A.DELETE_YN
+					,A.REG_DT
+					,A.MOD_DT
+					,A.REG_ID
+					,A.MOD_ID
+					,A.PAGE_IMAGE
+			  FROM  INFO_PAGE_INFO A
+			 WHERE 1=1
+
+			  ]]>
+
+		<if test="searchCondition == 1">	<![CDATA[	AND
+				A.PAGE_ID LIKE '%' || #{searchKeyword} || '%'	]]>
+		</if>
+		<if test="searchCondition == 2">	<![CDATA[	AND
+				A.PAGE_NM    LIKE '%' || #{searchKeyword} || '%'	]]>
+		</if>
+		<![CDATA[
+			/* 구현 Sql */
+				    ) ALL_LIST
+				    )
+			 WHERE  RNUM  > #{firstIndex}
+			   AND  RNUM <= #{firstIndex} + #{recordCountPerPage}
+			   ]]>
+
+	</select>
+
+
+	<select id="selectPageListTotCnt" parameterType="infomind.com.cms.info.page.vo.InfoPageInfoVO" resultType="int">
+			SELECT  COUNT(*) totcnt
+			  FROM  INFO_PAGE_INFO A
+		<if test="searchCondition == 1">	<![CDATA[	AND
+				A.PAGE_ID LIKE '%' || #{searchKeyword} || '%'	]]>
+		</if>
+		<if test="searchCondition == 2">	<![CDATA[	AND
+				A.PAGE_NM    LIKE '%' || #{searchKeyword} || '%'	]]>
+		</if>
+
+			 WHERE  1=1
+
+	</select>
+
+
+
+	<insert id="insertPageInfo">
+
+		<![CDATA[
+		    INSERT
+		      INTO  INFO_PAGE_INFO
+		         (
+		             PAGE_ID
+					,LAYOUT_ID
+					,PAGE_NM
+					,PAGE_URL
+					,MOD_TYPE
+					,USE_YN
+					,DELETE_YN
+					,REG_DT
+					,MOD_DT
+					,REG_ID
+					,MOD_ID
+					,PAGE_IMAGE
+		         )
+		    VALUES
+		         (
+		             #{pageId}
+					,#{layoutId}
+					,#{pageNm}
+					,#{pageUrl}
+					,#{modType}
+					,#{useYn}
+					,'N'
+					,sysdate
+					,sysdate
+					,#{regId}
+					,#{modId}
+					,#{pageImage}
+		         )
+		    ]]>
+
+	</insert>
+
+
+
+	<insert id="insertPageContent">
+
+		<![CDATA[
+		    INSERT
+		      INTO  INFO_PAGE_CONTENT
+		         (
+		             PAGE_ID
+					,CONTENT_INFO
+		         )
+		    VALUES
+		         (
+		             #{pageId}
+					,#{contentInfo}
+		         )
+		    ]]>
+
+	</insert>
+
+	<select id="selecPageInfoDetail" parameterType="infomind.com.cms.info.page.vo.InfoPageInfoVO" resultType="infomind.com.cms.info.page.vo.InfoPageInfoVO">
+
+		SELECT a.PAGE_ID
+			,a.LAYOUT_ID
+			,a.PAGE_NM
+			,a.PAGE_URL
+			,a.MOD_TYPE
+			,a.USE_YN
+			,a.DELETE_YN
+			,a.REG_DT
+			,a.MOD_DT
+			,a.REG_ID
+			,a.MOD_ID
+			,a.PAGE_IMAGE
+			,b.CONTENT_INFO
+		FROM INFO_PAGE_INFO A
+		,INFO_PAGE_CONTENT B
+		WHERE 1=1
+		AND a.PAGE_ID =b.PAGE_ID
+		AND a.PAGE_ID =#{pageId}
+
+	</select>
+
+
+	<update id="updatePageInfo">
+
+
+		   UPDATE  INFO_PAGE_INFO
+               SET
+					 LAYOUT_ID	=#{layoutId}
+					,PAGE_NM  =#{pageNm}
+					,PAGE_URL =#{pageUrl}
+					,MOD_TYPE =#{modType}
+					,USE_YN	=#{useYn}
+					,MOD_DT	=sysdate
+					,MOD_ID	=sysdate
+					,PAGE_IMAGE =#{pageImage}
+             WHERE  1=1
+             AND PAGE_ID		=#{pageId}
+	</update>
+
+
+	<update id="updatePageInfoDetail">
+
+
+		   UPDATE  INFO_PAGE_CONTENT
+               SET  CONTENT_INFO=#{contentInfo}
+             WHERE  1=1
+             AND PAGE_ID		=#{pageId}
+	</update>
+
+
+
+	<insert id="insertPageInfoHis">
+
+			INSERT
+		      INTO  INFO_PAGE_CONTENT_HIS
+		         (
+		             PAGE_HIS_SNO
+					,PAGE_ID
+					,CONTENT_INFO
+					,MOD_TYPE
+					,REG_DT
+					,REG_ID
+
+		         )
+		    VALUES
+		         (
+		             #{pageHisSno}
+					,#{pageId}
+					,#{contentInfo}
+					,#{modGb}
+					,sysdate
+					,#{regId}
+
+		         )
+
+	</insert>
+
+
+	<insert id="updatePageInfoHis">
+
+
+  			UPDATE  INFO_PAGE_CONTENT_HIS
+               SET  MOD_DT=sysdate
+                   ,MOD_ID=#{modId}
+             WHERE  1=1
+             AND PAGE_HIS_SNO		=#{pageHisSno}
+
+	</insert>
+
+
+
+	<select id="selectPageInfoHisList" parameterType="infomind.com.cms.info.page.vo.InfoPageInfoVO" resultType="infomind.com.cms.info.page.vo.InfoPageInfoVO">
+
+		<![CDATA[
+			SELECT  *
+			  FROM  (
+			SELECT ROWNUM RNUM, ALL_LIST.*
+			  FROM  (
+			/* 구현 Sql */
+			SELECT   PAGE_HIS_SNO
+					,PAGE_ID
+					,CONTENT_INFO
+					,MOD_TYPE
+					,REG_DT
+					,MOD_DT
+					,REG_ID
+					,MOD_ID
+			  FROM  INFO_PAGE_CONTENT_HIS A
+			  WHERE 1=1
+				and PAGE_ID =#{pageId}
+			  ]]>
+
+		<![CDATA[
+			/* 구현 Sql */
+				    ) ALL_LIST
+				    )
+			 WHERE  RNUM  > #{firstIndex}
+			   AND  RNUM <= #{firstIndex} + #{recordCountPerPage}
+			   ]]>
+
+	</select>
+
+
+	<select id="selectPageListHisTotCnt" parameterType="infomind.com.cms.info.page.vo.InfoPageInfoVO" resultType="int">
+		SELECT  COUNT(*) totcnt
+		FROM  INFO_PAGE_CONTENT_HIS A
+  		WHERE 1=1
+		and PAGE_ID =#{pageId}
+
+		WHERE  1=1
+
+	</select>
+
+
+
+</mapper>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoBoardItemHisDAO">
+
+    <select id="selectBoardItemHis"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardItemHisVO"
+            resultType="infomind.com.cms.info.board.vo.InfoBoardItemHisVO">
+		SELECT
+                 IBIH.ITEM_ID_HIS
+                ,IBIH.MOD_TYPE
+                ,IBIH.ITEM_ID
+                ,IBIH.ID_CODE
+                ,IBIH.BOARD_ID
+                ,IBIH.TITLE
+                ,IBIH.BOARD_CONTENT
+                ,IBIH.MEMO
+                ,IBIH.NOTICE_YN
+                ,IBIH.NOTICE_START_DATE
+                ,IBIH.NOTICE_END_DATE
+                ,IBIH.SECRET_YN
+                ,IBIH.PASSWORD
+                ,IBIH.INQUIRE_TYPE
+                ,IBIH.COMMENT_YN
+                ,IBIH.BOARD_FILE
+                ,IBIH.FILE01
+                ,IBIH.FILE02
+                ,IBIH.FILE03
+                ,IBIH.FILE04
+                ,IBIH.FILE05
+                ,IBIH.CATEGORY
+                ,IBIH.CATEGORIES
+                ,IBIH.LINK_TYPE
+                ,IBIH.LINK_URL
+                ,IBIH.READ_CNT
+                ,IBIH.TEMP1
+                ,IBIH.TEMP2
+                ,IBIH.TEMP3
+                ,IBIH.TEMP4
+                ,IBIH.TEMP5
+                ,IBIH.USE_YN
+                ,IBIH.DELETE_YN
+                ,IBIH.DELETE_TYPE
+                ,IBIH.REG_ID
+                ,IBIH.REG_DT
+                ,IBIH.REG_IP
+                ,IBIH.MOD_ID
+                ,IBIH.MOD_DT
+                ,IBIH.MOD_IP
+                ,IBIH.SUB_KEY
+ 		FROM INFO_BOARD_ITEM_HIS IBIH
+		WHERE 1=1
+        AND IBIH.ITEM_ID_HIS = #{itemIdHis}
+	</select>
+
+    <select id="selectBoardItemHisTotalCount"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardItemHisVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_BOARD_ITEM_HIS IBIH
+        WHERE 1=1
+    </select>
+
+    <select id="selectBoardItemHisList"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardItemHisVO"
+            resultType="infomind.com.cms.info.board.vo.InfoBoardItemHisVO">
+        SELECT *
+        FROM (
+        SELECT ROWNUM RNUM, ALL_LIST.*
+        FROM (
+        /* 구현 Sql */
+        SELECT
+                IBIH.ITEM_ID_HIS
+                ,IBIH.MOD_TYPE
+                ,IBIH.ITEM_ID
+                ,IBIH.ID_CODE
+                ,IBIH.BOARD_ID
+                ,IBIH.TITLE
+                ,IBIH.BOARD_CONTENT
+                ,IBIH.MEMO
+                ,IBIH.NOTICE_YN
+                ,IBIH.NOTICE_START_DATE
+                ,IBIH.NOTICE_END_DATE
+                ,IBIH.SECRET_YN
+                ,IBIH.PASSWORD
+               ,IBIH.INQUIRE_TYPE
+                ,IBIH.COMMENT_YN
+                ,IBIH.BOARD_FILE
+                ,IBIH.FILE01
+                ,IBIH.FILE02
+                ,IBIH.FILE03
+                ,IBIH.FILE04
+                ,IBIH.FILE05
+                ,IBIH.CATEGORY
+                ,IBIH.CATEGORIES
+                ,IBIH.LINK_TYPE
+                ,IBIH.LINK_URL
+                ,IBIH.READ_CNT
+                ,IBIH.TEMP1
+                ,IBIH.TEMP2
+                ,IBIH.TEMP3
+                ,IBIH.TEMP4
+                ,IBIH.TEMP5
+                ,IBIH.USE_YN
+                ,IBIH.DELETE_YN
+                ,IBIH.DELETE_TYPE
+                ,IBIH.REG_ID
+                ,IBIH.REG_DT
+                ,IBIH.REG_IP
+                ,IBIH.MOD_ID
+                ,IBIH.MOD_DT
+                ,IBIH.MOD_IP
+                ,IBIH.SUB_KEY
+        FROM INFO_BOARD_ITEM_HIS IBIH
+        WHERE 1=1
+
+        ) ALL_LIST
+        )
+        WHERE RNUM <![CDATA[  > ]]> #{firstIndex}
+        AND   RNUM <![CDATA[ <= ]]> #{firstIndex} + #{recordCountPerPage}
+    </select>
+
+    <insert id="insertBoardItemHis">
+		<![CDATA[
+            INSERT INTO INFO_BOARD_ITEM_HIS (
+                    ITEM_ID_HIS
+                    ,MOD_TYPE
+                    ,ITEM_ID
+                    ,ID_CODE
+                    ,BOARD_ID
+                    ,TITLE
+                    ,BOARD_CONTENT
+                    ,MEMO
+                    ,NOTICE_YN
+                    ,NOTICE_START_DATE
+                    ,NOTICE_END_DATE
+                    ,SECRET_YN
+                    ,PASSWORD
+                    ,INQUIRE_TYPE
+                    ,COMMENT_YN
+                    ,BOARD_FILE
+                    ,FILE01
+                    ,FILE02
+                    ,FILE03
+                    ,FILE04
+                    ,FILE05
+                    ,CATEGORY
+                    ,CATEGORIES
+                    ,LINK_TYPE
+                    ,LINK_URL
+                    ,READ_CNT
+                    ,TEMP1
+                    ,TEMP2
+                    ,TEMP3
+                    ,TEMP4
+                    ,TEMP5
+                    ,USE_YN
+                    ,DELETE_YN
+                    ,DELETE_TYPE
+                    ,REG_ID
+                    ,REG_DT
+                    ,REG_IP
+                    ,MOD_ID
+                    ,MOD_DT
+                    ,MOD_IP
+                    ,SUB_KEY
+            ) VALUES (
+                   #{itemIdHis}
+                    ,#{modType}
+                    ,#{itemId}
+                    ,#{idCode}
+                    ,#{boardId}
+                    ,#{title}
+                    ,#{boardContent}
+                    ,#{memo}
+                    ,#{noticeYn}
+                    ,#{noticeStartDate}
+                    ,#{noticeEndDate}
+                    ,#{secretYn}
+                    ,#{password}
+                    ,#{inquireType}
+                    ,#{commentYn}
+                    ,#{boardFile}
+                    ,#{file01}
+                    ,#{file02}
+                    ,#{file03}
+                    ,#{file04}
+                    ,#{file05}
+                    ,#{category}
+                    ,#{categories}
+                    ,#{linkType}
+                    ,#{linkUrl}
+                    ,#{readCnt}
+                    ,#{temp1}
+                    ,#{temp2}
+                    ,#{temp3}
+                    ,#{temp4}
+                    ,#{temp5}
+                    ,#{useYn}
+                    ,#{deleteYn}
+                    ,#{deleteType}
+                    ,#{regId}
+                    ,SYSDATE
+                    ,#{regIp}
+                    ,#{modId}
+                    ,SYSDATE
+                    ,#{modIp}
+                    ,#{subKey}
+            )
+        ]]>
+	</insert>
+</mapper>

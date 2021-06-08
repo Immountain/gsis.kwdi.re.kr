@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LangPackDAO">
+
+
+	<select id="getSelectLangPackList" parameterType="infomind.com.ext.vo.LangPackVO" resultType="infomind.com.ext.vo.LangPackVO">
+
+
+		select CODE     as LANG_CODE
+			  ,CODE_NM  as LANG_CODE_NM
+		  from  comtccmmndetailcode
+		where 1=1
+		and CODE_ID='LANG_CD'
+		and USE_AT='Y'
+
+
+	</select>
+
+
+
+
+	
+	<select id="getSelectWjFestivityLang" parameterType="wj.com.cms.wj.festivity.vo.WjFestivityInfoVO" resultType="wj.com.cms.wj.festivity.vo.WjFestivityLangVO">
+		   select A.CODE   as LANG_CODE
+				  ,CODE_NM       as LANG_CODE_NM
+				  ,FESTIVITY_ID
+				  ,FESTIVITY_PLACE
+				  ,FESTIVITY_SCALE
+				  ,FESTIVITY_SUBJECT
+				  ,FESTIVITY_HOST
+				  ,FESTIVITY_SUPERVISES
+				  ,FESTIVITY_SITUATION
+				  ,TEMP1
+				  ,TEMP2
+				  ,TEMP3
+				  ,TEMP4
+				  ,TEMP5
+				  ,REG_ID
+				  ,REG_DT
+				  ,MOD_ID
+				  ,MOD_DT
+			from comtccmmndetailcode  a
+			   left  join (
+
+			   select *
+					from WJ_FESTIVITY_LANG
+					where 1=1
+					and FESTIVITY_ID =#{festivityId}
+
+			   ) b
+			on a.CODE = b.LANG_CODE
+			where 1=1
+			and a.USE_AT ='Y'
+			and a.CODE_ID='LANG_CD'
+	</select>
+
+	<select id="getSelectWjFestivityScheduleLang" parameterType="wj.com.cms.wj.festivity.vo.WjFestivityScheduleVO" resultType="wj.com.cms.wj.festivity.vo.WjFestivityScheduleLangVO">
+
+
+			select A.CODE   as LANG_CODE
+				  ,CODE_NM       as langCodeNm
+				  ,FESTIVITY_ID
+				  ,SCHEDULE_SNO
+				  ,LANG_CODE
+				  ,SCHEDULE_TITLE
+				  ,SCHEDULE_PROGRAM
+				  ,SCHEDULE_PLACE
+				  ,REG_ID
+				  ,REG_DT
+				  ,MOD_ID
+				  ,MOD_DT
+			from comtccmmndetailcode  a
+			   left  join (
+
+			   select *
+					from WJ_FESTIVITY_SCHEDULE_LANG
+					where 1=1
+					and SCHEDULE_SNO=#{scheduleSno}
+
+			   ) b
+			on a.CODE = b.LANG_CODE
+			where 1=1
+			and a.USE_AT ='Y'
+			and a.CODE_ID='LANG_CD'
+
+
+	</select>
+
+
+	<select id="getSelectWjProgramInfoLang" parameterType="wj.com.cms.wj.program.vo.WjProgramInfoVO" resultType="wj.com.cms.wj.program.vo.WjProgramInfoLangVO">
+
+
+			select A.CODE   as LANG_CODE
+				  ,CODE_NM       as langCodeNm
+				  ,FESTIVITY_ID
+				  ,PROGRAM_SNO
+				  ,PROGRAM_NM
+				  ,PROGRAM_PLACE
+				  ,PROGRAM_ETC
+				  ,CONTENT_INFO
+				  ,REG_ID
+				  ,REG_DT
+				  ,MOD_ID
+				  ,MOD_DT
+			from comtccmmndetailcode  a
+			   left  join (
+
+			   select *
+					from WJ_PROGRAM_INFO_LANG
+					where 1=1
+
+					and PROGRAM_SNO=#{programSno}
+
+			   ) b
+			on a.CODE = b.LANG_CODE
+			where 1=1
+			and a.USE_AT ='Y'
+			and a.CODE_ID='LANG_CD'
+
+
+	</select>
+
+
+
+	<select id="getSelectWjProgramSubLang" parameterType="wj.com.cms.wj.program.vo.WjProgramSubVO" resultType="wj.com.cms.wj.program.vo.WjProgramSubLangVO">
+
+
+			select A.CODE   as LANG_CODE
+				  ,CODE_NM       as langCodeNm
+				  ,FESTIVITY_ID
+				  ,PROGRAM_SNO
+				  ,PROGRAM_SUB_SNO
+				  ,CONT_TITLE
+				  ,MAIN_TITLE
+				  ,MAIN_NAME
+				  ,MAIN_INFO
+				  ,MAIN_ETC
+				  ,REG_DT
+				  ,REG_ID
+				  ,MOD_DT
+				  ,MOD_ID
+			from comtccmmndetailcode  a
+			   left  join (
+
+			   select *
+					from WJ_PROGRAM_SUB_LANG
+					where 1=1
+					and PROGRAM_SNO=#{programSno}
+
+					AND PROGRAM_SUB_SNO = #{programSubSno}
+
+			   ) b
+			on a.CODE = b.LANG_CODE
+			where 1=1
+			and a.USE_AT ='Y'
+			and a.CODE_ID='LANG_CD'
+
+
+	</select>
+
+	<select id="getSelectWjStatsReportLang" parameterType="wj.com.cms.wj.stats.vo.WjStatsReportVO" resultType="wj.com.cms.wj.stats.vo.WjStatsReportLangVO">
+
+
+		select A.CODE   as LANG_CODE
+			 ,CODE_NM       as langCodeNm
+			 ,REPORT_SNO
+			 ,COUNTRY_GB
+			 ,AREA_CODE
+			 ,COUNTRY_CODE
+			 ,LANG_CODE
+			 ,ASSOCIATION_NAME
+			 ,MEMO
+		from comtccmmndetailcode  a
+				 left  join (
+
+			select *
+			from WJ_STATS_REPORT_LANG
+			where 1=1
+			  AND REPORT_SNO=#{reportSno}
+
+		) b
+							on a.CODE = b.LANG_CODE
+		where 1=1
+		  and a.USE_AT ='Y'
+		  and a.CODE_ID='LANG_CD'
+
+
+	</select>
+
+	<select id="getWjSubProgramLang" parameterType="wj.com.cms.wj.sub.vo.WjSubProgramVO" resultType="wj.com.cms.wj.sub.vo.WjSubProgramLangVO">
+
+
+		select A.CODE   as LANG_CODE
+			 ,CODE_NM       as langCodeNm
+			 ,FESTIVITY_ID
+			 ,FESTIVITY_PROGRAM_SNO
+			 ,LANG_CODE
+			 ,SUB_PROGRAM_TITLE
+			 ,CONTENT_INFO
+			 ,PAGE_ID
+			 ,REG_DT
+			 ,REG_ID
+			 ,MOD_DT
+			 ,MOD_ID
+		from comtccmmndetailcode  a
+				 left  join (
+
+			select *
+			from WJ_SUB_PROGRAM_LANG
+			where 1=1
+			  AND FESTIVITY_PROGRAM_SNO=#{festivityProgramSno}
+
+		) b
+							on a.CODE = b.LANG_CODE
+		where 1=1
+		  and a.USE_AT ='Y'
+		  and a.CODE_ID='LANG_CD'
+
+	</select>
+
+	<select id="getWjFestivityApplicationLang" parameterType="wj.com.cms.wj.festivity.vo.WjFestivityApplicationVO" resultType="wj.com.cms.wj.festivity.vo.WjFestivityApplicationLangVO">
+
+
+		select A.CODE   as LANG_CODE
+			 ,CODE_NM       as langCodeNm
+			 ,FESTIVITY_ID
+			 ,APPLICATION_ID
+			 ,LANG_CODE
+			 ,APPLICATION_TITLE
+			 ,CONTENT_INFO
+			 ,MEMO
+			 ,REG_ID
+			 ,REG_DT
+			 ,MOD_ID
+			 ,MOD_DT
+		from comtccmmndetailcode  a
+				 left  join (
+
+			select *
+			from WJ_FESTIVITY_APPLICATION_LANG
+			where 1=1
+			  AND APPLICATION_ID = #{applicationId}
+
+		) b
+							on a.CODE = b.LANG_CODE COLLATE utf8_unicode_ci
+		where 1=1
+		  and a.USE_AT ='Y'
+		  and a.CODE_ID='LANG_CD'
+
+	</select>
+
+	<select id="getWjEventLang" parameterType="wj.com.cms.wj.event.vo.WjEventInfoVO" resultType="wj.com.cms.wj.event.vo.WjEventInfoLangVO">
+
+
+		select A.CODE   as LANG_CODE
+			 ,CODE_NM       as langCodeNm
+			 ,EVENT_ID
+			 ,LANG_CODE
+			 ,EVENT_TITLE
+			 ,EVENT_CONTENT
+			 ,REG_ID
+			 ,REG_DT
+			 ,MOD_ID
+			 ,MOD_DT
+		from comtccmmndetailcode  a
+				 left  join (
+
+			select *
+			from WJ_EVENT_INFO_LANG
+			where 1=1
+			  AND EVENT_ID = #{eventId}
+
+		) b
+					on a.CODE = b.LANG_CODE
+		where 1=1
+		  and a.USE_AT ='Y'
+		  and a.CODE_ID='LANG_CD'
+
+	</select>
+
+
+
+	<select id="getInfoLangCode" parameterType="infomind.com.cms.info.lang.vo.InfoLangCodeVO" resultType="infomind.com.cms.info.lang.vo.InfoLangCodeVO">
+
+
+		select A.CODE  as LANG_CODE
+			   ,A.CODE_NM       as LANG_CODE_NM
+			   ,B.CODE_ID
+			   ,B.CODE
+			   ,B.CODE_NM
+		from comtccmmndetailcode a
+		  left  join (
+
+					   select *
+							from info_lang_code
+							where 1=1
+							and CODE_ID =#{codeId}
+							<if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(code)">
+								and code =#{code}
+							</if>
+
+		  ) b
+		on a.CODE = b.LANG_CODE
+		where 1=1
+		  and a.USE_AT ='Y'
+		  and a.CODE_ID='LANG_CD'
+
+		<if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(langCode)">
+			and b.LANG_CODE =#{langCode}
+		</if>
+
+
+
+
+	</select>
+
+
+
+
+	<select id="getInfoActLangCode" parameterType="infomind.com.cms.info.lang.vo.InfoLangCodeVO" resultType="infomind.com.cms.info.lang.vo.InfoLangCodeVO">
+
+				select A.CODE  			as CODE
+					   ,A.CODE_NM       as CODE_NM
+					   ,b.ACT_CODE      as checkCode
+		from info_lang_code a
+		  left  join (
+
+					   SELECT
+                           USER_ID
+                         , ACT_CODE
+                      FROM WJ_ACT_INFO
+                      WHERE 1=1
+                        AND USER_ID =#{userId}
+		  ) b
+		on a.CODE = b.ACT_CODE
+		where 1=1
+		  AND A.CODE_ID ='WJ_20'
+		  and a.LANG_CODE =#{langCode}
+
+	</select>
+
+
+
+</mapper>

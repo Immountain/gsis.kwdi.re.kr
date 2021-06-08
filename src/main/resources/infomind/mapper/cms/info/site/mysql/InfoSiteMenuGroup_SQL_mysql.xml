@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoSiteMenuGroupDAO">
+
+    <resultMap id="InfoSiteMenuGroup" type="infomind.com.cms.info.site.vo.InfoSiteMenuGroupVO" autoMapping="true">
+        <association property="infoSite" autoMapping="true" javaType="infomind.com.cms.info.site.vo.InfoSiteVO"/>
+        <association property="lang" autoMapping="true" javaType="infomind.com.ext.vo.CodeSearchVO"/>
+    </resultMap>
+
+    <select id="selectInfoSiteMenuGroup"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteMenuGroupVO"
+            resultMap="InfoSiteMenuGroup">
+		SELECT
+              ISMG.MENU_GROUP_ID
+            , ISMG.MENU_GROUP_NM
+            , ISMG.USE_YN
+            , ISMG.REG_DT
+            , ISMG.REG_ID
+            , ISMG.MOD_DT
+            , ISMG.MOD_ID
+            , ISMG.MENU_GROUP_LOCALE
+            , ISMG.SITE_ID
+
+            , ISI.HOST
+            , ISI.DEBUG_HOST
+            , ISI.SUB_PATH
+            , ISI.THEME
+            , ISI.MAIN_SITE_YN
+            , ISI.INDEX_PAGE
+            , ISI.LAYOUT
+            , ISI.LANG_CD
+
+		    , CDC.CODE_ID
+            , CDC.CODE
+            , CDC.CODE_NM
+ 		FROM INFO_SITE_MENU_GROUP ISMG
+		    LEFT OUTER JOIN INFO_SITE ISI ON ISI.SITE_ID = ISMG.SITE_ID
+            LEFT OUTER JOIN COMTCCMMNDETAILCODE CDC ON CDC.CODE_ID = 'LANG_CD' AND CDC.CODE = ISMG.MENU_GROUP_LOCALE
+		WHERE 1=1
+		AND ISMG.MENU_GROUP_ID = #{menuGroupId}
+	</select>
+
+    <select id="selectInfoSiteMenuGroupTotalCount"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteMenuGroupVO"
+            resultType="int">
+        SELECT COUNT(*) AS cnt
+        FROM INFO_SITE_MENU_GROUP ISMG
+            LEFT OUTER JOIN INFO_SITE ISI ON ISI.SITE_ID = ISMG.SITE_ID
+            LEFT OUTER JOIN COMTCCMMNDETAILCODE CDC ON CDC.CODE_ID = 'LANG_CD' AND CDC.CODE = ISMG.MENU_GROUP_LOCALE
+        WHERE 1=1
+
+        <if test="@egovframework.com.cmm.util.EgovMybaitsUtil@isNotEmpty(siteId)">
+            AND ISMG.SITE_ID = #{siteId}
+        </if>
+
+        <if test="searchCondition == 1">
+            AND ISMG.MENU_GROUP_NM LIKE CONCAT('%' , #{searchKeyword} , '%')
+        </if>
+    </select>
+
+    <select id="selectSiteMenuGroupList"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteMenuGroupVO"
+            resultMap="InfoSiteMenuGroup">
+
+        /* 구현 Sql */
+        SELECT
+                  ISMG.MENU_GROUP_ID
+                , ISMG.MENU_GROUP_NM
+                , ISMG.USE_YN
+                , ISMG.REG_DT
+                , ISMG.REG_ID
+                , ISMG.MOD_DT
+                , ISMG.MOD_ID
+                , ISMG.MENU_GROUP_LOCALE
+                , ISMG.SITE_ID
+
+                , ISI.HOST
+                , ISI.DEBUG_HOST
+                , ISI.SUB_PATH
+                , ISI.THEME
+                , ISI.MAIN_SITE_YN
+                , ISI.INDEX_PAGE
+                , ISI.LAYOUT
+                , ISI.LANG_CD
+
+                , CDC.CODE_ID
+                , CDC.CODE
+                , CDC.CODE_NM
+        FROM INFO_SITE_MENU_GROUP ISMG
+            LEFT OUTER JOIN INFO_SITE ISI ON ISI.SITE_ID = ISMG.SITE_ID
+            LEFT OUTER JOIN COMTCCMMNDETAILCODE CDC ON CDC.CODE_ID = 'LANG_CD' AND CDC.CODE = ISMG.MENU_GROUP_LOCALE
+        WHERE 1=1
+
+        <if test="@egovframework.com.cmm.util.EgovMybaitsUtil@isNotEmpty(siteId)">
+            AND ISMG.SITE_ID = #{siteId}
+        </if>
+
+        <if test="searchCondition == 1">
+			AND ISMG.MENU_GROUP_NM LIKE CONCAT('%' , #{searchKeyword} , '%')
+        </if>
+
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+    <insert id="insertSiteMenuGroup">
+		<![CDATA[
+            INSERT INTO INFO_SITE_MENU_GROUP (
+                     MENU_GROUP_ID
+                    ,MENU_GROUP_NM
+                    ,USE_YN
+                    ,REG_DT
+                    ,REG_ID
+                    ,MOD_DT
+                    ,MOD_ID
+                    ,MENU_GROUP_LOCALE
+                    ,SITE_ID
+
+            ) VALUES (
+                  #{menuGroupId}
+                , #{menuGroupNm}
+                , #{useYn}
+                , NOW()
+                , #{regId}
+                , NOW()
+                , #{modId}
+                , #{menuGroupLocale}
+                , #{siteId}
+            )
+        ]]>
+    </insert>
+
+    <update id="updateSiteMenuGroup">
+        UPDATE INFO_SITE_MENU_GROUP SET
+                  MENU_GROUP_ID = #{menuGroupId}
+                , MENU_GROUP_NM = #{menuGroupNm}
+                , USE_YN = #{useYn}
+                , REG_DT = NOW()
+                , REG_ID = #{regId}
+                , MOD_ID = #{modId}
+                , MENU_GROUP_LOCALE = #{menuGroupLocale}
+
+        WHERE  1=1
+            AND MENU_GROUP_ID = #{menuGroupId}
+    </update>
+
+</mapper>

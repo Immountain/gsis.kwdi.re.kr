@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoBoardCategoryDAO">
+
+    <select id="selectBoardCategory"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardCategoryVO"
+            resultType="infomind.com.cms.info.board.vo.InfoBoardCategoryVO">
+		SELECT
+            IBC.BOARD_CATEGORY_ID,
+            IBC.BOARD_ID,
+            IBC.BOARD_CATEGORY_NM,
+            IBC.ORD,
+            IBC.PARENT_ID,
+            IBC.DEPTH,
+            IBC.USE_YN,
+            IBC.REG_ID,
+            IBC.REG_DT,
+            IBC.MOD_ID,
+            IBC.MOD_DT
+		FROM INFO_BOARD_CATEGORY IBC
+		WHERE 1=1
+		AND IBC.BOARD_CATEGORY_ID = #{boardCategoryId}
+	</select>
+
+    <select id="selectBoardCategoryTotalCount"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardCategoryVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_BOARD_CATEGORY IBC
+        <if test="searchCondition == 1">
+            <![CDATA[	AND
+                IBS.BOARD_SKIN_ID LIKE '%' || #{searchKeyword} || '%'
+            ]]>
+        </if>
+        <if test="searchCondition == 2">
+            <![CDATA[
+                AND IBS.BOARD_SKIN_NM LIKE '%' || #{searchKeyword} || '%'
+            ]]>
+        </if>
+
+        WHERE 1=1
+    </select>
+
+    <select id="selectBoardCategoryList"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardCategoryVO"
+            resultType="infomind.com.cms.info.board.vo.InfoBoardCategoryVO">
+        SELECT *
+        FROM (
+        SELECT ROWNUM RNUM, ALL_LIST.*
+        FROM (
+        /* 구현 Sql */
+        SELECT
+            IBC.BOARD_CATEGORY_ID,
+            IBC.BOARD_ID,
+            IBC.BOARD_CATEGORY_NM,
+            IBC.ORD,
+            IBC.PARENT_ID,
+            IBC.DEPTH,
+            IBC.USE_YN,
+            IBC.REG_ID,
+            IBC.REG_DT,
+            IBC.MOD_ID,
+            IBC.MOD_DT
+        FROM INFO_BOARD_CATEGORY IBC
+        WHERE 1=1
+
+        AND BOARD_ID = #{boardId}
+
+        /* 구현 Sql */
+        ) ALL_LIST
+        )
+    </select>
+
+    <insert id="insertBoardCategory">
+		<![CDATA[
+            INSERT INTO  INFO_BOARD_CATEGORY (
+                BOARD_CATEGORY_ID,
+                BOARD_ID,
+                BOARD_CATEGORY_NM,
+                ORD,
+                PARENT_ID,
+                DEPTH,
+                USE_YN,
+                REG_ID,
+                REG_DT,
+                MOD_ID,
+                MOD_DT
+            ) VALUES (
+                #{boardCategoryId},
+                #{boardId},
+                #{boardCategoryNm},
+                #{ord},
+                #{parentId},
+                #{depth},
+                #{useYn},
+                #{regId},
+                SYSDATE,
+                #{modId},
+                SYSDATE
+            )
+        ]]>
+	</insert>
+
+    <update id="updateBoardCategory">
+        UPDATE INFO_BOARD_CATEGORY SET
+            BOARD_CATEGORY_NM = #{boardCategoryNm},
+            ORD = #{ord},
+            PARENT_ID = #{parentId},
+            DEPTH = #{depth},
+            USE_YN = #{useYn},
+            MOD_ID = #{modId},
+            MOD_DT = SYSDATE
+        WHERE  1=1
+        AND BOARD_CATEGORY_ID = #{boardCategoryId}
+	</update>
+
+
+
+    <select id="selectBoardCategoryDepthList"  parameterType="infomind.com.cms.info.board.vo.InfoBoardCategoryVO"   resultType="infomind.com.cms.info.board.vo.InfoBoardCategoryVO">
+
+          SELECT
+            IBC.BOARD_CATEGORY_ID,
+            IBC.BOARD_ID,
+            IBC.BOARD_CATEGORY_NM,
+            IBC.ORD,
+            IBC.PARENT_ID,
+            IBC.DEPTH,
+            IBC.USE_YN,
+            IBC.REG_ID,
+            IBC.REG_DT,
+            IBC.MOD_ID,
+            IBC.MOD_DT
+        FROM INFO_BOARD_CATEGORY IBC
+        WHERE 1=1
+        AND BOARD_ID = #{boardId}
+        order by IBC.ORD asc
+    </select>
+
+
+</mapper>

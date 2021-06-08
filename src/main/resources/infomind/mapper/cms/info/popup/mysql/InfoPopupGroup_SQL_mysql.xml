@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoPopupGroupDAO">
+
+    <select id="selectPopupGroup"
+            parameterType="infomind.com.cms.info.popup.vo.InfoPopupGroupVO"
+            resultType="infomind.com.cms.info.popup.vo.InfoPopupGroupVO">
+		SELECT
+             A.POPUP_GROUP_ID
+            ,A.POPUP_GROUP_NM
+            ,A.USE_YN
+            ,A.REG_ID
+            ,A.REG_DT
+            ,A.MOD_ID
+            ,A.MOD_DT
+		FROM INFO_POPUP_GROUP A
+		WHERE 1=1
+		AND A.POPUP_GROUP_ID =#{popupGroupId}
+	</select>
+
+    <select id="selectPopupGroupTotalCount"
+            parameterType="infomind.com.cms.info.popup.vo.InfoPopupGroupVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_POPUP_GROUP A
+        WHERE 1=1
+        <if test="searchCondition == 1">
+            <![CDATA[	AND
+                A.POPUP_GROUP_ID LIKE CONCAT('%' , #{searchKeyword} , '%')
+            ]]>
+        </if>
+        <if test="searchCondition == 2">
+            <![CDATA[
+                AND A.POPUP_GROUP_NM LIKE CONCAT('%' , #{searchKeyword} , '%')
+            ]]>
+        </if>
+
+
+    </select>
+
+    <select id="selectPopupGroupList"
+            parameterType="infomind.com.cms.info.popup.vo.InfoPopupGroupVO"
+            resultType="infomind.com.cms.info.popup.vo.InfoPopupGroupVO">
+
+        /* 구현 Sql */
+        SELECT
+            A.POPUP_GROUP_ID
+            ,A.POPUP_GROUP_NM
+            ,A.USE_YN
+            ,A.REG_ID
+            ,A.REG_DT
+            ,A.MOD_ID
+            ,A.MOD_DT
+            ,(CASE  A.USE_YN when 'Y' THEN '사용' else '사용안함' end ) as USE_YN_NM
+        FROM INFO_POPUP_GROUP A
+        WHERE 1=1
+
+        <if test="searchCondition == 1">
+            <![CDATA[	AND
+                A.POPUP_GROUP_ID LIKE CONCAT('%' , #{searchKeyword} , '%')
+            ]]>
+        </if>
+        <if test="searchCondition == 2">
+            <![CDATA[
+                AND A.POPUP_GROUP_NM LIKE CONCAT('%' , #{searchKeyword} , '%')
+            ]]>
+        </if>
+        order by A.REG_DT desc
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+
+    </select>
+
+    <insert id="insertPopupGroup">
+		<![CDATA[
+            INSERT INTO  INFO_POPUP_GROUP (
+                 POPUP_GROUP_ID
+                ,POPUP_GROUP_NM
+                ,USE_YN
+                ,REG_ID
+                ,REG_DT
+                ,MOD_ID
+                ,MOD_DT
+            ) VALUES (
+                 #{popupGroupId}
+                ,#{popupGroupNm}
+                ,#{useYn}
+                ,#{regId}
+                ,SYSDATE()
+                ,#{modId}
+                ,SYSDATE()
+            )
+        ]]>
+	</insert>
+
+    <update id="updatePopupGroup">
+        UPDATE INFO_POPUP_GROUP SET
+             POPUP_GROUP_ID = #{popupGroupId}
+            ,POPUP_GROUP_NM = #{popupGroupNm}
+            ,USE_YN = #{useYn}
+            ,REG_ID = #{regId}
+            ,REG_DT = SYSDATE()
+            ,MOD_ID = #{modId}
+            ,MOD_DT = SYSDATE()
+        WHERE  1=1
+        AND POPUP_GROUP_ID = #{popupGroupId}
+	</update>
+
+
+
+</mapper>

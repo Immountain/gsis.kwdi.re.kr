@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoSiteStatsDAO">
+
+    <select id="getSiteMenuStats" parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+        SELECT COUNT(*) AS cnt, SITE_MEMU_NM  AS titleName
+        FROM (
+            SELECT B.SITE_MEMU_NM
+                  ,A.V_DATE
+                  ,A.BROWSER_S
+            FROM INFO_SITE_VISIT A, INFO_SITE_MENU B
+            WHERE 1=1
+            AND A.SITE_URL =B.URL
+            AND TO_CHAR(A.V_DATE, 'YYYYMMDD') BETWEEN '20200101' AND '20201231'
+        ) A
+        GROUP BY SITE_MEMU_NM
+        ORDER BY CNT DESC
+    </select>
+
+    <select id="getSiteMenuBrowserStats" parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+        SELECT COUNT(*) AS CNT, BROWSER_S  AS titleName
+            FROM (
+                SELECT B.SITE_MEMU_NM
+                      ,A.V_DATE
+                      ,A.BROWSER_S
+                FROM INFO_SITE_VISIT A, INFO_SITE_MENU B
+                WHERE 1=1
+                AND A.SITE_URL =B.URL
+                AND TO_CHAR(A.V_DATE, 'YYYYMMDD') BETWEEN '20200101' AND '20201231'
+            )A
+            GROUP BY BROWSER_S
+            ORDER BY CNT DESC
+    </select>
+
+    <select id="getSiteMenuDayStats" parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+        SELECT COUNT(*) AS CNT, V_DATE  AS titleName
+        FROM (
+            SELECT B.SITE_MEMU_NM
+                  ,A.BROWSER_S
+                  ,TO_CHAR(A.V_DATE, 'YYYYMMDD') AS V_DATE
+            FROM INFO_SITE_VISIT A
+               ,INFO_SITE_MENU B
+            WHERE 1=1
+            AND A.SITE_URL =B.URL
+            AND TO_CHAR(A.V_DATE, 'YYYYMMDD') BETWEEN '20200101' AND '20201231'
+        )A
+        GROUP BY V_DATE
+        ORDER BY V_DATE ASC
+    </select>
+
+    <select id="getSiteMenuMonthStats" parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+        SELECT COUNT(*) AS CNT, V_DATE  AS titleName
+        FROM (
+            SELECT B.SITE_MEMU_NM
+                  ,A.BROWSER_S
+                  ,TO_CHAR(A.V_DATE, 'MM') AS V_DATE
+            FROM INFO_SITE_VISIT A
+               ,INFO_SITE_MENU B
+            WHERE 1=1
+            AND A.SITE_URL = B.URL
+            AND TO_CHAR(A.V_DATE, 'YYYYMMDD') BETWEEN '20200101' AND '20201231'
+        )A
+        GROUP BY V_DATE
+        ORDER BY V_DATE ASC
+    </select>
+
+    <select id="getSiteMenuYearStats" parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+      SELECT COUNT(*) AS CNT, V_DATE  AS titleName
+        FROM (
+            SELECT B.SITE_MEMU_NM, A.BROWSER_S, TO_CHAR(A.V_DATE, 'YYYY') AS V_DATE
+            FROM INFO_SITE_VISIT A, INFO_SITE_MENU B
+            WHERE 1=1
+            AND A.SITE_URL = B.URL
+        )A
+        GROUP BY V_DATE
+        ORDER BY V_DATE ASC
+    </select>
+</mapper>

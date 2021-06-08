@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WjProgramInfoDAO">
+
+    <select id="selectProgramInfo"
+            parameterType="wj.com.cms.wj.program.vo.WjProgramInfoVO"
+            resultType="wj.com.cms.wj.program.vo.WjProgramInfoVO">
+        SELECT
+             PI.FESTIVITY_ID
+            ,PI.PROGRAM_SNO
+            ,PI.PROGRAM_TITLE
+            ,PI.PROGRAM_DAY
+            ,PI.PROGRAM_STR_TIME
+            ,PI.PROGRAM_END_TIME
+            ,PI.PROGRAM_PLACE
+            ,PI.PROGRAM_ETC
+            ,PI.PAGE_TYPE
+            ,PI.ATCH_FILE_ID
+            ,PI.ORDER_CNT
+            ,PI.DELETE_YN
+            ,PI.REG_ID
+            ,PI.REG_DT
+            ,PI.MOD_ID
+            ,PI.MOD_DT
+            ,FI.FESTIVITY_NM
+        FROM WJ_PROGRAM_INFO PI
+            INNER JOIN WJ_FESTIVITY_INFO FI
+            ON PI.FESTIVITY_ID = FI.FESTIVITY_ID
+        WHERE 1=1
+          AND PI.PROGRAM_SNO = #{programSno}
+    </select>
+
+    <select id="selectProgramInfoTotalCount"
+            parameterType="wj.com.cms.wj.program.vo.WjProgramInfoVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM WJ_PROGRAM_INFO PI
+        INNER JOIN WJ_FESTIVITY_INFO FI
+        ON PI.FESTIVITY_ID = FI.FESTIVITY_ID
+        WHERE 1=1
+        AND PI.DELETE_YN = 'N'
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(festivityId)">
+            AND PI.FESTIVITY_ID = #{festivityId}
+        </if>
+        <if test="searchKeyword != null and searchKeyword != ''">
+            <if test="searchCondition == 1">AND
+                PI.PROGRAM_TITLE LIKE CONCAT('%' , #{searchKeyword}, '%')
+            </if>
+            <if test="searchCondition == 2">AND
+                PI.PROGRAM_PLACE LIKE CONCAT('%' , #{searchKeyword}, '%')
+            </if>
+        </if>
+
+    </select>
+
+    <select id="selectProgramInfoList"
+            parameterType="wj.com.cms.wj.program.vo.WjProgramInfoVO"
+            resultType="wj.com.cms.wj.program.vo.WjProgramInfoVO">
+        SELECT
+             PI.FESTIVITY_ID
+            ,PI.PROGRAM_SNO
+            ,PI.PROGRAM_TITLE
+            ,PI.PROGRAM_DAY
+            ,PI.PROGRAM_STR_TIME
+            ,PI.PROGRAM_END_TIME
+            ,PI.PROGRAM_PLACE
+            ,PI.PROGRAM_ETC
+            ,PI.PAGE_TYPE
+            ,PI.ATCH_FILE_ID
+            ,PI.ORDER_CNT
+            ,PI.DELETE_YN
+            ,PI.REG_ID
+            ,PI.REG_DT
+            ,PI.MOD_ID
+            ,PI.MOD_DT
+            ,FI.FESTIVITY_NM
+        FROM WJ_PROGRAM_INFO PI
+        INNER JOIN WJ_FESTIVITY_INFO FI
+        ON PI.FESTIVITY_ID = FI.FESTIVITY_ID
+        WHERE 1=1
+        AND PI.DELETE_YN = 'N'
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(festivityId)">
+            AND PI.FESTIVITY_ID = #{festivityId}
+        </if>
+        <if test="searchKeyword != null and searchKeyword != ''">
+            <if test="searchCondition == 1">AND
+                PI.PROGRAM_TITLE LIKE CONCAT('%' , #{searchKeyword}, '%')
+            </if>
+            <if test="searchCondition == 2">AND
+                PI.PROGRAM_PLACE LIKE CONCAT('%' , #{searchKeyword}, '%')
+            </if>
+        </if>
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+    <insert id="insertProgramInfo">
+		<![CDATA[
+        INSERT INTO  WJ_PROGRAM_INFO (
+             FESTIVITY_ID
+            ,PROGRAM_SNO
+            ,PROGRAM_TITLE
+            ,PROGRAM_DAY
+            ,PROGRAM_STR_TIME
+            ,PROGRAM_END_TIME
+            ,PROGRAM_PLACE
+            ,PROGRAM_ETC
+            ,PAGE_TYPE
+            ,ATCH_FILE_ID
+            ,ORDER_CNT
+            ,DELETE_YN
+            ,REG_ID
+            ,REG_DT
+        ) VALUES (
+
+             #{festivityId}
+            ,#{programSno}
+            ,#{programTitle}
+            ,REPLACE(#{programDay},'-','')
+            ,#{programStrTime}
+            ,#{programEndTime}
+            ,#{programPlace}
+            ,#{programEtc}
+            ,#{pageType}
+            ,#{atchFileId}
+            ,#{orderCnt}
+            ,'N'
+            ,#{regId}
+            ,NOW()
+                 )
+        ]]>
+	</insert>
+
+    <update id="updateProgramInfo">
+        UPDATE WJ_PROGRAM_INFO SET
+             FESTIVITY_ID = #{festivityId}
+            ,PROGRAM_SNO = #{programSno}
+            ,PROGRAM_TITLE = #{programTitle}
+            ,PROGRAM_DAY = REPLACE(#{programDay},'-','')
+            ,PROGRAM_STR_TIME = #{programStrTime}
+            ,PROGRAM_END_TIME = #{programEndTime}
+            ,PROGRAM_PLACE = #{programPlace}
+            ,PROGRAM_ETC = #{programEtc}
+            ,PAGE_TYPE = #{pageType}
+            ,ATCH_FILE_ID = #{atchFileId}
+            ,ORDER_CNT = #{orderCnt}
+            ,MOD_ID = #{modId}
+            ,MOD_DT = NOW()
+        WHERE  1=1
+          AND FESTIVITY_ID = #{festivityId}
+          AND PROGRAM_SNO = #{programSno}
+    </update>
+
+    <update id="deleteProgramInfo">
+        UPDATE WJ_PROGRAM_INFO SET
+            DELETE_YN = 'Y'
+            WHERE 1=1
+            AND PROGRAM_SNO = ${programSno}
+    </update>
+</mapper>

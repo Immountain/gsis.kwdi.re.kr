@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoBoardItemDAO">
+
+
+
+    <select id="selectInfoBoardItemTotalCount" parameterType="infomind.com.cms.info.board.vo.InfoBoardItemVO" resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_BOARD_ITEM A
+        WHERE 1=1
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(boardId)">
+            AND A.BOARD_ID = #{boardId}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(subKey)">
+            and  SUB_KEY=#{subKey}
+        </if>
+
+        <if test="deleteYn != ''">
+            and  DELETE_YN=#{deleteYn}
+        </if>
+        <if test="searchCondition == 1">    <![CDATA[	AND
+				A.TITLE LIKE CONCAT('%' , #{searchKeyword} , '%')	]]>
+        </if>
+        <if test="searchCondition == 2">
+            <![CDATA[	AND
+                A.MEMO LIKE CONCAT('%' , #{searchKeyword} , '%')
+            ]]>
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(category)">
+            AND A.CATEGORY = #{category}
+        </if>
+
+
+    </select>
+
+    <select id="selectInfoBoardItemList" parameterType="infomind.com.cms.info.board.vo.InfoBoardItemVO" resultType="infomind.com.cms.info.board.vo.InfoBoardItemVO">
+        SELECT
+             A.ITEM_ID
+            ,A.ID_CODE
+            ,A.BOARD_ID
+            ,A.TITLE
+            ,A.BOARD_CONTENT
+            ,A.MEMO
+            ,A.NOTICE_YN
+            ,A.NOTICE_START_DATE
+            ,A.NOTICE_END_DATE
+            ,A.SECRET_YN
+            ,A.PASSWORD
+            ,A.INQUIRE_TYPE
+            ,A.COMMENT_YN
+            ,A.FILE01
+            ,A.FILE02
+            ,A.FILE03
+            ,A.FILE04
+            ,A.FILE05
+            ,A.CATEGORY
+            ,A.CATEGORIES
+            ,A.LINK_TYPE
+            ,A.LINK_URL
+            ,IFNULL(A.READ_CNT,0) as READ_CNT
+            ,A.TEMP1
+            ,A.TEMP2
+            ,A.TEMP3
+            ,A.TEMP4
+            ,A.TEMP5
+            ,A.REG_ID
+            ,A.REG_DT
+            ,A.REG_IP
+            ,A.MOD_ID
+            ,A.MOD_DT
+            ,A.MOD_IP
+            ,A.BOARD_FILE
+            ,A.USE_YN
+            ,A.DELETE_YN
+            ,A.DELETE_TYPE
+            ,A.SUB_KEY
+            ,DATE_FORMAT(A.REG_DT,'%Y') AS REG_DT_YYYY
+            ,DATE_FORMAT(A.REG_DT,'%m') AS REG_DT_MM
+            ,DATE_FORMAT(A.REG_DT,'%d') AS REG_DT_DD
+            ,FN_USER_NM_BY_ESNTL_ID(A.REG_ID) as regNm
+            ,(
+
+
+                    select count(*) as cnt
+                    from info_file_detail
+                    where 1=1
+                    and ATCH_FILE_ID =A.BOARD_FILE
+                    and TEMP_YN='N'
+                    and DELETE_YN='N'
+
+            ) as fileCnt
+        ,SUBSTR(NOTICE_START_DATE, 1,4)   as NOTICE_START_YYYY
+        ,SUBSTR(NOTICE_START_DATE, 5,2) 	 as NOTICE_START_MM
+        ,SUBSTR(NOTICE_START_DATE, 7,2) 	 as NOTICE_START_DD
+        ,SUBSTR(NOTICE_START_DATE, 9,2)   as NOTICE_START_HOUR
+        ,SUBSTR(NOTICE_START_DATE, 11,2)  as NOTICE_START_MIN
+        ,SUBSTR(NOTICE_END_DATE, 1,4)    as NOTICE_END_YYYY
+        ,SUBSTR(NOTICE_END_DATE, 5,2) 	 as NOTICE_END_MM
+        ,SUBSTR(NOTICE_END_DATE, 7,2) 	 as NOTICE_END_DD
+        ,SUBSTR(NOTICE_END_DATE, 9,2)     as NOTICE_END_HOUR
+        ,SUBSTR(NOTICE_END_DATE, 11,2)    as NOTICE_END_MIN
+        ,case when DATE_FORMAT(SYSDATE(), '%Y%m%d%h%m') BETWEEN NOTICE_START_DATE and NOTICE_END_DATE  then 'Y' else 'N' end as checkDayYn
+       ,(select BOARD_CATEGORY_NM from info_board_category where 1=1
+        and BOARD_ID =A.BOARD_ID and BOARD_CATEGORY_ID = A.CATEGORY) as categoryNm
+
+
+        FROM INFO_BOARD_ITEM A
+        WHERE 1=1
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(boardId)">
+            AND A.BOARD_ID = #{boardId}
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(subKey)">
+            and  SUB_KEY=#{subKey}
+        </if>
+        <if test="deleteYn != ''">
+          and  DELETE_YN=#{deleteYn}
+        </if>
+
+
+        <if test="searchCondition == 1">    <![CDATA[	AND
+				A.TITLE LIKE CONCAT('%' , #{searchKeyword} , '%')	]]>
+        </if>
+        <if test="searchCondition == 2">
+            <![CDATA[	AND
+                A.MEMO LIKE CONCAT('%' , #{searchKeyword} , '%')
+            ]]>
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(category)">
+            AND A.CATEGORY = #{category}
+        </if>
+        order by A.ITEM_ID desc
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+
+
+    <insert id="insertBoardItem">
+		<![CDATA[
+            INSERT INTO  INFO_BOARD_ITEM (
+                    ITEM_ID
+                    ,ID_CODE
+                    ,BOARD_ID
+                    ,TITLE
+                    ,BOARD_CONTENT
+                    ,NOTICE_YN
+                    ,NOTICE_START_DATE
+                    ,NOTICE_END_DATE
+                    ,SECRET_YN
+                    ,PASSWORD
+                    ,INQUIRE_TYPE
+                    ,COMMENT_YN
+                    ,FILE01
+                    ,FILE02
+                    ,FILE03
+                    ,FILE04
+                    ,FILE05
+                    ,CATEGORY
+                    ,CATEGORIES
+                    ,LINK_TYPE
+                    ,LINK_URL
+                    ,READ_CNT
+                    ,TEMP1
+                    ,TEMP2
+                    ,TEMP3
+                    ,TEMP4
+                    ,TEMP5
+                    ,REG_ID
+                    ,REG_DT
+                    ,REG_IP
+                    ,MOD_ID
+                    ,MOD_DT
+                    ,MOD_IP
+                    ,BOARD_FILE
+                    ,MEMO
+                    ,USE_YN
+                    ,DELETE_YN
+                    ,DELETE_TYPE
+                    ,SUB_KEY
+            ) VALUES (
+                    #{itemId}
+                    ,#{idCode}
+                    ,#{boardId}
+                    ,#{title}
+                    ,#{boardContent}
+                    ,#{noticeYn}
+                    ,#{noticeStartDate}
+                    ,#{noticeEndDate}
+                    ,#{secretYn}
+                    ,#{password}
+                    ,#{inquireType}
+                    ,#{commentYn}
+                    ,#{file01}
+                    ,#{file02}
+                    ,#{file03}
+                    ,#{file04}
+                    ,#{file05}
+                    ,#{category}
+                    ,#{categories}
+                    ,#{linkType}
+                    ,#{linkUrl}
+                    ,#{readCnt}
+                    ,#{temp1}
+                    ,#{temp2}
+                    ,#{temp3}
+                    ,#{temp4}
+                    ,#{temp5}
+                    ,#{regId}
+                    ,SYSDATE()
+                    ,#{regIp}
+                    ,#{modId}
+                    ,SYSDATE()
+                    ,#{modIp}
+                    ,#{boardFile}
+                    ,#{memo}
+                    ,'Y'
+                    ,'N'
+                    ,#{deleteType}
+                    ,#{subKey}
+            )
+        ]]>
+	</insert>
+
+
+    <select id="selectBoardItem" parameterType="infomind.com.cms.info.board.vo.InfoBoardItemVO"  resultType="infomind.com.cms.info.board.vo.InfoBoardItemVO">
+	SELECT
+                A.ITEM_ID
+                ,A.ID_CODE
+                ,A.BOARD_ID
+                ,A.TITLE
+                ,A.BOARD_CONTENT
+                ,A.MEMO
+                ,A.NOTICE_YN
+                ,A.NOTICE_START_DATE
+                ,A.NOTICE_END_DATE
+                ,A.SECRET_YN
+                ,A.PASSWORD
+                ,A.INQUIRE_TYPE
+                ,A.COMMENT_YN
+                ,A.FILE01
+                ,A.FILE02
+                ,A.FILE03
+                ,A.FILE04
+                ,A.FILE05
+                ,A.CATEGORY
+                ,A.CATEGORIES
+                ,A.LINK_TYPE
+                ,A.LINK_URL
+                ,A.READ_CNT
+                ,A.TEMP1
+                ,A.TEMP2
+                ,A.TEMP3
+                ,A.TEMP4
+                ,A.TEMP5
+                ,A.REG_ID
+                ,A.REG_DT
+                ,A.REG_IP
+                ,A.MOD_ID
+                ,A.MOD_DT
+                ,A.MOD_IP
+                ,A.BOARD_FILE
+                ,A.USE_YN
+                ,A.DELETE_YN
+                ,A.DELETE_TYPE
+                ,A.SUB_KEY
+                ,DATE_FORMAT(A.REG_DT,'%Y') AS REG_DT_YYYY
+                ,DATE_FORMAT(A.REG_DT,'%m') AS REG_DT_MM
+                ,DATE_FORMAT(A.REG_DT,'%d') AS REG_DT_DD
+                ,FN_USER_NM_BY_ESNTL_ID(A.REG_ID) as regNm
+                ,(
+
+
+                    select count(*) as cnt
+                    from info_file_detail
+                    where 1=1
+                     and ATCH_FILE_ID =A.BOARD_FILE
+                    and TEMP_YN='N'
+                    and DELETE_YN='N'
+
+                ) as fileCnt
+                ,SUBSTR(NOTICE_START_DATE, 1,4)   as NOTICE_START_YYYY
+                ,SUBSTR(NOTICE_START_DATE, 5,2) 	 as NOTICE_START_MM
+                ,SUBSTR(NOTICE_START_DATE, 7,2) 	 as NOTICE_START_DD
+                ,SUBSTR(NOTICE_START_DATE, 9,2)   as NOTICE_START_HOUR
+                ,SUBSTR(NOTICE_START_DATE, 11,2)  as NOTICE_START_MIN
+                ,SUBSTR(NOTICE_END_DATE, 1,4)    as NOTICE_END_YYYY
+                ,SUBSTR(NOTICE_END_DATE, 5,2) 	 as NOTICE_END_MM
+                ,SUBSTR(NOTICE_END_DATE, 7,2) 	 as NOTICE_END_DD
+                ,SUBSTR(NOTICE_END_DATE, 9,2)     as NOTICE_END_HOUR
+                ,SUBSTR(NOTICE_END_DATE, 11,2)    as NOTICE_END_MIN
+                ,case when DATE_FORMAT(SYSDATE(), '%Y%m%d%h%m') BETWEEN NOTICE_START_DATE and NOTICE_END_DATE  then 'Y' else 'N' end as checkDayYn
+        FROM INFO_BOARD_ITEM A
+        WHERE 1=1
+        and A.ITEM_ID =#{itemId}
+        <if test="deleteYn != ''">
+            and  DELETE_YN=#{deleteYn}
+        </if>
+	</select>
+
+
+    <select id="selectInfoBoardItemNoticeList" parameterType="infomind.com.cms.info.board.vo.InfoBoardItemVO" resultType="infomind.com.cms.info.board.vo.InfoBoardItemVO">
+
+        SELECT
+            A.ITEM_ID
+            ,A.ID_CODE
+            ,A.BOARD_ID
+            ,A.TITLE
+            ,A.BOARD_CONTENT
+            ,A.MEMO
+            ,A.NOTICE_YN
+            ,A.NOTICE_START_DATE
+            ,A.NOTICE_END_DATE
+            ,A.SECRET_YN
+            ,A.PASSWORD
+            ,A.INQUIRE_TYPE
+            ,A.COMMENT_YN
+            ,A.FILE01
+            ,A.FILE02
+            ,A.FILE03
+            ,A.FILE04
+            ,A.FILE05
+            ,A.CATEGORY
+            ,A.CATEGORIES
+            ,A.LINK_TYPE
+            ,A.LINK_URL
+            ,A.READ_CNT
+            ,A.TEMP1
+            ,A.TEMP2
+            ,A.TEMP3
+            ,A.TEMP4
+            ,A.TEMP5
+            ,A.REG_ID
+            ,A.REG_DT
+            ,A.REG_IP
+            ,A.MOD_ID
+            ,A.MOD_DT
+            ,A.MOD_IP
+            ,A.BOARD_FILE
+            ,A.USE_YN
+            ,A.DELETE_YN
+            ,A.DELETE_TYPE
+            ,A.SUB_KEY
+            ,DATE_FORMAT(A.REG_DT,'%Y') AS REG_DT_YYYY
+            ,DATE_FORMAT(A.REG_DT,'%m') AS REG_DT_MM
+            ,DATE_FORMAT(A.REG_DT,'%d') AS REG_DT_DD
+            ,FN_USER_NM_BY_ESNTL_ID(A.REG_ID) as regNm
+            ,(
+
+
+                    select count(*) as cnt
+                    from info_file_detail
+                    where 1=1
+                     and ATCH_FILE_ID =A.BOARD_FILE
+                    and TEMP_YN='N'
+                    and DELETE_YN='N'
+
+                ) as fileCnt
+            ,SUBSTR(NOTICE_START_DATE, 1,4)   as NOTICE_START_YYYY
+            ,SUBSTR(NOTICE_START_DATE, 5,2) 	 as NOTICE_START_MM
+            ,SUBSTR(NOTICE_START_DATE, 7,2) 	 as NOTICE_START_DD
+            ,SUBSTR(NOTICE_START_DATE, 9,2)   as NOTICE_START_HOUR
+            ,SUBSTR(NOTICE_START_DATE, 11,2)  as NOTICE_START_MIN
+            ,SUBSTR(NOTICE_END_DATE, 1,4)    as NOTICE_END_YYYY
+            ,SUBSTR(NOTICE_END_DATE, 5,2) 	 as NOTICE_END_MM
+            ,SUBSTR(NOTICE_END_DATE, 7,2) 	 as NOTICE_END_DD
+            ,SUBSTR(NOTICE_END_DATE, 9,2)     as NOTICE_END_HOUR
+            ,SUBSTR(NOTICE_END_DATE, 11,2)    as NOTICE_END_MIN
+           ,case when DATE_FORMAT(SYSDATE(), '%Y%m%d%h%m') BETWEEN NOTICE_START_DATE and NOTICE_END_DATE  then 'Y' else 'N' end as checkDayYn
+       FROM INFO_BOARD_ITEM A
+           ,INFO_BOARD B
+       WHERE 1=1
+            AND A.BOARD_ID =B.BOARD_ID
+            AND B.USE_NOTICE='Y'
+            AND A.NOTICE_YN ='Y'
+            and A.BOARD_ID =#{boardId}
+            <if test="deleteYn != ''">
+                and  DELETE_YN=#{deleteYn}
+            </if>
+
+        <![CDATA[
+
+            AND NOTICE_START_DATE <=DATE_FORMAT(SYSDATE(), '%Y%m%d%h%m')
+            AND NOTICE_END_DATE>=DATE_FORMAT(SYSDATE(), '%Y%m%d%h%m')
+            ]]>
+
+    </select>
+
+    <update id="updateBoardReadCnt">
+
+
+        UPDATE INFO_BOARD_ITEM
+        SET READ_CNT =IFNULL(READ_CNT,0) +1
+        WHERE 1=1
+        AND ITEM_ID =#{itemId}
+
+    </update>
+
+
+    <update id="updateBoardItem">
+
+        UPDATE INFO_BOARD_ITEM
+            set
+
+
+                 TITLE              =#{title}
+                ,BOARD_CONTENT      =#{boardContent}
+                ,NOTICE_YN          =#{noticeYn}
+                ,NOTICE_START_DATE  =#{noticeStartDate}
+                ,NOTICE_END_DATE    =#{noticeEndDate}
+                ,SECRET_YN          =#{secretYn}
+                ,PASSWORD           =#{password}
+                ,INQUIRE_TYPE       =#{inquireType}
+                ,COMMENT_YN         =#{commentYn}
+                ,FILE01             =#{file01}
+                ,FILE02             =#{file02}
+                ,FILE03             =#{file03}
+                ,FILE04             =#{file04}
+                ,FILE05             =#{file05}
+                ,CATEGORY           =#{category}
+                ,CATEGORIES         =#{categories}
+                ,LINK_TYPE          =#{linkType}
+                ,LINK_URL           =#{linkUrl}
+                ,TEMP1              =#{temp1}
+                ,TEMP2              =#{temp2}
+                ,TEMP3              =#{temp3}
+                ,TEMP4              =#{temp4}
+                ,TEMP5              =#{temp5}
+                ,BOARD_FILE         =#{boardFile}
+                ,MEMO               =#{memo}
+                ,MOD_ID             =#{modId}
+                ,MOD_DT             =SYSDATE()
+                ,MOD_IP             =#{modIp}
+                ,USE_YN             =#{useYn}
+                ,SUB_KEY            =#{subKey}
+        WHERE 1=1
+        AND ITEM_ID =#{itemId}
+
+
+
+
+    </update>
+
+
+    <update id="deleteBoardItemId">
+        UPDATE INFO_BOARD_ITEM SET
+             DELETE_YN ='Y'
+           , DELETE_TYPE = #{deleteType}
+           , MOD_ID             =#{modId}
+           , MOD_DT             =SYSDATE()
+           , MOD_IP             =#{modIp}
+        WHERE 1=1
+        AND ITEM_ID = #{itemId}
+    </update>
+
+    <update id="restoreBoardItemId">
+        UPDATE INFO_BOARD_ITEM SET
+             DELETE_YN ='N'
+           , DELETE_TYPE = #{deleteType}
+           , MOD_ID             =#{modId}
+           , MOD_DT             =SYSDATE()
+           , MOD_IP             =#{modIp}
+        WHERE 1=1
+        AND ITEM_ID = #{itemId}
+    </update>
+
+
+
+    <select id="selectInfoBoardItemNoticeYnList" parameterType="infomind.com.cms.info.board.vo.InfoBoardItemVO" resultType="infomind.com.cms.info.board.vo.InfoBoardItemVO">
+
+        SELECT
+                A.ITEM_ID
+                ,A.ID_CODE
+                ,A.BOARD_ID
+                ,A.TITLE
+                ,A.BOARD_CONTENT
+                ,A.MEMO
+                ,A.NOTICE_YN
+                ,A.NOTICE_START_DATE
+                ,A.NOTICE_END_DATE
+                ,A.SECRET_YN
+                ,A.PASSWORD
+                ,A.INQUIRE_TYPE
+                ,A.COMMENT_YN
+                ,A.FILE01
+                ,A.FILE02
+                ,A.FILE03
+                ,A.FILE04
+                ,A.FILE05
+                ,A.CATEGORY
+                ,A.CATEGORIES
+                ,A.LINK_TYPE
+                ,A.LINK_URL
+                ,A.READ_CNT
+                ,A.TEMP1
+                ,A.TEMP2
+                ,A.TEMP3
+                ,A.TEMP4
+                ,A.TEMP5
+                ,A.REG_ID
+                ,A.REG_DT
+                ,A.REG_IP
+                ,A.MOD_ID
+                ,A.MOD_DT
+                ,A.MOD_IP
+                ,A.BOARD_FILE
+                ,A.USE_YN
+                ,A.DELETE_YN
+                ,A.DELETE_TYPE
+                ,A.SUB_KEY
+                ,DATE_FORMAT(A.REG_DT,'%Y') AS REG_DT_YYYY
+                ,DATE_FORMAT(A.REG_DT,'%m') AS REG_DT_MM
+                ,DATE_FORMAT(A.REG_DT,'%d') AS REG_DT_DD
+                ,FN_USER_NM_BY_ESNTL_ID(A.REG_ID) as regNm
+                ,(
+
+
+                        select count(*) as cnt
+                        from info_file_detail
+                        where 1=1
+                        and ATCH_FILE_ID =A.BOARD_FILE
+                        and TEMP_YN='N'
+                        and DELETE_YN='N'
+
+                ) as fileCnt
+                ,SUBSTR(NOTICE_START_DATE, 1,4)   as NOTICE_START_YYYY
+                ,SUBSTR(NOTICE_START_DATE, 5,2) 	 as NOTICE_START_MM
+                ,SUBSTR(NOTICE_START_DATE, 7,2) 	 as NOTICE_START_DD
+                ,SUBSTR(NOTICE_START_DATE, 9,2)   as NOTICE_START_HOUR
+                ,SUBSTR(NOTICE_START_DATE, 11,2)  as NOTICE_START_MIN
+                ,SUBSTR(NOTICE_END_DATE, 1,4)    as NOTICE_END_YYYY
+                ,SUBSTR(NOTICE_END_DATE, 5,2) 	 as NOTICE_END_MM
+                ,SUBSTR(NOTICE_END_DATE, 7,2) 	 as NOTICE_END_DD
+                ,SUBSTR(NOTICE_END_DATE, 9,2)     as NOTICE_END_HOUR
+                ,SUBSTR(NOTICE_END_DATE, 11,2)    as NOTICE_END_MIN
+                ,case when DATE_FORMAT(SYSDATE(), '%Y%m%d%h%m') BETWEEN NOTICE_START_DATE and NOTICE_END_DATE  then 'Y' else 'N' end as checkDayYn
+        FROM INFO_BOARD_ITEM A
+            ,INFO_BOARD B
+        WHERE 1=1
+        AND A.BOARD_ID =B.BOARD_ID
+
+        <if test="noticeYn != ''">
+            AND A.NOTICE_YN =#{noticeYn}
+        </if>
+        and A.BOARD_ID =#{boardId}
+        and A.DELETE_YN='N'
+
+
+      order by A.ITEM_ID desc
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+
+
+</mapper>

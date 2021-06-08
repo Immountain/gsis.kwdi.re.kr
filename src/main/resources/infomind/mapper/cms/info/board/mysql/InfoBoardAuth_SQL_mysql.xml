@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoBoardAuthDAO">
+
+    <resultMap id="boardAuthConfigMap" type="infomind.com.cms.info.board.vo.InfoBoardAuthConfigVO" autoMapping="true">
+        <id property="authTypeId" column="AUTH_TYPE_ID"/>
+        <result property="boardId" column="BOARD_ID"/>
+        <result property="authType" column="AUTH_TYPE"/>
+        <collection property="auths" ofType="infomind.com.cms.info.board.vo.InfoBoardAuthVO" autoMapping="true"/>
+    </resultMap>
+
+    <select id="selectBoardAuthConfigMap"
+            resultMap="boardAuthConfigMap"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardAuthVO">
+
+          select BOARD_AUTH_ID
+                ,#{boardId} as BOARD_ID
+                ,'common_not_login' as AUTH_TYPE
+                ,'common_not_login' as AUTH_TYPE_ID
+                ,A.AUTH_ACCESS
+
+          from
+          (
+
+                SELECT 'list' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'read' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'write' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'comment' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'reply' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'notice' AS AUTH_ACCESS FROM DUAL
+
+          ) a left join (
+              select    BOARD_AUTH_ID,
+                        BOARD_ID,
+                        AUTH_TYPE,
+                        AUTH_TYPE_ID,
+                        AUTH_ACCESS
+                  from info_board_auth b
+                  where 1=1
+                  and b.AUTH_TYPE ='common_not_login'
+                  and BOARD_ID =#{boardId}
+            )b
+            on a.AUTH_ACCESS =b.AUTH_ACCESS
+            UNION
+            select
+
+                 BOARD_AUTH_ID
+                ,#{boardId} as BOARD_ID
+                ,'common_login' as AUTH_TYPE
+                ,'common_login' as AUTH_TYPE_ID
+                ,A.AUTH_ACCESS
+          from
+          (
+                SELECT 'list' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'read' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'write' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'comment' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'reply' AS AUTH_ACCESS FROM DUAL UNION
+                SELECT 'notice' AS AUTH_ACCESS FROM DUAL
+
+          ) a left join (
+              select    BOARD_AUTH_ID,
+                        BOARD_ID,
+                        AUTH_TYPE,
+                        AUTH_TYPE_ID,
+                        AUTH_ACCESS
+                  from info_board_auth b
+                  where 1=1
+                  and b.AUTH_TYPE ='common_login'
+                  and BOARD_ID =#{boardId}
+            )b
+            on a.AUTH_ACCESS =b.AUTH_ACCESS
+            UNION
+
+
+           select BOARD_AUTH_ID
+                , BOARD_ID
+                , AUTH_TYPE
+                , AUTH_TYPE_ID
+                , AUTH_ACCESS
+
+              from info_board_auth b
+              where 1=1
+              and b.AUTH_TYPE not in('common_not_login','common_login')
+              and BOARD_ID =#{boardId}
+    </select>
+
+    <delete id="deleteBoardAuthConfig" parameterType="java.lang.String">
+        DELETE FROM INFO_BOARD_AUTH
+        WHERE 1=1
+        AND BOARD_ID = #{boardId}
+    </delete>
+
+    <select id="selectBoardAuth"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardAuthVO"
+            resultType="infomind.com.cms.info.board.vo.InfoBoardAuthVO">
+		SELECT
+            IBA.BOARD_AUTH_ID,
+            IBA.BOARD_ID,
+            IBA.AUTH_TYPE,
+            IBA.AUTH_TYPE_ID,
+            IBA.AUTH_ACCESS,
+            IBA.REG_ID,
+            IBA.REG_DT
+		FROM INFO_BOARD_AUTH IBA
+		WHERE 1=1
+		AND IBA.BOARD_AUTH_ID = #{boardAuthId}
+	</select>
+
+    <select id="selectBoardAuthTotalCount"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardAuthVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_BOARD_AUTH IBA
+        <if test="searchCondition == 1">
+            <![CDATA[	AND
+                IBA.BOARD_AUTH_ID LIKE '%' || #{searchKeyword} || '%'
+            ]]>
+        </if>
+
+        WHERE 1=1
+    </select>
+
+    <select id="selectBoardAuthList"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardAuthVO"
+            resultType="infomind.com.cms.info.board.vo.InfoBoardAuthVO">
+
+            /* 구현 Sql */
+            SELECT
+                IBA.BOARD_AUTH_ID,
+                IBA.BOARD_ID,
+                IBA.AUTH_TYPE,
+                IBA.AUTH_TYPE_ID,
+                IBA.AUTH_ACCESS,
+                IBA.REG_ID,
+                IBA.REG_DT
+            FROM INFO_BOARD_AUTH IBA
+            WHERE 1=1
+
+            <if test="searchCondition == 1">    <![CDATA[	AND
+                IBA.BOARD_AUTH_ID LIKE '%' || #{searchKeyword} || '%'	]]>
+            </if>
+
+          order by REG_DT desc
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+
+    </select>
+
+    <insert id="insertBoardAuth">
+		<![CDATA[
+            INSERT INTO  INFO_BOARD_AUTH (
+                BOARD_AUTH_ID,
+                BOARD_ID,
+                AUTH_TYPE,
+                AUTH_TYPE_ID,
+                AUTH_ACCESS,
+                REG_ID,
+                REG_DT
+            ) VALUES (
+                #{boardAuthId},
+                #{boardId},
+                #{authType},
+                #{authTypeId},
+                #{authAccess},
+                #{regId},
+                SYSDATE()
+            )
+        ]]>
+	</insert>
+
+    <update id="updateBoardAuth">
+        UPDATE INFO_BOARD_AUTH SET
+            BOARD_AUTH_ID = #{boardAuthId},
+            BOARD_ID = #{boardId},
+            AUTH_TYPE = #{authType},
+            AUTH_TYPE_ID = #{authTypeId},
+            AUTH_ACCESS = #{authAccess}
+
+        WHERE  1=1
+        AND BOARD_AUTH_ID = #{boardAuthId}
+	</update>
+
+
+
+    <select id="selectBoardAuthInfo"  parameterType="infomind.com.cms.info.board.vo.InfoBoardAuthVO"  resultType="infomind.com.cms.info.board.vo.InfoBoardAuthVO">
+
+        SELECT  IFNULL(SUM( CASE AUTH_ACCESS when 'comment' THEN 1 ELSE 0 end ),0)  AS COMMENT_YN
+               ,IFNULL(SUM( CASE AUTH_ACCESS when 'list' THEN 1 ELSE 0 end ) ,0)    AS LIST_YN
+               ,IFNULL(SUM( CASE AUTH_ACCESS when 'read' THEN 1 ELSE 0 end ) ,0)     AS READ_YN
+               ,IFNULL(SUM( CASE AUTH_ACCESS when 'reply' THEN 1 ELSE 0 end ) ,0)    AS REPLY_YN
+               ,IFNULL(SUM( CASE AUTH_ACCESS when 'write' THEN 1 ELSE 0 end )  ,0)   AS WRITE_YN
+               ,IFNULL(SUM( CASE AUTH_ACCESS when 'notice' THEN 1 ELSE 0 end ) ,0)   AS NOTICE_YN
+              ,IFNULL(SUM( CASE AUTH_ACCESS when 'modify' THEN 1 ELSE 0 end ) ,0)   AS MODIFY_YN
+        FROM (
+              SELECT BOARD_ID
+                    ,AUTH_ACCESS
+              FROM INFO_BOARD_AUTH
+              WHERE 1=1
+              AND BOARD_ID =#{boardId}
+              AND AUTH_TYPE =#{commonNotLogin}
+              UNION
+                    SELECT BOARD_ID
+                    ,AUTH_ACCESS
+              FROM INFO_BOARD_AUTH
+              WHERE 1=1
+              AND BOARD_ID =#{boardId}
+              AND AUTH_TYPE =#{commonLogin}
+              UNION
+              SELECT BOARD_ID
+                    ,AUTH_ACCESS
+              FROM INFO_BOARD_AUTH
+              WHERE 1=1
+              AND BOARD_ID =#{boardId}
+              AND AUTH_TYPE ='group'
+              AND  AUTH_TYPE_ID =#{group}
+              UNION
+              SELECT BOARD_ID
+                    ,AUTH_ACCESS
+              FROM INFO_BOARD_AUTH
+              WHERE 1=1
+              AND BOARD_ID =#{boardId}
+              AND AUTH_TYPE ='orgnzt'
+              AND  AUTH_TYPE_ID =#{orgnzt}
+              UNION
+              SELECT BOARD_ID
+                      ,'modify' AS AUTH_ACCESS
+                FROM INFO_BOARD_ITEM
+                WHERE 1=1
+                AND ITEM_ID=#{itemId}
+                AND REG_ID =#{regId}
+
+
+        ) a WHERE 1=1
+
+
+
+
+
+
+    </select>
+
+</mapper>

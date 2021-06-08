@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="themeLayout" preparer="infomind.com.view.InfoLayoutTilesViewPreparer" templateExpression=""/>
+
+    <!--page-->
+    <definition name="*.page" extends="themeLayout">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}.jsp" />
+    </definition>
+    <definition name="*/*.page" extends="themeLayout">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}.jsp" />
+    </definition>
+    <definition name="*/*/*.page" extends="themeLayout">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+    </definition>
+    <definition name="*/*/*/*.page" extends="themeLayout">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*.page" extends="themeLayout">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}.jsp" />
+    </definition>
+    <definition name="*/*/*/*/*/*.page" extends="themeLayout">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}.jsp" />
+    </definition>
+
+</tiles-definitions>

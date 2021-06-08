@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoSmsInfoDAO">
+
+
+
+    <insert id="insert">
+
+            INSERT INTO INFO_SMS_INFO
+                (
+                     SMS_INFO_ID
+                    ,SMS_NUM
+                    ,SMS_GB
+                    ,SMS_TYPE
+                    ,SMS_CHECK_YN
+                    ,REG_DT
+                    ,REG_IP
+                    ,MOD_DT
+                    ,MOD_IP
+                    ,SMS_MSG
+
+                    )
+            VALUES (
+                     #{smsInfoId}
+                    ,#{smsNum}
+                    ,#{smsGb}
+                    ,#{smsType}
+                    ,'N'
+                    ,SYSDATE()
+                    ,#{regIp}
+                    ,SYSDATE()
+                    ,#{modIp}
+                    ,#{smsMsg}
+
+
+	                )
+
+    </insert>
+
+
+    <update id="update">
+
+        UPDATE INFO_SMS_INFO
+            SET SMS_CHECK_YN ='Y'
+               ,SMS_MSG =#{smsMsg}
+               ,MOD_DT =SYSDATE()
+               ,MOD_IP =#{modIp}
+        WHERE SMS_INFO_ID=#{smsInfoId}
+         and  SMS_NUM =#{smsNum}
+
+    </update>
+
+    <select id="selectSmsCheckCount" parameterType="infomind.com.sms.vo.InfoSmsInfoVO" resultType="int">
+
+        SELECT count(*) as cnt
+        FROM INFO_SMS_INFO
+        WHERE 1=1
+        AND SMS_INFO_ID=#{smsInfoId}
+        AND SMS_NUM =#{smsNum}
+
+
+    </select>
+
+</mapper>

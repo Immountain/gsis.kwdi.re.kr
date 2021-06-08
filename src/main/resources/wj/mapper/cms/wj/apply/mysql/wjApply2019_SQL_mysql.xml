@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WjApply2019DAO">
+
+    <select id="selectWjApply2019"
+            parameterType="wj.com.cms.wj.apply.vo.WjApply2019VO"
+            resultType="wj.com.cms.wj.apply.vo.WjApply2019VO">
+
+        SELECT
+             A.NO_SNO
+            ,A.KNAME
+            ,A.ENAME
+            ,A.CNAME
+            ,A.PIC
+            ,A.SEX
+            ,A.BIRTH_YEAR
+            ,A.BIRTH_MONTH
+            ,A.BIRTH_DAY
+            ,A.AGE
+            ,A.NATIONALITY
+            ,A.KOREAN
+            ,A.LANGUAGE
+            ,A.ADDRESS
+            ,A.ADDRESS_ETC
+            ,A.COUNTRY
+            ,A.COUNTRY_ETC
+            ,A.STAY_ABROAD
+            ,A.HP
+            ,A.TEL1
+            ,A.TEL2
+            ,A.TEL3
+            ,A.EMAIL
+            ,A.COMPANY
+            ,A.SPOT
+            ,A.ARRIVE_MONTH
+            ,A.ARRIVE_DAY
+            ,A.DEPARTURE_MONTH
+            ,A.DEPARTURE_DAY
+            ,A.HOTEL_USE
+            ,A.GUESTS_NAME
+            ,A.DAY_2_PROGRAM
+            ,A.DAY_2_PROGRAM_DINNER
+            ,A.DAY_3_PROGRAM
+            ,A.OVERSEAS
+            ,A.OVERSEAS_GROUP
+            ,A.CAREER
+            ,A.WDATE
+            ,A.UDATE
+            ,A.ETC1
+            ,A.AGREE
+            ,A.ETC3
+            ,A.ETC4
+            ,A.ETC5
+            ,A.ETC6
+            ,A.ETC7
+            ,A.ETC8
+            ,A.ETC9
+            ,A.ETC10
+        FROM WJ_APPLY_2019 A
+        WHERE 1=1
+            AND A.NO_SNO = #{noSno}
+    </select>
+
+    <select id="selectWjApply2019TotalCount"
+            parameterType="wj.com.cms.wj.apply.vo.WjApply2019VO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM WJ_APPLY_2019 A
+        WHERE 1=1
+        <if test="searchCondition == 1">AND
+            A.KNAME LIKE CONCAT('%' , #{searchKeyword}, '%')
+        </if>
+        <if test="searchCondition == 2">AND
+            A.NATIONALITY LIKE CONCAT('%' , #{searchKeyword}, '%')
+        </if>
+
+    </select>
+
+    <select id="selectWjApply2019List"
+            parameterType="wj.com.cms.wj.apply.vo.WjApply2019VO"
+            resultType="wj.com.cms.wj.apply.vo.WjApply2019VO">
+        SELECT
+             A.NO_SNO
+            ,A.KNAME
+            ,A.ENAME
+            ,A.CNAME
+            ,A.PIC
+            ,A.SEX
+            ,A.BIRTH_YEAR
+            ,A.BIRTH_MONTH
+            ,A.BIRTH_DAY
+            ,A.AGE
+            ,A.NATIONALITY
+            ,A.KOREAN
+            ,A.LANGUAGE
+            ,A.ADDRESS
+            ,A.ADDRESS_ETC
+            ,A.COUNTRY
+            ,A.COUNTRY_ETC
+            ,A.STAY_ABROAD
+            ,A.HP
+            ,A.TEL1
+            ,A.TEL2
+            ,A.TEL3
+            ,A.EMAIL
+            ,A.COMPANY
+            ,A.SPOT
+            ,A.ARRIVE_MONTH
+            ,A.ARRIVE_DAY
+            ,A.DEPARTURE_MONTH
+            ,A.DEPARTURE_DAY
+            ,A.HOTEL_USE
+            ,A.GUESTS_NAME
+            ,A.DAY_2_PROGRAM
+            ,A.DAY_2_PROGRAM_DINNER
+            ,A.DAY_3_PROGRAM
+            ,A.OVERSEAS
+            ,A.OVERSEAS_GROUP
+            ,A.CAREER
+            ,A.WDATE
+            ,A.UDATE
+            ,A.ETC1
+            ,A.AGREE
+            ,A.ETC3
+            ,A.ETC4
+            ,A.ETC5
+            ,A.ETC6
+            ,A.ETC7
+            ,A.ETC8
+            ,A.ETC9
+            ,A.ETC10
+        FROM WJ_APPLY_2019 A
+        WHERE 1=1
+        <if test="searchCondition == 1">AND
+            A.KNAME LIKE CONCAT('%' , #{searchKeyword}, '%')
+        </if>
+        <if test="searchCondition == 2">AND
+            A.NATIONALITY LIKE CONCAT('%' , #{searchKeyword}, '%')
+        </if>
+        ORDER BY A.WDATE DESC
+    </select>
+
+    <insert id="insertWjApply2019">
+		<![CDATA[
+        INSERT INTO  WJ_APPLY_2019 (
+             NO_SNO
+            ,KNAME
+            ,ENAME
+            ,CNAME
+            ,PIC
+            ,SEX
+            ,BIRTH_YEAR
+            ,BIRTH_MONTH
+            ,BIRTH_DAY
+            ,AGE
+            ,NATIONALITY
+            ,KOREAN
+            ,LANGUAGE
+            ,ADDRESS
+            ,ADDRESS_ETC
+            ,COUNTRY
+            ,COUNTRY_ETC
+            ,STAY_ABROAD
+            ,HP
+            ,TEL1
+            ,TEL2
+            ,TEL3
+            ,EMAIL
+            ,COMPANY
+            ,SPOT
+            ,ARRIVE_MONTH
+            ,ARRIVE_DAY
+            ,DEPARTURE_MONTH
+            ,DEPARTURE_DAY
+            ,HOTEL_USE
+            ,GUESTS_NAME
+            ,DAY_2_PROGRAM
+            ,DAY_2_PROGRAM_DINNER
+            ,DAY_3_PROGRAM
+            ,OVERSEAS
+            ,OVERSEAS_GROUP
+            ,CAREER
+            ,WDATE
+            ,ETC1
+            ,AGREE
+            ,ETC3
+            ,ETC4
+            ,ETC5
+            ,ETC6
+            ,ETC7
+            ,ETC8
+            ,ETC9
+            ,ETC10
+        ) VALUES (
+             #{noSno}
+            ,#{kname}
+            ,#{ename}
+            ,#{cname}
+            ,#{pic}
+            ,#{sex}
+            ,#{birthYear}
+            ,#{birthMonth}
+            ,#{birthDay}
+            ,#{age}
+            ,#{nationality}
+            ,#{korean}
+            ,#{language}
+            ,#{address}
+            ,#{addressEtc}
+            ,#{country}
+            ,#{countryEtc}
+            ,#{stayAbroad}
+            ,#{hp}
+            ,#{tel1}
+            ,#{tel2}
+            ,#{tel3}
+            ,#{email}
+            ,#{company}
+            ,#{spot}
+            ,#{arriveMonth}
+            ,#{arriveDay}
+            ,#{departureMonth}
+            ,#{departureDay}
+            ,#{hotelUse}
+            ,#{guestsName}
+            ,#{day2Program}
+            ,#{day2ProgramDinner}
+            ,#{day3Program}
+            ,#{overseas}
+            ,#{overseasGroup}
+            ,#{career}
+            ,NOW()
+            ,#{etc1}
+            ,#{agree}
+            ,#{etc3}
+            ,#{etc4}
+            ,#{etc5}
+            ,#{etc6}
+            ,#{etc7}
+            ,#{etc8}
+            ,#{etc9}
+            ,#{etc10}
+                 )
+        ]]>
+	</insert>
+
+    <update id="updateWjApply2019">
+        UPDATE WJ_APPLY_2019 SET
+             NO_SNO = #{noSno}
+            ,KNAME = #{kname}
+            ,ENAME = #{ename}
+            ,CNAME = #{cname}
+            ,PIC = #{pic}
+            ,SEX = #{sex}
+            ,BIRTH_YEAR = #{birthYear}
+            ,BIRTH_MONTH = #{birthMonth}
+            ,BIRTH_DAY = #{birthDay}
+            ,AGE = #{age}
+            ,NATIONALITY = #{nationality}
+            ,KOREAN = #{korean}
+            ,LANGUAGE = #{language}
+            ,ADDRESS = #{address}
+            ,ADDRESS_ETC = #{addressEtc}
+            ,COUNTRY = #{country}
+            ,COUNTRY_ETC = #{countryEtc}
+            ,STAY_ABROAD = #{stayAbroad}
+            ,HP = #{hp}
+            ,TEL1 = #{tel1}
+            ,TEL2 = #{tel2}
+            ,TEL3 = #{tel3}
+            ,EMAIL = #{email}
+            ,COMPANY = #{company}
+            ,SPOT = #{spot}
+            ,ARRIVE_MONTH = #{arriveMonth}
+            ,ARRIVE_DAY = #{arriveDay}
+            ,DEPARTURE_MONTH = #{departureMonth}
+            ,DEPARTURE_DAY = #{departureDay}
+            ,HOTEL_USE = #{hotelUse}
+            ,GUESTS_NAME = #{guestsName}
+            ,DAY_2_PROGRAM = #{day2Program}
+            ,DAY_2_PROGRAM_DINNER = #{day2ProgramDinner}
+            ,DAY_3_PROGRAM = #{day3Program}
+            ,OVERSEAS = #{overseas}
+            ,OVERSEAS_GROUP = #{overseasGroup}
+            ,CAREER = #{career}
+            ,UDATE = #{udate}
+            ,ETC1 = #{etc1}
+            ,AGREE = #{agree}
+            ,ETC3 = #{etc3}
+            ,ETC4 = #{etc4}
+            ,ETC5 = #{etc5}
+            ,ETC6 = #{etc6}
+            ,ETC7 = #{etc7}
+            ,ETC8 = #{etc8}
+            ,ETC9 = #{etc9}
+            ,ETC10 = #{etc10}
+        WHERE  1=1
+          AND NO_SNO = #{noSno}
+    </update>
+
+</mapper>

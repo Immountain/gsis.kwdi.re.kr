@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoGroupManageDAO">
+
+	<resultMap id="group" type="infomind.com.cms.sec.gmt.vo.InfoGroupManageVO">
+        <result property="groupId" column="GROUP_ID"/>
+		<result property="groupNm" column="GROUP_NM"/>
+		<result property="groupDc" column="GROUP_DC"/>
+        <result property="groupCreatDe" column="GROUP_CREAT_DE"/>
+		<result property="groupOrganYn" column="GROUP_ORGAN_YN"/>
+	</resultMap>
+
+    <select id="selectInfoGroup" parameterType="infomind.com.cms.sec.gmt.vo.InfoGroupManageVO" resultMap="group">
+        
+            SELECT GROUP_ID, GROUP_NM, GROUP_DC, GROUP_CREAT_DE,GROUP_ORGAN_YN
+              FROM COMTNAUTHORGROUPINFO 
+             WHERE GROUP_ID=#{groupId}
+        
+    </select>
+
+    <select id="selectInfoGroupList" parameterType="infomind.com.cms.sec.gmt.vo.InfoGroupManageVO" resultMap="group">
+
+            SELECT GROUP_ID, GROUP_NM, GROUP_DC, GROUP_CREAT_DE ,GROUP_ORGAN_YN
+              FROM COMTNAUTHORGROUPINFO
+             WHERE 1=1
+            <if test="searchCondition == 1">AND
+                GROUP_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
+            </if>
+            ORDER BY GROUP_CREAT_DE DESC
+            LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+
+
+	<select id="selectCheckInfoGroupList" parameterType="infomind.com.cms.sec.gmt.vo.InfoGroupManageVO" resultMap="group">
+
+		SELECT GROUP_ID, GROUP_NM, GROUP_DC, GROUP_CREAT_DE ,GROUP_ORGAN_YN
+		FROM COMTNAUTHORGROUPINFO
+		WHERE 1=1
+		<if test='groupOrganYn != null and groupOrganYn neq "0" and groupOrganYn neq ""'>
+			and GROUP_ORGAN_YN =#{groupOrganYn}
+		</if>
+
+
+
+	</select>
+
+
+	<insert id="insertInfoGroup">
+		
+			INSERT INTO COMTNAUTHORGROUPINFO 
+				  ( GROUP_ID
+				  , GROUP_NM
+				  , GROUP_DC
+				  , GROUP_CREAT_DE
+				  , GROUP_ORGAN_YN
+				  )
+		   VALUES ( #{groupId}
+			      , #{groupNm}
+				  , #{groupDc}
+				  , now()
+				  , #{groupOrganYn}
+				  )
+		
+	</insert>
+	
+	<update id="updateInfoGroup" parameterType="infomind.com.cms.sec.gmt.vo.InfoGroupManage">
+		
+			UPDATE COMTNAUTHORGROUPINFO 
+			   SET GROUP_NM=#{groupNm}
+				 , GROUP_DC=#{groupDc}
+				 , GROUP_CREAT_DE=now()
+				 , GROUP_ORGAN_YN =#{groupOrganYn}
+		  	 WHERE GROUP_ID=#{groupId}
+		
+	</update>
+	
+	<delete id="deleteInfoGroup">
+		
+			DELETE FROM COMTNAUTHORGROUPINFO 
+			 WHERE GROUP_ID=#{groupId}
+		
+	</delete>
+	
+	<select id="selectInfoGroupListTotCnt" parameterType="infomind.com.cms.sec.gmt.vo.InfoGroupManageVO" resultType="int">
+
+			SELECT COUNT(*) totcnt
+			FROM COMTNAUTHORGROUPINFO
+			WHERE 1=1
+			<if test="searchCondition == 1">AND
+				GROUP_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
+			</if>
+	</select>
+
+</mapper>

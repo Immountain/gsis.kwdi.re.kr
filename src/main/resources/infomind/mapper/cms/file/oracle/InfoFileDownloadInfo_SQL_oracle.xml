@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoFileDownloadInfoDAO">
+
+        <select id="selectInfoFileDownloadInfo"  parameterType="infomind.com.file.vo.InfoFileDownloadInfoVO"  resultType="infomind.com.file.vo.InfoFileDownloadInfoVO">
+                        SELECT
+
+                         IFDI.FILE_DOWNLOAD_SNO
+                        ,IFDI.ATCH_FILE_ID
+                        ,IFDI.FILE_SN
+                        ,IFDI.IP
+                        ,IFDI.OS
+                        ,IFDI.BROWSER
+                        ,IFDI.LOC
+                        ,IFDI.USER_AGENT
+                        ,IFDI.REG_DT
+                        ,IFDI.REG_ID
+                        ,IFDI.BROWSER_S
+                        ,IFDI.REFERER_URL
+
+                        FROM INFO_FILE_DOWNLOAD_INFO IFDI
+                        WHERE 1=1
+                        AND IFDI.ATCH_FILE_ID = #{atchFileId}
+        </select>
+
+                <select id="selectInfoFileDownloadInfoTotalCount"
+                parameterType="infomind.com.file.vo.InfoFileDownloadInfoVO"
+                resultType="int">
+                SELECT COUNT(*) totcnt
+                FROM INFO_FILE_DOWNLOAD_INFO IFDI
+                WHERE 1=1
+        </select>
+
+                <select id="selectInfoFileDownloadInfoList"
+                        parameterType="infomind.com.file.vo.InfoFileDownloadInfoVO"
+                        resultType="infomind.com.file.vo.InfoFileDownloadInfoVO">
+                                SELECT *
+                                FROM (
+                                SELECT ROWNUM RNUM, ALL_LIST.*
+                                FROM (
+                                /* 구현 Sql */
+                                SELECT
+                                IFDI.FILE_DOWNLOAD_SNO
+                                ,IFDI.ATCH_FILE_ID
+                                ,IFDI.FILE_SN
+                                ,IFDI.IP
+                                ,IFDI.OS
+                                ,IFDI.BROWSER
+                                ,IFDI.LOC
+                                ,IFDI.USER_AGENT
+                                ,IFDI.REG_DT
+                                ,IFDI.REG_ID
+                                ,IFDI.BROWSER_S
+                                ,IFDI.REFERER_URL
+                                FROM INFO_FILE_DOWNLOAD_INFO IFDI
+                                WHERE 1=1
+
+                                ) ALL_LIST
+                                )
+                                WHERE RNUM <![CDATA[  > ]]> #{firstIndex}
+                                AND   RNUM <![CDATA[ <= ]]> #{firstIndex} + #{recordCountPerPage}
+        </select>
+
+        <insert id="insertInfoFileDownloadInfo">
+                <![CDATA[
+                INSERT INTO INFO_FILE_DOWNLOAD_INFO (
+                FILE_DOWNLOAD_SNO
+                ,ATCH_FILE_ID
+                ,FILE_SN
+                ,IP
+                ,OS
+                ,BROWSER
+                ,LOC
+                ,USER_AGENT
+                ,REG_DT
+                ,REG_ID
+                ,BROWSER_S
+                ,REFERER_URL
+                ,IS_DEVIEC
+                ) VALUES (
+                #{fileDownloadSno}
+                ,#{atchFileId}
+                ,#{fileSn}
+                ,#{ip}
+                ,#{os}
+                ,#{browser}
+                ,#{loc}
+                ,#{userAgent}
+                ,SYSDATE
+                ,#{regId}
+                ,#{browserS}
+                ,#{refererUrl}
+                ,#{isDeviec}
+
+                )
+                ]]>
+        </insert>
+</mapper>

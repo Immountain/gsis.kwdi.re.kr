@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoPageGroupDAO">
+
+	<select id="selectPageGroup"	parameterType="infomind.com.cms.info.page.vo.InfoPageGroupVO" resultType="infomind.com.cms.info.page.vo.InfoPageGroupVO">
+		SELECT
+			 A.PAGE_GROUP_ID
+			,A.PAGE_GROUP_NM
+			,A.USE_YN
+			,A.REG_DT
+			,A.MOD_DT
+			,A.REG_ID
+			,A.MOD_ID
+			/** CUSTOM */
+			 ,(CASE  A.USE_YN when 'Y' THEN '사용' else '미사용' end ) as USE_YN_NM
+		FROM INFO_PAGE_GROUP A
+		WHERE 1=1
+		  AND A.PAGE_GROUP_ID =#{pageGroupId}
+	</select>
+
+	<select id="selectPageGroupTotalCount"
+			parameterType="infomind.com.cms.info.page.vo.InfoPageGroupVO"
+			resultType="int">
+		SELECT COUNT(*) totcnt
+		FROM INFO_PAGE_GROUP A
+		WHERE 1=1
+		<if test='searchUseYn != null and searchUseYn neq "" '>
+			<![CDATA[
+			 AND A.USE_YN  = #{searchUseYn}
+			]]>
+		</if>
+<!--		<if test="pageGroupId != null and pageGroupId != ''">-->
+<!--			<![CDATA[-->
+<!--            AND A.PAGE_GROUP_ID = #{pageGroupId}-->
+<!--	    ]]>-->
+<!--		</if>-->
+<!--		<if test="searchCondition == 1">-->
+<!--			<![CDATA[-->
+<!--        	    AND A.PAGE_GROUP_ID LIKE CONCAT('%' , #{searchKeyword} , '%')-->
+<!--            ]]>-->
+<!--		</if>-->
+<!--		<if test="searchCondition == 2">-->
+<!--			<![CDATA[-->
+<!--                AND OM.ZEUS_ORGAN_CD LIKE CONCAT('%' , #{searchKeyword} , '%')-->
+<!--            ]]>-->
+<!--		</if>-->
+<!--		<if test="searchCondition == 3">-->
+<!--			<![CDATA[-->
+<!--                AND OM.ORGAN_NM LIKE CONCAT('%' , #{searchKeyword} , '%')-->
+<!--            ]]>-->
+<!--		</if>-->
+	</select>
+	<select id="selectPageGroupList" parameterType="infomind.com.cms.info.page.vo.InfoPageGroupVO" resultType="infomind.com.cms.info.page.vo.InfoPageGroupVO">
+
+		/* 구현 Sql */
+		SELECT
+		A.PAGE_GROUP_ID
+		,A.PAGE_GROUP_NM
+		,A.USE_YN
+		,A.REG_DT
+		,A.MOD_DT
+		,A.REG_ID
+		,A.MOD_ID
+		/** CUSTOM */
+		,(CASE  A.USE_YN when 'Y' THEN '사용' else '사용안함' end ) as USE_YN_NM
+		FROM INFO_PAGE_GROUP A
+		WHERE 1=1
+
+		<if test="searchCondition == 1">
+			<![CDATA[
+        	    AND A.PAGE_GROUP_ID LIKE CONCAT('%' , #{searchKeyword} , '%')
+            ]]>
+		</if>
+		<if test="searchCondition == 2">
+			<![CDATA[
+                AND A.PAGE_GROUP_NM LIKE CONCAT('%' , #{searchKeyword} , '%')
+            ]]>
+		</if>
+
+		ORDER BY A.REG_DT DESC
+		LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+	</select>
+
+	<insert id="insertPageGroup">
+		<![CDATA[
+		INSERT INTO  INFO_PAGE_GROUP (
+			 PAGE_GROUP_ID
+			,PAGE_GROUP_NM
+			,USE_YN
+			,REG_DT
+			,MOD_DT
+			,REG_ID
+			,MOD_ID
+		) VALUES (
+			  #{pageGroupId}
+			 ,#{pageGroupNm}
+			 ,#{useYn}
+			 ,SYSDATE()
+			 ,SYSDATE()
+			 ,#{regId}
+			 ,#{modId}
+				 )
+		]]>
+	</insert>
+
+	<update id="updatePageGroup">
+		UPDATE INFO_PAGE_GROUP
+		SET
+
+		   PAGE_GROUP_ID=#{pageGroupId}
+		  ,PAGE_GROUP_NM=#{pageGroupNm}
+		  ,USE_YN=#{useYn}
+		  ,MOD_DT=SYSDATE()
+		  ,MOD_ID=#{modId}
+		WHERE  1=1
+		  AND PAGE_GROUP_ID = #{pageGroupId}
+	</update>
+
+
+	<select id="getSelectPageGroupAll" parameterType="infomind.com.cms.info.page.vo.InfoPageGroupVO" resultType="infomind.com.cms.info.page.vo.InfoPageGroupVO">
+
+
+			SELECT PAGE_GROUP_ID
+				  ,PAGE_GROUP_NM
+			FROM INFO_PAGE_GROUP
+			WHERE 1=1
+			AND USE_YN='Y'
+		</select>
+
+
+<!--	<select id="getPageGroupList" parameterType="ipp.jtp.cms.pageGroup.vo.InfoPageGroupVO" resultType="ipp.jtp.cms.pageGroup.vo.InfoPageGroupVO">-->
+
+<!--		SELECT-->
+<!--		OM.JTP_ORGAN_CD-->
+<!--		,OM.ORGAN_NM-->
+<!--		,OM.OWNER_NM-->
+<!--		,OM.ZEUS_ORGAN_CD-->
+<!--		,OM.BUSI_REGIST_NO-->
+<!--		,OM.CARRIER_BC-->
+<!--		,OM.CARRIER_TOB-->
+<!--		,OM.ORGAN_CLASS_CD-->
+<!--		,OM.AREA_CD-->
+<!--		,OM.ZIP_NO-->
+<!--		,OM.ADDRESS1-->
+<!--		,OM.ADDRESS2-->
+<!--		,OM.TEL_NO-->
+<!--		,OM.WGS_X-->
+<!--		,OM.WGS_Y-->
+<!--		,OM.ZEUS_INTERFACE_YN-->
+<!--		,OM.USE_YN-->
+<!--		,OM.REG_ID-->
+<!--		,OM.REG_DT-->
+<!--		,OM.MOD_ID-->
+<!--		,OM.MOD_DT-->
+<!--		FROM ORGAN_MST OM-->
+<!--		WHERE 1=1-->
+<!--		<if test="searchCondition == 1">-->
+<!--			<![CDATA[-->
+<!--        	    AND OM.BUSI_REGIST_NO LIKE CONCAT('%' , #{searchKeyword} , '%')-->
+<!--            ]]>-->
+<!--		</if>-->
+<!--		<if test="searchCondition == 2">-->
+<!--			<![CDATA[-->
+<!--                AND OM.ORGAN_NM LIKE CONCAT('%' , #{searchKeyword} , '%')-->
+<!--            ]]>-->
+<!--		</if>-->
+<!--		<if test="searchCondition == 3">-->
+<!--			<![CDATA[-->
+<!--                AND OM.BUSI_REGIST_NO LIKE CONCAT('%' , #{searchKeyword} , '%')-->
+<!--            ]]>-->
+<!--		</if>-->
+<!--	</select>-->
+
+</mapper>

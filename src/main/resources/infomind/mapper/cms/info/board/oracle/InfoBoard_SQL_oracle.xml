@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoBoardDAO">
+
+    <select id="selectBoard"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardVO"
+            resultType="infomind.com.cms.info.board.vo.InfoBoardVO">
+		SELECT
+              IB.BOARD_ID
+            , IB.BOARD_SKIN_ID
+            , IB.BOARD_NM
+            , IB.BOARD_TXT
+            , IB.USE_COMMENT
+            , IB.USE_REPLY
+            , IB.USE_NOTICE
+            , IB.CATEGORIES
+            , IB.LIST_ROW
+            , IB.LOGIN_USER_LIST_YN
+            , IB.WR_SECRET_YN
+            , IB.SECRET_PW_YN
+            , IB.FILE_ATCH_POSBL_AT
+            , IB.ATCH_POSBL_FILE_NUMBER
+            , IB.ATCH_POSBL_FILE_SIZE
+            , IB.STSFDG_AT
+            , IB.INQUIRE_YN
+            , IB.BOARD_USE_USER
+            , IB.USE_YN
+            , IB.TEMP1
+            , IB.TEMP2
+            , IB.TEMP3
+            , IB.TEMP4
+            , IB.TEMP5
+            , IB.REG_ID
+            , IB.REG_DT
+            , IB.MOD_ID
+            , IB.MOD_DT
+            , IB.SUB_KEY_YN
+            , IB.BOARD_LIST_TYPE
+            , IBS.SKIN_TYPE
+            , IBS.STYLE_CLASS
+            , IBS.CSS_URL
+            , IBS.LIST_CLASS
+            , IBS.VIEW_CLASS
+            , IBS.WRITE_CLASS
+		FROM INFO_BOARD IB
+		    ,INFO_BOARD_SKIN IBS
+        WHERE 1=1
+        AND IB.BOARD_SKIN_ID =IBS.BOARD_SKIN_ID
+		AND IB.BOARD_ID = #{boardId}
+	</select>
+
+    <select id="selectBoardTotalCount"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_BOARD IB
+        <if test="searchCondition == 1">
+            <![CDATA[	AND
+                IB.BOARD_ID LIKE '%' || #{searchKeyword} || '%'
+            ]]>
+        </if>
+        <if test="searchCondition == 2">
+            <![CDATA[
+                AND IB.BOARD_NM LIKE '%' || #{searchKeyword} || '%'
+            ]]>
+        </if>
+
+        WHERE 1=1
+    </select>
+
+    <select id="selectBoardList"
+            parameterType="infomind.com.cms.info.board.vo.InfoBoardVO"
+            resultType="infomind.com.cms.info.board.vo.InfoBoardVO">
+        SELECT *
+        FROM (
+        SELECT ROWNUM RNUM, ALL_LIST.*
+        FROM (
+        /* 구현 Sql */
+        SELECT
+              IB.BOARD_ID
+            , IB.BOARD_SKIN_ID
+            , IB.BOARD_NM
+            , IB.BOARD_TXT
+            , IB.USE_COMMENT
+            , IB.USE_REPLY
+            , IB.USE_NOTICE
+            , IB.CATEGORIES
+            , IB.LIST_ROW
+            , IB.LOGIN_USER_LIST_YN
+            , IB.WR_SECRET_YN
+            , IB.SECRET_PW_YN
+            , IB.FILE_ATCH_POSBL_AT
+            , IB.ATCH_POSBL_FILE_NUMBER
+            , IB.ATCH_POSBL_FILE_SIZE
+            , IB.STSFDG_AT
+            , IB.INQUIRE_YN
+            , IB.BOARD_USE_USER
+            , IB.USE_YN
+            , IB.TEMP1
+            , IB.TEMP2
+            , IB.TEMP3
+            , IB.TEMP4
+            , IB.TEMP5
+            , IB.REG_ID
+            , IB.REG_DT
+            , IB.MOD_ID
+            , IB.MOD_DT
+            , IB.BOARD_LIST_TYPE
+            , IB.SUB_KEY_YN
+        FROM INFO_BOARD IB
+        WHERE 1=1
+
+        <if test="searchCondition == 1">    <![CDATA[	AND
+				IB.BOARD_ID LIKE '%' || #{searchKeyword} || '%'	]]>
+        </if>
+        <if test="searchCondition == 2">    <![CDATA[	AND
+				IB.BOARD_NM    LIKE '%' || #{searchKeyword} || '%'	]]>
+        </if>
+
+        /* 구현 Sql */
+        ) ALL_LIST
+        )
+        WHERE RNUM <![CDATA[  > ]]> #{firstIndex}
+        AND   RNUM <![CDATA[ <= ]]> #{firstIndex} + #{recordCountPerPage}
+    </select>
+
+    <insert id="insertBoard">
+		<![CDATA[
+            INSERT INTO INFO_BOARD (
+                  BOARD_ID
+                , BOARD_SKIN_ID
+                , BOARD_NM
+                , BOARD_TXT
+                , USE_COMMENT
+                , USE_REPLY
+                , USE_NOTICE
+                , CATEGORIES
+                , LIST_ROW
+                , LOGIN_USER_LIST_YN
+                , WR_SECRET_YN
+                , SECRET_PW_YN
+                , FILE_ATCH_POSBL_AT
+                , ATCH_POSBL_FILE_NUMBER
+                , ATCH_POSBL_FILE_SIZE
+                , STSFDG_AT
+                , INQUIRE_YN
+                , BOARD_USE_USER
+                , USE_YN
+                , TEMP1
+                , TEMP2
+                , TEMP3
+                , TEMP4
+                , TEMP5
+                , REG_ID
+                , REG_DT
+                , MOD_ID
+                , MOD_DT
+                , BOARD_LIST_TYPE
+                , SUB_KEY_YN
+            ) VALUES (
+                  #{boardId}
+                , #{boardSkinId}
+                , #{boardNm}
+                , #{boardTxt}
+                , #{useComment}
+                , #{useReply}
+                , #{useNotice}
+                , #{categories}
+                , nvl(#{listRow},10)
+                , #{loginUserListYn}
+                , #{wrSecretYn}
+                , #{secretPwYn}
+                , #{fileAtchPosblAt}
+                , #{atchPosblFileNumber}
+                , #{atchPosblFileSize}
+                , #{stsfdgAt}
+                , #{inquireYn}
+                , #{boardUseUser}
+                , #{useYn}
+                , #{temp1}
+                , #{temp2}
+                , #{temp3}
+                , #{temp4}
+                , #{temp5}
+                , #{regId}
+                , SYSDATE
+                , #{modId}
+                , SYSDATE
+                , #{boardListType}
+                , #{subKeyYn}
+            )
+        ]]>
+	</insert>
+
+    <update id="updateBoard">
+        UPDATE INFO_BOARD SET
+              BOARD_SKIN_ID = #{boardSkinId}
+            , BOARD_NM = #{boardNm}
+            , BOARD_TXT = #{boardTxt}
+            , USE_COMMENT = #{useComment}
+            , USE_REPLY = #{useReply}
+            , USE_NOTICE = #{useNotice}
+            , CATEGORIES = #{categories}
+            , LIST_ROW = nvl(#{listRow},10)
+            , LOGIN_USER_LIST_YN = #{loginUserListYn}
+            , WR_SECRET_YN = #{wrSecretYn}
+            , SECRET_PW_YN = #{secretPwYn}
+            , FILE_ATCH_POSBL_AT = #{fileAtchPosblAt}
+            , ATCH_POSBL_FILE_NUMBER = #{atchPosblFileNumber}
+            , ATCH_POSBL_FILE_SIZE = #{atchPosblFileSize}
+            , STSFDG_AT = #{stsfdgAt}
+            , INQUIRE_YN = #{inquireYn}
+            , BOARD_USE_USER = #{boardUseUser}
+            , USE_YN = #{useYn}
+            , TEMP1 = #{temp1}
+            , TEMP2 = #{temp2}
+            , TEMP3 = #{temp3}
+            , TEMP4 = #{temp4}
+            , TEMP5 = #{temp5}
+            , MOD_ID = #{modId}
+            , MOD_DT = #{modDt}
+            , BOARD_LIST_TYPE =#{boardListType}
+            , SUB_KEY_YN =#{subKeyYn}
+        WHERE  1=1
+        AND BOARD_ID = #{boardId}
+	</update>
+</mapper>

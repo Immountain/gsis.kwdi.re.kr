@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoSiteVisitDAO">
+
+    <select id="selectSiteVisit"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteVisitVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteVisitVO">
+		SELECT
+                      ISV.ID
+                     ,ISV.IP
+                     ,ISV.V_DATE
+                     ,ISV.OS
+                     ,ISV.BROWSER
+                     ,ISV.USER_AGENT
+                     ,ISV.SITE_ID
+                     ,ISV.BROWSER_S
+                     ,ISV.LOC
+                     ,ISV.VISIT_TYPE
+                     ,ISV.TARGET_ID
+                     ,ISV.SITE_URL
+                     ,ISV.REFERER_URL
+ 		FROM INFO_SITE_VISIT ISV
+		WHERE 1=1
+		AND ISV.ID = #{id}
+	</select>
+
+    <select id="selectSiteVisitTotalCount"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteVisitVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM INFO_SITE_VISIT ISV
+        WHERE 1=1
+    </select>
+
+    <select id="selectSiteVisitList"
+            parameterType="infomind.com.cms.info.site.vo.InfoSiteVisitVO"
+            resultType="infomind.com.cms.info.site.vo.InfoSiteVisitVO">
+        SELECT *
+        FROM (
+        SELECT ROWNUM RNUM, ALL_LIST.*
+        FROM (
+        /* 구현 Sql */
+        SELECT
+         ISV.ID
+        ,ISV.IP
+        ,ISV.V_DATE
+        ,ISV.OS
+        ,ISV.BROWSER
+        ,ISV.USER_AGENT
+        ,ISV.SITE_ID
+        ,ISV.BROWSER_S
+        ,ISV.LOC
+        ,ISV.VISIT_TYPE
+        ,ISV.TARGET_ID
+        ,ISV.SITE_URL
+        ,ISV.REFERER_URL
+        FROM INFO_SITE_VISIT ISV
+        WHERE 1=1
+
+        ) ALL_LIST
+        )
+        WHERE RNUM <![CDATA[  > ]]> #{firstIndex}
+        AND   RNUM <![CDATA[ <= ]]> #{firstIndex} + #{recordCountPerPage}
+    </select>
+
+    <insert id="insertSiteVisit">
+		<![CDATA[
+            INSERT INTO INFO_SITE_VISIT (
+                    ID
+                    ,IP
+                    ,V_DATE
+                    ,OS
+                    ,BROWSER
+                    ,USER_AGENT
+                    ,SITE_ID
+                    ,BROWSER_S
+                    ,LOC
+                    ,VISIT_TYPE
+                    ,TARGET_ID
+                    ,SITE_URL
+                    ,REFERER_URL
+                    ,IS_DEVIEC
+            ) VALUES (
+                  #{id}
+                , #{ip}
+                , SYSDATE
+                , #{os}
+                , #{browser}
+                , #{userAgent}
+                , #{siteId}
+                , #{browserS}
+                , #{loc}
+                , #{visitType}
+                , #{targetId}
+                , #{siteUrl}
+                , #{refererUrl}
+                , #{isDeviec}
+
+            )
+        ]]>
+	</insert>
+</mapper>

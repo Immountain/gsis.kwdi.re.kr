@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WjEventInfoLangDAO">
+
+    <select id="selectEventInfoLang"
+            parameterType="wj.com.cms.wj.event.vo.WjEventInfoLangVO"
+            resultType="wj.com.cms.wj.event.vo.WjEventInfoLangVO">
+        SELECT
+             EIL.EVENT_ID
+            ,EIL.LANG_CODE
+            ,EIL.EVENT_TITLE
+            ,EIL.EVENT_CONTENT
+            ,EIL.REG_ID
+            ,EIL.REG_DT
+            ,EIL.MOD_ID
+            ,EIL.MOD_DT
+        FROM WJ_EVENT_INFO_LANG EIL
+        WHERE 1=1
+          AND EIL.EVENT_ID =#{eventId}
+          AND EIL.LANG_CODE =#{langCode}
+    </select>
+    <select id="selectEventInfoLangTotalCount"
+        parameterType="wj.com.cms.wj.event.vo.WjEventInfoLangVO"
+        resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM WJ_EVENT_INFO_LANG EIL
+        WHERE 1=1
+        AND EIL.EVENT_ID = #{eventId}
+
+    </select>
+    <select id="selectEventInfoLangList"
+        parameterType="wj.com.cms.wj.event.vo.WjEventInfoLangVO"
+        resultType="wj.com.cms.wj.event.vo.WjEventInfoLangVO">
+        SELECT
+             EIL.EVENT_ID
+            ,EIL.LANG_CODE
+            ,EIL.EVENT_TITLE
+            ,EIL.EVENT_CONTENT
+            ,EIL.REG_ID
+            ,EIL.REG_DT
+            ,EIL.MOD_ID
+            ,EIL.MOD_DT
+        FROM WJ_EVENT_INFO_LANG EIL
+        WHERE 1=1
+        AND EIL.EVENT_ID = ${eventId}
+    </select>
+
+    <insert id="insertEventInfoLang">
+        <![CDATA[
+            INSERT INTO WJ_EVENT_INFO_LANG(
+                EVENT_ID
+                ,LANG_CODE
+                ,EVENT_TITLE
+                ,EVENT_CONTENT
+                ,REG_ID
+                ,REG_DT
+            ) VALUES (
+                 #{eventId}
+                ,#{langCode}
+                ,#{eventTitle}
+                ,#{eventContent}
+                ,#{regId}
+                ,NOW()
+                     )
+        ]]>
+    </insert>
+    <update id="updateEventInfoLang">
+        UPDATE WJ_EVENT_INFO_LANG SET
+             EVENT_ID = #{eventId}
+            ,LANG_CODE = #{langCode}
+            ,EVENT_TITLE = #{eventTitle}
+            ,EVENT_CONTENT = #{eventContent}
+            ,MOD_ID = #{modId}
+            ,MOD_DT = NOW()
+        WHERE 1=1
+        AND USER_ID = #{userId}
+        AND LANG_CODE = #{langCode}
+    </update>
+
+</mapper>
