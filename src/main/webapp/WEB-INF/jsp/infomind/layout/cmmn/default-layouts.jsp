@@ -33,7 +33,7 @@
         메뉴토글</button>
 
     <h1>
-        <a href="">(사)세계제주인대회<small>조직위원회</small>
+        <a href="">제주여성가족연구원<small>성인지통계 시스템</small>
         </a>
     </h1>
 

@@ -313,7 +313,7 @@ function fnLoginTypeSelect(objName){
 			<%--<input type="button" class="btn_login" value="<spring:message code="comUatUia.loginForm.login"/>" onclick="actionLogin()"> <!-- 로그인  -->--%>
 
 	</div>
-	<p class="copyright">Copyright 2018. (사)세계제주인대회조직위원회 all rights reserved.</p>
+	<p class="copyright">Copyright 2018 제주여성가족연구원. All rights reserved</p>
 </form>
 
 
