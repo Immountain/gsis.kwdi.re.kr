@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import wj.com.cms.wj.main.service.WjMainDashBoardServcie;
-import wj.com.cms.wj.main.vo.WjMainDashBoardVO;
+
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
@@ -44,8 +43,6 @@ public class InfoCmsMainController {
     private InfoMenuManageService menuManageService;
 
 
-    @Resource(name = "WjMainDashBoardServcie")
-    private WjMainDashBoardServcie wjMainDashBoardServcie;
 
     /**
      * log
@@ -136,14 +133,16 @@ public class InfoCmsMainController {
     @RequestMapping(value = "/cms/dashboard.do")
     public String dashboard(ModelMap model) throws Exception {
 
-        List<WjMainDashBoardVO> wjMainDashBoardVOList = wjMainDashBoardServcie.getPeopleCountSiteMain(null);
+       // List<WjMainDashBoardVO> wjMainDashBoardVOList = wjMainDashBoardServcie.getPeopleCountSiteMain(null);
+
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd일 HH시");
         Date time = new Date();
         String formatTime = format.format(time);
         model.addAttribute("formatTime", formatTime);
 
 
-        model.addAttribute("wjMainDashBoardVOList", wjMainDashBoardVOList);
+     //   model.addAttribute("wjMainDashBoardVOList", wjMainDashBoardVOList);
         return "infomind/com/main/InfoCmsDashBoardView.sub";
     }
 

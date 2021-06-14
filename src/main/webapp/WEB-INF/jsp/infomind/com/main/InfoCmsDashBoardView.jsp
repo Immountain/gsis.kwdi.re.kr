@@ -45,15 +45,15 @@
                     <tbody>
 
 
-                    <c:forEach items="${wjMainDashBoardVOList}" var="item" varStatus="status">
+                    <%--<c:forEach items="${wjMainDashBoardVOList}" var="item" varStatus="status">--%>
 
-                        <tr>
-                            <td>${item.langCode}</td>
-                            <td>${item.dayCnt} 명</td>
-                            <td>${item.monthCnt} 명</td>
-                            <td>${item.yearCnt} 명</td>
-                        </tr>
-                    </c:forEach>
+                        <%--<tr>--%>
+                            <%--<td>${item.langCode}</td>--%>
+                            <%--<td>${item.dayCnt} 명</td>--%>
+                            <%--<td>${item.monthCnt} 명</td>--%>
+                            <%--<td>${item.yearCnt} 명</td>--%>
+                        <%--</tr>--%>
+                    <%--</c:forEach>--%>
                     </tbody>
                 </table>
             </div>
