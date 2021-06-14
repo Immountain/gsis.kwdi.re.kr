@@ -16,8 +16,8 @@ public class InfoViewUtils {
         return "wj/com/cms/" + path + page + "." + type;
     }
 
-    public static String adminJtpMstView(String path, String page, String type) {
-        return "ipp/jtp/cms/" + path + page + "." + type;
+    public static String adminJsView(String path, String page, String type) {
+        return "js/com/cms/" + path + page + "." + type;
     }
 
     public static String adminBoardView(String path, String page, String type) {

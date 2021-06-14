@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JewStatsCategoryDAO">
+
+    <select id="selectStatsCategory"
+            parameterType="js.com.cms.stats.vo.JewStatsCategoryVO"
+            resultType="js.com.cms.stats.vo.JewStatsCategoryVO">
+        SELECT
+            JSC.CATEGORY_ID,
+            JSC.CATEGORY_ID_NM,
+            JSC.PARENT_ID,
+            JSC.ORDER_CNT,
+            JSC.VW_CD,
+            JSC.TBL_ID,
+            JSC.STATS_URL,
+            JSC.USE_YN,
+            JSC.DELETE_YN,
+            JSC.REG_DT,
+            JSC.REG_ID,
+            JSC.MOD_DT,
+            JSC.MOD_ID
+        FROM JEW_STATS_CATEGORY JSC
+        WHERE 1=1
+          AND JSC.CATEGORY_ID =#{categoryId}
+    </select>
+
+    <select id="selectStatsCategoryList"
+        parameterType="js.com.cms.stats.vo.JewStatsCategoryVO"
+        resultType="js.com.cms.stats.vo.JewStatsCategoryVO">
+        SELECT
+            JSC.CATEGORY_ID,
+            JSC.CATEGORY_ID_NM,
+            JSC.PARENT_ID,
+            JSC.ORDER_CNT,
+            JSC.VW_CD,
+            JSC.TBL_ID,
+            JSC.STATS_URL,
+            JSC.USE_YN,
+            JSC.DELETE_YN,
+            JSC.REG_DT,
+            JSC.REG_ID,
+            JSC.MOD_DT,
+            JSC.MOD_ID
+        FROM JEW_STATS_CATEGORY JSC
+        WHERE 1=1
+        AND
+            JSC.DELETE_YN = 'N'
+        AND
+            binary(JSC.PARENT_ID) = #{parentId}
+        <if test="searchCondition == 1"> AND
+            JSC.CATEGORY_ID LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        <if test="searchCondition == 2"> AND
+            JSC.CATEGORY_ID_NM LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        order by JSC.ORDER_CNT desc
+    </select>
+
+    <select id="selectStatsCategorySearchList"
+            parameterType="js.com.cms.stats.vo.JewStatsCategoryVO"
+            resultType="js.com.cms.stats.vo.JewStatsCategoryVO">
+        SELECT
+        JSC.CATEGORY_ID,
+        JSC.CATEGORY_ID_NM,
+        JSC.PARENT_ID,
+        JSC.ORDER_CNT,
+        JSC.VW_CD,
+        JSC.TBL_ID,
+        JSC.STATS_URL,
+        JSC.USE_YN,
+        JSC.DELETE_YN,
+        JSC.REG_DT,
+        JSC.REG_ID,
+        JSC.MOD_DT,
+        JSC.MOD_ID
+        FROM JEW_STATS_CATEGORY JSC
+        WHERE 1=1
+        AND
+        JSC.DELETE_YN = 'N'
+        AND
+        JSC.PARENT_ID = 'ROOT'
+        <if test="searchCondition == 1"> AND
+            JSC.CATEGORY_ID LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        <if test="searchCondition == 2"> AND
+            JSC.CATEGORY_ID_NM LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        order by JSC.ORDER_CNT desc
+    </select>
+
+    <insert id="insertStatsCategory">
+        <![CDATA[
+            INSERT INTO JEW_STATS_CATEGORY(
+                 CATEGORY_ID
+                ,CATEGORY_ID_NM
+                ,PARENT_ID
+                ,ORDER_CNT
+                ,VW_CD
+                ,TBL_ID
+                ,STATS_URL
+                ,USE_YN
+                ,DELETE_YN
+                ,REG_DT
+                ,REG_ID
+
+            ) VALUES (
+                 #{categoryId}
+                ,#{categoryIdNm}
+                ,#{parentId}
+                ,#{orderCnt}
+                ,#{vwCd}
+                ,#{tblId}
+                ,#{statsUrl}
+                ,#{useYn}
+                ,'N'
+                ,NOW()
+                ,#{regId}
+                     )
+        ]]>
+    </insert>
+    <update id="updateStatsCategory">
+        UPDATE JEW_STATS_CATEGORY SET
+             CATEGORY_ID = #{categoryId}
+            ,CATEGORY_ID_NM = #{categoryIdNm}
+            ,ORDER_CNT = #{orderCnt}
+            ,VW_CD = #{vwCd}
+            ,TBL_ID = #{tblId}
+            ,STATS_URL = #{statsUrl}
+            ,USE_YN = #{useYn}
+            ,MOD_DT = NOW()
+            ,MOD_ID = #{modId}
+        WHERE CATEGORY_ID = #{categoryId}
+    </update>
+
+    <update id="deleteStatsCategory">
+        UPDATE JEW_STATS_CATEGORY SET
+            DELETE_YN = 'Y'
+        WHERE 1=1
+        AND CATEGORY_ID = #{categoryId}
+    </update>
+
+</mapper>

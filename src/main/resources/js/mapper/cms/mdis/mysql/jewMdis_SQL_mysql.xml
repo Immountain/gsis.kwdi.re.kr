@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JewMdisDAO">
+
+    <select id="selectMdis"
+            parameterType="js.com.cms.mdis.vo.JewMdisVO"
+            resultType="js.com.cms.mdis.vo.JewMdisVO">
+        SELECT
+             JM.JEW_MDIS_SNO
+            ,JM.MDIS_NUM
+            ,JM.MDIS_TYPE
+            ,JM.MDIS_KOR_NM
+            ,JM.MDIS_EN_NM
+            ,JM.DATA_OF_FORM
+            ,JM.PROJECT_KOR_NM
+            ,JM.PROJECT_EN_NM
+            ,JM.PI
+            ,JM.CO_PI
+            ,JM.ORGANIZATION
+            ,JM.SUPPORTING_ORGANIZATION
+            ,JM.COPYRIGHT_HOLDER
+            ,JM.INVESTIGATE_PURPOSE
+            ,JM.INVESTIGATE_CONTENT
+            ,JM.KEYWORD
+            ,JM.COLLECTION_STR_DAY
+            ,JM.COLLECTION_END_DAY
+            ,JM.INVESTIGATE_AREA
+            ,JM.ANALYSIS_UNIT
+            ,JM.SUBJECT
+            ,JM.MDIS_TIME
+            ,JM.RESEARCH_ORGANIZATION
+            ,JM.INTERVIEW_SURVEY
+            ,JM.SELF_ADMINISTERED_SURVEY
+            ,JM.MAIL_SURVEY
+            ,JM.PHONE_SURVEY
+            ,JM.ONLINE_SURVEY
+            ,JM.ETC
+            ,JM.EXTRACTION
+            ,JM.CASE_NUMBER
+            ,JM.WEIGHT
+            ,JM.DATA_FORM
+            ,JM.DATA_STRUCTURE
+            ,JM.MDIS_LANGUAGE
+            ,JM.PUBLIC_YN
+            ,JM.PUBLIC_REASONS
+            ,JM.REMARK
+            ,JM.ETC
+            ,JM.DATA_FILE
+            ,JM.REG_DT
+            ,JM.REG_ID
+            ,JM.MOD_DT
+            ,JM.MOD_ID
+        FROM JEW_MDIS JM
+        WHERE 1=1
+        AND JM.JEW_MDIS_SNO = #{jewMdisSno}
+    </select>
+
+    <select id="selectMdisList"
+        parameterType="js.com.cms.mdis.vo.JewMdisVO"
+        resultType="js.com.cms.mdis.vo.JewMdisVO">
+        SELECT
+             JM.JEW_MDIS_SNO
+            ,JM.MDIS_NUM
+            ,JM.MDIS_TYPE
+            ,JM.MDIS_KOR_NM
+            ,JM.MDIS_EN_NM
+            ,JM.DATA_OF_FORM
+            ,JM.PROJECT_KOR_NM
+            ,JM.PROJECT_EN_NM
+            ,JM.PI
+            ,JM.CO_PI
+            ,JM.ORGANIZATION
+            ,JM.SUPPORTING_ORGANIZATION
+            ,JM.COPYRIGHT_HOLDER
+            ,JM.INVESTIGATE_PURPOSE
+            ,JM.INVESTIGATE_CONTENT
+            ,JM.KEYWORD
+            ,JM.COLLECTION_STR_DAY
+            ,JM.COLLECTION_END_DAY
+            ,JM.INVESTIGATE_AREA
+            ,JM.ANALYSIS_UNIT
+            ,JM.SUBJECT
+            ,JM.MDIS_TIME
+            ,JM.RESEARCH_ORGANIZATION
+            ,JM.INTERVIEW_SURVEY
+            ,JM.SELF_ADMINISTERED_SURVEY
+            ,JM.MAIL_SURVEY
+            ,JM.PHONE_SURVEY
+            ,JM.ONLINE_SURVEY
+            ,JM.ETC
+            ,JM.EXTRACTION
+            ,JM.CASE_NUMBER
+            ,JM.WEIGHT
+            ,JM.DATA_FORM
+            ,JM.DATA_STRUCTURE
+            ,JM.MDIS_LANGUAGE
+            ,JM.PUBLIC_YN
+            ,JM.PUBLIC_REASONS
+            ,JM.REMARK
+            ,JM.ETC
+            ,JM.DATA_FILE
+            ,JM.REG_DT
+            ,JM.REG_ID
+            ,JM.MOD_DT
+            ,JM.MOD_ID
+        FROM JEW_MDIS JM
+        WHERE 1=1
+    </select>
+
+    <insert id="insertMdis">
+        <![CDATA[
+            INSERT INTO JEW_MDIS(
+                 JEW_MDIS_SNO
+                ,MDIS_NUM
+                ,MDIS_TYPE
+                ,MDIS_KOR_NM
+                ,MDIS_EN_NM
+                ,DATA_OF_FORM
+                ,PROJECT_KOR_NM
+                ,PROJECT_EN_NM
+                ,PI
+                ,CO_PI
+                ,ORGANIZATION
+                ,SUPPORTING_ORGANIZATION
+                ,COPYRIGHT_HOLDER
+                ,INVESTIGATE_PURPOSE
+                ,INVESTIGATE_CONTENT
+                ,KEYWORD
+                ,COLLECTION_STR_DAY
+                ,COLLECTION_END_DAY
+                ,INVESTIGATE_AREA
+                ,ANALYSIS_UNIT
+                ,SUBJECT
+                ,MDIS_TIME
+                ,RESEARCH_ORGANIZATION
+                ,INTERVIEW_SURVEY
+                ,SELF_ADMINISTERED_SURVEY
+                ,MAIL_SURVEY
+                ,PHONE_SURVEY
+                ,ONLINE_SURVEY
+                ,ETC
+                ,EXTRACTION
+                ,CASE_NUMBER
+                ,WEIGHT
+                ,DATA_FORM
+                ,DATA_STRUCTURE
+                ,MDIS_LANGUAGE
+                ,PUBLIC_YN
+                ,PUBLIC_REASONS
+                ,REMARK
+                ,ETC
+                ,DATA_FILE
+                ,REG_DT
+                ,REG_ID
+
+            ) VALUES (
+                 #{jewMdisSno}
+                ,#{mdisNum}
+                ,#{mdisType}
+                ,#{mdisKorNm}
+                ,#{mdisEnNm}
+                ,#{dataOfForm}
+                ,#{projectKorNm}
+                ,#{projectEnNm}
+                ,#{pi}
+                ,#{coPi}
+                ,#{organization}
+                ,#{supportingOrganization}
+                ,#{copyrightHolder}
+                ,#{investigatePurpose}
+                ,#{investigateContent}
+                ,#{keyword}
+                ,#{collectionStrDay}
+                ,#{collectionEndDay}
+                ,#{investigateArea}
+                ,#{analysisUnit}
+                ,#{subject}
+                ,#{mdisTime}
+                ,#{researchOrganization}
+                ,#{interviewSurvey}
+                ,#{selfAdministeredSurvey}
+                ,#{mailSurvey}
+                ,#{phoneSurvey}
+                ,#{onlineSurvey}
+                ,#{etc}
+                ,#{extraction}
+                ,#{caseNumber}
+                ,#{weight}
+                ,#{dataForm}
+                ,#{dataStructure}
+                ,#{mdisLanguage}
+                ,#{publicYn}
+                ,#{publicReasons}
+                ,#{remark}
+                ,#{etc}
+                ,#{dataFile}
+                ,NOW()
+                ,#{regId}
+                     )
+        ]]>
+    </insert>
+    <update id="updateMdis">
+        UPDATE JEW_MDIS SET
+                 JEW_MDIS_SNO = #{jewMdisSno}
+                ,MDIS_NUM = #{mdisNum}
+                ,MDIS_TYPE = #{mdisType}
+                ,MDIS_KOR_NM = #{mdisKorNm}
+                ,MDIS_EN_NM = #{mdisEnNm}
+                ,DATA_OF_FORM = #{dataOfForm}
+                ,PROJECT_KOR_NM = #{projectKorNm}
+                ,PROJECT_EN_NM = #{projectEnNm}
+                ,PI = #{pi}
+                ,CO_PI = #{coPi}
+                ,ORGANIZATION = #{organization}
+                ,SUPPORTING_ORGANIZATION = #{supportingOrganization}
+                ,COPYRIGHT_HOLDER = #{copyrightHolder}
+                ,INVESTIGATE_PURPOSE = #{investigatePurpose}
+                ,INVESTIGATE_CONTENT = #{investigateContent}
+                ,KEYWORD = #{keyword}
+                ,COLLECTION_STR_DAY = #{collectionStrDay}
+                ,COLLECTION_END_DAY = #{collectionEndDay}
+                ,INVESTIGATE_AREA = #{investigateArea}
+                ,ANALYSIS_UNIT = #{analysisUnit}
+                ,SUBJECT = #{subject}
+                ,MDIS_TIME = #{mdisTime}
+                ,RESEARCH_ORGANIZATION = #{researchOrganization}
+                ,INTERVIEW_SURVEY = #{interviewSurvey}
+                ,SELF_ADMINISTERED_SURVEY = #{selfAdministeredSurvey}
+                ,MAIL_SURVEY = #{mailSurvey}
+                ,PHONE_SURVEY = #{phoneSurvey}
+                ,ONLINE_SURVEY = #{onlineSurvey}
+                ,ETC = #{etc}
+                ,EXTRACTION = #{extraction}
+                ,CASE_NUMBER = #{caseNumber}
+                ,WEIGHT = #{weight}
+                ,DATA_FORM = #{dataForm}
+                ,DATA_STRUCTURE = #{dataStructure}
+                ,MDIS_LANGUAGE = #{mdisLanguage}
+                ,PUBLIC_YN = #{publicYn}
+                ,PUBLIC_REASONS = #{publicReasons}
+                ,REMARK = #{remark}
+                ,ETC = #{etc}
+                ,DATA_FILE = #{dataFile}
+                ,REG_DT = #{regDt}
+                ,REG_ID = #{regId}
+                ,MOD_DT = #{modDt}
+                ,MOD_ID = #{modId}
+        WHERE JEW_MDIS_SNO = #{jewMdisSno}
+    </update>
+
+</mapper>
