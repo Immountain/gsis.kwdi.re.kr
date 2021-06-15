@@ -105,8 +105,8 @@
         var API_SERVER = "<c:url value='/cms/gsis/thema/jewThemaInfoRegistView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 400,
-            width: 800,
+            height: 664,
+            width: 896,
             header: {
                 title: '테마통계관리 등록',
                 btns: {
@@ -132,19 +132,19 @@
     //수정화면
     function gotoUpdt(row) {
 
-        var categoryId = firstGrid.getList()[row].categoryId;
+        var themaId = firstGrid.getList()[row].themaId;
 
         var p = {
-            categoryId: categoryId
+            themaId: themaId
         };
 
-        var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategoryUpdtView.do' />";
+        var API_SERVER = "<c:url value='/cms/gsis/thema/jewThemaInfoUpdtView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 350,
-            width: 800,
+            height: 664,
+            width: 896,
             header: {
-                title: '통계DB카테고리 수정',
+                title: '테마통계관리 수정',
                 btns: {
                     close: {
                         label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
@@ -168,10 +168,10 @@
 
         var formData ={
 
-            categoryId : firstGrid.getList()[row].categoryId
+            themaId : firstGrid.getList()[row].themaId
         }
 
-        var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategoryDelete.do' />";
+        var API_SERVER = "<c:url value='/cms/gsis/thema/jewThemaInfoDelete.do' />";
         var saveQuestion = confirm("삭제 하시겠습니까?");
         if (saveQuestion) {
             $.ajax({

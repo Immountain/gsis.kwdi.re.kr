@@ -61,5 +61,35 @@ public class JewThemaGroupController extends BaseAjaxController {
 
         return ok();
     }
-    
+
+    @RequestMapping(value="/cms/gsis/thema/jewThemaGroupUpdtView.do")
+    public String jewThemaGroupUpdtView(@ModelAttribute("searchVO")JewThemaGroupVO searchVO,ModelMap model)throws Exception{
+
+        model.addAttribute("jewThemaGroupVO",jewThemaGroupService.selectThemaGroup(searchVO));
+        return InfoViewUtils.adminJsView(pagePath,"jewThemaGroupUpdate","axmodal");
+    }
+
+    @RequestMapping(value="/cms/gsis/thema/jewThemaGroupUpdt.do")
+    @ResponseBody
+    public ApiResponse jewThemaGroupUpdt(JewThemaGroupVO jewThemaGroupVO)throws Exception{
+
+        LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+        jewThemaGroupVO.setModId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
+
+        jewThemaGroupService.updateThemaGroup(jewThemaGroupVO);
+
+        return ok();
+    }
+
+    @RequestMapping(value="/cms/gsis/thema/jewThemaGroupDelete.do")
+    @ResponseBody
+    public ApiResponse jewThemaGroupDelete(JewThemaGroupVO jewThemaGroupVO)throws Exception{
+
+        LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+        jewThemaGroupVO.setModId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
+
+        jewThemaGroupService.deleteThemaGroup(jewThemaGroupVO);
+
+        return ok();
+    }
 }

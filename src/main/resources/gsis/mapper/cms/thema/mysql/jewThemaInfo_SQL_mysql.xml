@@ -95,7 +95,7 @@
                 ,MOD_ID
 
             ) VALUES (
-                ,#{themaGroupId}
+                 #{themaGroupId}
                 ,#{themaId}
                 ,#{themaNm}
                 ,#{themaTitle}
