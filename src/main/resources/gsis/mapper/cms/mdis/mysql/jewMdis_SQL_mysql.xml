@@ -34,7 +34,7 @@
             ,JM.MAIL_SURVEY
             ,JM.PHONE_SURVEY
             ,JM.ONLINE_SURVEY
-            ,JM.ETC
+            ,JM.ETC_SURVEY
             ,JM.EXTRACTION
             ,JM.CASE_NUMBER
             ,JM.WEIGHT
@@ -46,6 +46,8 @@
             ,JM.REMARK
             ,JM.ETC
             ,JM.DATA_FILE
+            ,JM.USE_YN
+            ,JM.DELETE_YN
             ,JM.REG_DT
             ,JM.REG_ID
             ,JM.MOD_DT
@@ -53,6 +55,7 @@
         FROM JEW_MDIS JM
         WHERE 1=1
         AND JM.JEW_MDIS_SNO = #{jewMdisSno}
+        AND JM.DELETE_YN = 'N'
     </select>
 
     <select id="selectMdisList"
@@ -87,7 +90,7 @@
             ,JM.MAIL_SURVEY
             ,JM.PHONE_SURVEY
             ,JM.ONLINE_SURVEY
-            ,JM.ETC
+            ,JM.ETC_SURVEY
             ,JM.EXTRACTION
             ,JM.CASE_NUMBER
             ,JM.WEIGHT
@@ -99,6 +102,8 @@
             ,JM.REMARK
             ,JM.ETC
             ,JM.DATA_FILE
+            ,JM.USE_YN
+            ,JM.DELETE_YN
             ,JM.REG_DT
             ,JM.REG_ID
             ,JM.MOD_DT
@@ -110,6 +115,7 @@
     <insert id="insertMdis">
         <![CDATA[
             INSERT INTO JEW_MDIS(
+
                  JEW_MDIS_SNO
                 ,MDIS_NUM
                 ,MDIS_TYPE
@@ -138,7 +144,7 @@
                 ,MAIL_SURVEY
                 ,PHONE_SURVEY
                 ,ONLINE_SURVEY
-                ,ETC
+                ,ETC_SURVEY
                 ,EXTRACTION
                 ,CASE_NUMBER
                 ,WEIGHT
@@ -150,11 +156,14 @@
                 ,REMARK
                 ,ETC
                 ,DATA_FILE
+                ,USE_YN
+                ,DELETE_YN
                 ,REG_DT
                 ,REG_ID
 
             ) VALUES (
-                 #{jewMdisSno}
+
+                ,#{jewMdisSno}
                 ,#{mdisNum}
                 ,#{mdisType}
                 ,#{mdisKorNm}
@@ -182,7 +191,7 @@
                 ,#{mailSurvey}
                 ,#{phoneSurvey}
                 ,#{onlineSurvey}
-                ,#{etc}
+                ,#{etcSurvey}
                 ,#{extraction}
                 ,#{caseNumber}
                 ,#{weight}
@@ -194,6 +203,8 @@
                 ,#{remark}
                 ,#{etc}
                 ,#{dataFile}
+                ,#{useYn}
+                ,'N'
                 ,NOW()
                 ,#{regId}
                      )
@@ -201,50 +212,50 @@
     </insert>
     <update id="updateMdis">
         UPDATE JEW_MDIS SET
-                 JEW_MDIS_SNO = #{jewMdisSno}
-                ,MDIS_NUM = #{mdisNum}
-                ,MDIS_TYPE = #{mdisType}
-                ,MDIS_KOR_NM = #{mdisKorNm}
-                ,MDIS_EN_NM = #{mdisEnNm}
-                ,DATA_OF_FORM = #{dataOfForm}
-                ,PROJECT_KOR_NM = #{projectKorNm}
-                ,PROJECT_EN_NM = #{projectEnNm}
-                ,PI = #{pi}
-                ,CO_PI = #{coPi}
-                ,ORGANIZATION = #{organization}
-                ,SUPPORTING_ORGANIZATION = #{supportingOrganization}
-                ,COPYRIGHT_HOLDER = #{copyrightHolder}
-                ,INVESTIGATE_PURPOSE = #{investigatePurpose}
-                ,INVESTIGATE_CONTENT = #{investigateContent}
-                ,KEYWORD = #{keyword}
-                ,COLLECTION_STR_DAY = #{collectionStrDay}
-                ,COLLECTION_END_DAY = #{collectionEndDay}
-                ,INVESTIGATE_AREA = #{investigateArea}
-                ,ANALYSIS_UNIT = #{analysisUnit}
-                ,SUBJECT = #{subject}
-                ,MDIS_TIME = #{mdisTime}
-                ,RESEARCH_ORGANIZATION = #{researchOrganization}
-                ,INTERVIEW_SURVEY = #{interviewSurvey}
-                ,SELF_ADMINISTERED_SURVEY = #{selfAdministeredSurvey}
-                ,MAIL_SURVEY = #{mailSurvey}
-                ,PHONE_SURVEY = #{phoneSurvey}
-                ,ONLINE_SURVEY = #{onlineSurvey}
-                ,ETC = #{etc}
-                ,EXTRACTION = #{extraction}
-                ,CASE_NUMBER = #{caseNumber}
-                ,WEIGHT = #{weight}
-                ,DATA_FORM = #{dataForm}
-                ,DATA_STRUCTURE = #{dataStructure}
-                ,MDIS_LANGUAGE = #{mdisLanguage}
-                ,PUBLIC_YN = #{publicYn}
-                ,PUBLIC_REASONS = #{publicReasons}
-                ,REMARK = #{remark}
-                ,ETC = #{etc}
-                ,DATA_FILE = #{dataFile}
-                ,REG_DT = #{regDt}
-                ,REG_ID = #{regId}
-                ,MOD_DT = #{modDt}
-                ,MOD_ID = #{modId}
+             JEW_MDIS_SNO = #{jewMdisSno}
+            ,MDIS_NUM = #{mdisNum}
+            ,MDIS_TYPE = #{mdisType}
+            ,MDIS_KOR_NM = #{mdisKorNm}
+            ,MDIS_EN_NM = #{mdisEnNm}
+            ,DATA_OF_FORM = #{dataOfForm}
+            ,PROJECT_KOR_NM = #{projectKorNm}
+            ,PROJECT_EN_NM = #{projectEnNm}
+            ,PI = #{pi}
+            ,CO_PI = #{coPi}
+            ,ORGANIZATION = #{organization}
+            ,SUPPORTING_ORGANIZATION = #{supportingOrganization}
+            ,COPYRIGHT_HOLDER = #{copyrightHolder}
+            ,INVESTIGATE_PURPOSE = #{investigatePurpose}
+            ,INVESTIGATE_CONTENT = #{investigateContent}
+            ,KEYWORD = #{keyword}
+            ,COLLECTION_STR_DAY = #{collectionStrDay}
+            ,COLLECTION_END_DAY = #{collectionEndDay}
+            ,INVESTIGATE_AREA = #{investigateArea}
+            ,ANALYSIS_UNIT = #{analysisUnit}
+            ,SUBJECT = #{subject}
+            ,MDIS_TIME = #{mdisTime}
+            ,RESEARCH_ORGANIZATION = #{researchOrganization}
+            ,INTERVIEW_SURVEY = #{interviewSurvey}
+            ,SELF_ADMINISTERED_SURVEY = #{selfAdministeredSurvey}
+            ,MAIL_SURVEY = #{mailSurvey}
+            ,PHONE_SURVEY = #{phoneSurvey}
+            ,ONLINE_SURVEY = #{onlineSurvey}
+            ,ETC_SURVEY = #{etcSurvey}
+            ,EXTRACTION = #{extraction}
+            ,CASE_NUMBER = #{caseNumber}
+            ,WEIGHT = #{weight}
+            ,DATA_FORM = #{dataForm}
+            ,DATA_STRUCTURE = #{dataStructure}
+            ,MDIS_LANGUAGE = #{mdisLanguage}
+            ,PUBLIC_YN = #{publicYn}
+            ,PUBLIC_REASONS = #{publicReasons}
+            ,REMARK = #{remark}
+            ,ETC = #{etc}
+            ,DATA_FILE = #{dataFile}
+            ,USE_YN = #{useYn}
+            ,DELETE_YN = #{deleteYn}
+            ,MOD_DT = NOW()
+            ,MOD_ID = #{modId}
         WHERE JEW_MDIS_SNO = #{jewMdisSno}
     </update>
 

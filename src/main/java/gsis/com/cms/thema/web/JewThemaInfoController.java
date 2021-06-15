@@ -3,6 +3,8 @@ package gsis.com.cms.thema.web;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.annotation.IncludedInfo;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
+import gsis.com.cms.thema.service.JewThemaGroupService;
+import gsis.com.cms.thema.vo.JewThemaGroupVO;
 import infomind.com.cmm.api.ApiResponse;
 import infomind.com.cmm.web.BaseAjaxController;
 import infomind.com.utils.web.InfoViewUtils;
@@ -23,6 +25,9 @@ public class JewThemaInfoController extends BaseAjaxController {
 
     @Resource(name="JewThemaInfoService")
     private JewThemaInfoService jewThemaInfoService;
+
+    @Resource(name="JewThemaGroupService")
+    private JewThemaGroupService jewThemaGroupService;
 
     private String pagePath = "thema/";
 
@@ -47,7 +52,11 @@ public class JewThemaInfoController extends BaseAjaxController {
     /** 테마통계관리 등록화면 */
     @RequestMapping(value="/cms/gsis/thema/jewThemaInfoRegistView.do")
     public String jewThemaInfoRegistView(@ModelAttribute("searchVO") JewThemaInfoVO searchVO, ModelMap model) throws Exception{
+
+        JewThemaGroupVO jewThemaGroupVO = new JewThemaGroupVO();
         model.addAttribute("jewThemaInfoVO", new JewThemaInfoVO());
+        model.addAttribute("jewGroupList",jewThemaGroupService.selectThemaGroupList(jewThemaGroupVO));
+
         return InfoViewUtils.adminJsView(pagePath,"jewThemaInfoRegist","axmodal");
     }
 
@@ -56,8 +65,37 @@ public class JewThemaInfoController extends BaseAjaxController {
     public ApiResponse jewThemaInfoRegist(JewThemaInfoVO jewThemaInfoVO)throws Exception{
         LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
         jewThemaInfoVO.setRegId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
+        System.out.println("mountain"+jewThemaInfoVO);
+        jewThemaInfoService.insertThemaInfo(jewThemaInfoVO);
+        return ok();
+    }
+
+    @RequestMapping(value="/cms/gsis/thema/jewThemaInfoUpdtView.do")
+    public String jewThemaInfoUpdtView(@ModelAttribute("searchVO")JewThemaInfoVO searchVO,ModelMap model)throws Exception{
+
+        JewThemaGroupVO jewThemaGroupVO = new JewThemaGroupVO();
+        model.addAttribute("jewThemaInfoVO",jewThemaInfoService.selectThemaInfo(searchVO));
+        model.addAttribute("jewGroupList",jewThemaGroupService.selectThemaGroupList(jewThemaGroupVO));
+        return InfoViewUtils.adminJsView(pagePath,"jewThemaInfoUpdt","axmodal");
+    }
+
+    @RequestMapping(value="/cms/gsis/thema/jewThemaInfoUpdt.do")
+    @ResponseBody
+    public ApiResponse jewThemaInfoUpdt(JewThemaInfoVO jewThemaInfoVO)throws Exception{
+
+        LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+        jewThemaInfoVO.setRegId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
+        jewThemaInfoService.updateThemaInfo(jewThemaInfoVO);
 
         return ok();
     }
 
+    @RequestMapping(value="/cms/gsis/thema/jewThemaInfoDelete.do")
+    @ResponseBody
+    public ApiResponse jewThemaInfoDelete(JewThemaInfoVO jewThemaInfoVO)throws Exception {
+
+        jewThemaInfoService.deleteThemaInfo(jewThemaInfoVO);
+
+        return ok();
+    }
 }

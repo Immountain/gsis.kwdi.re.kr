@@ -121,19 +121,19 @@
     //수정화면
     function gotoUpdt(row) {
 
-        var categoryId = firstGrid.getList()[row].categoryId;
+        var themaGroupId = firstGrid.getList()[row].themaGroupId;
 
         var p = {
-            categoryId: categoryId
+            themaGroupId: themaGroupId
         };
 
-        var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategoryUpdtView.do' />";
+        var API_SERVER = "<c:url value='/cms/gsis/thema/jewThemaGroupUpdtView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 350,
-            width: 800,
+            height: 326,
+            width: 796,
             header: {
-                title: '통계DB카테고리 수정',
+                title: '테마통계관리그룹 수정',
                 btns: {
                     close: {
                         label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
@@ -157,10 +157,10 @@
 
         var formData ={
 
-            categoryId : firstGrid.getList()[row].categoryId
+            themaGroupId : firstGrid.getList()[row].themaGroupId
         }
 
-        var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategoryDelete.do' />";
+        var API_SERVER = "<c:url value='/cms/gsis/thema/jewThemaGroupDelete.do' />";
         var saveQuestion = confirm("삭제 하시겠습니까?");
         if (saveQuestion) {
             $.ajax({
