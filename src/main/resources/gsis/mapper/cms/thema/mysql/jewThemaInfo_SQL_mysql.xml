@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JewThemaInfoDAO">
+
+    <select id="selectThemaInfo"
+            parameterType="gsis.com.cms.thema.vo.JewThemaInfoVO"
+            resultType="gsis.com.cms.thema.vo.JewThemaInfoVO">
+        SELECT
+             JTI.THEMA_GROUP_ID
+            ,JTI.THEMA_ID
+            ,JTI.THEMA_NM
+            ,JTI.THEMA_TITLE
+            ,JTI.THEMA_MEMO
+            ,JTI.THEMA_ETC
+            ,JTI.TBL_ID
+            ,JTI.LOAD_GUBUN
+            ,JTI.LOAD_TERM
+            ,JTI.COLLECT_TYPE
+            ,JTI.COLLECT_CYCLE
+            ,JTI.API_URL
+            ,JTI.HTML_FILE
+            ,JTI.ORDER_CNT
+            ,JTI.USE_YN
+            ,JTI.DELETE_YN
+            ,JTI.REG_DT
+            ,JTI.REG_ID
+            ,JTI.MOD_DT
+            ,JTI.MOD_ID
+        FROM JEW_THEMA_INFO JTI
+        WHERE 1=1
+          AND JTI.THEMA_ID =#{themaId}
+    </select>
+
+    <select id="selectThemaInfoList"
+        parameterType="gsis.com.cms.thema.vo.JewThemaInfoVO"
+        resultType="gsis.com.cms.thema.vo.JewThemaInfoVO">
+        SELECT
+             JTI.THEMA_GROUP_ID
+            ,JTI.THEMA_ID
+            ,JTI.THEMA_NM
+            ,JTI.THEMA_TITLE
+            ,JTI.THEMA_MEMO
+            ,JTI.THEMA_ETC
+            ,JTI.TBL_ID
+            ,JTI.LOAD_GUBUN
+            ,JTI.LOAD_TERM
+            ,JTI.COLLECT_TYPE
+            ,JTI.COLLECT_CYCLE
+            ,JTI.API_URL
+            ,JTI.HTML_FILE
+            ,JTI.ORDER_CNT
+            ,JTI.USE_YN
+            ,JTI.DELETE_YN
+            ,JTI.REG_DT
+            ,JTI.REG_ID
+            ,JTI.MOD_DT
+            ,JTI.MOD_ID
+        FROM JEW_THEMA_INFO JTI
+        WHERE 1=1
+        AND
+            JTI.DELETE_YN = 'N'
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(themaGroupId)">
+            AND JTI.THEMA_GROUP_ID = #{themaGroupId}
+        </if>
+        <if test="searchCondition == 1"> AND
+            JTI.THEMA_GROUP_ID LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        <if test="searchCondition == 2"> AND
+            JTI.THEMA_GROUP_NM LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        order by JTI.ORDER_CNT desc
+    </select>
+
+    <insert id="insertThemaInfo">
+        <![CDATA[
+            INSERT INTO JEW_THEMA_INFO(
+                 THEMA_GROUP_ID
+                ,THEMA_ID
+                ,THEMA_NM
+                ,THEMA_TITLE
+                ,THEMA_MEMO
+                ,THEMA_ETC
+                ,TBL_ID
+                ,LOAD_GUBUN
+                ,LOAD_TERM
+                ,COLLECT_TYPE
+                ,COLLECT_CYCLE
+                ,API_URL
+                ,HTML_FILE
+                ,ORDER_CNT
+                ,USE_YN
+                ,DELETE_YN
+                ,MOD_DT
+                ,MOD_ID
+
+            ) VALUES (
+                ,#{themaGroupId}
+                ,#{themaId}
+                ,#{themaNm}
+                ,#{themaTitle}
+                ,#{themaMemo}
+                ,#{themaEtc}
+                ,#{tblId}
+                ,#{loadGubun}
+                ,#{loadTerm}
+                ,#{collectType}
+                ,#{collectCycle}
+                ,#{apiUrl}
+                ,#{htmlFile}
+                ,#{orderCnt}
+                ,#{useYn}
+                ,'N'
+                ,NOW()
+                ,#{modId}
+                     )
+        ]]>
+    </insert>
+
+    <update id="updateThemaInfo">
+        UPDATE JEW_THEMA_INFO SET
+             THEMA_GROUP_ID = #{themaGroupId}
+            ,THEMA_ID = #{themaId}
+            ,THEMA_NM = #{themaNm}
+            ,THEMA_TITLE = #{themaTitle}
+            ,THEMA_MEMO = #{themaMemo}
+            ,THEMA_ETC = #{themaEtc}
+            ,TBL_ID = #{tblId}
+            ,LOAD_GUBUN = #{loadGubun}
+            ,LOAD_TERM = #{loadTerm}
+            ,COLLECT_TYPE = #{collectType}
+            ,COLLECT_CYCLE = #{collectCycle}
+            ,API_URL = #{apiUrl}
+            ,HTML_FILE = #{htmlFile}
+            ,ORDER_CNT = #{orderCnt}
+            ,USE_YN = #{useYn}
+            ,MOD_DT = NOW()
+            ,MOD_ID = #{modId}
+        WHERE THEMA_GROUP_ID = #{themaGroupId}
+    </update>
+
+    <update id="deleteThemaInfo">
+        UPDATE JEW_THEMA_INFO SET
+            DELETE_YN = 'Y'
+        WHERE 1=1
+        AND THEMA_ID = #{themaId}
+    </update>
+
+</mapper>

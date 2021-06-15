@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JewThemaGroupDAO">
+
+    <select id="selectThemaGroup"
+            parameterType="gsis.com.cms.thema.vo.JewThemaGroupVO"
+            resultType="gsis.com.cms.thema.vo.JewThemaGroupVO">
+        SELECT
+             JTG.THEMA_GROUP_ID
+            ,JTG.THEMA_GROUP_NM
+            ,JTG.ORDER_CNT
+            ,JTG.USE_YN
+            ,JTG.DELETE_YN
+            ,JTG.REG_DT
+            ,JTG.REG_ID
+            ,JTG.MOD_DT
+            ,JTG.MOD_ID
+        FROM JEW_THEMA_GROUP JTG
+        WHERE 1=1
+          AND JTG.THEMA_GROUP_ID =#{themaGroupId}
+    </select>
+
+    <select id="selectThemaGroupList"
+        parameterType="gsis.com.cms.thema.vo.JewThemaGroupVO"
+        resultType="gsis.com.cms.thema.vo.JewThemaGroupVO">
+        SELECT
+             JTG.THEMA_GROUP_ID
+            ,JTG.THEMA_GROUP_NM
+            ,JTG.ORDER_CNT
+            ,JTG.USE_YN
+            ,JTG.DELETE_YN
+            ,JTG.REG_DT
+            ,JTG.REG_ID
+            ,JTG.MOD_DT
+            ,JTG.MOD_ID
+        FROM JEW_THEMA_GROUP JTG
+        WHERE 1=1
+        AND
+            JTG.DELETE_YN = 'N'
+        <if test="searchCondition == 1"> AND
+            JTG.THEMA_GROUP_ID LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        <if test="searchCondition == 2"> AND
+            JTG.THEMA_GROUP_NM LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        order by JTG.ORDER_CNT desc
+    </select>
+
+    <insert id="insertThemaGroup">
+        <![CDATA[
+            INSERT INTO JEW_THEMA_GROUP(
+                 THEMA_GROUP_ID
+                ,THEMA_GROUP_NM
+                ,ORDER_CNT
+                ,USE_YN
+                ,DELETE_YN
+                ,REG_DT
+                ,REG_ID
+
+            ) VALUES (
+                 #{themaGroupId}
+                ,#{themaGroupNm}
+                ,#{orderCnt}
+                ,#{useYn}
+                ,'N'
+                ,NOW()
+                ,#{regId}
+                     )
+        ]]>
+    </insert>
+
+    <update id="updateThemaGroup">
+        UPDATE JEW_THEMA_GROUP SET
+             THEMA_GROUP_ID =#{themaGroupId}
+            ,THEMA_GROUP_NM =#{themaGroupNm}
+            ,ORDER_CNT =#{orderCnt}
+            ,USE_YN =#{useYn}
+            ,MOD_DT = NOW()
+            ,MOD_ID =#{modId}
+        WHERE THEMA_GROUP_ID = #{themaGroupId}
+    </update>
+
+    <update id="deleteThemaGroup">
+        UPDATE JEW_THEMA_GROUP SET
+            DELETE_YN = 'Y'
+        WHERE 1=1
+        AND THEMA_GROUP_ID = #{themaGroupId}
+    </update>
+
+</mapper>
