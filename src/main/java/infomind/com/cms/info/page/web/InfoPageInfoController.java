@@ -30,10 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springmodules.validation.commons.DefaultBeanValidator;
-import wj.com.cms.wj.festivity.vo.WjFestivityScheduleVO;
-
 import javax.annotation.Resource;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 

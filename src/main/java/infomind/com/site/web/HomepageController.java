@@ -5,7 +5,6 @@ import infomind.com.cms.info.popup.service.InfoPopupManageService;
 import infomind.com.cms.info.site.service.InfoSiteVisitService;
 import infomind.com.cms.info.site.vo.InfoSiteVO;
 import infomind.com.file.service.InfoFileService;
-import infomind.com.file.vo.InfoFileDetailVO;
 import infomind.com.utils.web.InfoViewUtils;
 import infomind.com.utils.web.InfoWebUtils;
 import org.apache.commons.lang.StringUtils;
@@ -14,16 +13,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import wj.com.site.festivity.service.WjSiteFestivityService;
-import wj.com.site.festivity.vo.WjSiteFestivityInfoVO;
-
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Controller
 public class HomepageController {
@@ -48,10 +43,6 @@ public class HomepageController {
     @Resource(name = "InfoSiteVisitService")
     private InfoSiteVisitService infoSiteVisitService;
 
-
-
-    @Resource(name = "WjSiteFestivityService")
-    private WjSiteFestivityService wjSiteFestivityService;
 
 
 
@@ -91,36 +82,6 @@ public class HomepageController {
         InfoSiteVO infoSite = InfoWebUtils.getCurrentSiteInfo(request);
 
 
-        List<InfoFileDetailVO> fileList = new ArrayList<>();
-        WjSiteFestivityInfoVO wjSiteFestivityInfoVO = new WjSiteFestivityInfoVO();
-        wjSiteFestivityInfoVO.setLangCode(infoSite.getLangCd());
-
-
-        WjSiteFestivityInfoVO festivityInfo = new WjSiteFestivityInfoVO();
-        int festivitySize =0;
-
-        try {
-
-            List<WjSiteFestivityInfoVO> festivityList =wjSiteFestivityService.getMainFesitivityList(wjSiteFestivityInfoVO);
-
-            festivitySize =festivityList.size();
-            if(festivitySize>0){
-                festivityInfo =festivityList.get(0);
-                if (festivityInfo.getFestivityImage() != null || !"".equals(festivityInfo.getFestivityImage())) {
-                    InfoFileDetailVO file = new InfoFileDetailVO();
-                    file.setAtchFileId(festivityInfo.getFestivityImage());
-                    fileList = infoFileService.getInfoFileList(file);
-                }
-
-            }
-        }catch (Exception e){
-
-
-        }
-
-        model.addAttribute("festivitySize", festivitySize);
-        model.addAttribute("festivityInfo", festivityInfo);
-        model.addAttribute("fileList", fileList);
 
         System.out.println(String.format("[INFO-%s] %s", this.getClass().getName(), "Started"));
         System.out.println(String.format("[INFO-%s] %s", this.getClass().getName(), InfoViewUtils.forwardSiteMainPage(infoSite)));
