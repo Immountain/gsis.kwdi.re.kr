@@ -36,7 +36,7 @@
 				<value>classpath:/jtp/mapper/site/*/${Globals.DbType}/*_${Globals.DbType}.xml</value>
 			    <value>classpath:/jtp/mapper/site/*/*/${Globals.DbType}/*_${Globals.DbType}.xml</value>
 
-				<value>classpath:/js/mapper/cms/*/${Globals.DbType}/*_${Globals.DbType}.xml</value>
+				<value>classpath:/gsis/mapper/cms/*/${Globals.DbType}/*_${Globals.DbType}.xml</value>
 
 			</list>
 		</property>
