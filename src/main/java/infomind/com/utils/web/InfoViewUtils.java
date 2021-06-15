@@ -17,7 +17,7 @@ public class InfoViewUtils {
     }
 
     public static String adminJsView(String path, String page, String type) {
-        return "js/com/cms/" + path + page + "." + type;
+        return "gsis/com/cms/" + path + page + "." + type;
     }
 
     public static String adminBoardView(String path, String page, String type) {
