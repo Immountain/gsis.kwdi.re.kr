@@ -150,8 +150,8 @@
                     </td>
                     <th>부모카테고리<span class="pilsu">*</span></th>
                     <td>
-                            ${searchVO.parentId}
-                        <form:hidden path="parentId" value="${searchVO.parentId}"/>
+                            ${jewStatsCategoryVO.parentId}
+                        <form:hidden path="parentId" value="${jewStatsCategoryVO.parentId}"/>
                     </td>
                 </tr>
                 <tr>
