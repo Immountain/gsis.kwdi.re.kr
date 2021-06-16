@@ -210,7 +210,7 @@
 
             var formData = $("#jewMdisVO").serializeObject();
 
-            var API_SERVER = "<c:url value='/cms/gsis/stats/jewMdisRegist.do' />";
+            var API_SERVER = "<c:url value='/cms/gsis/stats/jewMdisUpdt.do' />";
             var saveQuestion = confirm("저장 하시겠습니까?");
             if (saveQuestion) {
                 $.ajax({
@@ -412,11 +412,11 @@
                 <tr>
                     <th>조사방법</th>
                     <td colspan="3">
-                        <input id="interviewSurvey" name="interviewSurvey" type="checkbox"><label for="interviewSurvey">면대면</label>
-                        <input id="selfAdministeredSurvey" name="selfAdministeredSurvey" type="checkbox"><label for="selfAdministeredSurvey">자기기입식</label>
-                        <input id="mailSurvey" name="mailSurvey" type="checkbox"><label for="mailSurvey">우편조사</label>
-                        <input id="phoneSurvey" name="phoneSurvey" type="checkbox"><label for="phoneSurvey">전화조사</label>
-                        <input id="onlineSurvey" name="onlineSurvey" type="checkbox"><label for="onlineSurvey">온라인조사</label>
+                        <input id="interviewSurvey" name="interviewSurvey" type="checkbox" <c:if test="${jewMdisVO.interviewSurvey =='Y'}">checked</c:if>><label for="interviewSurvey">면대면</label>
+                        <input id="selfAdministeredSurvey" name="selfAdministeredSurvey" type="checkbox" <c:if test="${jewMdisVO.selfAdministeredSurvey =='Y'}">checked</c:if>><label for="selfAdministeredSurvey">자기기입식</label>
+                        <input id="mailSurvey" name="mailSurvey" type="checkbox"><label for="mailSurvey" <c:if test="${jewMdisVO.mailSurvey =='Y'}">checked</c:if>>우편조사</label>
+                        <input id="phoneSurvey" name="phoneSurvey" type="checkbox"><label for="phoneSurvey" <c:if test="${jewMdisVO.phoneSurvey =='Y'}">checked</c:if>>전화조사</label>
+                        <input id="onlineSurvey" name="onlineSurvey" type="checkbox"><label for="onlineSurvey" <c:if test="${jewMdisVO.onlineSurvey =='Y'}">checked</c:if>>온라인조사</label>
                         기타<input id="etcSurvey" name="etcSurvey" type="text">
                     </td>
                 </tr>

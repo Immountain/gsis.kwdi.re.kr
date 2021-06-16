@@ -55,7 +55,6 @@
         FROM JEW_MDIS JM
         WHERE 1=1
         AND JM.JEW_MDIS_SNO = #{jewMdisSno}
-        AND JM.DELETE_YN = 'N'
     </select>
 
     <select id="selectMdisList"
@@ -110,6 +109,7 @@
             ,JM.MOD_ID
         FROM JEW_MDIS JM
         WHERE 1=1
+        AND JM.DELETE_YN = 'N'
     </select>
 
     <insert id="insertMdis">
@@ -163,7 +163,7 @@
 
             ) VALUES (
 
-                ,#{jewMdisSno}
+                 #{jewMdisSno}
                 ,#{mdisNum}
                 ,#{mdisType}
                 ,#{mdisKorNm}
@@ -253,10 +253,13 @@
             ,ETC = #{etc}
             ,DATA_FILE = #{dataFile}
             ,USE_YN = #{useYn}
-            ,DELETE_YN = #{deleteYn}
             ,MOD_DT = NOW()
             ,MOD_ID = #{modId}
         WHERE JEW_MDIS_SNO = #{jewMdisSno}
     </update>
-
+    <update id="deleteMdis">
+        UPDATE JEW_MDIS SET
+            DELETE_YN = 'Y'
+        WHERE JEW_MDIS_SNO = #{jewMdisSno}
+    </update>
 </mapper>

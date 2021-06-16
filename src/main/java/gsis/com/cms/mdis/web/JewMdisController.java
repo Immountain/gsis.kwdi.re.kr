@@ -63,4 +63,32 @@ public class JewMdisController extends BaseAjaxController {
         return ok();
     }
 
+    /** 마이크로데이터 수정화면 */
+    @RequestMapping(value="/cms/gsis/stats/jewMdisUpdtView.do")
+    public String jewMdisUpdtView(@ModelAttribute("searchVO")JewMdisVO searchVO, ModelMap model)throws Exception{
+        model.addAttribute("jewMdisVO",jewMdisService.selectMdis(searchVO));
+        return InfoViewUtils.adminJsView(pagePath,"jewMdisUpdt","ax5ui");
+    }
+
+    /** 마이크로데이터 수정 */
+    @RequestMapping(value="/cms/gsis/stats/jewMdisUpdt.do")
+    @ResponseBody
+    public ApiResponse jewMdisUpdt(JewMdisVO jewMdisVO) throws Exception{
+
+        LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+        jewMdisVO.setRegId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
+        jewMdisService.updateMdis(jewMdisVO);
+
+        return ok();
+    }
+
+    /** 마이크로데이터 삭제 */
+    @RequestMapping(value="/cms/gsis/stats/jewMdisDelete.do")
+    @ResponseBody
+    public ApiResponse jewMdisDelete(JewMdisVO jewMdisVO) throws Exception{
+
+        jewMdisService.deleteMdis(jewMdisVO);
+        return ok();
+    }
+
 }

@@ -13,4 +13,7 @@ public interface JewMdisService {
      void insertMdis(JewMdisVO vo)throws Exception;
 
      void updateMdis(JewMdisVO vo)throws Exception;
-}
+
+     void deleteMdis(JewMdisVO vo)throws Exception;
+
+     }

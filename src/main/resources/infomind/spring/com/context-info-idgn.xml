@@ -122,4 +122,12 @@
         <property name="tableName"          value="PCC_SMS_SNO"/>
     </bean>
 
+    <bean name="jewMdisIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+        <property name="dataSource" ref="egov.dataSource" />
+        <property name="blockSize"  value="10"/>
+        <property name="table"      value="INFO_IDS"/>
+        <property name="tableNameFieldName"  value="IDGEN_TABLE_NM"/>
+        <property name="nextIdFieldName" value="IDGEN_NEXT_ID"/>
+        <property name="tableName" value="JEW_MDIS_SNO"/>
+    </bean>
 </beans>

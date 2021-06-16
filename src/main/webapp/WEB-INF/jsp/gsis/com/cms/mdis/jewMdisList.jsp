@@ -69,13 +69,6 @@
                     {key: "publicReasons", label: "자료공개_사유"},
                     {key: "remark", label: "비고"},
                     {
-                        key: "categoryId", label: "카테고리", formatter: function () {
-
-                            // console.log(this.item);
-                            return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoCategory(" + this.dindex + ");'> 카테고리 </button>";
-                        }
-                    },
-                    {
                         key: "categoryId", label: "수정", width:60 ,formatter: function () {
 
                             // console.log(this.item);
@@ -129,11 +122,11 @@
     function gotoRegist() {
 
         var p = {};
-        var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategoryRegistView.do' />";
+        var API_SERVER = "<c:url value='/cms/gsis/stats/jewMdisRegistView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 400,
-            width: 800,
+            height: 791,
+            width: 919,
             header: {
                 title: '마이크로데이터 등록',
                 btns: {
@@ -159,17 +152,17 @@
     //수정화면
     function gotoUpdt(row) {
 
-        var companyId = firstGrid.getList()[row].companyId;
+        var jewMdisSno = firstGrid.getList()[row].jewMdisSno;
 
         var p = {
-            companyId: companyId
+            jewMdisSno: jewMdisSno
         };
 
-        var API_SERVER = "<c:url value='/bus/cms/transportation/TransportationUdptView.do' />";
+        var API_SERVER = "<c:url value='/cms/gsis/stats/jewMdisUpdtView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 350,
-            width: 800,
+            height: 791,
+            width: 919,
             header: {
                 title: '마이크로데이터 수정',
                 btns: {
@@ -191,6 +184,49 @@
         });
     }
 
+    function gotoDelete(row){
+
+        var formData ={
+
+            jewMdisSno : firstGrid.getList()[row].jewMdisSno
+        }
+
+        var API_SERVER = "<c:url value='/cms/gsis/stats/jewMdisDelete.do' />";
+        var saveQuestion = confirm("삭제 하시겠습니까?");
+        if (saveQuestion) {
+            $.ajax({
+                url : API_SERVER,
+                type : 'post',
+                data : formData,
+                dateType:'json',
+
+                beforeSend: function(xhr) {
+
+                    xhr.setRequestHeader("AJAX", "true");
+
+                },
+                success : function(data) {
+
+                    var jsonObj = JSON.stringify(data);
+                    if(data.status=="0"){
+                        if(data.message=="SUCCESS"){
+                            alert("삭제 완료했습니다.");
+                            Search();
+                        }else{
+                            alert(data.message);
+
+                        }
+                    }else{
+
+                        alert("처리중 오류가 발생했습니다.");
+                    }
+                }, // success
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+    };
 
 </script>
 <div class="sub subView">

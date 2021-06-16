@@ -31,7 +31,7 @@ public class JewMdisVO extends CmsSearchVO {
         private String investigateArea;  //varchar(50)  null comment '조사지역',
         private String analysisUnit;  //varchar(50)  null comment '분석단위',
         private String subject;  //varchar(200) null comment '조사대상',
-        private String time;  //varchar(50)  null comment '시간적차원',
+        private String mdisTime;  //varchar(50)  null comment '시간적차원',
         private String researchOrganization;  //varchar(50)  null comment '새 조사수행기관',
         private String interviewSurvey;  //varchar(20)  null comment '조사방법_면대면',
         private String selfAdministeredSurvey;  //varchar(20)  null comment '조사방법_자기기입식',
@@ -44,11 +44,17 @@ public class JewMdisVO extends CmsSearchVO {
         private String weight;  //varchar(50)  null comment '가중치',
         private String dataForm;  //varchar(50)  null comment '자료형식',
         private String dataStructure;  //varchar(50)  null comment '자료구성',
-        private String language;  //varchar(50)  null comment '사용언어',
+        private String mdisLanguage;  //varchar(50)  null comment '사용언어',
         private String publicYn;  //varchar(2)   null comment '자료공개여부',
         private String publicReasons;  //varchar(200) null comment '자료공개_사유',
         private String remark;  //varchar(500) null comment '비고',
         private String etc;  //varchar(20)  null comment '기타파일',
         private String dataFile;  //varchar(20)  null comment '데이터파일',
+        private String useYn;  //varchar(2)   null comment '사용여부',
+        private String deleteYn;  //varchar(2)   null comment '삭제여부',
+        private String regDt;  //datetime     null comment '등록일',
+        private String regId;  //varchar(20)  null comment '등록자',
+        private String modDt;  //datetime     null comment '수정자',
+        private String modId;  //varchar(20)  null comment '수정일'
 
 }

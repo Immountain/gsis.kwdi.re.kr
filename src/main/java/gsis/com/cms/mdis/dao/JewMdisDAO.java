@@ -24,4 +24,8 @@ public class JewMdisDAO extends EgovComAbstractDAO {
     public void updateMdis(JewMdisVO vo)throws Exception{
         insert("JewMdisDAO.updateMdis",vo);
     }
+
+    public void deleteMdis(JewMdisVO vo)throws Exception{
+        insert("JewMdisDAO.deleteMdis",vo);
+    }
 }
