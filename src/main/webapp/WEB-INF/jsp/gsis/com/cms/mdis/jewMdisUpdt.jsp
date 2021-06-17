@@ -285,31 +285,31 @@
                 <c:set var="inputYes"><spring:message code="input.yes" /></c:set>
                 <c:set var="inputNo"><spring:message code="input.no" /></c:set>
                 <tr>
-                    <input type="hidden" name="parentId" id="parentId" value="root" />
+                    <form:hidden path="jewMdisSno"/>
                     <th style="width:100px"><label for="mdisType">자료유형<span class="pilsu">*</span></label></th>
                     <td class="left" >
                         <form:input path="mdisType" title="${title} ${inputTxt}" maxlength="10"/>
                     </td>
                     <th style="width:100px"  ><label for="mdisNum">자료번호<span class="pilsu">*</span></label></th>
                     <td class="left">
-                        <form:input path="mdisNum" title="${title} ${inputTxt}" maxlength="25" />
+                        <form:input path="mdisNum" title="${title} ${inputTxt}" maxlength="10" />
                     </td>
                 </tr>
                 <tr>
                     <th><label for="mdisKorNm">자료명(국문)<span class="pilsu">*</span></label></th>
                     <td class="left">
-<%--                        <form:input path="orderCnt" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="숫자만입력가능합니다" title="${title} ${inputTxt}" maxlength="8" />--%>
-                        <form:input path="mdisKorNm" />
+                            <%--                        <form:input path="orderCnt" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="숫자만입력가능합니다" title="${title} ${inputTxt}" maxlength="8" />--%>
+                        <form:input path="mdisKorNm" maxlength="100"/>
                     </td>
                     <th>자료명(영문)<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="mdisEnNm" maxlength="10"/>
+                        <form:input path="mdisEnNm" maxlength="100"/>
                     </td>
                 </tr>
                 <tr>
                     <th>자료인용서식<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="dataOfForm" maxlength="10"/>
+                        <form:textarea path="dataOfForm" maxlength="250"/>
                     </td>
                     <th>사용여부<span class="pilsu">*</span></th>
                     <td>
@@ -322,51 +322,51 @@
                 <tr>
                     <th>연구과제명(국문)<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="projectKorNm"/>
+                        <form:input path="projectKorNm" maxlength="100"/>
                     </td>
                     <th>연구과제명(영문)<span class="pilsu">*</span></th>
                     <td colspan="3">
-                        <form:input path="projectEnNm"/>
+                        <form:input path="projectEnNm" maxlength="100"/>
                     </td>
                 </tr>
                 <tr>
                     <th>연구책임자<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="pi"/>
+                        <form:input path="pi" maxlength="10"/>
                     </td>
                     <th>공동연구자<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="coPi"/>
+                        <form:input path="coPi" maxlength="100"/>
                     </td>
                 </tr>
                 <tr>
                     <th>연구수행기관<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="organization"/>
+                        <form:input path="organization" maxlength="25"/>
                     </td>
                     <th>연구비지원기관<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="supportingOrganization"/>
+                        <form:input path="supportingOrganization" maxlength="25"/>
                     </td>
                 </tr>
                 <tr>
                     <th>저작권자<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="copyrightHolder"/>
-                    </td>
-                    <th>조사목적<span class="pilsu">*</span></th>
-                    <td colspan="3">
-                        <form:input path="investigatePurpose"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th>조사내용<span class="pilsu">*</span></th>
-                    <td>
-                        <form:input path="investigateContent"/>
+                        <form:input path="copyrightHolder" maxlength="25"/>
                     </td>
                     <th>키워드<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="keyword"/>
+                        <form:input path="keyword" maxlength="100"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>조사목적<span class="pilsu">*</span></th>
+                    <td>
+                        <form:textarea path="investigatePurpose" maxlength="250"/>
+                    </td>
+                    <th>조사내용<span class="pilsu">*</span></th>
+                    <td>
+                        <form:textarea path="investigateContent" maxlength="250"/>
                     </td>
                 </tr>
                 <tr>
@@ -382,27 +382,27 @@
                 <tr>
                     <th>조사지역<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="investigateArea"/>
+                        <form:input path="investigateArea" maxlength="25"/>
                     </td>
                     <th>분석단위<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="analysisUnit"/>
+                        <form:input path="analysisUnit" maxlength="25"/>
                     </td>
                 </tr>
                 <tr>
                     <th>조사대상<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="subject"/>
+                        <form:input path="subject" maxlength="100"/>
                     </td>
                     <th>시간적차원<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="mdisTime"/>
+                        <form:input path="mdisTime" maxlength="25"/>
                     </td>
                 </tr>
                 <tr>
                     <th>조사수행기관<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="researchOrganization"/>
+                        <form:input path="researchOrganization" maxlength="25"/>
                     </td>
                     <th>표본추출방법<span class="pilsu">*</span></th>
                     <td>
@@ -413,37 +413,37 @@
                     <th>조사방법</th>
                     <td colspan="3">
                         <input id="interviewSurvey" name="interviewSurvey" type="checkbox" <c:if test="${jewMdisVO.interviewSurvey =='Y'}">checked</c:if>><label for="interviewSurvey">면대면</label>
-                        <input id="selfAdministeredSurvey" name="selfAdministeredSurvey" type="checkbox" <c:if test="${jewMdisVO.selfAdministeredSurvey =='Y'}">checked</c:if>><label for="selfAdministeredSurvey">자기기입식</label>
-                        <input id="mailSurvey" name="mailSurvey" type="checkbox"><label for="mailSurvey" <c:if test="${jewMdisVO.mailSurvey =='Y'}">checked</c:if>>우편조사</label>
-                        <input id="phoneSurvey" name="phoneSurvey" type="checkbox"><label for="phoneSurvey" <c:if test="${jewMdisVO.phoneSurvey =='Y'}">checked</c:if>>전화조사</label>
-                        <input id="onlineSurvey" name="onlineSurvey" type="checkbox"><label for="onlineSurvey" <c:if test="${jewMdisVO.onlineSurvey =='Y'}">checked</c:if>>온라인조사</label>
-                        기타<input id="etcSurvey" name="etcSurvey" type="text">
+                        <input id="selfAdministeredSurvey" name="selfAdministeredSurvey" type="checkbox" <c:if test="${jewMdisVO.selfAdministeredSurvey == 'Y'}">checked</c:if>><label for="selfAdministeredSurvey">자기기입식</label>
+                        <input id="mailSurvey" name="mailSurvey" type="checkbox" <c:if test="${jewMdisVO.mailSurvey == 'Y'}">checked</c:if>><label for="mailSurvey">우편조사</label>
+                        <input id="phoneSurvey" name="phoneSurvey" type="checkbox" <c:if test="${jewMdisVO.phoneSurvey == 'Y'}"></c:if>><label for="phoneSurvey">전화조사</label>
+                        <input id="onlineSurvey" name="onlineSurvey" type="checkbox" <c:if test="${jewMdisVO.onlineSurvey == 'Y'}"></c:if>><label for="onlineSurvey">온라인조사</label>
+                        기타<form:input path="etcSurvey"/>
                     </td>
                 </tr>
                 <tr>
                     <th>사례수<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="caseNumber"/>
+                        <form:input path="caseNumber" maxlength="50"/>
                     </td>
                     <th>가중치<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="weight"/>
+                        <form:input path="weight" maxlength="25"/>
                     </td>
                 </tr>
                 <tr>
                     <th>자료형식<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="dataForm"/>
+                        <form:input path="dataForm" maxlength="25"/>
                     </td>
                     <th>자료구성<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="dataStructure"/>
+                        <form:input path="dataStructure" maxlength="25"/>
                     </td>
                 </tr>
                 <tr>
                     <th>사용언어<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="mdisLanguage"/>
+                        <form:input path="mdisLanguage" maxlength="25"/>
                     </td>
                     <th>자료공개여부</th>
                     <td>
@@ -456,11 +456,11 @@
                 <tr>
                     <th>자료공개사유</th>
                     <td>
-                        <form:input path="publicReasons"/>
+                        <form:input path="publicReasons" maxlength="100"/>
                     </td>
                     <th>비고</th>
                     <td>
-                        <form:input path="remark"/>
+                        <form:textarea path="remark" maxlength="250"/>
                     </td>
                 </tr>
                 <tr>
@@ -483,7 +483,7 @@
     </form:form>
     <!-- 하단 버튼 -->
     <div class="btn-set right">
-        <button type="button" id="btn_save" class="btn main" name="btn_save">등록</button>
+        <button type="button" id="btn_save" class="btn main" name="btn_save">수정</button>
     </div>
 </div>
 

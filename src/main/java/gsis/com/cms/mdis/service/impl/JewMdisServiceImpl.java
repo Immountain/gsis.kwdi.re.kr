@@ -25,7 +25,21 @@ public class JewMdisServiceImpl extends EgovAbstractServiceImpl implements JewMd
 
     @Override
     public JewMdisVO selectMdis(JewMdisVO vo) throws Exception {
-        return jewMdisDAO.selectMdis(vo);
+
+        JewMdisVO jewMdisVO = jewMdisDAO.selectMdis(vo);
+
+        String strYy = jewMdisVO.getCollectionStrDay().substring(0,4);
+        String strMm = jewMdisVO.getCollectionStrDay().substring(4,6);
+        String strDd = jewMdisVO.getCollectionStrDay().substring(6,8);
+
+        String endYy = jewMdisVO.getCollectionEndDay().substring(0,4);
+        String endMm = jewMdisVO.getCollectionEndDay().substring(4,6);
+        String endDd = jewMdisVO.getCollectionEndDay().substring(6,8);
+
+        jewMdisVO.setCollectionStrDay(strYy+"-"+strMm+"-"+strDd);
+        jewMdisVO.setCollectionEndDay(endYy+"-"+endMm+"-"+endDd);
+
+        return jewMdisVO;
     }
 
     @Override

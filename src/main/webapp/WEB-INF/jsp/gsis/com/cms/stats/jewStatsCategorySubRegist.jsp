@@ -148,7 +148,7 @@
                         <form:input path="categoryId" title="${title} ${inputTxt}" maxlength="10"/>
                         <div><form:errors path="categoryId" cssClass="error"/></div>
                     </td>
-                    <th style="width:100px"  ><label for="parentId">부모카테고리 <span class="pilsu">*</span></label></th>
+                    <th style="width:100px"  ><label for="parentId">부모카테고리ID<span class="pilsu">*</span></label></th>
                         <form:hidden path="parentId" value="${searchVO.parentId}"/>
                     <td class="left">
                         ${searchVO.parentId}

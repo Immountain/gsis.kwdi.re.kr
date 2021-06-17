@@ -110,6 +110,7 @@
         FROM JEW_MDIS JM
         WHERE 1=1
         AND JM.DELETE_YN = 'N'
+        ORDER BY JM.MDIS_NUM ASC
     </select>
 
     <insert id="insertMdis">
@@ -179,8 +180,8 @@
                 ,#{investigatePurpose}
                 ,#{investigateContent}
                 ,#{keyword}
-                ,#{collectionStrDay}
-                ,#{collectionEndDay}
+                ,REPLACE(#{collectionStrDay},"-","")
+                ,REPLACE(#{collectionEndDay},"-","")
                 ,#{investigateArea}
                 ,#{analysisUnit}
                 ,#{subject}
@@ -228,8 +229,8 @@
             ,INVESTIGATE_PURPOSE = #{investigatePurpose}
             ,INVESTIGATE_CONTENT = #{investigateContent}
             ,KEYWORD = #{keyword}
-            ,COLLECTION_STR_DAY = #{collectionStrDay}
-            ,COLLECTION_END_DAY = #{collectionEndDay}
+            ,COLLECTION_STR_DAY = REPLACE(#{collectionStrDay},"-","")
+            ,COLLECTION_END_DAY = REPLACE(#{collectionEndDay},"-","")
             ,INVESTIGATE_AREA = #{investigateArea}
             ,ANALYSIS_UNIT = #{analysisUnit}
             ,SUBJECT = #{subject}

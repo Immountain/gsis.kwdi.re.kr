@@ -139,6 +139,9 @@
 
     // 조회
     function Search() {
+
+        SearchSecondGrid();
+
         var searchCondition = $("#searchCondition option:selected").val();
         var searchKeyword = $("#searchKeyword").val();
         var searchUseYn = $("#searchUseYn option:selected").val();
@@ -227,10 +230,12 @@
     //3차카테고리 등록화면
     function gotoSubRegist() {
         var data = categoryGrid.getList("selected");
+
         if(data.length<1){
             alert("2차카테고리 선택하세요")
             return false;
         }
+
         var parentId = $('#parentSubId').val()
 
         var p = {
@@ -267,8 +272,7 @@
     //2차카테고리 수정
     function gotoUpdt(row) {
 
-        var categoryId = categoryGrid.getList()[row].categoryId;
-        var parentId = categoryGrid.getList()[row].parentId;
+        var categoryId = categorySubGrid.getList()[row].categoryId;
 
         var p = {
             categoryId : categoryId,
@@ -326,7 +330,7 @@
             <div class="rows">
                  <span class="select-outline">
                  <select id="parentId">
-                        <option selected value=''>부모카테고리</option>
+                        <option selected value=''>부모카테고리명</option>
                         <c:forEach items="${jsCategoryList}" var="item">
                             <option value="${item.categoryId}">${item.categoryIdNm}</option>
                         </c:forEach>

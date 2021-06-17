@@ -69,14 +69,14 @@
                     {key: "publicReasons", label: "자료공개_사유"},
                     {key: "remark", label: "비고"},
                     {
-                        key: "categoryId", label: "수정", width:60 ,formatter: function () {
+                        key: "jewMdisSno", label: "수정", width:60 ,formatter: function () {
 
                             // console.log(this.item);
                             return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoUpdt(" + this.dindex + ");'> 수정 </button>";
                         }
                     },
                     {
-                        key: "categoryId", label: "삭제", width:60 ,formatter: function () {
+                        key: "jewMdisSno", label: "삭제", width:60 ,formatter: function () {
 
                             // console.log(this.item);
                             return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoDelete(" + this.dindex + ");'> 삭제 </button>";
@@ -189,6 +189,7 @@
         var formData ={
 
             jewMdisSno : firstGrid.getList()[row].jewMdisSno
+
         }
 
         var API_SERVER = "<c:url value='/cms/gsis/stats/jewMdisDelete.do' />";
@@ -234,7 +235,7 @@
         <i class='bx bxs-home'></i>${menuInfo.depthFullname}
     </nav>
     <h2 class="stitle">
-        <i class='bx bxs-dashboard'></i>마이크로데이터 <spring:message code="title.list"/>
+        <i class='bx bxs-dashboard'></i>마이크로데이터 목록
     </h2>
     <h3 class="btitle">
         검색
@@ -247,7 +248,7 @@
                 <select name="searchCondition" id="searchCondition"
                         title="<spring:message code="title.searchCondition" />">
                        <option selected value=''><spring:message code="input.select"/></option><!-- 선택하세요 -->
-                       <option value="1">카테고리아이디</option>
+                       <option value="1"></option>
                     <!-- 코드ID -->
                        <option value="2">카테고리명</option>
                     <!-- 코드ID -->
