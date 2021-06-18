@@ -36,7 +36,6 @@
                 columns: [
                     {key: "themaGroupId", label: "테마통계관리그룹아이디"},
                     {key: "themaGroupNm", label: "테마그룹명"},
-                    {key: "orderCnt", label: "정렬순번"},
                     {key: "useYn", label: "사용여부"},
                     {
                         key: "themaGroupId", label: "수정", width:60 ,formatter: function () {
@@ -261,9 +260,9 @@
                 <select name="searchCondition" id="searchCondition"
                         title="<spring:message code="title.searchCondition" />">
                        <option selected value=''>검색조건</option><!-- 선택하세요 -->
-                       <option value="1">카테고리아이디</option>
+                       <option value="1">그룹아이디</option>
                     <!-- 코드ID -->
-                       <option value="2">카테고리명</option>
+                       <option value="2">그룹명</option>
                     <!-- 코드ID -->
                </select>
          </span>

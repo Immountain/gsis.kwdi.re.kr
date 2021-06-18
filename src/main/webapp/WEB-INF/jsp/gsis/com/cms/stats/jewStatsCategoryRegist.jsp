@@ -151,7 +151,7 @@
                     </td>
                     <th style="width:100px"  ><label for="categoryIdNm">카테고리명 <span class="pilsu">*</span></label></th>
                     <td class="left">
-                        <form:input path="categoryIdNm" title="${title} ${inputTxt}" maxlength="200" />
+                        <form:textarea path="categoryIdNm" title="${title} ${inputTxt}" maxlength="250" />
                         <div><form:errors path="categoryIdNm" cssClass="error" /></div>
                     </td>
                 </tr>

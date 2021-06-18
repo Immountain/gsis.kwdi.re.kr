@@ -184,12 +184,6 @@
                 <c:set var="inputNo"><spring:message code="input.no" /></c:set>
                 <tr>
                     <th style="width:180px"><label for="themaGroupId">테마통계관리그룹아이디<span class="pilsu">*</span></label></th>
-
-                    <th style="width:180px"  ><label for="themaId">테마통계아이디<span class="pilsu">*</span></label></th>
-                    <td class="left">
-                        <form:input path="themaId" title="${title} ${inputTxt}" maxlength="10" />
-                        <div><form:errors path="themaId" cssClass="error" /></div>
-                    </td>
                     <td class="left" >
                         <span class="select-outline">
                             <form:select path="themaGroupId">
@@ -199,6 +193,11 @@
                                 </c:forEach>
                             </form:select>
                         </span>
+                    </td>
+                    <th style="width:180px"  ><label for="themaId">테마통계아이디<span class="pilsu">*</span></label></th>
+                    <td class="left">
+                        <form:input path="themaId" title="${title} ${inputTxt}" maxlength="10" />
+                        <div><form:errors path="themaId" cssClass="error" /></div>
                     </td>
                 </tr>
                 <tr>

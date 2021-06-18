@@ -3,6 +3,7 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="info" uri="http://infomind.com/info" %>
 <script type="text/javascript">
 
@@ -83,10 +84,12 @@
     function Search() {
         var searchCondition = $("#searchCondition option:selected").val();
         var searchKeyword = $("#searchKeyword").val();
+        var themaGroupId = $('#themaGroupId').val();
 
         var p = {
             searchCondition: searchCondition,
             searchKeyword: searchKeyword,
+            themaGroupId: themaGroupId
         };
 
         $ifx.ajax('<c:url value='/cms/gsis/thema/jewThemaInfoListObject.do' />', {
@@ -268,6 +271,20 @@
     <!-- 검색조건선택 -->
     <div class="white-box">
         <div class="rows">
+        <span class="select-outline">
+<%--            <form:select path="themaGroupId">--%>
+<%--                <form:option value="" label="선택"/>--%>
+<%--                <c:forEach items="${jewGroupList}" var="item">--%>
+<%--                    <form:option value="${item.themaGroupId}" label="${item.themaGroupId}"/>--%>
+<%--                </c:forEach>--%>
+<%--            </form:select>--%>
+            <select id="themaGroupId">
+                <option value="">그룹선택</option>
+                <c:forEach items="${jewGroupList}" var="item">
+                    <option value="${item.themaGroupId}">${item.themaGroupId}</option>
+                </c:forEach>
+            </select>
+        </span>
          <span class="select-outline">
                 <select name="searchCondition" id="searchCondition"
                         title="<spring:message code="title.searchCondition" />">

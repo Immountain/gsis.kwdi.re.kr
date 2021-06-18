@@ -173,6 +173,31 @@
             var remark = $('#remark').val()
             var useYn = $('#useYn').val()
 
+            if(!collectionStrDay){
+                alert('자료수집시작일 입력하세요')
+                return;
+            }
+
+            if(!collectionEndDay){
+                alert('자료수집종료일 입력하세요')
+                return;
+            }
+
+            if(collectionStrDay > collectionEndDay){
+                alert('종료일이 시작일보다 빠를 수 없습니다')
+                return;
+            }
+
+            if(!mdisKorNm){
+                alert('자료명(국문) 입력하세요')
+                return;
+            }
+
+            if(!mdisEnNm){
+                alert('자료명(영문) 입력하세요')
+                return;
+            }
+
             //면대면
             if($("#interviewSurvey").is(":checked")){
                 $("#interviewSurvey").val("Y");

@@ -173,6 +173,20 @@
             var remark = $('#remark').val()
             var useYn = $('#useYn').val()
 
+            if(!collectionStrDay){
+                alert('자료수집시작일 입력하세요')
+                return;
+            }
+
+            if(!collectionEndDay){
+                alert('자료수집종료일 입력하세요')
+                return;
+            }
+
+            if(collectionStrDay > collectionEndDay){
+                alert('종료일이 시작일보다 빠를 수 없습니다')
+            }
+
             //면대면
             if($("#interviewSurvey").is(":checked")){
                 $("#interviewSurvey").val("Y");

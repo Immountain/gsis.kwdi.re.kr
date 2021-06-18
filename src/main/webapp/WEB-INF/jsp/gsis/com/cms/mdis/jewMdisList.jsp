@@ -38,7 +38,7 @@
                     {key: "dataOfForm", label: "자료인용서식"},
                     {key: "projectKorNm", label: "연구과제명"},
                     {key: "projectEnNm", label: "연구과제명"},
-                    {key: "Pi", label: "연구책임자"},
+                    {key: "pi", label: "연구책임자"},
                     {key: "coPi", label: "공동연구자"},
                     {key: "organization", label: "연구수행기관"},
                     {key: "supportingOrganization", label: "연구비지원기관"},
@@ -248,10 +248,8 @@
                 <select name="searchCondition" id="searchCondition"
                         title="<spring:message code="title.searchCondition" />">
                        <option selected value=''><spring:message code="input.select"/></option><!-- 선택하세요 -->
-                       <option value="1"></option>
-                    <!-- 코드ID -->
-                       <option value="2">카테고리명</option>
-                    <!-- 코드ID -->
+                       <option value="1">자료명</option>
+                       <option value="2">연구책임자</option>
                </select>
          </span>
 

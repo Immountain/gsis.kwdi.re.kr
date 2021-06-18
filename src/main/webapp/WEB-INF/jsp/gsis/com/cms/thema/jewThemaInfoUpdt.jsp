@@ -107,7 +107,7 @@
 
             var formData = $("#jewThemaInfoVO").serializeObject();
 
-            var API_SERVER = "<c:url value='/cms/gsis/thema/jewThemaInfoRegist.do' />";
+            var API_SERVER = "<c:url value='/cms/gsis/thema/jewThemaInfoUpdt.do' />";
             var saveQuestion = confirm("저장 하시겠습니까?");
             if (saveQuestion) {
                 $.ajax({

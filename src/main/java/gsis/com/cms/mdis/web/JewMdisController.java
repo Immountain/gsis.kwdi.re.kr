@@ -67,6 +67,7 @@ public class JewMdisController extends BaseAjaxController {
     @RequestMapping(value="/cms/gsis/stats/jewMdisUpdtView.do")
     public String jewMdisUpdtView(@ModelAttribute("searchVO")JewMdisVO searchVO, ModelMap model)throws Exception{
         model.addAttribute("jewMdisVO",jewMdisService.selectMdis(searchVO));
+
         return InfoViewUtils.adminJsView(pagePath,"jewMdisUpdt","ax5ui");
     }
 

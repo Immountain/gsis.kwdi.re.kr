@@ -34,8 +34,11 @@ public class JewThemaInfoController extends BaseAjaxController {
     /**테마통계관리 목록*/
     @IncludedInfo(name="테마통계관리", listUrl = "/cms/gsis/thema/jewThemaInfoList.do", order = 1111, gid = 60)
     @RequestMapping(value="/cms/gsis/thema/jewThemaInfoList.do")
-    public String jewThemaInfoList(@ModelAttribute("searchVO") JewThemaInfoVO searchVO)throws Exception{
+    public String jewThemaInfoList(@ModelAttribute("searchVO") JewThemaInfoVO searchVO,ModelMap model)throws Exception{
 
+        JewThemaGroupVO jewThemaGroupVO = new JewThemaGroupVO();
+        model.addAttribute("jewGroupList",jewThemaGroupService.selectThemaGroupList(jewThemaGroupVO));
+        System.out.println("MountainTest====================================="+jewThemaGroupService.selectThemaGroupList(jewThemaGroupVO));
         return InfoViewUtils.adminJsView(pagePath,"jewThemaInfoList","ax5ui");
     }
 

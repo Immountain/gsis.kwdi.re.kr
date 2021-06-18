@@ -110,6 +110,15 @@
         FROM JEW_MDIS JM
         WHERE 1=1
         AND JM.DELETE_YN = 'N'
+        <if test="searchCondition == 1">
+            AND JM.MDIS_KOR_NM LIKE CONCAT('%',#{searchKeyword},'%')
+        </if>
+        <if test="searchCondition == 2">
+            AND JM.PI LIKE CONCAT('%',#{searchKeyword},'%')
+        </if>
+        <if test='searchUseYn != null and searchUseYn neq "" '>
+            AND JM.USE_YN  = #{searchUseYn}
+        </if>
         ORDER BY JM.MDIS_NUM ASC
     </select>
 
