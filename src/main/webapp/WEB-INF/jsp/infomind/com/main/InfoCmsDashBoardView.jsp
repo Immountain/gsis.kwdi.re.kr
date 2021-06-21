@@ -7,58 +7,59 @@
 
 <div class="dashboard-inside subView">
 
+    <div  id="lastWeekDaysVisitCount"></div>
 
     <h2 class="stitle"><i class="bx bxs-dashboard"></i>Dashboard</h2>
-    <div class="widget c05 h02 gray-l wall">
-        <div class="inline">
-            <h3>
-                사이트별 방문
-                <small>
-                    ${formatTime} 기준
-                    <button type="button" onclick="getSearchChartData()"><i class="bx bx-refresh"></i>새로고침</button>
-                </small>
-            </h3>
-            <div class="box">
-                <div class="chart" id="lastWeekDaysVisitCount"></div>
-            </div>
-        </div>
-    </div>
-    <div class="widget c04 h02 main">
-        <div class="inline">
-            <h3>
-                가입 현황
-                <small>
-                    ${formatTime} 기준
-                    <button><i class="bx bx-refresh"></i>새로고침</button>
-                </small>
-            </h3>
-            <div class="box table">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>싸이트별</th>
-                        <th>일별</th>
-                        <th>월별</th>
-                        <th>년간</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+    <%--<div class="widget c05 h02 gray-l wall">--%>
+        <%--<div class="inline">--%>
+            <%--<h3>--%>
+                <%--사이트별 방문--%>
+                <%--<small>--%>
+                    <%--${formatTime} 기준--%>
+                    <%--<button type="button" onclick="getSearchChartData()"><i class="bx bx-refresh"></i>새로고침</button>--%>
+                <%--</small>--%>
+            <%--</h3>--%>
+            <%--<div class="box">--%>
+                <%--<div class="chart" id="lastWeekDaysVisitCount"></div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="widget c04 h02 main">--%>
+        <%--<div class="inline">--%>
+            <%--<h3>--%>
+                <%--가입 현황--%>
+                <%--<small>--%>
+                    <%--${formatTime} 기준--%>
+                    <%--<button><i class="bx bx-refresh"></i>새로고침</button>--%>
+                <%--</small>--%>
+            <%--</h3>--%>
+            <%--<div class="box table">--%>
+                <%--<table>--%>
+                    <%--<thead>--%>
+                    <%--<tr>--%>
+                        <%--<th>싸이트별</th>--%>
+                        <%--<th>일별</th>--%>
+                        <%--<th>월별</th>--%>
+                        <%--<th>년간</th>--%>
+                    <%--</tr>--%>
+                    <%--</thead>--%>
+                    <%--<tbody>--%>
 
 
-                    <%--<c:forEach items="${wjMainDashBoardVOList}" var="item" varStatus="status">--%>
+                    <%--&lt;%&ndash;<c:forEach items="${wjMainDashBoardVOList}" var="item" varStatus="status">&ndash;%&gt;--%>
 
-                        <%--<tr>--%>
-                            <%--<td>${item.langCode}</td>--%>
-                            <%--<td>${item.dayCnt} 명</td>--%>
-                            <%--<td>${item.monthCnt} 명</td>--%>
-                            <%--<td>${item.yearCnt} 명</td>--%>
-                        <%--</tr>--%>
-                    <%--</c:forEach>--%>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+                        <%--&lt;%&ndash;<tr>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;<td>${item.langCode}</td>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;<td>${item.dayCnt} 명</td>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;<td>${item.monthCnt} 명</td>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;<td>${item.yearCnt} 명</td>&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;</tr>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;</c:forEach>&ndash;%&gt;--%>
+                    <%--</tbody>--%>
+                <%--</table>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
 
     <div>
         <div class="widget c03 h02">
@@ -130,11 +131,116 @@
 <script src="<c:url value="/js/infomind/com/common-ui/Highcharts/code/highcharts.src.js"/>"></script>
 <script>
     $(document.body).ready(function () {
-        initChartEl();
+        // initChartEl();
+        //
+        // getSearchChartData();
+        // searchData();
+        //
 
-        getSearchChartData();
-        searchData();
+        test();
+
     });
+
+
+
+    function test() {
+
+        var p ={method:"getList",format:"json",jsonVD:"Y",userStatsId:"jinz1004z/101/DT_1B81A17/2/1/20210615181049",prdSe:"Y",newEstPrdCnt:"1"}
+
+        $ifx.ajax('<c:url value="/cms/api/test/dataObject.do"/>', {
+            method: 'GET',
+            data: p,
+            success: function (res) {
+              console.log(res)
+
+                var orgId =res.list[0].ORG_ID;
+                var tblId =res.list[0].TBL_ID;
+
+                var strTable = "";
+                if(res.list.length > 0) {
+
+
+                    var  html ="";
+
+                    strTable += "<h5>" + res.list[0].TBL_NM + "</h5>";
+                    strTable += "<p style='position:absolute; top:32px; left:450px;'>단위 : " + res.list[0].UNIT_NM + "</p>";
+                    strTable += "<table cellpadding='0' cellspacing='0' class='TB02' summary='' style='margin-top:15px;width:500px;'>";
+                    strTable += "<thead>";
+                    strTable += "<tr>";
+                    strTable += "<th class='fst al_C' scope='col'>시군구별</th>";
+
+
+                    $.each(res.list, function(idx){
+
+                        if(idx <8){
+
+
+                            strTable += "<th scope='col'>" + this.ITM_NM + "</th>";
+                        }
+
+
+
+                        //
+                        // if(idx  = dataColumnLength) {
+                        //
+                        // }
+
+
+                    });
+
+
+
+
+
+                    strTable += "</tr>";
+                    strTable += "</thead>";
+                    strTable += "<tbody>";
+
+                    for(var i=0;i<res.list.length;i++) {
+                        strTable += "<tr>";
+                        strTable += "<td class='al_C'>" + res.list[i].PRD_DE + "</td>";
+                        strTable += "<td class='al_C'>" + res.list[i].DT.replace(/,/gi,'') + "</td>";
+                        strTable += "</tr>";
+                    }
+                    strTable += "</tbody>";
+                    strTable += "</table>";
+
+
+
+                    //
+                    // var dataColumnLength =8
+                    // $.each(res.list, function(idx){
+                    //     if(idx % dataColumnLength == 0) {
+                    //         html += '<tr><th>' + this.ITM_NM+ '</th>';
+                    //     }
+                    //
+                    //     html += '<td>' + this.DT + '</td>';
+                    //     // console.log("this : " , this);
+                    //     // console.log("this.DT : " , this.DT);
+                    //     if(idx % dataColumnLength == dataColumnLength - 1) {
+                    //         html += '</tr>';
+                    //     }
+                    // });
+
+
+
+                    document.getElementById("lastWeekDaysVisitCount").innerHTML = strTable;
+
+
+                } else {
+                    html = '<tr><td colspan="'+ (dataColumnLength + subjectLength) +'">검색 데이터 없음</td></tr>';
+                }
+
+
+             //   $('#getSiteMenuYearStats_ko').append(html);
+            }
+        })
+
+    }
+
+
+
+
 
     var chartColor = [
         '#e94235', '#fabb04', '#34a853', '#4285f4',

@@ -1,5 +1,6 @@
 package gsis.com.cms.api.web;
 
+import gsis.com.cms.api.vo.ApiTestVO;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -36,7 +37,7 @@ public class ApiTestController implements InitializingBean {
      * 마이크로데이터 grid ajax
      */
     @RequestMapping(value = "/cms/api/test/dataObject.do")
-    public ModelAndView dataObject() throws Exception {
+    public ModelAndView dataObject(ApiTestVO apiTestVO) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("jsonView");
 
@@ -45,16 +46,17 @@ public class ApiTestController implements InitializingBean {
             headers.set("Accept", "application/json");
 
             UriComponents url = UriComponentsBuilder.fromHttpUrl(API_KOSIS_SERVER_URL)
-                    .queryParam("method", "getList")
+                    .queryParam("method", apiTestVO.getMethod())
                     .queryParam("apiKey", "ZTA0MGI4ZGIxMDVhYWEyZDNhM2I2YWM3NWUzOTkyMWM=")
-                    .queryParam("format", "json")
-                    .queryParam("jsonVD", "Y")
-                    .queryParam("userStatsId", "jinz1004z/101/DT_1B81A17/2/1/20210615181049")
-                    .queryParam("prdSe", "Y")
-                    .queryParam("newEstPrdCnt", "1")
+                    .queryParam("format", apiTestVO.getFormat())
+                    .queryParam("jsonVD", apiTestVO.getJsonVD())
+                    .queryParam("userStatsId", apiTestVO.getUserStatsId())
+                    .queryParam("prdSe", apiTestVO.getPrdSe())
+                    .queryParam("newEstPrdCnt", apiTestVO.getNewEstPrdCnt())
                     .build();
 
             HttpEntity<?> entity = new HttpEntity<>(headers);
+            //jinz1004z/101/DT_1B81A17/2/1/20210615181049
 
             System.out.println(String.format("[IN_CMS_API_CALL] %s", url.toUriString()));
 
