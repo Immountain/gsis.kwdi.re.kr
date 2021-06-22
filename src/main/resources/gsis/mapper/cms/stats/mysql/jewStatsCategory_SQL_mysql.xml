@@ -45,16 +45,14 @@
         WHERE 1=1
         AND
             JSC.DELETE_YN = 'N'
-        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(parentId)">
-            AND binary(JSC.PARENT_ID) = #{parentId}
-        </if>
+        AND binary(JSC.PARENT_ID) = #{parentId}
         <if test="searchCondition == 1"> AND
             JSC.CATEGORY_ID LIKE CONCAT('%', #{searchKeyword}, '%')
         </if>
         <if test="searchCondition == 2"> AND
             JSC.CATEGORY_ID_NM LIKE CONCAT('%', #{searchKeyword}, '%')
         </if>
-        order by JSC.ORDER_CNT desc
+        order by JSC.ORDER_CNT
     </select>
 
     <select id="selectStatsCategorySearchList"
@@ -86,7 +84,7 @@
         <if test="searchCondition == 2"> AND
             JSC.CATEGORY_ID_NM LIKE CONCAT('%', #{searchKeyword}, '%')
         </if>
-        order by JSC.ORDER_CNT desc
+        order by JSC.ORDER_CNT
     </select>
 
     <insert id="insertStatsCategory">
