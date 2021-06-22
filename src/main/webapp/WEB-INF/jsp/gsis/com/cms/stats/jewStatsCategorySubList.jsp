@@ -64,6 +64,7 @@
 
         $('#btn_search').click(function () {
             Search();
+            SearchSecondGrid();
         });
 
         $('#btn_regist').click(function () {
@@ -139,8 +140,6 @@
 
     // 조회
     function Search() {
-
-        SearchSecondGrid();
 
         var searchCondition = $("#searchCondition option:selected").val();
         var searchKeyword = $("#searchKeyword").val();
@@ -329,21 +328,20 @@
         <div class="white-box">
             <div class="rows">
                  <span class="select-outline">
-                 <select id="parentId">
-                        <option selected value=''>부모카테고리명</option>
-                        <c:forEach items="${jsCategoryList}" var="item">
-                            <option value="${item.categoryId}">${item.categoryIdNm}</option>
-                        </c:forEach>
-                 </select>
+                    <select id="parentId">
+                           <option selected value=''>부모카테고리</option>
+                           <c:forEach items="${jsCategoryList}" var="item">
+                               <option value="${item.categoryId}">${item.categoryId}</option>
+                           </c:forEach>
+                    </select>
                  </span>
 
-                <span class="select-outline">
-                    <select name="searchUseYn" id="searchUseYn" title="사용여부">
+                    <select name="searchCondition" id="searchCondition" title="사용여부">
                            <option selected value=''>전체</option><!-- 선택하세요 -->
-                           <option value="Y">사용</option><!-- 코드ID -->
-                           <option value="N">사용안함</option><!-- 코드ID -->
+                           <option value="1">카테고리아이디</option><!-- 코드ID -->
+                           <option value="2">카테고리명</option><!-- 코드ID -->
                    </select>
-               </span>
+
                 <input type="text" class="w100" class="main" name="searchKeyword"  size="35" id="searchKeyword"
                        title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''
                        maxlength="155">
@@ -375,6 +373,7 @@
         <!-- 검색조건선택 -->
         <div class="white-box">
             <div class="rows">
+
          <span class="select-outline">
             <select name="searchConditionThird" id="searchConditionThird"
                 title="<spring:message code="title.searchCondition" />">
@@ -382,8 +381,7 @@
                 <option value="2">카테고리명</option>
             </select>
          </span>
-                <span class="select-outline">
-         </span>
+
                 <input type="hidden" id="parentSubId"/>
                 <input type="text" class="w100" class="main" name="searchKeywordPort" id="searchKeywordPort" size="35"
                        title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''

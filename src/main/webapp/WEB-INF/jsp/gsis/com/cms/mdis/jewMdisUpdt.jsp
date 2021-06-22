@@ -11,128 +11,6 @@
 
     $(document.body).ready(function () {
 
-        $("#etcFileuploader").uploadFile({
-            url: "<c:url value="/"/>cms/info/file/upload.do",
-            atchFileId:$("#etc").val(),
-            viewUrl:"<c:url value='/cms/info/file/ImageView.do' />",
-            multiple:true,
-            dragDrop:true,
-            fileName:"uploadfile",
-            maxFileCount:$("#maxFileCount").val(),
-            returnType:"json",
-            showPreview:true,
-            previewHeight: "100px",
-            previewWidth: "100px",
-            showDelete: true,
-            showDownload:true,
-            sequential:true,
-            sequentialCount:1,
-            onLoad:function(obj) {
-                $.ajax({
-                    cache: false,
-                    url: "<c:url value="/"/>cms/info/file/tempList.do",
-                    dataType: "json",
-                    data:{atchFileId:$("#etc").val()},
-                    success: function(data) {
-                        for(var i=0;i<data.length;i++) {
-                            obj.createProgress(data[i]);
-                        }
-                    }
-                });
-            },
-            onSubmit:function(files) {
-            },
-            onSuccess:function(files,data,xhr,pd) {
-                var url ="<c:url value='/cms/info/file/ImageView.do?atchFileId=' />"+data.atchFileId+"&fileSn="+data.fileSn;
-                var testVal =data.orignlFileNm+"("+getSizeStr(data.fileSize)+")</br>"+url;
-                pd.filename.html(testVal)
-                $("#etc").val(data.atchFileId);
-            },
-            afterUploadAll:function(obj) {
-            },
-            dynamicFormData: function() {
-                var data ={atchFileId:$("#etc").val(),prixFixe:'BOAD_'}
-                return data;
-            },
-            onError: function(files,status,errMsg,pd) {
-            },
-            deleteCallback: function (data, pd) {
-                $.ajax({
-                    cache: false,
-                    url: "<c:url value="/"/>cms/info/file/delete.do",
-                    dataType: "json",
-                    data:{atchFileId:data.atchFileId,fileSn:data.fileSn},
-                    success: function(data) {
-                        pd.statusbar.hide(); //You choice.
-                    }
-                });
-            },
-            downloadCallback:function(data,pd) {
-                location.href="/cms/info/file/fileDown.do?atchFileId="+data.atchFileId+"&fileSn="+data.fileSn;
-            }
-        });
-
-        $("#fileuploader").uploadFile({
-            url: "<c:url value="/"/>cms/info/file/upload.do",
-            atchFileId:$("#dataFile").val(),
-            viewUrl:"<c:url value='/cms/info/file/ImageView.do' />",
-            multiple:true,
-            dragDrop:true,
-            fileName:"uploadfile",
-            maxFileCount:$("#maxFileCount").val(),
-            returnType:"json",
-            showPreview:true,
-            previewHeight: "100px",
-            previewWidth: "100px",
-            showDelete: true,
-            showDownload:true,
-            sequential:true,
-            sequentialCount:1,
-            onLoad:function(obj) {
-                $.ajax({
-                    cache: false,
-                    url: "<c:url value="/"/>cms/info/file/tempList.do",
-                    dataType: "json",
-                    data:{atchFileId:$("#dataFile").val()},
-                    success: function(data) {
-                        for(var i=0;i<data.length;i++) {
-                            obj.createProgress(data[i]);
-                        }
-                    }
-                });
-            },
-            onSubmit:function(files) {
-            },
-            onSuccess:function(files,data,xhr,pd) {
-                var url ="<c:url value='/cms/info/file/ImageView.do?atchFileId=' />"+data.atchFileId+"&fileSn="+data.fileSn;
-                var testVal =data.orignlFileNm+"("+getSizeStr(data.fileSize)+")</br>"+url;
-                pd.filename.html(testVal)
-                $("#dataFile").val(data.atchFileId);
-            },
-            afterUploadAll:function(obj) {
-            },
-            dynamicFormData: function() {
-                var data ={atchFileId:$("#dataFile").val(),prixFixe:'BOAD_'}
-                return data;
-            },
-            onError: function(files,status,errMsg,pd) {
-            },
-            deleteCallback: function (data, pd) {
-                $.ajax({
-                    cache: false,
-                    url: "<c:url value="/"/>cms/info/file/delete.do",
-                    dataType: "json",
-                    data:{atchFileId:data.atchFileId,fileSn:data.fileSn},
-                    success: function(data) {
-                        pd.statusbar.hide(); //You choice.
-                    }
-                });
-            },
-            downloadCallback:function(data,pd) {
-                location.href="/cms/info/file/fileDown.do?atchFileId="+data.atchFileId+"&fileSn="+data.fileSn;
-            }
-        });
-
         //닫기
         $('#modal-close').click(function () {
             ax5modal.close();
@@ -440,8 +318,8 @@
                         <input id="interviewSurvey" name="interviewSurvey" type="checkbox" <c:if test="${jewMdisVO.interviewSurvey =='Y'}">checked</c:if>><label for="interviewSurvey">면대면</label>
                         <input id="selfAdministeredSurvey" name="selfAdministeredSurvey" type="checkbox" <c:if test="${jewMdisVO.selfAdministeredSurvey == 'Y'}">checked</c:if>><label for="selfAdministeredSurvey">자기기입식</label>
                         <input id="mailSurvey" name="mailSurvey" type="checkbox" <c:if test="${jewMdisVO.mailSurvey == 'Y'}">checked</c:if>><label for="mailSurvey">우편조사</label>
-                        <input id="phoneSurvey" name="phoneSurvey" type="checkbox" <c:if test="${jewMdisVO.phoneSurvey == 'Y'}"></c:if>><label for="phoneSurvey">전화조사</label>
-                        <input id="onlineSurvey" name="onlineSurvey" type="checkbox" <c:if test="${jewMdisVO.onlineSurvey == 'Y'}"></c:if>><label for="onlineSurvey">온라인조사</label>
+                        <input id="phoneSurvey" name="phoneSurvey" type="checkbox" <c:if test="${jewMdisVO.phoneSurvey == 'Y'}">checked</c:if>><label for="phoneSurvey">전화조사</label>
+                        <input id="onlineSurvey" name="onlineSurvey" type="checkbox" <c:if test="${jewMdisVO.onlineSurvey == 'Y'}">checked</c:if>><label for="onlineSurvey">온라인조사</label>
                         기타<form:input path="etcSurvey"/>
                     </td>
                 </tr>

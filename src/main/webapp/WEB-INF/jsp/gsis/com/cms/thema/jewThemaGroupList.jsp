@@ -196,49 +196,6 @@
 
     };
 
-    //충전시설정보팝업
-    function gotoCategory(row) {
-
-
-        // var categoryId = firstGrid.getList()[row].categoryId;
-
-        var p = {
-            // categoryId: categoryId
-        };
-
-
-        var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategorySubList.do' />";
-        ax5modal.open({
-            theme: "primary",
-            height: 511,
-            width: 1226,
-            header: {
-                title: '하위카테고리',
-                btns: {
-                    close: {
-                        label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
-                            // modal.close();
-                            ax5modal.close();
-                        }
-                    }
-                }
-
-            },
-            iframe: {
-                method: "get",
-                url: API_SERVER,
-                param: p
-
-            },
-
-        }, function (d) {
-
-            if (d.modType == "modify") {
-                ax5modal.close();
-                gotoModify(d.companyId)
-            }
-        });
-    }
 
 
 </script>

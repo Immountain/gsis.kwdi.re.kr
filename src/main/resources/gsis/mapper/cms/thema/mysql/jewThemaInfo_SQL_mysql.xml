@@ -64,12 +64,12 @@
             AND JTI.THEMA_GROUP_ID = #{themaGroupId}
         </if>
         <if test="searchCondition == 1"> AND
-            JTI.THEMA_GROUP_ID LIKE CONCAT('%', #{searchKeyword}, '%')
+            JTI.THEMA_ID LIKE CONCAT('%', #{searchKeyword}, '%')
         </if>
         <if test="searchCondition == 2"> AND
-            JTI.THEMA_GROUP_NM LIKE CONCAT('%', #{searchKeyword}, '%')
+            JTI.THEMA_NM LIKE CONCAT('%', #{searchKeyword}, '%')
         </if>
-        order by JTI.ORDER_CNT desc
+        order by JTI.ORDER_CNT
     </select>
 
     <insert id="insertThemaInfo">

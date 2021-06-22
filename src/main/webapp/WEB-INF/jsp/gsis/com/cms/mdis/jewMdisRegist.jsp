@@ -18,7 +18,7 @@
             multiple:true,
             dragDrop:true,
             fileName:"uploadfile",
-            maxFileCount:$("#maxFileCount").val(),
+            maxFileCount:1,
             returnType:"json",
             showPreview:true,
             previewHeight: "100px",
@@ -43,15 +43,22 @@
             onSubmit:function(files) {
             },
             onSuccess:function(files,data,xhr,pd) {
-                var url ="<c:url value='/cms/info/file/ImageView.do?atchFileId=' />"+data.atchFileId+"&fileSn="+data.fileSn;
+
+
+                var url ="<c:url value='/site/info/file/ImageView.do?atchFileId=' />"+data.atchFileId+"&fileSn="+data.fileSn;
+
+
                 var testVal =data.orignlFileNm+"("+getSizeStr(data.fileSize)+")</br>"+url;
+
+
                 pd.filename.html(testVal)
+
                 $("#etc").val(data.atchFileId);
             },
             afterUploadAll:function(obj) {
             },
             dynamicFormData: function() {
-                var data ={atchFileId:$("#etc").val(),prixFixe:'BOAD_'}
+                var data ={atchFileId:$("#etc").val(),prixFixe:'DATA_'}
                 return data;
             },
             onError: function(files,status,errMsg,pd) {
@@ -79,7 +86,7 @@
             multiple:true,
             dragDrop:true,
             fileName:"uploadfile",
-            maxFileCount:$("#maxFileCount").val(),
+            maxFileCount:1,
             returnType:"json",
             showPreview:true,
             previewHeight: "100px",
@@ -104,15 +111,22 @@
             onSubmit:function(files) {
             },
             onSuccess:function(files,data,xhr,pd) {
-                var url ="<c:url value='/cms/info/file/ImageView.do?atchFileId=' />"+data.atchFileId+"&fileSn="+data.fileSn;
+
+
+                var url ="<c:url value='/site/info/file/ImageView.do?atchFileId=' />"+data.atchFileId+"&fileSn="+data.fileSn;
+
+
                 var testVal =data.orignlFileNm+"("+getSizeStr(data.fileSize)+")</br>"+url;
+
+
                 pd.filename.html(testVal)
+
                 $("#dataFile").val(data.atchFileId);
             },
             afterUploadAll:function(obj) {
             },
             dynamicFormData: function() {
-                var data ={atchFileId:$("#dataFile").val(),prixFixe:'BOAD_'}
+                var data ={atchFileId:$("#dataFile").val(),prixFixe:''}
                 return data;
             },
             onError: function(files,status,errMsg,pd) {

@@ -45,8 +45,9 @@
         WHERE 1=1
         AND
             JSC.DELETE_YN = 'N'
-        AND
-            binary(JSC.PARENT_ID) = #{parentId}
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(parentId)">
+            AND binary(JSC.PARENT_ID) = #{parentId}
+        </if>
         <if test="searchCondition == 1"> AND
             JSC.CATEGORY_ID LIKE CONCAT('%', #{searchKeyword}, '%')
         </if>

@@ -98,7 +98,7 @@
         var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategoryRegistView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 400,
+            height: 439,
             width: 800,
             header: {
                 title: '통계DB카테고리 등록',
@@ -201,50 +201,19 @@
 
     };
 
-    //충전시설정보팝업
-    function gotoCategory(row) {
 
-
-        // var categoryId = firstGrid.getList()[row].categoryId;
-
-        var p = {
-            // categoryId: categoryId
-        };
-
-
-        var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategorySubList.do' />";
-        ax5modal.open({
-            theme: "primary",
-            height: 511,
-            width: 1226,
-            header: {
-                title: '하위카테고리',
-                btns: {
-                    close: {
-                        label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
-                            // modal.close();
-                            ax5modal.close();
-                        }
-                    }
-                }
-
-            },
-            iframe: {
-                method: "get",
-                url: API_SERVER,
-                param: p
-
-            },
-
-        }, function (d) {
-
-            if (d.modType == "modify") {
-                ax5modal.close();
-                gotoModify(d.companyId)
+    function gridExcelUplad() {
+        var formData = new FormData(document.excelForm);
+        $ifx.ajax('<c:url value="/jtp/cms/kpiEquipRet/excel/upload.do"/>', {
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function(res){
+                firstGrid.setData(res);
             }
-        });
+        })
     }
-
 
 </script>
 <div class="sub subView">
@@ -278,9 +247,12 @@
                     value="<spring:message code="button.inquire" />"
                     title="<spring:message code="title.inquire" /> <spring:message code="input.button" />"><i
                     class='bx bx-slider-alt'></i><spring:message code="title.inquire"/></button>
-            <button type="button" class="button main" name="btn_regist" id="btn_regist"
-                    title="<spring:message code="button.create" /> <spring:message code="input.button" />">
-                <spring:message code="button.create"/></button>
+<%--            <c:if test="${!empty resultMsg}">--%>
+                <button type="button" class="button main" name="btn_regist" id="btn_regist"
+                        title="<spring:message code="button.create" /> <spring:message code="input.button" />">
+                    <spring:message code="button.create"/>
+                </button>
+<%--            </c:if>--%>
         </div>
     </div>
     <h3 class="btitle">

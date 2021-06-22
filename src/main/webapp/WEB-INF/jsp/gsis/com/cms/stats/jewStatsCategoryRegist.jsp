@@ -183,7 +183,7 @@
                 <tr>
                     <th>통계URL<span class="pilsu">*</span></th>
                     <td colspan="3">
-                        <form:input path="statsUrl" maxlength="100"/>
+                        <form:input path="statsUrl" maxlength="100" size="50"/>
                     </td>
                 </tr>
                 </tbody>

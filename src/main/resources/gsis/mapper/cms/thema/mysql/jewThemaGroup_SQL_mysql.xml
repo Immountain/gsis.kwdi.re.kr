@@ -43,7 +43,7 @@
         <if test="searchCondition == 2"> AND
             JTG.THEMA_GROUP_NM LIKE CONCAT('%', #{searchKeyword}, '%')
         </if>
-        order by JTG.ORDER_CNT desc
+        order by JTG.ORDER_CNT asc
     </select>
 
     <insert id="insertThemaGroup">

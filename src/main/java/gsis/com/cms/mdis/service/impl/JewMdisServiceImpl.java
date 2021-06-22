@@ -53,15 +53,20 @@ public class JewMdisServiceImpl extends EgovAbstractServiceImpl implements JewMd
         String key = idgenService.getNextStringId();
         vo.setJewMdisSno(key);
 
+        jewMdisDAO.insertMdis(vo);
+
         //여기서 파일 경로 체인지
         infoFileMngUtil.copyFile(vo.getEtc());
         infoFileMngUtil.copyFile(vo.getDataFile());
-        jewMdisDAO.insertMdis(vo);
     }
 
     @Override
     public void updateMdis(JewMdisVO vo) throws Exception {
         jewMdisDAO.updateMdis(vo);
+
+        //여기서 파일 경로 체인지
+        infoFileMngUtil.copyFile(vo.getEtc());
+        infoFileMngUtil.copyFile(vo.getDataFile());
     }
 
     @Override

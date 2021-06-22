@@ -211,51 +211,6 @@
 
     };
 
-    //충전시설정보팝업
-    function gotoCategory(row) {
-
-
-        // var categoryId = firstGrid.getList()[row].categoryId;
-
-        var p = {
-            // categoryId: categoryId
-        };
-
-
-        var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategorySubList.do' />";
-        ax5modal.open({
-            theme: "primary",
-            height: 511,
-            width: 1226,
-            header: {
-                title: '하위카테고리',
-                btns: {
-                    close: {
-                        label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
-                            // modal.close();
-                            ax5modal.close();
-                        }
-                    }
-                }
-
-            },
-            iframe: {
-                method: "get",
-                url: API_SERVER,
-                param: p
-
-            },
-
-        }, function (d) {
-
-            if (d.modType == "modify") {
-                ax5modal.close();
-                gotoModify(d.companyId)
-            }
-        });
-    }
-
-
 </script>
 <div class="sub subView">
     <nav class="navigation">
@@ -289,9 +244,9 @@
                 <select name="searchCondition" id="searchCondition"
                         title="<spring:message code="title.searchCondition" />">
                        <option selected value=''>검색조건</option><!-- 선택하세요 -->
-                       <option value="1">카테고리아이디</option>
+                       <option value="1">테마통계아이디</option>
                     <!-- 코드ID -->
-                       <option value="2">카테고리명</option>
+                       <option value="2">테마통계명</option>
                     <!-- 코드ID -->
                </select>
          </span>
