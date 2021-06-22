@@ -1,98 +1,41 @@
+
 @font-face {
-    font-family: 'NanumSquare';
+    font-family: 'S-CoreDream';
+    // font-family: 'S-CoreDream-4Regular';
+    src: url('../font/S-CoreDream-4Regular.woff') format('woff');
     font-weight: 400;
-    src: url(../font/NanumSquareR.eot);
-    src: url(../font/NanumSquareR.eot?#iefix) format('embedded-opentype'),
-         url(../font/NanumSquareR.woff) format('woff'),
-         url(../font/NanumSquareR.ttf) format('truetype');
-   }
-   @font-face {
-    font-family: 'NanumSquare';
-    font-weight: 700;
-    src: url(../font/NanumSquareB.eot);
-    src: url(../font/NanumSquareB.eot?#iefix) format('embedded-opentype'),
-         url(../font/NanumSquareB.woff) format('woff'),
-         url(../font/NanumSquareB.ttf) format('truetype');
-   }
-   @font-face {
-    font-family: 'NanumSquare';
-    font-weight: 800;
-    src: url(../font/NanumSquareEB.eot);
-    src: url(../font/NanumSquareEB.eot?#iefix) format('embedded-opentype'),
-         url(../font/NanumSquareEB.woff) format('woff'),
-         url(../font/NanumSquareEB.ttf) format('truetype');
-   }
-   @font-face {
-    font-family: 'NanumSquare';
-    font-weight: 300;
-    src: url(../font/NanumSquareL.eot);
-    src: url(../font/NanumSquareL.eot?#iefix) format('embedded-opentype'),
-         url(../font/NanumSquareL.woff) format('woff'),
-         url(../font/NanumSquareL.ttf) format('truetype');
-   }
-
-
-   @font-face {
-    font-family: 'IBMPlexSansKR-Bold';
-    src: url(../font/IBMPlexSansKR-Bold.woff) format('woff');
-    font-weight: normal;
     font-style: normal;
-    }
+}
+@font-face {
+    font-family: 'S-CoreDream';
+    // font-family: 'S-CoreDream-5Medium';
+    src: url('../font/S-CoreDream-5Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
 
+@font-face {
+    font-family: 'S-CoreDream';
+    // font-family: 'S-CoreDream-6Bold';
+    src: url('../font/S-CoreDream-6Bold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'S-CoreDream';
+    // font-family: 'S-CoreDream-8Heavy';
+    src: url('../font/S-CoreDream-8Heavy.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
 
-
-    @font-face {
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        font-weight: 100;
-        src: url(../font/NotoSansKR-Thin.woff2) format('woff2'),
-        url(../font/NotoSansKR-Thin.woff) format('woff'),
-        url(../font/NotoSansKR-Thin.otf) format('opentype');
-    } 
-        
-    @font-face {
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        font-weight: 300;
-        src: url(../font/NotoSansKR-Light.woff2) format('woff2'),
-        url(../font/NotoSansKR-Light.woff) format('woff'),
-        url(../font/NotoSansKR-Light.otf) format('opentype');
-    } 
-    
-    @font-face {
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        font-weight: 400;
-        src: url(../font/NotoSansKR-Regular.woff2) format('woff2'),
-        url(../font/NotoSansKR-Regular.woff) format('woff'),
-        url(../font/NotoSansKR-Regular.otf) format('opentype');
-    } 
-    
-    @font-face {font-family: 'Noto Sans KR';
-        font-style: normal;
-        font-weight: 500;
-        src: url(../font/NotoSansKR-Medium.woff2) format('woff2'),
-        url(../font/NotoSansKR-Medium.woff) format('woff'),
-        url(../font/NotoSansKR-Medium.otf) format('opentype');
-    } 
-    
-    @font-face {
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        font-weight: 700;
-        src: url(../font/NotoSansKR-Bold.woff2) format('woff2'),
-        url(../font/NotoSansKR-Bold.woff) format('woff'),
-        url(../font/NotoSansKR-Bold.otf) format('opentype');
-    } 
-    
-    @font-face {
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        font-weight: 900;
-        src: url(../font/NotoSansKR-Black.woff2) format('woff2'),
-        url(../font/NotoSansKR-Black.woff) format('woff'),
-        url(../font/NotoSansKR-Black.otf) format('opentype');
-    }
+@font-face {
+    font-family: 'S-CoreDream';
+    // font-family: 'S-CoreDream-9Black';
+    src: url('../font/S-CoreDream-9Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+}
 
 
 
@@ -101,15 +44,7 @@
 
 
 
-
-
-
-
-$myfont: "Noto Sans KR";
-
-// @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
-// $myfont: "Noto Sans KR";
-
+$myfont: "S-CoreDream";
 
 
 @mixin txt($weight) {

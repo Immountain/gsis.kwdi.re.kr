@@ -130,15 +130,24 @@ button {
 	display: inline-block;
 	vertical-align: baseline;
 	outline: none;
-	border: 1px solid #ccc;
-	background: #fff;
+	border: 1px solid #999;
+	background: #E9E9E9;
 	line-height: 46px;
 	padding: 0 20px;
 	margin: 0 2px 4px;
-	font-size: 14px;
+	font-size: 18px;
+	color:#555;
+	font-weight:500;
+
+	@media (min-width: $screen-size-pc) {
+		line-height:52px;
+		font-size:20px;
+		min-width:140px;
+	}
 
 	&.main {
-		background: $color-main;
+		background: #4F6BAA;
+		border:1px solid #2C4988;
 		color: #fff;
 		border-color: transparent;
 	}
@@ -792,6 +801,10 @@ article.layer-popup {
 				a {
 					display:block;
 					font-size:0;
+
+					img {
+						max-width:1000px;
+					}
 				}
 
 				div.check {
