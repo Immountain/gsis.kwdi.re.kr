@@ -55,191 +55,96 @@
 
 
 <!-- S:mainContent -->
-<div id="content" class="sub sub02">
-
-    <!-- 각 구성요소 article로 모듈화 -->
-    <div class="sub-head">
-
-        <nav class="sub-menu">
-            <button type="button">${menuInfo.parentNm}</button>
-            <info:getMenuModel modelName="subSiteMenu" groupId="${SITEINFO.langCd}-primary" siteMemuId=""/>
-
-            <div class="outline">
-                <c:forEach items="${subSiteMenu}" var="item">
-                    <c:if test="${item.viewYn eq 'Y'}">
-                        <a <c:if test="${item.siteMemuId eq menuInfo.parentId}">class="active"</c:if> href="<info:url value="${item.url}"/>">${item.siteMemuNm}</a>
-                    </c:if>
-                </c:forEach>
-            </div>
-        </nav>
+<div id="content" class="sub">
 
 
+    <section class="sub-navigation">
+        <div class="container">
 
-    <%--<article class="sub-title">--%>
-            <%--<div class="container">--%>
-                <%--<h2>--%>
-                    <%--${menuInfo.siteMemuNm}--%>
-                <%--</h2>--%>
-
-            <%--</div>--%>
-        <%--</article>--%>
-
-
-
-
-        <%--<article class="menu-depth3 item4">--%>
-            <%--<div class="container">--%>
-                <%--<info:indicatorTag group="" skinName="festivity-sub-memu" siteMemuId="${menuInfo.siteMemuId}"/>--%>
-            <%--</div>--%>
-        <%--</article>--%>
-        <!-- background-item -->
-        <div class='waves'>
-            <div class='wave -one'></div>
-            <div class='wave -two'></div>
-            <div class='wave -three'></div>
+            <a class="home" href="/">홈으로 <i class='bx bxs-home'></i></a>
+            <info:indicatorTag group="" skinName="indicator-memu" siteMemuId="${menuInfo.siteMemuId}"/>
         </div>
-        <div class="bubble" >
-            <ul class="circles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </div >
+    </section>
 
 
-
-
-    </div>
-
-
-
+    <h4 class="stitle">공지사항</h4>
 
     <form name="searchVO" action="<info:url value="${boardVO.actionListUrl}"/>" method="post" onSubmit="fn_board_search_page(); return false;">
         <input name="category" id="category" type="hidden" value="<c:out value='${searchVO.category}'/>">
 
-        <div class="content-box">
+    <article class="board-tools">
+        <div class="container">
 
-            <article class="menu-depth3 sub02 item4 normal">
-                <!--
-                    1. 각 서브메뉴별 클래스명 적용 sub01, sub02 ...
-                    2. 서브메뉴 갯수별 클래스명 적용 item1, item2 ...
-                -->
-                <div class="container">
-                    <button type="button">${menuInfo.siteMemuNm}</button>
+            <fieldset class="search">
+                <legend class="sr-only">게시판 검색</legend>
 
-                    <div class="outline">
-                        <info:indicatorTag group="" skinName="board-sub-memu" siteMemuId="${menuInfo.siteMemuId}"/>
-                    </div>
-                </div>
-            </article>
+                <input type="text" name="searchKeyword" id="searchKeyword">
+                <button type="submit">검색</button>
+            </fieldset>
+
+        </div>
+    </article>
 
 
+    <article class="board-list">
+        <div class="container">
 
+            <h4 class="sr-only">
+                게시판 리스트
+            </h4>
 
-            <article class="navigation">
-            <div class="container">
-                <p>Home</p>
-                <info:indicatorTag group="" skinName="indicator-memu" siteMemuId="${menuInfo.siteMemuId}"/>
+            <ul class="list">
 
-            </div>
-        </article>
+            <c:forEach items="${boardItemList}" var="item" varStatus="status">
 
+                <li>
+                    <a href="<info:url value='${boardVO.actionViewUrl}?itemId=${item.itemId}'/>" onClick="fn_detail('<c:out value="${item.itemId}"/>');return false;">
 
+                        <p class="num">
+                            <span>번호</span>
+                            <c:out value="${paginationInfo.totalRecordCount - ((paginationInfo.currentPageNo-1) * paginationInfo.recordCountPerPage + status.index) }"/>.
+                        </p>
 
+                        <h5>
+                            <span>제목</span>
+                                ${item.title}
+                            <i class='bx bx-paperclip'></i>
+                        </h5>
 
-        <article class="board-list-headline">
-            <div class="container">
+                        <p class="name">
+                            <span>작성자</span>
+                                ${item.regNm}
+                        </p>
 
-                <h4 class="sr-only">
-                    ${menuInfo.siteMemuNm}
-                </h4>
-            <c:if test="${fn:length(noticelist) != 0}">
-                <ul class="list">
-                    <c:forEach items="${noticelist}" var="item" varStatus="status">
-                        <li>
-                            <a href="<info:url value='${boardVO.actionViewUrl}?itemId=${item.itemId}'/>" onClick="fn_detail('<c:out value="${item.itemId}"/>');return false;">
+                        <p class="date">
+                            <span>등록일</span>
+                                ${item.regDtYyyy}-${item.regDtMm}-${item.regDtDd}
+                        </p>
 
-                                <h5>
-                                    <small>${item.regDtYyyy}.${item.regDtMm}.${item.regDtDd}</small>
-                                    <span>${item.title}</span>
-                                </h5>
-                                <div class="text">
-                                    <p>${item.memo}</p>
-                                    <%--<p>아래 링크를 클릭하면 보실 수 있습니다.</p>--%>
-                                    <%--<p>http:///youtu.be/4KgjcTAFWCc</p>--%>
-                                </div>
+                        <p class="count">
+                            <span>조회수</span>
+                                ${item.readCnt}
+                        </p>
 
-                            </a>
-                        </li>
-                   </c:forEach>
-                </ul>
-            </c:if>
-            </div>
-        </article>
+                    </a>
+                </li>
+            </c:forEach>
 
-        <article class="board-list">
-            <div class="container">
+            </ul>
 
-                <h4 class="sr-only">
-                    ${menuInfo.siteMemuNm}
-                </h4>
+        </div>
+    </article>
 
-                <ul class="list">
+    <article class="pagenation">
 
-                        <c:forEach items="${boardItemList}" var="item" varStatus="status">
-                            <li>
-                                <a href="<info:url value='${boardVO.actionViewUrl}?itemId=${item.itemId}'/>" onClick="fn_detail('<c:out value="${item.itemId}"/>');return false;">
+        <ui:pagination paginationInfo="${paginationInfo}" type="cmm" jsFunction="fn_board_select_linkPage"/>
+    </article>
+    <input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>">
+    <input name="siteMemuId" type="hidden" value="<c:out value='${menuInfo.siteMemuId}'/>">
+    <input name="searchCondition" type="hidden" value="1">
 
-                                    <div class="info">
-                                        <span>${item.regDtYyyy}-${item.regDtMm}-${item.regDtDd}</span>
-                                        <span><spring:message code="게시판.조회수"/> ${item.readCnt}</span>
-                                    </div>
-                                    <h5>
-                                        <small>NO. <c:out value="${paginationInfo.totalRecordCount - ((paginationInfo.currentPageNo-1) * paginationInfo.recordCountPerPage + status.index) }"/></small>
-                                            ${item.title}
-                                    </h5>
-
-                                </a>
-                            </li>
-                        </c:forEach>
-                </ul>
-
-            </div>
-        </article>
-
-        <article class="board-tools">
-            <div class="container">
-
-                <fieldset class="search">
-                    <legend class="sr-only">게시판 검색</legend>
-
-                    <input type="text" id="searchKeyword" name="searchKeyword" value="<c:out value='${searchVO.searchKeyword}'/>" >
-                    <button type="submit">검색</button>
-                </fieldset>
-
-            </div>
-
-
-        </article>
-
-
-        <article class="pagenation">
-
-            <ui:pagination paginationInfo="${paginationInfo}" type="cmm" jsFunction="fn_board_select_linkPage"/>
-        </article>
-        <input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>">
-        <input name="siteMemuId" type="hidden" value="<c:out value='${menuInfo.siteMemuId}'/>">
-        <input name="searchCondition" type="hidden" value="1">
-
-
-
-    </div>
-</form>
+    </form>
 
 </div>
 <!-- E:mainContent -->
-
 

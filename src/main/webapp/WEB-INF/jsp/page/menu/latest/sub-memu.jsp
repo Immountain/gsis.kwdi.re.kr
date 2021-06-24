@@ -9,6 +9,13 @@
    <%--<a href="<info:url value="/festivity/program.do"/>">주요프로그램</a>--%>
    <%--<a href="">부대프로그램</a>--%>
 
+   <%--<a class="home" href="/">홈으로 <i class='bx bxs-home'></i></a>--%>
+
+   <%--<a href="">소개<i class='bx bx-chevron-right' ></i></a>--%>
+   <%--<strong>제주 성인지통계시스템</strong>--%>
+
+
+
 
    <c:forEach items="${depth2List}" var="item1">
 
