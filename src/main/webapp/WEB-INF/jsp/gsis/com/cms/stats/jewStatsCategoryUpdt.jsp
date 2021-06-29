@@ -181,7 +181,7 @@
                 <tr>
                     <th>통계URL<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="statsUrl" maxlength="10"/>
+                        <form:input path="statsUrl" maxlength="400"/>
                     </td>
                     <th><label for="orderCnt">정렬순번 <span class="pilsu">*</span></label></th>
                     <td class="left">

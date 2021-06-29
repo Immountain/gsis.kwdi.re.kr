@@ -26,7 +26,7 @@
 <script src="<c:url value="/js/infomind/com/moment.js"/>"></script>
 
 
-<c:set var="pageTitle">공지 게시판</c:set>
+<c:set var="pageTitle">보고서 게시판</c:set>
 <script type="text/javascript">
 $(document).ready(function() {
 

@@ -80,7 +80,7 @@ public class EgovWebApplicationInitializer implements WebApplicationInitializer 
 			rootContext.setConfigLocations("classpath*:egovframework/spring/com/**/context-*.xml",
 					"classpath*:infomind/spring/com/**/context-info-*.xml",
 
-					"classpath*:wj/spring/com/**/context-info-*.xml");
+					"classpath*:gsis/spring/com/**/context-info-*.xml");
 		} else {
 			rootContext.setConfigLocations("classpath*:egovframework/spring/com/context-*.xml",
 					"classpath*:egovframework/spring/com/scheduling/context-scheduling-sym-bat.xml",
@@ -88,7 +88,7 @@ public class EgovWebApplicationInitializer implements WebApplicationInitializer 
 					"classpath*:egovframework/spring/com/idgn/context-*.xml",
 					"classpath*:infomind/spring/com/**/context-info-*.xml",
 
-					"classpath*:wj/spring/com/**/context-info-*.xml");
+					"classpath*:gsis/spring/com/**/context-info-*.xml");
 		}
 
 		rootContext.refresh();
@@ -245,7 +245,7 @@ public class EgovWebApplicationInitializer implements WebApplicationInitializer 
 		xmlWebApplicationContext.setConfigLocations(
 				"/WEB-INF/config/egovframework/springmvc/egov-com-*.xml",
 				"classpath*:infomind/spring/mvc/context-info-*.xml",
-				"classpath*:wj/spring/mvc/context-info-*.xml"
+				"classpath*:gsis/spring/mvc/context-info-*.xml"
 		);
 
 		ServletRegistration.Dynamic dispatcher = servletContext.addServlet(servletName, new DispatcherServlet(xmlWebApplicationContext));

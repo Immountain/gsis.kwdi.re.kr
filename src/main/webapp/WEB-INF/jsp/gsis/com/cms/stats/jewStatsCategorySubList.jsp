@@ -127,7 +127,7 @@
                     {
                         key: "categoryId", label: "수정",width: 60, formatter: function () {
 
-                            return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoUpdt(" + this.dindex + ");'> 수정 </button>";
+                            return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoSubPdt(" + this.dindex + ");'> 수정 </button>";
                         }
                     }
 
@@ -268,10 +268,59 @@
         });
     }
 
+
+
+    function gotoSubPdt(row) {
+
+
+        var categoryId = categorySubGrid.getList()[row].categoryId;
+
+        var p = {
+            categoryId : categoryId,
+            parentId : parentId
+        };
+
+
+        var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategorySubUpdtView.do' />";
+        ax5modal.open({
+            theme: "primary",
+            height: 402,
+            width: 830,
+            header: {
+                title: '하위카테고리 수정',
+                btns: {
+                    close: {
+                        label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
+                            // modal.close();
+                            ax5modal.close();
+                        }
+                    }
+                }
+
+            },
+            iframe: {
+                method: "get",
+                url: API_SERVER,
+                param: p
+
+            },
+
+        }, function (d) {
+            Search();
+            SearchSecondGrid();
+        });
+
+
+    }
+
+
+
+
+
     //2차카테고리 수정
     function gotoUpdt(row) {
 
-        var categoryId = categorySubGrid.getList()[row].categoryId;
+        var categoryId = categoryGrid.getList()[row].categoryId;
 
         var p = {
             categoryId : categoryId,
@@ -331,7 +380,7 @@
                     <select id="parentId">
                            <option selected value=''>부모카테고리</option>
                            <c:forEach items="${jsCategoryList}" var="item">
-                               <option value="${item.categoryId}">${item.categoryId}</option>
+                               <option value="${item.categoryId}">${item.categoryIdNm}</option>
                            </c:forEach>
                     </select>
                  </span>

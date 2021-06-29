@@ -35,10 +35,9 @@
 	<security:http pattern="^((?!\/cms).)*/menu/.*$" request-matcher="regex" security="none" />
 	<security:http pattern="^((?!\/cms).)*/board/.*$" request-matcher="regex" security="none" />
 	<security:http pattern="^((?!\/cms).)*/comment/.*$" request-matcher="regex" security="none" />
-	<security:http pattern="^((?!\/cms).)*/equipment/.*$" request-matcher="regex" security="none" />
-	<security:http pattern="^((?!\/cms).)*/festivity/.*$" request-matcher="regex" security="none" />
-	<security:http pattern="^((?!\/cms).)*/program/.*$" request-matcher="regex" security="none" />
-	<security:http pattern="^((?!\/cms).)*/jeju/.*$" request-matcher="regex" security="none" />
+
+	<security:http pattern="^((?!\/cms).)*/statsdb/.*$" request-matcher="regex" security="none" />
+
 
 
 

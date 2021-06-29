@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JejuDbDAO">
+
+
+    <select id="getSelectJejuDbList"  parameterType="gsis.com.site.jejudb.vo.JejuDbVO"  resultType="gsis.com.site.jejudb.vo.JejuDbVO">
+
+
+            select CATEGORY_ID
+                  ,CATEGORY_ID_NM
+                  ,PARENT_ID
+                  ,ORDER_CNT
+                  ,VW_CD
+                  ,TBL_ID
+                  ,STATS_URL
+                  ,DELETE_YN
+            from jew_stats_category
+            where 1=1
+            and USE_YN ='Y'
+            and DELETE_YN ='N'
+            and PARENT_ID =#{parentId}
+            and USE_YN ='Y'
+            and DELETE_YN ='N'
+            order by ORDER_CNT asc
+
+
+
+
+    </select>
+
+
+</mapper>

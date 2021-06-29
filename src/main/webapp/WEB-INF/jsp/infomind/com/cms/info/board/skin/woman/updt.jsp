@@ -26,7 +26,7 @@
 <script src="<c:url value="/js/infomind/com/moment.js"/>"></script>
 
 
-<c:set var="pageTitle">공지 게시판</c:set>
+<c:set var="pageTitle">월간제주여성고용동향 게시판</c:set>
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -283,58 +283,58 @@
                         <div><form:errors path="memo" cssClass="error" /></div>
                     </td>
                 </tr>
-                <tr>
-                    <th>공지여부<span class="pilsu">*</span></th>
-                    <td class="left">
-                        <form:select path="noticeYn" cssClass="txt">
-                            <form:option value="N" label="사용안함"/>
-                            <form:option value="Y"  label="사용"/>
+                <%--<tr>--%>
+                    <%--<th>공지여부<span class="pilsu">*</span></th>--%>
+                    <%--<td class="left">--%>
+                        <%--<form:select path="noticeYn" cssClass="txt">--%>
+                            <%--<form:option value="N" label="사용안함"/>--%>
+                            <%--<form:option value="Y"  label="사용"/>--%>
 
-                        </form:select>
-                        <div><form:errors path="noticeYn" cssClass="error" /></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th><label for="strDay">공지 게시일자 </label></th>
-                    <td class="left">
-                        <input class="date" type="date" id="strDay" name="strDay" max="9999-12-31" value="${resultVO.noticeStartDay}">
-                        <span>~</span>
-                        <input class="date" type="date" id="endDay" name="endDay" max="9999-12-31" value="${resultVO.noticeEndDay}">
-                    </td>
-                </tr>
-                <tr>
-                    <th><label for="strDay">공지 게시시작 시간 </label></th>
-                    <td class="left">
-                        <select id="strHour" name="strHour">
-                            <c:forEach items="${boardVO.hourList}" var="item" varStatus="status">
-                                <option value="${item}"  <c:if test="${resultVO.noticeStartHour==item}">selected</c:if> >${item}</option>
-                            </c:forEach>
+                        <%--</form:select>--%>
+                        <%--<div><form:errors path="noticeYn" cssClass="error" /></div>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
+                <%--<tr>--%>
+                    <%--<th><label for="strDay">공지 게시일자 </label></th>--%>
+                    <%--<td class="left">--%>
+                        <%--<input class="date" type="date" id="strDay" name="strDay" max="9999-12-31" value="${resultVO.noticeStartDay}">--%>
+                        <%--<span>~</span>--%>
+                        <%--<input class="date" type="date" id="endDay" name="endDay" max="9999-12-31" value="${resultVO.noticeEndDay}">--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
+                <%--<tr>--%>
+                    <%--<th><label for="strDay">공지 게시시작 시간 </label></th>--%>
+                    <%--<td class="left">--%>
+                        <%--<select id="strHour" name="strHour">--%>
+                            <%--<c:forEach items="${boardVO.hourList}" var="item" varStatus="status">--%>
+                                <%--<option value="${item}"  <c:if test="${resultVO.noticeStartHour==item}">selected</c:if> >${item}</option>--%>
+                            <%--</c:forEach>--%>
 
-                        </select>
-                        <span>:</span>
-                        <select id="strMin" name="strMin">
-                            <c:forEach items="${boardVO.minList}" var="item" varStatus="status">
-                                <option value="${item}"  <c:if test="${resultVO.noticeStartMin==item}">selected</c:if>   >${item}</option>
-                            </c:forEach>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th><label for="strDay">공지 게시종료 시간 </label></th>
-                    <td class="left">
-                        <select id="endHour" name="endHour">
-                            <c:forEach items="${boardVO.hourList}" var="item" varStatus="status">
-                                <option value="${item}"   <c:if test="${resultVO.noticeEndHour==item}">selected</c:if> >${item}</option>
-                            </c:forEach>
+                        <%--</select>--%>
+                        <%--<span>:</span>--%>
+                        <%--<select id="strMin" name="strMin">--%>
+                            <%--<c:forEach items="${boardVO.minList}" var="item" varStatus="status">--%>
+                                <%--<option value="${item}"  <c:if test="${resultVO.noticeStartMin==item}">selected</c:if>   >${item}</option>--%>
+                            <%--</c:forEach>--%>
+                        <%--</select>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
+                <%--<tr>--%>
+                    <%--<th><label for="strDay">공지 게시종료 시간 </label></th>--%>
+                    <%--<td class="left">--%>
+                        <%--<select id="endHour" name="endHour">--%>
+                            <%--<c:forEach items="${boardVO.hourList}" var="item" varStatus="status">--%>
+                                <%--<option value="${item}"   <c:if test="${resultVO.noticeEndHour==item}">selected</c:if> >${item}</option>--%>
+                            <%--</c:forEach>--%>
 
-                        </select><span>:</span>
-                        <select id="endMin" name="endMin">
-                            <c:forEach items="${boardVO.minList}" var="item" varStatus="status">
-                                <option value="${item}" <c:if test="${resultVO.noticeEndMin==item}">selected</c:if> >${item}</option>
-                            </c:forEach>
-                        </select>
-                    </td>
-                </tr>
+                        <%--</select><span>:</span>--%>
+                        <%--<select id="endMin" name="endMin">--%>
+                            <%--<c:forEach items="${boardVO.minList}" var="item" varStatus="status">--%>
+                                <%--<option value="${item}" <c:if test="${resultVO.noticeEndMin==item}">selected</c:if> >${item}</option>--%>
+                            <%--</c:forEach>--%>
+                        <%--</select>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
 
                 <tr>
                     <th><label for="boardContent">내용 <span class="pilsu">*</span></label></th>

@@ -67,7 +67,7 @@
     </section>
 
 
-    <h4 class="stitle">공지사항</h4>
+    <h4 class="stitle">${menuInfo.siteMemuNm}</h4>
 
     <form name="searchVO" action="<info:url value="${boardVO.actionListUrl}"/>" method="post" onSubmit="fn_board_search_page(); return false;">
         <input name="category" id="category" type="hidden" value="<c:out value='${searchVO.category}'/>">
@@ -108,19 +108,19 @@
                         <h5>
                             <span>제목</span>
                                 ${item.title}
-                            <i class='bx bx-paperclip'></i>
-                        </h5>
 
+                                <c:if test="${item.fileCnt>0}">
+                                     <i class='bx bx-paperclip'></i>
+                                </c:if>
+                        </h5>
                         <p class="name">
                             <span>작성자</span>
                                 ${item.regNm}
                         </p>
-
                         <p class="date">
                             <span>등록일</span>
                                 ${item.regDtYyyy}-${item.regDtMm}-${item.regDtDd}
                         </p>
-
                         <p class="count">
                             <span>조회수</span>
                                 ${item.readCnt}

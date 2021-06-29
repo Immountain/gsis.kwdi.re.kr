@@ -20,6 +20,7 @@
 				<value>classpath:/infomind/mapper/sms/${Globals.DbType}/*_${Globals.DbType}.xml</value>
 				<value>classpath:/infomind/mapper/ext/lang/${Globals.DbType}/*_${Globals.DbType}.xml</value>
 				<value>classpath:/gsis/mapper/cms/*/${Globals.DbType}/*_${Globals.DbType}.xml</value>
+				<value>classpath:/gsis/mapper/site/*/${Globals.DbType}/*_${Globals.DbType}.xml</value>
 
 			</list>
 		</property>

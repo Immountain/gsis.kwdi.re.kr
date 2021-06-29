@@ -18,7 +18,7 @@
 
 
 
-<c:set var="pageTitle">공지 게시판</c:set>
+<c:set var="pageTitle">통계소식 게시판</c:set>
 <script type="text/javascript">
 $(document).ready(function() {
 

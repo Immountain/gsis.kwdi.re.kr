@@ -62,11 +62,11 @@ public class InfoViewUtils {
     }
 
 
-    public static String wjPpageContentView(String path, String view, String layout) {
+    public static String gsisPpageContentView(String path, String view, String layout) {
         String tempPath = (path == null || "".equals(path)) ? "" : "/" + path;
         String tempView = (view == null || "".equals(view)) ? "" : "/" + view;
         String tempLayout = (layout == null || "".equals(layout)) ? "" : ".page";
-        String pageUrl = "wj/com/site" + tempPath + tempView + tempLayout;
+        String pageUrl = "gsis/com/site" + tempPath + tempView + tempLayout;
         return pageUrl;
     }
 
