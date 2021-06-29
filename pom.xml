@@ -26,6 +26,11 @@
 
     <repositories>
         <repository>
+            <id>in-project</id>
+            <name>In Project Repo</name>
+            <url>file://${project.basedir}/libs</url>
+        </repository>
+        <repository>
             <id>mvn2s</id>
             <url>https://repo1.maven.org/maven2/</url>
             <releases>
@@ -559,11 +564,11 @@
         <!-- 3rd party 라이브러리로 별도의 설치 필요 -->
         <!-- oracle 11g driver -->
         <dependency>
-            <groupId>ojdbc</groupId>
-            <artifactId>ojdbc</artifactId>
-            <version>6-11</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6-11.2.0.3.jar</systemPath>
+            <groupId>oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.3</version>
+            <!--<scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6-11.2.0.3.jar</systemPath>-->
         </dependency>
         
         <!-- altibase driver -->
@@ -601,32 +606,32 @@
             <groupId>kr.go.mgov</groupId>
             <artifactId>smeapi</artifactId>
             <version>2.7</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/smeapi_2_7.jar</systemPath>
+            <!--<scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/smeapi_2_7.jar</systemPath>-->
         </dependency>
-        <!-- GPKI인증서 로그인처리 라이브러리 -->         
+        <!-- GPKI인증서 로그인처리 라이브러리 -->
         <dependency>
             <groupId>kr.go.gpki</groupId>
             <artifactId>gpkisecureweb</artifactId>
             <version>1.0.4.9</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/gpkisecureweb-1.0.4.9.jar</systemPath>
-        </dependency>        
-        <dependency>
-            <groupId>sciSecuPCC_v3</groupId>
-            <artifactId>sciSecuPCC_v3</artifactId>
-            <version>1.4.0.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/sciSecuPCC_v3.jar</systemPath>
+            <!--<scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/gpkisecureweb-1.0.4.9.jar</systemPath>-->
         </dependency>
 
-        <!-- 본인인증 -->
         <dependency>
             <groupId>kr.go.gpki</groupId>
             <artifactId>libgpkiapi_jni</artifactId>
             <version>1.4.0.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/libgpkiapi_jni-1.4.0.0.jar</systemPath>
+            <!--<scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/libgpkiapi_jni-1.4.0.0.jar</systemPath>-->
+        </dependency>
+
+        <dependency>
+            <groupId>com.sci.v2.pccv2</groupId>
+            <artifactId>sciSecuPCC</artifactId>
+            <version>1.0.0</version>
+            <!--<scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/sciSecuPCC_v3.jar</systemPath>-->
         </dependency>
         <!-- 3rd party 라이브러리로 별도의 설치 필요 끝 -->
 
