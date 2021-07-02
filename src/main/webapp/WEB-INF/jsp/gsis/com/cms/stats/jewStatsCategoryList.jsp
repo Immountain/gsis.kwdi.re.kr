@@ -98,7 +98,7 @@
         var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategoryRegistView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 439,
+            height: 500,
             width: 800,
             header: {
                 title: '통계DB카테고리 등록',
@@ -134,7 +134,7 @@
         var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategoryUpdtView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 350,
+            height: 500,
             width: 800,
             header: {
                 title: '통계DB카테고리 수정',

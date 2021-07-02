@@ -30,6 +30,9 @@
             var statsUrl = $('#statsUrl').val();
             var useYn = $('#useYn').val();
 
+            var titleNm = $('#titleNm').val();
+            var subTitleNm = $('#subTitleNm').val();
+
             if(!categoryId){
                 alert('카테고리아이디 입력하세요');
                 return;
@@ -39,6 +42,18 @@
                 alert('카테고리명 입력하세요');
                 return;
             }
+
+            if(!titleNm){
+                alert('제목 입력하세요')
+                return;
+            }
+
+
+            if(!subTitleNm){
+                alert('서브제목 입력하세요')
+                return;
+            }
+
 
             if(!orderCnt){
                 alert('정렬순서 입력하세요')
@@ -169,6 +184,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>제목<span class="pilsu">*</span></th>
+                    <td>
+                        <form:input path="titleNm" maxlength="100"/>
+                    </td>
+                    <th>서브 제목<span class="pilsu">*</span></th>
+                    <td>
+                        <form:input path="subTitleNm" maxlength="100"/>
+                    </td>
+                </tr>
+
+
+                <tr>
                     <th>kosis 서비스코드<span class="pilsu">*</span></th>
                     <td>
                         <form:input path="vwCd" maxlength="10"/>
@@ -180,11 +207,15 @@
                 </tr>
                 <tr>
                     <th>통계URL<span class="pilsu">*</span></th>
-                    <td>
-                        <form:input path="statsUrl" maxlength="400"/>
+                    <td colspan="3">
+                        <form:input path="statsUrl" maxlength="500" cssClass="w500"/>
                     </td>
+                </tr>
+
+                <tr>
+
                     <th><label for="orderCnt">정렬순번 <span class="pilsu">*</span></label></th>
-                    <td class="left">
+                    <td class="left" colspan="3">
                         <form:input path="orderCnt" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="숫자만입력가능합니다" title="${title} ${inputTxt}" maxlength="8" />
                         <div><form:errors path="orderCnt" cssClass="error" /></div>
                     </td>

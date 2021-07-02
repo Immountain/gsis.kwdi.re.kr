@@ -30,6 +30,9 @@
             var statsUrl = $('#statsUrl').val();
             var useYn = $('#useYn').val();
 
+            var titleNm = $('#titleNm').val();
+            var subTitleNm = $('#subTitleNm').val();
+
             if(!categoryId){
                 alert('카테고리아이디 입력하세요');
                 return;
@@ -39,6 +42,19 @@
                 alert('카테고리명 입력하세요');
                 return;
             }
+
+
+            if(!titleNm){
+                alert('제목 입력하세요')
+                return;
+            }
+
+
+            if(!subTitleNm){
+                alert('서브제목 입력하세요')
+                return;
+            }
+
 
             if(!orderCnt){
                 alert('정렬순서 입력하세요')
@@ -153,6 +169,16 @@
                     <td class="left">
                         <form:textarea path="categoryIdNm" title="${title} ${inputTxt}" maxlength="250" />
                         <div><form:errors path="categoryIdNm" cssClass="error" /></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>제목<span class="pilsu">*</span></th>
+                    <td>
+                        <form:input path="titleNm" maxlength="100"/>
+                    </td>
+                    <th>서브 제목<span class="pilsu">*</span></th>
+                    <td>
+                        <form:input path="subTitleNm" maxlength="100"/>
                     </td>
                 </tr>
                 <tr>
