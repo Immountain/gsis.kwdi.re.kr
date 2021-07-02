@@ -3,4 +3,136 @@
 <mapper namespace="SiteJewMdisDAO">
 
 
+    <select id="getSelectJewMdisList" parameterType="gsis.com.site.jewmdis.vo.SiteJewMdisVO" resultType="gsis.com.site.jewmdis.vo.SiteJewMdisVO">
+
+        <![CDATA[
+			SELECT JEW_MDIS_SNO
+                    ,MDIS_NUM
+                    ,MDIS_TYPE
+                    ,MDIS_KOR_NM
+                    ,MDIS_EN_NM
+                    ,DATA_OF_FORM
+                    ,PROJECT_KOR_NM
+                    ,PROJECT_EN_NM
+                    ,PI
+                    ,CO_PI
+                    ,ORGANIZATION
+                    ,SUPPORTING_ORGANIZATION
+                    ,COPYRIGHT_HOLDER
+                    ,INVESTIGATE_PURPOSE
+                    ,INVESTIGATE_CONTENT
+                    ,KEYWORD
+                    ,COLLECTION_STR_DAY
+                    ,COLLECTION_END_DAY
+                    ,INVESTIGATE_AREA
+                    ,ANALYSIS_UNIT
+                    ,SUBJECT
+                    ,MDIS_TIME
+                    ,RESEARCH_ORGANIZATION
+                    ,INTERVIEW_SURVEY
+                    ,SELF_ADMINISTERED_SURVEY
+                    ,MAIL_SURVEY
+                    ,PHONE_SURVEY
+                    ,ONLINE_SURVEY
+                    ,ETC_SURVEY
+                    ,EXTRACTION
+                    ,CASE_NUMBER
+                    ,WEIGHT
+                    ,DATA_FORM
+                    ,DATA_STRUCTURE
+                    ,MDIS_LANGUAGE
+                    ,PUBLIC_YN
+                    ,PUBLIC_REASONS
+                    ,REMARK
+                    ,ETC
+                    ,DATA_FILE
+                    ,USE_YN
+                    ,DELETE_YN
+                    ,REG_DT
+                    ,REG_ID
+                    ,MOD_DT
+                    ,MOD_ID
+            FROM JEW_MDIS
+            WHERE 1=1
+            AND USE_YN ='Y'
+            AND DELETE_YN ='N'
+		]]>
+
+
+        LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
+    </select>
+
+
+    <select id="getSelectJewMdisTotCnt" parameterType="gsis.com.site.jewmdis.vo.SiteJewMdisVO" resultType="int">
+
+        <![CDATA[
+			SELECT COUNT(*) as cnt
+            FROM JEW_MDIS
+            WHERE 1=1
+            AND USE_YN ='Y'
+            AND DELETE_YN ='N'
+		]]>
+
+
+    </select>
+
+
+
+    <select id="getSelectJewMdisView" parameterType="gsis.com.site.jewmdis.vo.SiteJewMdisVO" resultType="gsis.com.site.jewmdis.vo.SiteJewMdisVO">
+
+	SELECT JEW_MDIS_SNO
+                    ,MDIS_NUM
+                    ,MDIS_TYPE
+                    ,MDIS_KOR_NM
+                    ,MDIS_EN_NM
+                    ,DATA_OF_FORM
+                    ,PROJECT_KOR_NM
+                    ,PROJECT_EN_NM
+                    ,PI
+                    ,CO_PI
+                    ,ORGANIZATION
+                    ,SUPPORTING_ORGANIZATION
+                    ,COPYRIGHT_HOLDER
+                    ,INVESTIGATE_PURPOSE
+                    ,INVESTIGATE_CONTENT
+                    ,KEYWORD
+                    ,COLLECTION_STR_DAY
+                    ,COLLECTION_END_DAY
+                    ,INVESTIGATE_AREA
+                    ,ANALYSIS_UNIT
+                    ,SUBJECT
+                    ,MDIS_TIME
+                    ,RESEARCH_ORGANIZATION
+                    ,INTERVIEW_SURVEY
+                    ,SELF_ADMINISTERED_SURVEY
+                    ,MAIL_SURVEY
+                    ,PHONE_SURVEY
+                    ,ONLINE_SURVEY
+                    ,ETC_SURVEY
+                    ,EXTRACTION
+                    ,CASE_NUMBER
+                    ,WEIGHT
+                    ,DATA_FORM
+                    ,DATA_STRUCTURE
+                    ,MDIS_LANGUAGE
+                    ,PUBLIC_YN
+                    ,PUBLIC_REASONS
+                    ,REMARK
+                    ,ETC
+                    ,DATA_FILE
+                    ,USE_YN
+                    ,DELETE_YN
+                    ,REG_DT
+                    ,REG_ID
+                    ,MOD_DT
+                    ,MOD_ID
+            FROM JEW_MDIS
+            WHERE 1=1
+            AND USE_YN ='Y'
+            AND DELETE_YN ='N'
+            AND JEW_MDIS_SNO =#{jewMdisSno}
+
+    </select>
+
+
 </mapper>

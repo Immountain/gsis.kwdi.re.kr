@@ -37,4 +37,10 @@ public class JewStatsCategoryVO extends CmsSearchVO {
     /* 삭제여부 **/
     private String deleteYn;
 
+
+    /* 타이 **/
+    private String titleNm;
+
+    /* 서브타이틀 **/
+    private String subTitleNm;
 }

@@ -37,6 +37,8 @@
 	<security:http pattern="^((?!\/cms).)*/comment/.*$" request-matcher="regex" security="none" />
 
 	<security:http pattern="^((?!\/cms).)*/statsdb/.*$" request-matcher="regex" security="none" />
+	<security:http pattern="^((?!\/cms).)*/mdis/.*$" request-matcher="regex" security="none" />
+	<security:http pattern="^((?!\/cms).)*/jejuTheme/.*$" request-matcher="regex" security="none" />
 
 
 

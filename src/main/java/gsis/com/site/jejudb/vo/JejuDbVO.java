@@ -21,6 +21,8 @@ public class JejuDbVO {
         private String  regId="";
         private String  modDt="";
         private String  modId="";
+        private String  titleNm="";
+        private String  subTitleNm="";
 
 
     }

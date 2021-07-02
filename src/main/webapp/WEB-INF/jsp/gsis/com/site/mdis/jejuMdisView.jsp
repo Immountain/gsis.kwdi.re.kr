@@ -51,30 +51,19 @@
     </section>
 
 
-    <section class="sub-content">
+    <section class="sub-db">
         <div class="container">
 
-            <h4 class="stitle">성인지통계DB</h4>
+            <h4 class="stitle">${menuInfo.siteMemuNm}</h4>
 
             <article class="db-steps">
 
 
-                <fieldset class="search">
-                    <legend class="sr-only">검색</legend>
-
-                    <strong>주제별 통계</strong>
-
-
-                    <input type="text" placeholder="통계표 목록 검색">
-                    <button><i class='bx bx-search'></i>검색</button>
-                </fieldset>
-
-
-                <div class="step step01 on">
-                    <h5>분류 1<i class='bx bxs-right-arrow'></i></h5>
+                <div class="step step01">
+                    <h5>분류 1</h5>
                     <ul class="list">
                         <li>
-                            <a href="#">카테고리</a>
+                            <a class="active" href="#">카테고리</a>
                         </li>
                         <li>
                             <a href="#">카테고리</a>
@@ -94,7 +83,7 @@
 
 
                 <div class="step step02">
-                    <h5>분류 2<i class='bx bxs-right-arrow'></i></h5>
+                    <h5>분류 2</h5>
                     <ul class="list">
                         <li>
                             <a href="#">카테고리</a>
@@ -117,7 +106,7 @@
 
 
                 <div class="step step03">
-                    <h5>분류 3<i class='bx bxs-right-arrow'></i></h5>
+                    <h5>분류 3</h5>
                     <ul class="list">
                         <li>
                             <a href="#" class="active"><i class='bx bx-link-external'></i>총조사 인구 <span>(성/행정구역/연령별)</span></a>
@@ -157,11 +146,8 @@
         <!--
             최종 링크에 맞는 아이프레임 호출
         -->
-        <iframe style="width:100%; height:100%;"  src="https://gsis.kwdi.re.kr/statHtml/statHtml.do?mode=tab&orgId=338&tblId=DT_1LFB011&vw_cd=MT_ATITLE&list_id=DT_1LFB011&scrId=&seqNo=&language=ko&obj_var_id=131013447B&itm_id=131013447B.20017&conn_path=MT_ATITLE&path=">
 
-
-        </iframe>
-
+        팝업창
 
 
         <button class="close">닫기 <i class='bx bx-x' ></i></button>

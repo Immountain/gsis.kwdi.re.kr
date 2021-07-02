@@ -9,6 +9,10 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/statsdb/**"/>
 			<mvc:mapping path="/*/statsdb/**"/>
+			<mvc:mapping path="/jejuTheme/**"/>
+			<mvc:mapping path="/*/jejuTheme/**"/>
+
+
 			<bean class="infomind.com.cmm.interceptor.SiteInterceptor"/>
 		</mvc:interceptor>
 

@@ -14,6 +14,8 @@
                   ,TBL_ID
                   ,STATS_URL
                   ,DELETE_YN
+                  ,TITLE_NM
+                  ,SUB_TITLE_NM
             from jew_stats_category
             where 1=1
             and USE_YN ='Y'
