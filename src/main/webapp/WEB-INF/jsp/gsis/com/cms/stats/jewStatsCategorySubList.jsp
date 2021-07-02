@@ -201,7 +201,7 @@
         var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategorySubRegistView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 401,
+            height: 500,
             width: 763,
             header: {
                 title: '하위카테고리 등록',
@@ -243,7 +243,7 @@
         var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategorySubRegistView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 401,
+            height: 500,
             width: 763,
             header: {
                 title: '하위카테고리 등록',
@@ -284,7 +284,7 @@
         var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategorySubUpdtView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 402,
+            height: 500,
             width: 830,
             header: {
                 title: '하위카테고리 수정',
@@ -331,7 +331,7 @@
         var API_SERVER = "<c:url value='/cms/gsis/stats/jewStatsCategorySubUpdtView.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 402,
+            height: 500,
             width: 830,
             header: {
                 title: '하위카테고리 수정',

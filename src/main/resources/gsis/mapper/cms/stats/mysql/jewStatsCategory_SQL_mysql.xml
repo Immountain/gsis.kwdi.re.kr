@@ -18,7 +18,11 @@
             JSC.REG_DT,
             JSC.REG_ID,
             JSC.MOD_DT,
-            JSC.MOD_ID
+            JSC.MOD_ID,
+            JSC.TITLE_NM,
+            JSC.SUB_TITLE_NM
+
+
         FROM JEW_STATS_CATEGORY JSC
         WHERE 1=1
           AND JSC.CATEGORY_ID =#{categoryId}
@@ -40,7 +44,9 @@
             JSC.REG_DT,
             JSC.REG_ID,
             JSC.MOD_DT,
-            JSC.MOD_ID
+            JSC.MOD_ID,
+            JSC.TITLE_NM,
+            JSC.SUB_TITLE_NM
         FROM JEW_STATS_CATEGORY JSC
         WHERE 1=1
         AND
@@ -71,7 +77,9 @@
         JSC.REG_DT,
         JSC.REG_ID,
         JSC.MOD_DT,
-        JSC.MOD_ID
+        JSC.MOD_ID,
+        JSC.TITLE_NM,
+        JSC.SUB_TITLE_NM
         FROM JEW_STATS_CATEGORY JSC
         WHERE 1=1
         AND
@@ -101,6 +109,8 @@
                 ,DELETE_YN
                 ,REG_DT
                 ,REG_ID
+                ,TITLE_NM
+                ,SUB_TITLE_NM
 
             ) VALUES (
                  #{categoryId}
@@ -114,6 +124,10 @@
                 ,'N'
                 ,NOW()
                 ,#{regId}
+                ,#{titleNm)
+                ,#{subTitleNm)
+
+
                      )
         ]]>
     </insert>
@@ -128,6 +142,8 @@
             ,USE_YN = #{useYn}
             ,MOD_DT = NOW()
             ,MOD_ID = #{modId}
+            ,TITLE_NM= #{titleNm}
+            ,SUB_TITLE_NM= #{subTitleNm}
         WHERE CATEGORY_ID = #{categoryId}
     </update>
 
