@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -11,18 +11,18 @@
 <script src="<c:url value='/js/infomind/com/incms.polyfill.js'/>"></script>
 <script src="<c:url value='/js/infomind/com/incms.core.js'/>"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
+    $(document).ready(function () {
 
-        Search("ROOT");
+        Search("ROOT", 0);
 
-	});
+    });
 
 
     // 조회
-    function Search(parentId) {
+    function Search(parentId, idx) {
         var parentId = parentId;
 
-        var p = {
+        var p = {//root
             parentId: parentId
         };
 
@@ -30,7 +30,49 @@
             method: "POST",
             data: JSON.stringify(p),
             success: function (res) {
-               console.log(res)
+
+                var $allstep = $('.db-steps .step');
+
+                for(var i = idx; i < 3; i++) {
+                    $allstep.eq(i).find('.list li').remove();
+                }
+
+                var $step = $allstep.eq(idx);
+                var $stepList = $step.find('.list');
+                $stepList.empty();
+
+                $step.addClass('on');
+
+                res.list.forEach(function (v, i) {
+                    //console.log(v, i)
+                    var $li = $('<li />');
+                    if(idx < 2) {
+                        var $a = $('<a />', {'href': 'javascript:;', 'text': v.categoryIdNm});
+                        $a.on('click', function () {
+                            $a.closest('ul').find('li a').removeClass('on')
+                            $a.addClass('on')
+                            Search(v.categoryId, idx + 1);
+                        })
+                        $li.append($a)
+                    }else{
+                        var $a = $('<a />', {'href': 'javascript:;'});
+                        $a.append("<i class='bx bx-link-external'></i>");
+                        $a.append(v.titleNm)
+                        $a.append('<span>' + v.subTitleNm + '</span>')
+                        $a.on('click', function () {
+                            var $layer = $('div.layer-pop');
+                            $layer.find('iframe').attr('src', '');
+                            $layer.find('iframe').attr('src', v.statsUrl);
+                            $layer.show();
+                            $layer.find('button.close').off().on('click', function(){
+                                $layer.hide();
+                            })
+                        });
+                        $li.append($a);
+                    }
+                    $stepList.append($li);
+                })
+
             }
         })
     }
@@ -73,22 +115,6 @@
                 <div class="step step01 on">
                     <h5>분류 1<i class='bx bxs-right-arrow'></i></h5>
                     <ul class="list">
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-
                     </ul>
                 </div>
 
@@ -96,22 +122,6 @@
                 <div class="step step02">
                     <h5>분류 2<i class='bx bxs-right-arrow'></i></h5>
                     <ul class="list">
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a class="active" href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-
                     </ul>
                 </div>
 
@@ -119,22 +129,6 @@
                 <div class="step step03">
                     <h5>분류 3<i class='bx bxs-right-arrow'></i></h5>
                     <ul class="list">
-                        <li>
-                            <a href="#" class="active"><i class='bx bx-link-external'></i>총조사 인구 <span>(성/행정구역/연령별)</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class='bx bx-link-external'></i>총조사 인구 <span>(성/행정구역/연령별)</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class='bx bx-link-external'></i>총조사 인구 <span>(성/행정구역/연령별)</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class='bx bx-link-external'></i>총조사 인구 <span>(성/행정구역/연령별)</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class='bx bx-link-external'></i>총조사 인구 <span>(성/행정구역/연령별)</span></a>
-                        </li>
-
                     </ul>
                 </div>
 
@@ -147,9 +141,6 @@
 <!-- E:mainContent -->
 
 
-
-
-
 <!-- S:popup -->
 <div class="layer-pop">
     <div class="outline">
@@ -157,14 +148,12 @@
         <!--
             최종 링크에 맞는 아이프레임 호출
         -->
-        <iframe style="width:100%; height:100%;"  src="https://gsis.kwdi.re.kr/statHtml/statHtml.do?mode=tab&orgId=338&tblId=DT_1LFB011&vw_cd=MT_ATITLE&list_id=DT_1LFB011&scrId=&seqNo=&language=ko&obj_var_id=131013447B&itm_id=131013447B.20017&conn_path=MT_ATITLE&path=">
-
-
+        <iframe style="width:100%; height:100%;"
+                src="https://gsis.kwdi.re.kr/statHtml/statHtml.do?mode=tab&orgId=338&tblId=DT_1LFB011&vw_cd=MT_ATITLE&list_id=DT_1LFB011&scrId=&seqNo=&language=ko&obj_var_id=131013447B&itm_id=131013447B.20017&conn_path=MT_ATITLE&path=">
         </iframe>
 
 
-
-        <button class="close">닫기 <i class='bx bx-x' ></i></button>
+        <button class="close">닫기 <i class='bx bx-x'></i></button>
 
     </div>
 </div>
