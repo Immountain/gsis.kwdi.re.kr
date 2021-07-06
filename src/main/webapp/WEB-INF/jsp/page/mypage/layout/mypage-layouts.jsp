@@ -5,36 +5,37 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="info" uri="http://infomind.com/info" %>
-
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>세계제주인대회조직위원회</title>
-<link href="<c:url value="/"/>site/css/boxicons.css" rel="stylesheet">
-<link href="<c:url value="/"/>site/css/style.css" rel="stylesheet">
 
-<!-- javaScript -->
-<script src="<c:url value="/"/>site/js/jquery-3.5.1.min.js"></script>
-<script src="<c:url value="/"/>site/js/jquery.scrollify.js"></script>
-<script src="<c:url value="/"/>site/js/plax.js"></script>
-<script src="<c:url value="/"/>site/js/slick.min.js"></script>
-<script src="<c:url value="/"/>site/js/common.js"></script>
-</head>
+        <head>
+             <info:include  id="jew.com.head"/>
+        </head>
+        <body class="main-layout">
+            <!-- S:skip_navi -->
+                <info:include  id="jew.com.page.skipnavi"/>
 
-<body class="sub-layout">
+            <!-- E:skip_navi -->
+            <!-- S:header -->
+            <header id="header">
+            <div class="container">
+            <h1><a href="/"><small>제주여성가족연구원</small>성인지통계시스템</a></h1>
 
-<info:include id="wj.com.page.skipnavi"/>
-<info:include id="wj.com.page.header"/>
-<info:include id="wj.com.page.mainmenu"/>
-<tiles:insertAttribute name="content"/>
-<info:include id="wj.com.page.footer"/>
+            <button class="main-menu">
+            메뉴호출버튼
+            <i class='bx bx-menu'></i>
+            </button>
+            </div>
+            </header>
+            <!-- E:header -->
 
+            <info:include  id="jew.com.page.topmenu"/>
+            <tiles:insertAttribute name="content"/>
+            <info:include  id="jew.com.page.foote"/>
+        </body>
 
-</body>
 </html>
+
 
 
 

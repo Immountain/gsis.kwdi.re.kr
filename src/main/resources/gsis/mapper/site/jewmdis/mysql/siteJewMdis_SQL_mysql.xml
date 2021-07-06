@@ -135,4 +135,33 @@
     </select>
 
 
+
+    <insert id="getInsertMdisFileDownload">
+        <![CDATA[
+            INSERT INTO JEW_FILE_DOWNLOAD(
+
+                 DOWNLOAD_SNO
+                ,DOWNLOAD_TYPE
+                ,JEW_MDIS_SNO
+                ,DATA_FILE
+                ,FILE_SN
+                ,USER_ID
+                ,REG_DT
+
+            ) VALUES (
+
+                 #{downloadSno}
+                ,#{downloadType}
+                ,#{jewMdisSno}
+                ,#{dataFile}
+                ,#{fileSn}
+                ,#{userId}
+                ,NOW()
+
+               )
+        ]]>
+    </insert>
+
+
+
 </mapper>

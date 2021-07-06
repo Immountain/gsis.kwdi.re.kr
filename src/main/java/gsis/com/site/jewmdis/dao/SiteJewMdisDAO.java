@@ -1,6 +1,7 @@
 package gsis.com.site.jewmdis.dao;
 
 import egovframework.com.cmm.service.impl.EgovComAbstractDAO;
+import gsis.com.site.jewmdis.vo.SiteJewFileDownloadVO;
 import gsis.com.site.jewmdis.vo.SiteJewMdisVO;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,11 @@ public class SiteJewMdisDAO extends EgovComAbstractDAO {
 
     public SiteJewMdisVO getSelectJewMdisView(SiteJewMdisVO vo)throws Exception{
         return selectOne("SiteJewMdisDAO.getSelectJewMdisView",vo);
+    }
+
+
+    public void getInsertMdisFileDownload(SiteJewFileDownloadVO vo)throws Exception{
+        insert("SiteJewMdisDAO.getInsertMdisFileDownload",vo);
     }
 
 

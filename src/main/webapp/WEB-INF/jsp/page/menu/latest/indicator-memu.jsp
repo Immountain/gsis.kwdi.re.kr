@@ -6,7 +6,8 @@
 
 
 <c:if test="${fn:length(depth1List) != 0}">
-   <a href="">${depth1Title}
+   <a href="">
+          ${depth1Title}
 
          <c:if test="${fn:length(depth2List) != 0}">
             <i class='bx bx-chevron-right' ></i>

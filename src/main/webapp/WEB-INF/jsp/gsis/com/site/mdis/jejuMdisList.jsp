@@ -13,9 +13,55 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
-        Search("ROOT");
+
+
+        $('#btn_pop_open').click(function () {
+
+
+            <c:if test="${loginVO!= null}">
+            var mdisSno = $(this).attr('data-mdis');
+
+                $('#jewMdisSno').val(mdisSno);
+                $(".download-pop").addClass("on");
+            </c:if>
+            <c:if test="${loginVO== null}">
+                alert("로그인 하셔야 합니다.")
+                $('#jewMdisSno').val("");
+            </c:if>
+        });
+
+
+        $('#btn_pop_close').click(function () {
+
+            $(".download-pop").removeClass("on");
+            $('#jewMdisSno').val("");
+        });
+
+
+
+        $('#btn_file_download').click(function () {
+
+            var radioVal = $('input[name="use-check"]:checked').val();
+            var jewMdisSno =$('#jewMdisSno').val();
+
+            <c:if test="${loginVO!= null}">
+                location.href="/mdis/fileDown.do?jewMdisSno="+jewMdisSno+"&downloadType="+radioVal;
+            </c:if>
+            <c:if test="${loginVO== null}">
+
+            alert("로그인 하셔야 합니다.")
+            $('#jewMdisSno').val("");
+            </c:if>
+
+
+
+
+
+        });
+
 
 	});
+
 
 
     // 조회
@@ -51,106 +97,107 @@
     </section>
 
 
-    <section class="sub-db">
-        <div class="container">
+    <form name="searchVO" action="<info:url value="/mdis/list.do"/>" method="post" onSubmit="fn_search_page(); return false;">
 
-            <h4 class="stitle">${menuInfo.siteMemuNm}</h4>
+        <section class="sub-content">
+            <div class="container">
 
-            <article class="db-steps">
+                <h4 class="stitle">마이크로데이터</h4>
 
 
-                <div class="step step01">
-                    <h5>분류 1</h5>
+
+                <article class="board-tools">
+                    <div class="container">
+
+                        <fieldset class="search">
+                            <legend class="sr-only">게시판 검색</legend>
+
+                            <input type="text" id="mdisKorNm" name="mdisKorNm">
+                            <button type="submit">검색</button>
+                        </fieldset>
+
+                    </div>
+                </article>
+
+                <article class="micro-list">
+
                     <ul class="list">
-                        <li>
-                            <a class="active" href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
+
+                        <c:forEach items="${list}" var="item" varStatus="status">
+
+                            <li>
+                                <h5>
+                                    <a href="<info:url value="/mdis/view.do?jewMdisSno=${item.jewMdisSno}"/>">
+                                            ${item.mdisKorNm}
+                                    </a>
+                                </h5>
+
+                                <ul>
+                                    <li class="name">
+                                        <span><i class='bx bxs-user' ></i>연구책임자</span> <strong>${item.pi}</strong>
+                                    </li>
+                                    <li class="agency">
+                                        <span><i class='bx bx-buildings' ></i>연구수행기관</span> <strong>${item.organization}</strong>
+                                    </li>
+                                </ul>
+                                <button type="button" id="btn_pop_open" data-mdis ="${item.jewMdisSno}" name="btn_pop_open"><i class='bx bx-download'></i>데이터 다운로드</button>
+                            </li>
+
+                        </c:forEach>
+
 
                     </ul>
-                </div>
 
 
-                <div class="step step02">
-                    <h5>분류 2</h5>
-                    <ul class="list">
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a class="active" href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
-                        <li>
-                            <a href="#">카테고리</a>
-                        </li>
+                </article>
 
-                    </ul>
-                </div>
+                <article class="pagenation">
+                    <ui:pagination paginationInfo="${paginationInfo}" type="cmm" jsFunction="fn_board_select_linkPage"/>
+                </article>
+                <input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>">
+                <input name="siteMemuId" type="hidden" value="<c:out value='${menuInfo.siteMemuId}'/>">
+
+            </div>
+        </section>
 
 
-                <div class="step step03">
-                    <h5>분류 3</h5>
-                    <ul class="list">
-                        <li>
-                            <a href="#" class="active"><i class='bx bx-link-external'></i>총조사 인구 <span>(성/행정구역/연령별)</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class='bx bx-link-external'></i>총조사 인구 <span>(성/행정구역/연령별)</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class='bx bx-link-external'></i>총조사 인구 <span>(성/행정구역/연령별)</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class='bx bx-link-external'></i>총조사 인구 <span>(성/행정구역/연령별)</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class='bx bx-link-external'></i>총조사 인구 <span>(성/행정구역/연령별)</span></a>
-                        </li>
-
-                    </ul>
-                </div>
-
-            </article>
+    </form>
 
 
-        </div>
-    </section>
 </div>
 <!-- E:mainContent -->
 
 
-
-
-
-<!-- S:popup -->
-<div class="layer-pop">
+<!-- S:popup 팝업창 입니다.-->
+<div class="download-pop">
     <div class="outline">
+        <h3>
+            마이크로데이터 다운로드
+        </h3>
 
-        <!--
-            최종 링크에 맞는 아이프레임 호출
-        -->
+        <h4>
+            마이크로데이터를 다운로드 하시겠습니까?
 
-        팝업창
+            <small>
+                데이터의 이용 목적을 알려주시기 바랍니다.
+            </small>
+        </h4>
+
+        <div class="check-outline">
+            <input type="radio" name="use-check" id="use01"  value="A" checked >
+            <label for="use01">연구용</label>
+            <input type="radio" name="use-check" id="use02" value="B">
+            <label for="use02">교육용</label>
+            <input type="radio" name="use-check" id="use03" value="C">
+            <label for="use03">자료학습탐색용</label>
+
+            <input type="hidden" id="jewMdisSno" name="jewMdisSno" >
+
+        </div>
 
 
-        <button class="close">닫기 <i class='bx bx-x' ></i></button>
+        <button type="button" class="download" id="btn_file_download" name="btn_file_download" ><i class='bx bx-download'></i>데이터 다운로드</button>
+        <button type="button" class="close"  id="btn_pop_close" name="btn_pop_close">취소하기</button>
 
     </div>
 </div>

@@ -31,6 +31,20 @@
                 },
 
                 columns: [
+                    {
+                        key: "jewMdisSno", label: "수정", width:60 ,formatter: function () {
+
+                            // console.log(this.item);
+                            return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoUpdt(" + this.dindex + ");'> 수정 </button>";
+                        }
+                    },
+                    {
+                        key: "jewMdisSno", label: "삭제", width:60 ,formatter: function () {
+
+                            // console.log(this.item);
+                            return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoDelete(" + this.dindex + ");'> 삭제 </button>";
+                        }
+                    },
                     {key: "mdisNum", label: "자료번호"},
                     {key: "mdisType", label: "자료유형"},
                     {key: "mdisKorNm", label: "자료명"},
@@ -67,21 +81,8 @@
                     {key: "mdisLanguage", label: "사용언어"},
                     {key: "publicYn", label: "자료공개여부"},
                     {key: "publicReasons", label: "자료공개_사유"},
-                    {key: "remark", label: "비고"},
-                    {
-                        key: "jewMdisSno", label: "수정", width:60 ,formatter: function () {
+                    {key: "remark", label: "비고"}
 
-                            // console.log(this.item);
-                            return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoUpdt(" + this.dindex + ");'> 수정 </button>";
-                        }
-                    },
-                    {
-                        key: "jewMdisSno", label: "삭제", width:60 ,formatter: function () {
-
-                            // console.log(this.item);
-                            return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoDelete(" + this.dindex + ");'> 삭제 </button>";
-                        }
-                    }
 
                 ]
             }
@@ -126,7 +127,7 @@
         ax5modal.open({
             theme: "primary",
             height: 791,
-            width: 919,
+            width: 930,
             header: {
                 title: '마이크로데이터 등록',
                 btns: {
@@ -162,7 +163,7 @@
         ax5modal.open({
             theme: "primary",
             height: 791,
-            width: 919,
+            width: 930,
             header: {
                 title: '마이크로데이터 수정',
                 btns: {

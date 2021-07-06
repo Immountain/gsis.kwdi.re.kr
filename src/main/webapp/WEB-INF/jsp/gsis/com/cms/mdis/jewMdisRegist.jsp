@@ -297,6 +297,18 @@
 
         return obj;
     };
+
+    function getSizeStr(size) {
+        var sizeStr = "";
+        var sizeKB = size / 1024;
+        if(parseInt(sizeKB) > 1024) {
+            var sizeMB = sizeKB / 1024;
+            sizeStr = sizeMB.toFixed(2) + " MB";
+        } else {
+            sizeStr = sizeKB.toFixed(2) + " KB";
+        }
+        return sizeStr;
+    }
 </script>
 
 <div class="sub subView">
@@ -325,75 +337,75 @@
                 </tr>
                 <tr>
                     <th><label for="mdisKorNm">자료명(국문)<span class="pilsu">*</span></label></th>
-                    <td class="left">
+                    <td class="left" colspan="3">
 <%--                        <form:input path="orderCnt" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="숫자만입력가능합니다" title="${title} ${inputTxt}" maxlength="8" />--%>
-                        <form:input path="mdisKorNm" maxlength="100"/>
+                        <form:input path="mdisKorNm" maxlength="200" cssClass="w600"/>
                     </td>
-                    <th>자료명(영문)<span class="pilsu">*</span></th>
-                    <td>
-                        <form:input path="mdisEnNm" maxlength="100"/>
+                </tr>
+                <tr>  <th>자료명(영문)<span class="pilsu">*</span></th>
+                    <td colspan="3">
+                        <form:input path="mdisEnNm" maxlength="200" cssClass="w600"/>
                     </td>
                 </tr>
                 <tr>
                     <th>자료인용서식<span class="pilsu">*</span></th>
-                    <td>
+                    <td colspan="3">
                         <form:textarea path="dataOfForm" maxlength="250"/>
-                    </td>
-                    <th>사용여부<span class="pilsu">*</span></th>
-                    <td>
-                        <form:select path="useYn">
-                            <form:option value="Y" label="사용"/>
-                            <form:option value="N" label="사용안함"/>
-                        </form:select>
                     </td>
                 </tr>
                 <tr>
                     <th>연구과제명(국문)<span class="pilsu">*</span></th>
-                    <td>
-                        <form:input path="projectKorNm" maxlength="100"/>
+                    <td colspan="3">
+                        <form:input path="projectKorNm" maxlength="150" cssClass="w600"/>
                     </td>
+                </tr>
+                <tr>
                     <th>연구과제명(영문)<span class="pilsu">*</span></th>
                     <td colspan="3">
-                        <form:input path="projectEnNm" maxlength="100"/>
+                        <form:input path="projectEnNm" maxlength="150" cssClass="w600"/>
                     </td>
                 </tr>
                 <tr>
                     <th>연구책임자<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="pi" maxlength="10"/>
+                        <form:input path="pi" maxlength="50" cssClass="w200"/>
                     </td>
                     <th>공동연구자<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="coPi" maxlength="100"/>
+                        <form:input path="coPi" maxlength="100" cssClass="w200"/>
                     </td>
                 </tr>
                 <tr>
                     <th>연구수행기관<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="organization" maxlength="25"/>
+                        <form:input path="organization" maxlength="25" cssClass="w200"/>
                     </td>
                     <th>연구비지원기관<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="supportingOrganization" maxlength="25"/>
+                        <form:input path="supportingOrganization" maxlength="25" cssClass="w200"/>
                     </td>
                 </tr>
                 <tr>
                     <th>저작권자<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="copyrightHolder" maxlength="25"/>
+                        <form:input path="copyrightHolder" maxlength="25" cssClass="w300"/>
                     </td>
                     <th>키워드<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="keyword" maxlength="100"/>
+                        <form:input path="keyword" maxlength="100" cssClass="w300"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>조사목적<span class="pilsu">*</span></th>
+                    <td colspan="3">
+                        <form:textarea path="investigatePurpose" maxlength="250"/>
                     </td>
                 </tr>
                 <tr>
-                    <th>조사목적<span class="pilsu">*</span></th>
-                    <td>
-                        <form:textarea path="investigatePurpose" maxlength="250"/>
-                    </td>
+
                     <th>조사내용<span class="pilsu">*</span></th>
-                    <td>
+                    <td colspan="3">
                         <form:textarea path="investigateContent" maxlength="250"/>
                     </td>
                 </tr>
@@ -410,7 +422,7 @@
                 <tr>
                     <th>조사지역<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="investigateArea" maxlength="25"/>
+                        <form:input path="investigateArea" maxlength="25" />
                     </td>
                     <th>분석단위<span class="pilsu">*</span></th>
                     <td>
@@ -420,11 +432,11 @@
                 <tr>
                     <th>조사대상<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="subject" maxlength="100"/>
+                        <form:input path="subject" maxlength="100" cssClass="w300"/>
                     </td>
                     <th>시간적차원<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="mdisTime" maxlength="25"/>
+                        <form:input path="mdisTime" maxlength="25" cssClass="w300"/>
                     </td>
                 </tr>
                 <tr>
@@ -445,7 +457,15 @@
                         <input id="mailSurvey" name="mailSurvey" type="checkbox"><label for="mailSurvey">우편조사</label>
                         <input id="phoneSurvey" name="phoneSurvey" type="checkbox"><label for="phoneSurvey">전화조사</label>
                         <input id="onlineSurvey" name="onlineSurvey" type="checkbox"><label for="onlineSurvey">온라인조사</label>
-                        기타<input id="etcSurvey" name="etcSurvey" type="text" maxlength="50">
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>조사방법기타<span class="pilsu">*</span></th>
+                    <td colspan="3">
+                        <form:input path="etcSurvey" maxlength="50" cssClass="w300"/>
+                        <br>
+                        (해당사항에 표시하고 필요한 경우 상세 기술함)
                     </td>
                 </tr>
                 <tr>
@@ -458,6 +478,7 @@
                         <form:input path="weight" maxlength="25"/>
                     </td>
                 </tr>
+
                 <tr>
                     <th>자료형식<span class="pilsu">*</span></th>
                     <td>
@@ -469,26 +490,41 @@
                     </td>
                 </tr>
                 <tr>
+                <th>자료공개여부</th>
+                <td colspan="3">
+                    <form:select path="publicYn">
+                        <form:option value="Y" label="공개"/>
+                        <form:option value="N" label="공개안함"/>
+                        <form:option value="D" label="제한적 공개"/>
+                    </form:select>
+                </td>
+                </tr>
+
+                <tr>
+                    <th>자료공개사유</th>
+                    <td colspan="3">
+                        <form:input path="publicReasons" maxlength="100" cssClass="w400"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>비고</th>
+                    <td colspan="3">
+                        <form:textarea path="remark" maxlength="250"/>
+                    </td>
+                </tr>
+                <tr>
+
                     <th>사용언어<span class="pilsu">*</span></th>
                     <td>
                         <form:input path="mdisLanguage" maxlength="25"/>
                     </td>
-                    <th>자료공개여부</th>
+
+                    <th>사용여부<span class="pilsu">*</span></th>
                     <td>
-                        <form:select path="publicYn">
-                            <form:option value="Y" label="공개"/>
-                            <form:option value="N" label="공개안함"/>
+                        <form:select path="useYn">
+                            <form:option value="Y" label="사용"/>
+                            <form:option value="N" label="사용안함"/>
                         </form:select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>자료공개사유</th>
-                    <td>
-                        <form:input path="publicReasons" maxlength="100"/>
-                    </td>
-                    <th>비고</th>
-                    <td>
-                        <form:textarea path="remark" maxlength="250"/>
                     </td>
                 </tr>
                 <tr>

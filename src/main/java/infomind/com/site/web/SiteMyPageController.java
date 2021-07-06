@@ -13,6 +13,8 @@ import infomind.com.cms.info.site.vo.InfoSiteMenuVO;
 import infomind.com.cms.info.site.vo.InfoSiteVO;
 import infomind.com.cms.info.site.vo.InfoSiteVisitVO;
 import infomind.com.cms.uss.umt.vo.InfoStplatVO;
+import infomind.com.ext.service.CodeSearchService;
+import infomind.com.ext.vo.CodeSearchVO;
 import infomind.com.site.service.SiteMyPageService;
 import infomind.com.site.vo.SiteJoinVO;
 import infomind.com.site.vo.SiteSuccessVO;
@@ -34,9 +36,13 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import static infomind.com.utils.http.InfoHttpResponseUtils.alertAndBackPage;
+import static infomind.com.utils.http.InfoHttpResponseUtils.alertAndMovePage;
 
 
 @Controller
@@ -69,23 +75,10 @@ public class SiteMyPageController extends BaseController {
     private InfoSiteVisitService infoSiteVisitService;
 
 
-    /**
-     * PccModuleService
-     */
-    @Resource(name = "PccModuleService")
-    private PccModuleService pccModuleService;
+    @Resource(name = "CodeSearchService")
+    private CodeSearchService codeSearchService;
 
 
-    /**
-     * InfoSmsInfoService
-     */
-    @Resource(name = "InfoSmsInfoService")
-    private InfoSmsInfoService infoSmsInfoService;
-    /**
-     * ScTranService
-     */
-    @Resource(name = "ScTranService")
-    private ScTranService scTranService;
 
     /**
      * 마이페이지 로그인
@@ -105,14 +98,6 @@ public class SiteMyPageController extends BaseController {
 
         if (StringUtils.isNotEmpty(infoSite.getSubPath())) {
             sb.append(infoSite.getSubPath());
-        }
-
-        if (user != null) {
-
-
-            // return sb.toString();
-            return String.format("redirect:%s", "/jeju/people/register.do");
-            //return "redirect:/people/register.do";
         }
 
         //   LOGGER.debug("User Id : {}", user == null ? "" : EgovStringUtil.isNullToString(user.getId()));
@@ -178,7 +163,7 @@ public class SiteMyPageController extends BaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/mypage/joinStep2.do")
+    @RequestMapping("/mypage/join.do")
     public String join(ModelMap model, HttpServletRequest request,
                        @RequestAttribute(value = "menuInfo", required = false) InfoSiteMenuVO menuInfo,
                        @ModelAttribute("checkYn") String checkYn,
@@ -193,29 +178,37 @@ public class SiteMyPageController extends BaseController {
 //       return "page/mypage/join.mypage";
 
 
-        if ("Y".equals(checkYn) && !"".equals(di) && !"".equals(reqNum)) {
+//        if ("Y".equals(checkYn) && !"".equals(di) && !"".equals(reqNum)) {
+//
+//            PccSmsInfoVO pccVo = new PccSmsInfoVO();
+//            pccVo.setDi(di);
+//            pccVo.setReqNum(reqNum);
+//
+//
+//            pccVo = pccModuleService.getSelectPccSmsInfo(pccVo);
+//
+//            if (pccVo != null && !"".equals(pccVo.getPccSmsSno())) {
+//                model.addAttribute("pccVo", pccVo);
+//                return "page/mypage/join.mypage";
+//            } else {
+//                model.addAttribute("msg", "잘못된 접근입니다.");
+//                return "forward:/mypage/joinStep1.do";
+//            }
+//
+//        } else {
+//            model.addAttribute("msg", "잘못된 접근입니다.");
+//            return "forward:/mypage/joinStep1.do";
+//        }
 
-            PccSmsInfoVO pccVo = new PccSmsInfoVO();
-            pccVo.setDi(di);
-            pccVo.setReqNum(reqNum);
+
+        CodeSearchVO codeSearchVO = new CodeSearchVO();
+        codeSearchVO.setCodeId("COM022");
+
+        List<CodeSearchVO> codeList = codeSearchService.selectComtccmmndetailcodeList(codeSearchVO) ;
+        model.addAttribute("codeList", codeList);
 
 
-            pccVo = pccModuleService.getSelectPccSmsInfo(pccVo);
-
-            if (pccVo != null && !"".equals(pccVo.getPccSmsSno())) {
-                model.addAttribute("pccVo", pccVo);
-                return "page/mypage/join.mypage";
-            } else {
-                model.addAttribute("msg", "잘못된 접근입니다.");
-                return "forward:/mypage/joinStep1.do";
-            }
-
-        } else {
-            model.addAttribute("msg", "잘못된 접근입니다.");
-            return "forward:/mypage/joinStep1.do";
-        }
-
-
+        return "page/mypage/join.mypage";
     }
 
     /**
@@ -265,6 +258,36 @@ public class SiteMyPageController extends BaseController {
 
 
     /**
+     * 입력한 사용자아이디의 중복여부를 체크하여 사용가능여부를 확인
+     *
+     * @param commandMap 파라메터전달용 commandMap
+     * @return uss/umt/EgovIdDplctCnfirm
+     * @throws Exception
+     */
+    @RequestMapping(value = "/mypage/checkEmail.do")
+    public ModelAndView checkEmail(@RequestParam Map<String, Object> commandMap) throws Exception {
+
+        //  System.out.println("checkUserId==>");
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("jsonView");
+
+        String email = (String) commandMap.get("email");
+        //checkId = new String(checkId.getBytes("ISO-8859-1"), "UTF-8");
+
+        int emailCnt = siteMyPageService.checkEmail(email);
+        modelAndView.addObject("usedCnt", emailCnt);
+        modelAndView.addObject("checkId", email);
+
+        return modelAndView;
+    }
+
+
+
+
+
+
+    /**
      * 싸이트에서 회원 가입
      *
      * @param siteJoinVO
@@ -274,11 +297,30 @@ public class SiteMyPageController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/mypage/mberInsert.do")
-    public String insertMber(@ModelAttribute("siteJoinVO") SiteJoinVO siteJoinVO, BindingResult bindingResult, Model model) throws Exception {
+    public void insertMber(@ModelAttribute("siteJoinVO") SiteJoinVO siteJoinVO,  HttpServletResponse response, Model model) throws Exception {
 
-        siteMyPageService.insertMber(siteJoinVO);
-        model.addAttribute("resultMsg", "success");
-        return "redirect:/mypage/joinStep3.do";
+
+        try {
+
+            siteMyPageService.insertMber(siteJoinVO);
+            alertAndMovePage(response, "회원가입 되셨습니다.","/");
+
+        }catch (Exception e){
+
+            alertAndMovePage(response, "처리중 오류가 발생하였습니다.","/mypage/join.do");
+
+        }
+
+
+
+
+       // model.addAttribute("resultMsg", "success");
+
+
+
+
+
+      //  return "redirect:/mypage/login.do";
     }
 
     /**

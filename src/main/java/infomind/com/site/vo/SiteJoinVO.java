@@ -32,13 +32,16 @@ public class SiteJoinVO {
     private String mberTyCode="";
     private String authorCode="";
     private String moblphonNo="";
-    private String jtpOrganCd="";
-    private String di="";
 
-    private String zeusCertiYn;
-    private String zeusId;
-    private String jtpCloudId;
-    private String chngGb;
+
+
+    private String sexdstnCode="";
+    private String passwordHint="";
+    private String passwordCnsr="";
+
+
+
+
 
     public InfoMberManageVO getGnrUser(){
 
@@ -58,9 +61,9 @@ public class SiteJoinVO {
         gnrUser.setMberSttus("P");
         gnrUser.setDetailAdres("없음");
         //지역번호
-        gnrUser.setAreaNo(this.tel1);
-        gnrUser.setMiddleTelno(this.tel2);
-        gnrUser.setEndTelno(this.tel3);
+        gnrUser.setAreaNo(this.phone1);
+        gnrUser.setMiddleTelno(this.phone2);
+        gnrUser.setEndTelno(this.phone3);
         //핸드폰번호
         gnrUser.setMoblphonNo(this.phone1+"-"+this.phone2+"-"+this.phone3);
         //그룹
@@ -70,13 +73,18 @@ public class SiteJoinVO {
        //이메일주음소
         gnrUser.setMberEmailAdres(this.email);
 
-        //기관번호
-        gnrUser.setJtpOrganCd(this.jtpOrganCd);
-        //인증번호
-        gnrUser.setDi(this.di);
+        //성별
+        gnrUser.setSexdstnCode(this.sexdstnCode);
 
-        gnrUser.setZeusId(this.zeusId);
-        gnrUser.setZeusCertiYn(this.zeusCertiYn);
+        //질문
+        gnrUser.setPasswordHint(this.passwordHint);
+        //답변
+        gnrUser.setPasswordCnsr(this.passwordCnsr);
+
+
+
+
+
 
         return gnrUser;
     }
@@ -136,14 +144,8 @@ public class SiteJoinVO {
         //신청자 전화번호
         entUser.setMbtlnum(this.phone1+"-"+this.phone2+"-"+this.phone3);
 
-        entUser.setJtpOrganCd(this.jtpOrganCd);
 
-        //인증번호
-        entUser.setDi(this.di);
 
-        entUser.setZeusId(this.zeusId);
-        entUser.setZeusCertiYn(this.zeusCertiYn);
-        entUser.setJtpCloudId(this.jtpCloudId);
 
     return entUser;
 

@@ -12,6 +12,7 @@ import infomind.com.site.service.SiteMyPageService;
 import infomind.com.site.vo.SiteJoinVO;
 import infomind.com.site.vo.SiteUserVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -35,6 +36,14 @@ public class SiteMyPageServiceImpl extends EgovAbstractServiceImpl implements Si
         return siteMyPageDAO.checkUserId(userId);
     }
 
+
+    @Override
+    public int checkEmail(String email) {
+
+        return siteMyPageDAO.checkEmial(email);
+    }
+
+    @Transactional
     @Override
     public String insertMber(SiteJoinVO mberManageVO) throws Exception {
 

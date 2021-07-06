@@ -31,6 +31,27 @@
     </select>
 
 
+    <select id="checkEmial" resultType="int">
+
+   SELECT COUNT(1) usedCnt
+        FROM  (
+
+                      SELECT EMAIL_ADRES email
+                       FROM    COMTNEMPLYRINFO
+                       UNION ALL
+                       SELECT APPLCNT_EMAIL_ADRES email
+                       FROM   COMTNENTRPRSMBER
+                       UNION ALL
+                       SELECT MBER_EMAIL_ADRES email
+                       FROM   COMTNGNRLMBER
+               )
+               A
+        WHERE  email = #{email}
+    </select>
+
+
+
+
     <insert id="insertMber">
 
             INSERT INTO COMTNGNRLMBER
@@ -375,33 +396,34 @@
 
 
           SELECT   B.ESNTL_ID
-                            ,A.EMAILL as EMAIL
-                            ,A.USER_ID
-                            ,A.KOR_NAME as USER_NM
+                            ,B.MBER_EMAIL_ADRES as EMAIL
+                            ,B.MBER_ID
+                            ,B.MBER_NM as USER_NM
                             ,B.PASSWORD
-             FROM WJ_JEJU_PEOPLE A
-                ,COMTNGNRLMBER B
+             FROM
+                COMTNGNRLMBER B
             WHERE 1=1
-            AND A.USER_ID =B.MBER_ID
-            AND A.KOR_NAME =#{userNm}
-            AND A.EMAILL =#{email}
+            AND B.MBER_NM =#{userNm}
+            AND B.MBER_EMAIL_ADRES =#{email}
 
     </select>
 
     <select id="getSiteUserPwFind" parameterType="infomind.com.site.vo.SiteUserVO" resultType="infomind.com.site.vo.SiteUserVO">
 
-           SELECT   B.ESNTL_ID
-                            ,A.EMAILL as EMAIL
-                            ,A.USER_ID
-                            ,A.KOR_NAME as USER_NM
+           SELECT  B.ESNTL_ID
+                            ,B.MBER_EMAIL_ADRES as EMAIL
+                            ,B.MBER_ID
+                            ,B.MBER_NM as USER_NM
                             ,B.PASSWORD
-             FROM WJ_JEJU_PEOPLE A
-                ,COMTNGNRLMBER B
+             FROM COMTNGNRLMBER B
             WHERE 1=1
-            AND A.USER_ID =B.MBER_ID
-            AND A.KOR_NAME =#{userNm}
-            AND A.EMAILL =#{email}
-            AND A.USER_ID =#{userId}
+
+            AND B.MBER_NM=#{userNm}
+            AND B.MBER_EMAIL_ADRES =#{email}
+            AND B.MBER_ID =#{userId}
+            and B.PASSWORD_HINT =#{passwordHint}
+            and B.PASSWORD_CNSR =#{passwordCnsr}
+
     </select>
 
 

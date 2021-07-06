@@ -36,6 +36,8 @@ public class SiteUserVO {
     private String groupId="";
     private String orgnztId="";
     private String mbtlnum="";
+    private String passwordHint="";
+    private String passwordCnsr="";
 
 
 }

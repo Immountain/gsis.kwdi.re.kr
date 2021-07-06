@@ -24,6 +24,9 @@ public class SiteMyPageDAO extends EgovComAbstractDAO {
     public int checkUserId(String userId){
         return selectOne("SiteMyPageDAO.checkUserId", userId);
     }
+    public int checkEmial(String email){
+        return selectOne("SiteMyPageDAO.checkEmial", email);
+    }
 
     /**
      * 일반회원의 기본정보를 화면에서 입력하여 항목의 정합성을 체크하고 데이터베이스에 저장

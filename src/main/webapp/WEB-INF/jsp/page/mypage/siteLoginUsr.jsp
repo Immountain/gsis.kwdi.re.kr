@@ -61,105 +61,68 @@
     }
 </script>
 
-<div id="content" class="sub sub01">
-
-    <!-- 각 구성요소 article로 모듈화 -->
-    <div class="sub-head">
-
-        <nav class="sub-menu">
-            <button type="button">제주인 등록</button>
-            <info:getMenuModel modelName="subSiteMenu" groupId="${SITEINFO.langCd}-primary" siteMemuId=""/>
-
-            <div class="outline">
-                <c:forEach items="${subSiteMenu}" var="item">
-                    <c:if test="${item.viewYn eq 'Y'}">
-                        <a <c:if test="${item.siteMemuId eq menuInfo.parentId}">class="active"</c:if> href="<info:url value="${item.url}"/>">${item.siteMemuNm}</a>
-                    </c:if>
-                </c:forEach>
-            </div>
-        </nav>
+<!-- S:mainContent -->
+<div id="content" class="sub">
 
 
+    <section class="sub-navigation">
+        <div class="container">
 
-        <!-- background-item -->
-        <div class='waves'>
-            <div class='wave -one'></div>
-            <div class='wave -two'></div>
-            <div class='wave -three'></div>
+            <a class="home" href="/">홈으로 <i class='bx bxs-home'></i></a>
+            <strong>로그인</strong>
+
+
         </div>
-        <div class="bubble" >
-            <ul class="circles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </div >
+    </section>
 
 
 
+    <c:if test="${loginVO==null}">
 
-    </div>
+        <a class="login" href="<info:url value="/mypage/login.do"/>">login</a>
+    </c:if>
+    <c:if test="${loginVO!=null}">
 
+        <a class="login" href="/logout.do?redirect=<info:url value="/"/>">logout</a>
 
+    </c:if>
 
-
-
-    <div class="content-box">
-
-
-
-        <article class="login">
-            <div class="container">
-
-                <form name="loginForm" id="loginForm" action="<c:url value='/cms/actionLogin.do'/>" method="post">
-
-                    <input type="hidden" id="message" name="message" value="${message}">
-                    <input type="hidden" id="userSe" name="userSe" value="GNR">
-                    <input type="hidden" id="redirect" name="redirect" value="/">
-                    <input type="hidden" id="pageRedirect" name="pageRedirect" value="page">
-                    <input name="j_username" type="hidden"/>
-
-                    <div class="container">
+    <section class="sub-content">
+        <div class="container">
+            <form name="loginForm" id="loginForm" action="<c:url value='/cms/actionLogin.do'/>" method="post">
+                <input type="hidden" id="message" name="message" value="${message}">
+                <input type="hidden" id="userSe" name="userSe" value="GNR">
+                <input type="hidden" id="redirect" name="redirect" value="/">
+                <input type="hidden" id="pageRedirect" name="pageRedirect" value="page">
+                <input name="j_username" type="hidden"/>
 
 
+            <h4 class="stitle">로그인</h4>
+
+                    <article class="login">
                         <fieldset>
-                            <legend class="sr-only">제주인 등록을 하지 않은 경우</legend>
-                            <div class="sign">
+                            <legend class="sr-only">로그인폼</legend>
 
-                                <h3 class="sign">제주인 등록을 하지 않은 경우</h3>
+                            <input type="text" id="id" name="id"  placeholder="아이디">
+                            <input type="password" d="password" name="password" placeholder="비밀번호">
+                            <button class="submit" type="button" onclick="actionLogin()">로그인</button>
 
-                                <p class="info">아래의 등록하기를 눌러 <span>제주인등록을 해주세요.</span></p>
-
-                                <a href="/jeju/people/register.do">제주인 등록하기</a>
-
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend class="sr-only">제주인 등록을 한 경우</legend>
-                            <div class="sign">
-                                <h3 class="login">제주인 등록을 한 경우</h3>
-
-                                <p class="info">이미 제주인등록을 하신 분은 <span>로그인 해주세요.</span></p>
-                                <div class="input-outline"><input type="text"  id="id" name="id" placeholder="아이디 입력" maxlength="20"><label class="forid" for="id">아이디</label></div>
-                                <div class="input-outline"><input type="password" id="password" name="password" placeholder="비밀번호(문자/숫자/특수문자로 조합된 8~16자리)"><label class="forpw" for="password">패스워드</label></div>
-                                <button class="submit" type="button" onclick="actionLogin()">로그인</button>
-                            </div>
                             <ul class="tools">
                                 <li><a href="/mypage/find.do">아이디 / 비밀번호 찾기</a></li>
                             </ul>
+
+                            <div class="sign">
+                                회원가입 후 사이트의 모든 기능을 이용 가능합니다.</span>
+
+                                <a href="/mypage/join.do">회원가입</a>
+                            </div>
                         </fieldset>
-                    </div>
-                </form>
 
-            </div>
-        </article>
-    </div>
+                    </article>
+            </form>
 
-
+        </div>
+    </section>
 </div>
-
+<!-- E:mainContent -->
 

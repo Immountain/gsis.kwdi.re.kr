@@ -21,6 +21,8 @@ public interface SiteMyPageService {
      */
     int checkUserId(String userId);
 
+    int checkEmail(String userId);
+
     /**
      * 일반회원의 기본정보를 화면에서 입력하여 항목의 정합성을 체크하고 데이터베이스에 저장
      * @param mberManageVO 일반회원 등록정보

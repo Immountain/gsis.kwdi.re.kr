@@ -14,9 +14,18 @@ $(function () {
             }
         });
     }
+    
+    function mainSlide() {
+        if (windowW < 1200) {
+            $(".main-issue .slider img").attr("src", $(".main-issue .slider img").attr("data-for-mobile"));
+        } else {
+            $(".main-issue .slider img").attr("src", $(".main-issue .slider img").attr("data-for-pc"));
+        }
+    }
+
 
     pcmenu();
-
+    mainSlide();
 
     $(window).on("resize", function(){
         
@@ -25,6 +34,10 @@ $(function () {
         
         $("nav#main-menu h3 a").unbind();
         pcmenu();
+
+
+        mainSlide();
+
     });
 
 
@@ -105,6 +118,116 @@ $(function () {
     });
 
 
+
+    $(".micro-list button").on("click", function () {
+        $(".download-pop").addClass("on");
+    });
+
+    $(".download-pop button.close").on("click", function () {
+        $(".download-pop").removeClass("on");
+    });
+
+    $(".micro-view .tabs button").on("click", function () {
+        $(".tab-contents").removeClass("on");
+
+        $(".tab-contents."+ $(this).attr("data")).addClass("on");
+        ;
+    });
+
+
+    $(".find .find-type input").on("click", function () {
+        $(".find-form").removeClass("on");
+
+        if ($(this).attr("id") == "type01") {
+
+
+            $("div.form-id").addClass("on");
+
+        } else {
+
+            $("div.form-pw").addClass("on");
+
+        }
+    });
+
+
+
+
+    var $mainIssue = $("section.main-issue div.slider");
+    $mainIssue.slick({
+        arrows:false,
+        autoplay:true,
+        speed: 1000,
+        dots: false,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+
+        
+
+    });
+
+    var $outsite = $("section.outsite-slider .slider");
+
+    $outsite.slick({
+        mobileFirst: true,
+        autoplay:true,
+        speed: 1000,
+        dots: false,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        nextArrow:$('.outsite-slider button.right'),
+        prevArrow:$('.outsite-slider button.left'),
+
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    variableWidth:true,
+                    dotsClass: 'custom_paging',
+                    customPaging: function (slider, i) {
+                        //FYI just have a look at the object to find available information
+                        //press f12 to access the console in most browsers
+                        //you could also debug or look in the source
+                        var slideNumber   = (i + 1),
+                            totalSlides = slider.slideCount;
+                        return '<a class="custom-dot" role="button" title="' + slideNumber + ' of ' + totalSlides + '"><span class="string">' + slideNumber + '</span></a>';
+                    }
+
+                }
+            }
+        ]
+
+
+
+    });
+
+
+    $(".main-issue .pager li:first-child").addClass("on");
+
+    $(".main-issue .pager li").each(function(){
+        $(this).attr("data", $(this).index());
+    });
+
+    $mainIssue.on('init reInit afterChange', function (event, slick, currentSlide, nextSlide) {
+
+        var pager = currentSlide + 1;
+        $(".main-issue .pager li").removeClass("on");
+        $(".main-issue .pager li:nth-child("+ pager +")").addClass("on");
+
+    });
+
+    $(".main-issue .pager li").on("click", function(){
+        // $(".main-issue .pager li").removeClass("on");
+        // $(this).addClass("on");
+        $mainIssue.slick("slickGoTo", $(this).attr("data"));
+
+        console.log($(this).attr("data"));
+    });
 
 
 

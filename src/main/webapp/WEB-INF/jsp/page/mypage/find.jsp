@@ -158,163 +158,117 @@
 
 
 
-<div id="content" class="sub sub01">
-
-    <div class="sub-head">
-
+<!-- S:mainContent -->
+<div id="content" class="sub">
 
 
-        <!-- background-item -->
-        <div class='waves'>
-            <div class='wave -one'></div>
-            <div class='wave -two'></div>
-            <div class='wave -three'></div>
-        </div>
-        <div class="bubble" >
-            <ul class="circles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </div >
-
-
-    </div>
-
-    <div class="content-box">
-
-        <article class="sub-title">
-            <div class="container">
-                <h2>
-                    아이디/비밀번호 찾기
-                </h2>
-
-            </div>
-        </article>
-
-
-        <section class="find-id">
+    <section class="sub-navigation">
         <div class="container">
 
-            <input type="hidden" id="info" name="info">
+            <a class="home" href="/">홈으로 <i class='bx bxs-home'></i></a>
 
-            <fieldset>
-                <legend class="sr-only">로그인폼</legend>
-
-                <div class="find-type">
-                    <input name="type" id="type01" type="radio" onchange="onchangeRadio()" checked><label for="type01">아이디 찾기</label>
-                    <input name="type" id="type02" type="radio" onchange="onchangeRadio()" ><label for="type02">비밀번호 찾기</label>
-                </div>
-
-                <div class="find-form form-id on">
-                    <dl>
-                        <dt>
-                            <label for="userNm">이름</label>
-                        </dt>
-                        <dd>
-                            <input id="userNm" name="userNm" type="text">
-                        </dd>
-                        <dt>
-                            <label for="emaill">이메일</label>
-                        </dt>
-                        <dd>
-                            <input id="emaill" name="emaill" type="text">
-                        </dd>
-                        <%--<dt>--%>
-                            <%--<label for="phone1">휴대전화</label>--%>
-                        <%--</dt>--%>
-                        <%--<dd>--%>
-                            <%--<input id="phone1" name="phone1" class="tel" type="text" maxlength="3" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">--%>
-                            <%--<u>-</u>--%>
-                            <%--<input type="text" class="tel" id="phone2" name="phone2" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">--%>
-                            <%--<u>-</u>--%>
-                            <%--<input type="text" class="tel" id="phone3" name="phone3" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">--%>
-
-                            <%--<button type="button" id="btn_verification" name="btn_verification">전송</button>--%>
-                            <%--<input type="hidden" id="verificationYn" name="verificationYn" value="N">--%>
-                        <%--</dd>--%>
-                        <%--<dt>--%>
-                            <%--<label for="verificationCode">인증번호</label>--%>
-                        <%--</dt>--%>
-                        <%--<dd>--%>
-                            <%--<input id="verificationCode" name="verificationCode" type="text">--%>
-                        <%--</dd>--%>
-                    </dl>
-                    <div class="btn-set center full">
-                        <button class="btn main" type="button" id="btn_id_find" name="btn_id_find">확인</button>
-
-                        <%--<strong>adbs123</strong> 입니다.--%>
-                          <div class="result" id="idInfo" name="idInfo">
-                            회원님의 아이디는
-                            <span id="userIdInfo" ></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="find-form form-pw">
-                    <dl>
-                        <dt>
-                            <label for="pwuserNm">이름</label>
-                        </dt>
-                        <dd>
-                            <input id="pwuserNm" name="pwuserNm" type="text">
-                        </dd>
-                        <dt>
-                            <label for="userId">아이디</label>
-                        </dt>
-                        <dd>
-                            <input id="userId" name="userId" type="text">
-                        </dd>
-                        <dt>
-                            <label for="pwemaill">이메일</label>
-                        </dt>
-                        <dd>
-                            <input id="pwemaill" name="pwemaill" type="text">
-                        </dd>
-
-                        <%--<dt>--%>
-                            <%--<label for="pwphone1">휴대전화</label>--%>
-                        <%--</dt>--%>
-                        <%--<dd>--%>
-                            <%--<input id="pwphone1" name="pwphone1" class="tel" type="text" maxlength="3" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">--%>
-                            <%--<u>-</u>--%>
-                            <%--<input type="text" class="tel" id="pwphone2" name="pwphone2" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">--%>
-                            <%--<u>-</u>--%>
-                            <%--<input type="text" class="tel" id="pwphone3" name="pwphone3" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">--%>
-
-                            <%--<button type="button" id="btn_pwverification" name="btn_verification">전송</button>--%>
-                            <%--<input type="hidden" id="pwverificationYn" name="pwverificationYn" value="N">--%>
-                        <%--</dd>--%>
-                        <%--<dt>--%>
-                            <%--<label for="pwverificationCode">인증번호</label>--%>
-                        <%--</dt>--%>
-                        <%--<dd>--%>
-                            <%--<input id="pwverificationCode" name="pwverificationCode" type="text">--%>
-                        <%--</dd>--%>
-                    </dl>
-                    <div class="btn-set center full">
-                        <button class="btn main" type="button" id="btn_pw_find" name="btn_pw_find">확인</button>
-
-                        <div class="result">
-                            비밀번호는
-                            <span><strong>해당 이메일로 전송 됩니다</strong></span>
-                        </div>
-                    </div>
-                </div>
-
-            </fieldset>
-
-
-
+            <!-- <a href="">소개<i class='bx bx-chevron-right' ></i></a> -->
+            <strong>아이디/비밀번호찾기</strong>
 
 
         </div>
     </section>
 
-    </div>
 
+    <section class="sub-content">
+        <div class="container">
+
+            <h4 class="stitle">아이디/비밀번호찾기</h4>
+
+            <article class="find">
+                <fieldset>
+                    <legend class="sr-only">찾기 폼</legend>
+
+                    <div class="find-type">
+                        <input name="type" id="type01" type="radio" checked><label for="type01">아이디 찾기</label>
+                        <input name="type" id="type02" type="radio"><label for="type02">비밀번호 찾기</label>
+                    </div>
+
+                    <div class="find-form form-id on">
+                        <dl>
+                            <dt>
+                                <label for="userNm">이름</label>
+                            </dt>
+                            <dd>
+                                <input id="userNm" name="userNm" type="text">
+                            </dd>
+                            <dt>
+                                <label for="emaill">이메일</label>
+                            </dt>
+                            <dd>
+                                <input id="emaill" name="emaill" type="text">
+                            </dd>
+
+
+                        </dl>
+                        <div class="btn-set center full">
+                            <button class="btn main" type="button" id="btn_id_find" name="btn_id_find">확인</button>
+
+                            <div class="result">
+                                회원님의 아이디는
+                                <span><strong>adbs123</strong> 입니다.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="find-form form-pw">
+                        <dl>
+                            <dt>
+                                <label for="pwuserNm">이름</label>
+                            </dt>
+                            <dd>
+                                <input id="pwuserNm" name="pwuserNm" type="text">
+                            </dd>
+                            <dt>
+                                <label for="userId">아이디</label>
+                            </dt>
+                            <dd>
+                                <input id="userId" name="userId" type="text">
+                            </dd>
+                            <dt>
+                                <label for="pwemaill">이메일</label>
+                            </dt>
+                            <dd>
+                                <input id="pwemaill" name="pwemaill" type="text">
+                            </dd>
+                            <dt>
+                                <label for="find-text">질문</label>
+                            </dt>
+                            <dd>
+                                <select id="find-text">
+                                    <option>나의 좌우명은?</option>
+                                </select>
+                            </dd>
+                            <dt>
+                                <label for="find-answer">답변</label>
+                            </dt>
+                            <dd>
+                                <input id="find-answer" name="answer" type="text">
+                            </dd>
+
+
+                        </dl>
+                        <div class="btn-set center full">
+                            <button class="btn main">확인</button>
+
+                            <div class="result">
+                                비밀번호는
+                                <span><strong>adbs123</strong> 입니다.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+            </article>
+
+
+        </div>
+    </section>
 </div>
 <!-- E:mainContent -->

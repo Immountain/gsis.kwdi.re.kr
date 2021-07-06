@@ -11,6 +11,9 @@
 			<mvc:mapping path="/*/statsdb/**"/>
 			<mvc:mapping path="/jejuTheme/**"/>
 			<mvc:mapping path="/*/jejuTheme/**"/>
+			<mvc:mapping path="/mdis/**"/>
+			<mvc:mapping path="/*/mdis/**"/>
+
 
 
 			<bean class="infomind.com.cmm.interceptor.SiteInterceptor"/>

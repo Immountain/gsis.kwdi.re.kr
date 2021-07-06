@@ -114,7 +114,7 @@
             var formData = $("#jewMdisVO").serializeObject();
 
             var API_SERVER = "<c:url value='/cms/gsis/stats/jewMdisUpdt.do' />";
-            var saveQuestion = confirm("저장 하시겠습니까?");
+            var saveQuestion = confirm("수정 하시겠습니까?");
             if (saveQuestion) {
                 $.ajax({
                     url : API_SERVER,
@@ -135,7 +135,7 @@
 
                                 ax5modal.callback('OK');
                                 ax5modal.close();
-                                alert("저장처리 완료했습니다.");
+                                alert("수정 처리 완료했습니다.");
 
                             }else{
                                 alert(data.message);
@@ -151,6 +151,148 @@
                 });
             }
         });
+
+
+        $("#etcFileuploader").uploadFile({
+            url: "<c:url value="/"/>cms/info/file/upload.do",
+            atchFileId:$("#etc").val(),
+            viewUrl:"<c:url value='/cms/info/file/ImageView.do' />",
+            multiple:true,
+            dragDrop:true,
+            fileName:"uploadfile",
+            maxFileCount:1,
+            returnType:"json",
+            showPreview:true,
+            previewHeight: "100px",
+            previewWidth: "100px",
+            showDelete: true,
+            showDownload:true,
+            sequential:true,
+            sequentialCount:1,
+            onLoad:function(obj) {
+                $.ajax({
+                    cache: false,
+                    url: "<c:url value="/"/>cms/info/file/tempList.do",
+                    dataType: "json",
+                    data:{atchFileId:$("#etc").val()},
+                    success: function(data) {
+                        for(var i=0;i<data.length;i++) {
+                            obj.createProgress(data[i]);
+                        }
+                    }
+                });
+            },
+            onSubmit:function(files) {
+            },
+            onSuccess:function(files,data,xhr,pd) {
+
+
+                var url ="<c:url value='/site/info/file/ImageView.do?atchFileId=' />"+data.atchFileId+"&fileSn="+data.fileSn;
+
+
+                var testVal =data.orignlFileNm+"("+getSizeStr(data.fileSize)+")</br>"+url;
+
+
+                pd.filename.html(testVal)
+
+                $("#etc").val(data.atchFileId);
+            },
+            afterUploadAll:function(obj) {
+            },
+            dynamicFormData: function() {
+                var data ={atchFileId:$("#etc").val(),prixFixe:'DATA_'}
+                return data;
+            },
+            onError: function(files,status,errMsg,pd) {
+            },
+            deleteCallback: function (data, pd) {
+                $.ajax({
+                    cache: false,
+                    url: "<c:url value="/"/>cms/info/file/delete.do",
+                    dataType: "json",
+                    data:{atchFileId:data.atchFileId,fileSn:data.fileSn},
+                    success: function(data) {
+                        pd.statusbar.hide(); //You choice.
+                    }
+                });
+            },
+            downloadCallback:function(data,pd) {
+                location.href="/cms/info/file/fileDown.do?atchFileId="+data.atchFileId+"&fileSn="+data.fileSn;
+            }
+        });
+
+        $("#fileuploader").uploadFile({
+            url: "<c:url value="/"/>cms/info/file/upload.do",
+            atchFileId:$("#dataFile").val(),
+            viewUrl:"<c:url value='/cms/info/file/ImageView.do' />",
+            multiple:true,
+            dragDrop:true,
+            fileName:"uploadfile",
+            maxFileCount:1,
+            returnType:"json",
+            showPreview:false,
+            previewHeight: "100px",
+            previewWidth: "100px",
+            showDelete: true,
+            showDownload:true,
+            sequential:true,
+            sequentialCount:1,
+            onLoad:function(obj) {
+                $.ajax({
+                    cache: false,
+                    url: "<c:url value="/"/>cms/info/file/tempList.do",
+                    dataType: "json",
+                    data:{atchFileId:$("#dataFile").val()},
+                    success: function(data) {
+                        for(var i=0;i<data.length;i++) {
+                            obj.createProgress(data[i]);
+                        }
+                    }
+                });
+            },
+            onSubmit:function(files) {
+            },
+            onSuccess:function(files,data,xhr,pd) {
+
+
+                var url ="<c:url value='/site/info/file/ImageView.do?atchFileId=' />"+data.atchFileId+"&fileSn="+data.fileSn;
+
+
+                var testVal =data.orignlFileNm+"("+getSizeStr(data.fileSize)+")</br>"+url;
+                pd.filename.html(testVal)
+
+
+
+                $("#dataFile").val(data.atchFileId);
+            },
+            afterUploadAll:function(obj) {
+            },
+            dynamicFormData: function() {
+                var data ={atchFileId:$("#dataFile").val(),prixFixe:''}
+                return data;
+            },
+            onError: function(files,status,errMsg,pd) {
+            },
+            deleteCallback: function (data, pd) {
+                $.ajax({
+                    cache: false,
+                    url: "<c:url value="/"/>cms/info/file/delete.do",
+                    dataType: "json",
+                    data:{atchFileId:data.atchFileId,fileSn:data.fileSn},
+                    success: function(data) {
+                        pd.statusbar.hide(); //You choice.
+                    }
+                });
+            },
+            downloadCallback:function(data,pd) {
+                location.href="/cms/info/file/fileDown.do?atchFileId="+data.atchFileId+"&fileSn="+data.fileSn;
+            }
+        });
+
+
+
+
+
     });
 
     jQuery.fn.serializeObject = function() {
@@ -172,6 +314,19 @@
 
         return obj;
     };
+
+
+    function getSizeStr(size) {
+        var sizeStr = "";
+        var sizeKB = size / 1024;
+        if(parseInt(sizeKB) > 1024) {
+            var sizeMB = sizeKB / 1024;
+            sizeStr = sizeMB.toFixed(2) + " MB";
+        } else {
+            sizeStr = sizeKB.toFixed(2) + " KB";
+        }
+        return sizeStr;
+    }
 </script>
 
 <div class="sub subView">
@@ -200,75 +355,76 @@
                 </tr>
                 <tr>
                     <th><label for="mdisKorNm">자료명(국문)<span class="pilsu">*</span></label></th>
-                    <td class="left">
+                    <td class="left" colspan="3">
                             <%--                        <form:input path="orderCnt" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="숫자만입력가능합니다" title="${title} ${inputTxt}" maxlength="8" />--%>
-                        <form:input path="mdisKorNm" maxlength="100"/>
+                        <form:input path="mdisKorNm" maxlength="200" cssClass="w600"/>
                     </td>
-                    <th>자료명(영문)<span class="pilsu">*</span></th>
-                    <td>
-                        <form:input path="mdisEnNm" maxlength="100"/>
+                </tr>
+                <tr>  <th>자료명(영문)<span class="pilsu">*</span></th>
+                    <td colspan="3">
+                        <input type="text" id="mdisEnNm" name="mdisEnNm" value="${jewMdisVO.mdisEnNm}" maxlength="200" class="w600">
+                        <%--<form:input path="mdisEnNm" maxlength="200" cssClass="w600"/>--%>
                     </td>
                 </tr>
                 <tr>
                     <th>자료인용서식<span class="pilsu">*</span></th>
-                    <td>
+                    <td colspan="3">
                         <form:textarea path="dataOfForm" maxlength="250"/>
-                    </td>
-                    <th>사용여부<span class="pilsu">*</span></th>
-                    <td>
-                        <form:select path="useYn">
-                            <form:option value="Y" label="사용"/>
-                            <form:option value="N" label="사용안함"/>
-                        </form:select>
                     </td>
                 </tr>
                 <tr>
                     <th>연구과제명(국문)<span class="pilsu">*</span></th>
-                    <td>
-                        <form:input path="projectKorNm" maxlength="100"/>
+                    <td colspan="3">
+                        <form:input path="projectKorNm" maxlength="150" cssClass="w600"/>
                     </td>
+                </tr>
+                <tr>
                     <th>연구과제명(영문)<span class="pilsu">*</span></th>
                     <td colspan="3">
-                        <form:input path="projectEnNm" maxlength="100"/>
+                        <input type="text" id="projectEnNm" name="projectEnNm" value="${jewMdisVO.projectEnNm}" maxlength="200" class="w600">
                     </td>
                 </tr>
                 <tr>
                     <th>연구책임자<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="pi" maxlength="10"/>
+                        <form:input path="pi" maxlength="50" cssClass="w200"/>
                     </td>
                     <th>공동연구자<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="coPi" maxlength="100"/>
+                        <form:input path="coPi" maxlength="100" cssClass="w200"/>
                     </td>
                 </tr>
                 <tr>
                     <th>연구수행기관<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="organization" maxlength="25"/>
+                        <form:input path="organization" maxlength="25" cssClass="w200"/>
                     </td>
                     <th>연구비지원기관<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="supportingOrganization" maxlength="25"/>
+                        <form:input path="supportingOrganization" maxlength="25" cssClass="w200"/>
                     </td>
                 </tr>
                 <tr>
                     <th>저작권자<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="copyrightHolder" maxlength="25"/>
+                        <form:input path="copyrightHolder" maxlength="25" cssClass="w300"/>
                     </td>
                     <th>키워드<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="keyword" maxlength="100"/>
+                        <form:input path="keyword" maxlength="100" cssClass="w300"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>조사목적<span class="pilsu">*</span></th>
+                    <td colspan="3">
+                        <form:textarea path="investigatePurpose" maxlength="250"/>
                     </td>
                 </tr>
                 <tr>
-                    <th>조사목적<span class="pilsu">*</span></th>
-                    <td>
-                        <form:textarea path="investigatePurpose" maxlength="250"/>
-                    </td>
+
                     <th>조사내용<span class="pilsu">*</span></th>
-                    <td>
+                    <td colspan="3">
                         <form:textarea path="investigateContent" maxlength="250"/>
                     </td>
                 </tr>
@@ -285,7 +441,7 @@
                 <tr>
                     <th>조사지역<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="investigateArea" maxlength="25"/>
+                        <form:input path="investigateArea" maxlength="25" />
                     </td>
                     <th>분석단위<span class="pilsu">*</span></th>
                     <td>
@@ -295,11 +451,11 @@
                 <tr>
                     <th>조사대상<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="subject" maxlength="100"/>
+                        <form:input path="subject" maxlength="100" cssClass="w300"/>
                     </td>
                     <th>시간적차원<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="mdisTime" maxlength="25"/>
+                        <form:input path="mdisTime" maxlength="25" cssClass="w300"/>
                     </td>
                 </tr>
                 <tr>
@@ -320,7 +476,14 @@
                         <input id="mailSurvey" name="mailSurvey" type="checkbox" <c:if test="${jewMdisVO.mailSurvey == 'Y'}">checked</c:if>><label for="mailSurvey">우편조사</label>
                         <input id="phoneSurvey" name="phoneSurvey" type="checkbox" <c:if test="${jewMdisVO.phoneSurvey == 'Y'}">checked</c:if>><label for="phoneSurvey">전화조사</label>
                         <input id="onlineSurvey" name="onlineSurvey" type="checkbox" <c:if test="${jewMdisVO.onlineSurvey == 'Y'}">checked</c:if>><label for="onlineSurvey">온라인조사</label>
-                        기타<form:input path="etcSurvey"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>조사방법기타<span class="pilsu">*</span></th>
+                    <td colspan="3">
+                        <form:input path="etcSurvey" maxlength="50" cssClass="w300"/>
+                        <br>
+                        (해당사항에 표시하고 필요한 경우 상세 기술함)
                     </td>
                 </tr>
                 <tr>
@@ -333,6 +496,7 @@
                         <form:input path="weight" maxlength="25"/>
                     </td>
                 </tr>
+
                 <tr>
                     <th>자료형식<span class="pilsu">*</span></th>
                     <td>
@@ -344,26 +508,41 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>자료공개여부</th>
+                    <td colspan="3">
+                        <form:select path="publicYn">
+                            <form:option value="Y" label="공개"/>
+                            <form:option value="N" label="공개안함"/>
+                            <form:option value="D" label="제한적 공개"/>
+                        </form:select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>자료공개사유</th>
+                    <td colspan="3">
+                        <form:input path="publicReasons" maxlength="100" cssClass="w400"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>비고</th>
+                    <td colspan="3">
+                        <form:textarea path="remark" maxlength="250"/>
+                    </td>
+                </tr>
+                <tr>
+
                     <th>사용언어<span class="pilsu">*</span></th>
                     <td>
                         <form:input path="mdisLanguage" maxlength="25"/>
                     </td>
-                    <th>자료공개여부</th>
+
+                    <th>사용여부<span class="pilsu">*</span></th>
                     <td>
-                        <form:select path="publicYn">
-                            <form:option value="Y" label="공개"/>
-                            <form:option value="N" label="공개안함"/>
+                        <form:select path="useYn">
+                            <form:option value="Y" label="사용"/>
+                            <form:option value="N" label="사용안함"/>
                         </form:select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>자료공개사유</th>
-                    <td>
-                        <form:input path="publicReasons" maxlength="100"/>
-                    </td>
-                    <th>비고</th>
-                    <td>
-                        <form:textarea path="remark" maxlength="250"/>
                     </td>
                 </tr>
                 <tr>
@@ -382,7 +561,7 @@
             </table>
         </div>
         <input name="etc" id="etc" type="hidden" value="${jewMdisVO.etc}">
-        <input name="dataFile" id="dataFile" type="hidden" value="${jewMdisVO.dataFile}">
+        <input name="dataFile" id="dataFile" type="text" value="${jewMdisVO.dataFile}">
     </form:form>
     <!-- 하단 버튼 -->
     <div class="btn-set right">
