@@ -482,6 +482,54 @@ body {
                 
             }
 
+            div.iframes {
+                position:absolute;
+                left:0;
+                right:0;
+                top:0;
+                bottom:0;
+            }
+
+            div.result {
+                position:absolute;
+                left:0;
+                right:0;
+                top:0;
+                bottom:0;
+                overflow-y:scroll;
+
+                h3 {
+                    font-size:16px;
+                    padding:15px 10px;
+                    margin:0;
+                    border-bottom:1px solid #423B84;
+                    font-weight:600;
+                    background:#f4f4f4;
+
+                    strong {
+                        color:#FF6600;
+                    }
+                }
+
+                ul {
+                    list-style:none;
+                    margin:0;
+                    padding:0;
+
+                    li {
+                        a {
+                            display:block;
+                            padding:20px 10px;
+                            border-bottom:1px solid #ccc;
+
+                            strong {
+                                color:#FF6600;
+                            }
+                        }
+                    }
+                }
+            }
+
             button.close {
                 position:absolute;
                 top:-40px;

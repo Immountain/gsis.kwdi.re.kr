@@ -4,18 +4,14 @@ package gsis.com.site.jewmdis.web;
 import egovframework.com.cmm.LoginVO;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
 import gsis.com.site.jewmdis.service.SiteJewMdisService;
 import gsis.com.site.jewmdis.vo.SiteJewFileDownloadVO;
 import gsis.com.site.jewmdis.vo.SiteJewMdisVO;
-
 import infomind.com.cmm.web.BaseAjaxController;
-import infomind.com.cmm.web.BaseController;
 import infomind.com.cms.info.site.vo.InfoSiteMenuVO;
 import infomind.com.cms.info.site.vo.InfoSiteVO;
 import infomind.com.file.service.InfoFileService;
 import infomind.com.file.vo.InfoFileDetailVO;
-
 import infomind.com.utils.file.InfoFileMngUtil;
 import infomind.com.utils.web.InfoViewUtils;
 import infomind.com.utils.web.InfoWebUtils;
@@ -23,20 +19,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static infomind.com.utils.http.InfoHttpResponseUtils.alert;
 import static infomind.com.utils.http.InfoHttpResponseUtils.alertAndBackPage;
-import static org.bouncycastle.crypto.tls.ContentType.alert;
 
 @RequestMapping(value = {"/mdis"})
 @Controller
