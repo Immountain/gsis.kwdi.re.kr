@@ -20,4 +20,9 @@ public class JejuDbServiceImpl extends EgovAbstractServiceImpl implements JejuDb
     public List<JejuDbVO> getSelectJejuDbList(JejuDbVO vo) throws Exception {
         return jejuDbDAO.getSelectJejuDbList(vo);
     }
+
+    @Override
+    public List<JejuDbVO> getSelectSearchJejuDbList(JejuDbVO vo) throws Exception {
+        return jejuDbDAO.getSelectSearchJejuDbList(vo);
+    }
 }

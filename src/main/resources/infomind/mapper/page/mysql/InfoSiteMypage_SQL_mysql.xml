@@ -397,7 +397,7 @@
 
           SELECT   B.ESNTL_ID
                             ,B.MBER_EMAIL_ADRES as EMAIL
-                            ,B.MBER_ID
+                            ,B.MBER_ID  as userId
                             ,B.MBER_NM as USER_NM
                             ,B.PASSWORD
              FROM

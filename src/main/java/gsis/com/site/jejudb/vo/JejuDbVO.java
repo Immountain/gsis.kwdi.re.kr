@@ -24,5 +24,10 @@ public class JejuDbVO {
         private String  titleNm="";
         private String  subTitleNm="";
 
+        private String  category2idNm="";
+        private String  category1idNm="";
+        private String  parent2id="";
+        private String  parent1id="";
+
 
     }

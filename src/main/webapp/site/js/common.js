@@ -158,7 +158,7 @@ $(function () {
         arrows:false,
         autoplay:true,
         speed: 1000,
-        dots: false,
+        dots: true,
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -206,28 +206,6 @@ $(function () {
 
     });
 
-
-    $(".main-issue .pager li:first-child").addClass("on");
-
-    $(".main-issue .pager li").each(function(){
-        $(this).attr("data", $(this).index());
-    });
-
-    $mainIssue.on('init reInit afterChange', function (event, slick, currentSlide, nextSlide) {
-
-        var pager = currentSlide + 1;
-        $(".main-issue .pager li").removeClass("on");
-        $(".main-issue .pager li:nth-child("+ pager +")").addClass("on");
-
-    });
-
-    $(".main-issue .pager li").on("click", function(){
-        // $(".main-issue .pager li").removeClass("on");
-        // $(this).addClass("on");
-        $mainIssue.slick("slickGoTo", $(this).attr("data"));
-
-        console.log($(this).attr("data"));
-    });
 
 
 

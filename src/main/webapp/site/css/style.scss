@@ -697,6 +697,141 @@ body {
         
     }
 
+    div.password-pop {
+        display:none;
+        position:fixed;
+        z-index:1000000;
+        left:0;
+        right:0;
+        top:0;
+        bottom:0;
+        background:rgba(0,0,0,0.7);
+
+        &.on {
+            display:block;
+        }
+
+        div.outline {
+            position:absolute;
+            top:50%;
+            transform:translateY(-50%);
+            background:#fff;
+            padding:0;
+            left:20px;
+            right:20px;
+            @include drop-shadow($x:0,$y: 20px, $blur: 20px, $spread: 0, $alpha: 0.6);
+
+            @media (min-width: $screen-size-pc) {
+                width:700px;
+                left:50%;
+                margin-left:-350px;
+                right:auto;
+            }
+
+            text-align:center;
+
+            h3 {
+                margin:0 0 40px;
+                line-height:60px;
+                background:#4D468B;
+                color:#fff;
+                padding:0 20px;
+                font-size:24px;
+                font-weight:600;
+                text-align:left;
+
+                word-break:keep-all;
+                overflow:hidden;
+                white-space:nowrap;
+                text-overflow:ellipsis;
+            }
+
+            h4 {
+                margin:0 0 40px;
+                padding:0 20px;
+                font-weight:500;
+                font-size:26px;
+                word-break:keep-all;
+
+                small {
+                    display:block;
+                    font-size:20px;
+                    padding:10px 0 0;
+                    font-weight:200;
+                }
+            }
+
+            div.input-outline {
+                
+                font-size:0;
+                margin:0 60px 60px;
+                padding:6px;
+
+                @media (min-width: $screen-size-pc) {
+                    margin:0 100px 60px;
+                }
+
+                
+                input {
+                    background:#eee;
+                    font-size:16px;
+                    text-align:center;
+                    width:100%;
+                    height:60px;
+                    margin-bottom:10px;
+                    border:none;
+                    border-bottom:2px solid #222;
+                }
+
+                label {
+                    display:none;
+        
+                    
+                }
+
+                input:checked + label {
+                    background:#4D468B;
+                    color:#fff;
+                    font-weight:600;
+                }
+
+            }
+
+            button {
+                vertical-align:top;
+                margin:0 5px 30px;
+                height:52px;
+                width:150px;
+                border:none;
+                color:#fff;
+                font-weight:500;
+
+                &.ok {
+                    background:#423B84;
+                }
+
+                &.close {
+                    background:#575757;
+                }
+
+                i {
+                    position:relative;
+                    top:3px;
+                    font-size:20px;
+                    margin:0 6px 0 0;
+
+                }
+            }
+
+
+
+
+        }
+
+        
+    }
+
+
 
     div#content {
         display:inline-block;
@@ -761,12 +896,59 @@ body {
                             }
                         }
 
+                        ul.slick-dots {
+                            position:absolute;
+                            left:20px;
+                            bottom:230px;
+                            margin:0;
+                            padding:0;
+
+                            @media (min-width: $screen-size-pc) {
+                                bottom:20px;
+                            }
+
+                            li {
+                                display:inline-block;
+                                margin-right:5px;
+
+                                button {
+                                    width:10px;
+                                    height:10px;
+                                    margin:0;
+                                    padding:0;
+                                    border:none;
+                                    border-radius:50%;
+                                    background:#ccc;
+
+                                    @media (min-width: $screen-size-pc) {
+                                        width:14px;
+                                        height:14px;
+                                    }
+        
+
+                                }
+
+                                &.slick-active {
+                                    button {
+                                        background:#423B84;
+                                    }
+                                }
+                            }
+                        }
+
                     }
 
-                    div.pager {
+                    div.etc-issue {
+                        display:inline-block;
+                        width:100%;
+                        vertical-align:top;
+                        background:#F4F4F4;
+                        @include inner-shadow($x:3px,$y: 0, $blur: 6px, $spread: 0, $alpha: 0.25);
+
 
                         @media (min-width: $screen-size-pc) {
                             display:inline-block;
+                            width:auto;
                             vertical-align:top;
                             background:#F4F4F4;
                             @include inner-shadow($x:3px,$y: 0, $blur: 6px, $spread: 0, $alpha: 0.25);
@@ -774,67 +956,66 @@ body {
 
                         }
                         ul {
-                            position:absolute;
-                            bottom:20px;
-                            left:20px;
+                            width:100%;
                             list-style:none;
                             margin:0;
                             padding:0;
-                            font-size:0;
+                            display:inline-block;
 
-                            @media (min-width: $screen-size-pc) {
-                                position:static;
-                                display:inline-block;
-
-                            }
 
                             li {
                                 display:inline-block;
-                                width:10px;
-                                height:10px;
-                                margin:0 4px 0 0;
-                                border-radius:50%;
-                                background:#ccc;
+                                position:relative;
+                                font-size:14px;
+                                border-radius:0;
+                                width:calc(100% / 2);
+                                height:105px;
+                                margin:0;
+                                border-bottom:1px solid #ccc;
+                                padding:10px;
+                                cursor:pointer;
+                                background:transparent;
+                                word-break:keep-all;
+
+                                &:nth-child(2n) {
+                                    border-left:1px solid #ccc;
+                                }
 
                                 @media (min-width: $screen-size-pc) {
                                     display:block;
-                                    position:relative;
-                                    font-size:14px;
-                                    border-radius:0;
                                     width:300px;
-                                    height:105px;
-                                    margin:0;
-                                    border-bottom:1px solid #ccc;
                                     padding:20px;
-                                    cursor:pointer;
-                                    background:transparent;
 
                                     &:last-of-type {
                                         border:none;
                                     }
 
-                                    span {
-                                        font-size:16px;
-                                        font-weight:500;
-                                        display:block;
-                                        margin:0 0 14px;
-                                        font-style:normal;
-                                    }
-
-                                    i {
-                                        font-style:normal;
-                                    }
-
-                                    strong {
-                                        position:absolute;
-                                        right:20px;
-                                        bottom:20px;
-                                        font-size:24px;
-                                        font-weight:800;
-                                        color:#563B84;
-
+                                    &:nth-child(2n) {
+                                        border-left:none;
                                     }
     
+                                }
+
+                                span {
+                                    font-size:16px;
+                                    font-weight:500;
+                                    display:block;
+                                    margin:0 0 14px;
+                                    font-style:normal;
+                                }
+
+                                i {
+                                    font-style:normal;
+                                }
+
+                                strong {
+                                    position:absolute;
+                                    right:20px;
+                                    bottom:20px;
+                                    font-size:24px;
+                                    font-weight:800;
+                                    color:#563B84;
+
                                 }
 
                                 &.on {

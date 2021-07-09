@@ -15,5 +15,10 @@ public class JejuDbDAO extends EgovComAbstractDAO {
     }
 
 
+    public List<JejuDbVO> getSelectSearchJejuDbList(JejuDbVO vo)throws Exception{
+        return selectList("JejuDbDAO.getSelectSearchJejuDbList", vo);
+    }
+
+
 
 }

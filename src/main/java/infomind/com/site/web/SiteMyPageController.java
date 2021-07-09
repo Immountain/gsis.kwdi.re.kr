@@ -283,17 +283,11 @@ public class SiteMyPageController extends BaseController {
     }
 
 
-
-
-
-
     /**
      * 싸이트에서 회원 가입
-     *
      * @param siteJoinVO
-     * @param bindingResult
+     * @param response
      * @param model
-     * @return
      * @throws Exception
      */
     @RequestMapping("/mypage/mberInsert.do")
@@ -346,6 +340,18 @@ public class SiteMyPageController extends BaseController {
     @RequestMapping("/mypage/find.do")
     public String find(ModelMap model, HttpServletRequest request,
                        @RequestAttribute(value = "menuInfo", required = false) InfoSiteMenuVO menuInfo) throws Exception {
+
+
+
+        CodeSearchVO codeSearchVO = new CodeSearchVO();
+        codeSearchVO.setCodeId("COM022");
+
+        List<CodeSearchVO> codeList = codeSearchService.selectComtccmmndetailcodeList(codeSearchVO) ;
+        model.addAttribute("codeList", codeList);
+
+
+
+
         return "page/mypage/find.mypage";
     }
 
@@ -484,26 +490,29 @@ public class SiteMyPageController extends BaseController {
         if (list.size() == 1) {
 
             String userId = list.get(0).getUserId();
-            Random rnd = new Random();
-            StringBuffer buf = new StringBuffer();
+            String ESNTL_ID =list.get(0).getEsntlId();
 
-            for (int i = 0; i < 8; i++) {
-                if (rnd.nextBoolean()) {
-                    buf.append((char) (rnd.nextInt(26) + 97));
-
-                } else {
-                    buf.append((rnd.nextInt(10)));
-                }
-            }
-
-            String encryptPass = EgovFileScrty.encryptPassword(buf.toString(), userId);
-            list.get(0).setPassword(encryptPass);
-            list.get(0).setType("USR");
-            siteMyPageService.getUserPw(list.get(0));
-            String msg = "세계제주인대회조직위원회 임시 패시워드는[" + buf + "] 입니다.";
+//
+//            Random rnd = new Random();
+//            StringBuffer buf = new StringBuffer();
+//
+//            for (int i = 0; i < 8; i++) {
+//                if (rnd.nextBoolean()) {
+//                    buf.append((char) (rnd.nextInt(26) + 97));
+//
+//                } else {
+//                    buf.append((rnd.nextInt(10)));
+//                }
+//            }
+//
+//            String encryptPass = EgovFileScrty.encryptPassword(buf.toString(), userId);
+//            list.get(0).setPassword(encryptPass);
+//            list.get(0).setType("USR");
+//            siteMyPageService.getUserPw(list.get(0));
+//            String msg = "세계제주인대회조직위원회 임시 패시워드는[" + buf + "] 입니다.";
             sVo.setSuccessCode("0000");
             sVo.setMsg("성공");
-            sVo.setInfo(msg);
+            sVo.setInfo(ESNTL_ID);
 
         } else if (list.size() == 0) {
 
@@ -583,6 +592,72 @@ public class SiteMyPageController extends BaseController {
         modelAndView.addObject("info", sVo);
         return modelAndView;
     }
+
+
+
+
+
+    /**
+     * 일반회원  새로운 비빌번호 암호 수정
+     *
+     * @throws Exception
+     */
+    @RequestMapping(value = "/mypage/mberNewPassword.do")
+    public ModelAndView mberNewPassword(@ModelAttribute("searchVO") SiteUserVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
+
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("jsonView");
+
+
+        String oldPassword = searchVO.getOldPassword();
+
+
+
+
+
+        List<SiteUserVO> list = siteMyPageService.getSiteUserPwFind(searchVO);
+        SiteSuccessVO sVo = new SiteSuccessVO();
+        if (list.size() == 1) {
+
+            String userId = list.get(0).getUserId();
+            String ESNTL_ID =list.get(0).getEsntlId();
+
+
+
+            String newPassword = EgovFileScrty.encryptPassword(searchVO.getPassword(), searchVO.getUserId());
+            searchVO.setPassword(newPassword);
+
+
+
+            siteMyPageService.getUserPw(searchVO);
+            sVo.setSuccessCode("0000");
+            sVo.setMsg("성공");
+            sVo.setInfo("");
+
+
+        } else if (list.size() == 0) {
+
+            sVo.setSuccessCode("9999");
+            sVo.setMsg("정보을 확인 바랍니다.");
+            sVo.setInfo(searchVO.getNewPassword());
+
+        } else {
+
+            sVo.setSuccessCode("8888");
+            sVo.setMsg("관리자 문의 바랍니다.");
+            sVo.setInfo("");
+
+
+        }
+
+
+        modelAndView.addObject("info", sVo);
+        return modelAndView;
+    }
+
+
+
 
 
     public String smsNum() {

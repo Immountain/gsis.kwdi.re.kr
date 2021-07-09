@@ -8,4 +8,7 @@ public interface JejuDbService {
 
     List<JejuDbVO> getSelectJejuDbList(JejuDbVO vo)throws Exception;
 
+
+    List<JejuDbVO> getSelectSearchJejuDbList(JejuDbVO vo)throws Exception;
+
 }

@@ -81,17 +81,17 @@
         var $list = $layer.find('.result ul');
         $list.empty();
 
-        $ifx.ajax('<c:url value='/statsdb/infoList.do' />', {
+        $ifx.ajax('<c:url value='/statsdb/infoSearchList.do' />', {
             method: "POST",
             data: JSON.stringify({
-                parentId: 'CT_04_01'
+                categoryIdNm: searchKeyword
             }),
             success: function (res) {
                 $h3.html('검색어 "<strong>' + searchKeyword + '</strong>"에 대한 검색결과 총 <strong>' + res.list.length + '건</strong> 입니다.');
 
                 res.list.forEach(function (v, i) {
                     // <a href="">인구 &gt; 사망 &gt; <strong>직업별</strong> 사망(성/연령별)(1993~2017)</a>
-                    var title = '분류1 > 분류2 > ';
+                    var title = v.category1idNm + ' > '+v.category2idNm +" > ";
                     if(v.titleNm.indexOf(searchKeyword) > -1) {
                         var splitStr = v.titleNm.split(searchKeyword);
                         splitStr.forEach(function (v, i) {

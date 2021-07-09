@@ -21,10 +21,41 @@
             and USE_YN ='Y'
             and DELETE_YN ='N'
             and PARENT_ID =#{parentId}
-            and USE_YN ='Y'
-            and DELETE_YN ='N'
             order by ORDER_CNT asc
 
+
+
+
+    </select>
+
+    <select id="getSelectSearchJejuDbList"  parameterType="gsis.com.site.jejudb.vo.JejuDbVO"  resultType="gsis.com.site.jejudb.vo.JejuDbVO">
+
+
+            select   a.CATEGORY_ID ,
+                     a.CATEGORY_ID_NM ,
+                     b.CATEGORY_ID_NM as CATEGORY_2ID_NM,
+                     c.CATEGORY_ID_NM  as CATEGORY_1ID_NM,
+                     a.PARENT_ID ,
+                     b.PARENT_ID  as PARENT_2ID,
+                     c.PARENT_ID  as PARENT_1ID,
+                     a.ORDER_CNT ,
+                     a.VW_CD ,
+                     a.TBL_ID ,
+                     a.STATS_URL ,
+                     a.DELETE_YN ,
+                     a.TITLE_NM ,
+                     a.SUB_TITLE_NM
+            from     jew_stats_category a
+                     inner join jew_stats_category b
+                     on a.PARENT_ID =b.CATEGORY_ID
+                     left join jew_stats_category c
+                     on b.PARENT_ID =c.CATEGORY_ID
+            where    1         =1
+            and      a.USE_YN    ='Y'
+            and      a.DELETE_YN ='N'
+            and      a.CATEGORY_ID_NM   LIKE CONCAT('%', #{categoryIdNm}, '%')
+            and      a.STATS_URL is not null
+            order by a.ORDER_CNT asc
 
 
 

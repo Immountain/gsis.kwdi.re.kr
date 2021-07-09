@@ -60,5 +60,15 @@ public class JejuDbController extends BaseAjaxController {
 
 
 
+    /** ajax */
+    @RequestMapping(value="/infoSearchList.do")
+    public ModelAndView infoSearchList(@RequestBody JejuDbVO searchVO) throws Exception{
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("jsonView");
+        modelAndView.addObject("list",jejuDbService.getSelectSearchJejuDbList(searchVO));
+
+        return modelAndView;
+    }
+
 
 }
