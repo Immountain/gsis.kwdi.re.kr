@@ -1,6 +1,7 @@
 package gsis.com.site.theme.web;
 
 
+import gsis.com.site.jejudb.vo.JejuDbVO;
 import gsis.com.site.jewmdis.vo.SiteJewMdisVO;
 import infomind.com.cmm.web.BaseController;
 import infomind.com.cms.info.site.vo.InfoSiteMenuVO;
@@ -25,7 +26,7 @@ public class SiteThemeController extends BaseController {
     @RequestMapping("/list.do")
     public String list(HttpServletRequest request, ModelMap model
             , @RequestAttribute(value = "menuInfo", required = false) InfoSiteMenuVO menuInfo
-            , @ModelAttribute("searchVO") SiteJewMdisVO searchVO
+            , @ModelAttribute("searchVO") JejuDbVO searchVO
     ) throws Exception {
 
         InfoSiteVO infoSite = InfoWebUtils.getCurrentSiteInfo(request);

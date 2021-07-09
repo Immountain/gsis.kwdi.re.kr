@@ -13,11 +13,17 @@
 <script type="text/javascript">
     $(document).ready(function () {
         treeSearch("ROOT", 0);
+
+
+
     });
 
 
     // 분류 조회
     function treeSearch(parentId, idx) {
+
+
+
         var parentId = parentId;
 
         var p = {//root
@@ -46,6 +52,13 @@
                     var $li = $('<li />');
                     if(idx < 2) {
                         var $a = $('<a />', {'href': 'javascript:;', 'text': v.categoryIdNm});
+
+                        if(parentId=='ROOT'){
+                            if(v.categoryId ==$("#parent1id").val()){
+                                $a.addClass('on')
+                                treeSearch(v.categoryId, 1);
+                            }
+                        }
                         $a.on('click', function () {
                             $a.closest('ul').find('li a').removeClass('on')
                             $a.addClass('on')
@@ -158,6 +171,9 @@
                     <strong>주제별 통계</strong>
                     <input type="text" id="searchKeyword" onkeypress="if(event.keyCode==13) keywordSearch();" placeholder="통계표 목록 검색">
                     <button type="button" onclick="keywordSearch();"><i class='bx bx-search'></i>검색</button>
+
+                    <input type="hidden" id="parent1id" name="parent1id" value="${searchVO.parent1id}">
+                    <input type="hidden" id="parent2id" name="parent2id" value="${searchVO.parent2id}">
                 </fieldset>
 
                 <div class="step step01 on">
