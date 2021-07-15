@@ -6,14 +6,10 @@ import java.util.List;
 
 public interface JewThemaGroupService {
 
-    public JewThemaGroupVO selectThemaGroup(JewThemaGroupVO vo)throws Exception;
-
-    public List<?> selectThemaGroupList(JewThemaGroupVO vo)throws Exception;
-
-    public void insertThemaGroup(JewThemaGroupVO vo)throws Exception;
-
-    public void updateThemaGroup(JewThemaGroupVO vo)throws Exception;
-
-    public void deleteThemaGroup(JewThemaGroupVO vo)throws Exception;
+    JewThemaGroupVO selectThemaGroup(JewThemaGroupVO vo)throws Exception;
+    List<?> selectThemaGroupList(JewThemaGroupVO vo)throws Exception;
+    void insertThemaGroup(JewThemaGroupVO vo)throws Exception;
+    void updateThemaGroup(JewThemaGroupVO vo)throws Exception;
+    void deleteThemaGroup(JewThemaGroupVO vo)throws Exception;
 
 }
