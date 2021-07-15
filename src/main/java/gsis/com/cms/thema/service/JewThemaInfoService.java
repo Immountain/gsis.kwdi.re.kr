@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface JewThemaInfoService {
 
-    public JewThemaInfoVO selectThemaInfo(JewThemaInfoVO vo)throws Exception;
+    JewThemaInfoVO selectThemaInfo(JewThemaInfoVO vo)throws Exception;
 
-    public List<?> selectThemaInfoList(JewThemaInfoVO vo)throws Exception;
+    List<?> selectThemaInfoList(JewThemaInfoVO vo)throws Exception;
 
-    public void insertThemaInfo(JewThemaInfoVO vo)throws Exception;
+    void insertThemaInfo(JewThemaInfoVO vo)throws Exception;
 
-    public void updateThemaInfo(JewThemaInfoVO vo)throws Exception;
+    void updateThemaInfo(JewThemaInfoVO vo)throws Exception;
 
-    public void deleteThemaInfo(JewThemaInfoVO vo)throws Exception;
+    void deleteThemaInfo(JewThemaInfoVO vo)throws Exception;
 
 }
