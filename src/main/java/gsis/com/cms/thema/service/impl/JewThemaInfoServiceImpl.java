@@ -39,4 +39,9 @@ public class JewThemaInfoServiceImpl extends EgovAbstractServiceImpl implements 
     public void deleteThemaInfo(JewThemaInfoVO vo) throws Exception {
         jewThemaInfoDAO.deleteThemaInfo(vo);
     }
+
+    @Override
+    public List<?> getSelectThemaInfoList(JewThemaInfoVO vo) throws Exception {
+        return jewThemaInfoDAO.selectThemaInfoList(vo);
+    }
 }

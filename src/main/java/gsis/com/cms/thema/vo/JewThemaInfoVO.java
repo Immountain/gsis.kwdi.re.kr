@@ -30,4 +30,9 @@ public class JewThemaInfoVO extends CmsSearchVO {
         private String modDt;  //datetime     null comment '수정일',
         private String modId;  //varchar(20)  null comment '수정자'
 
+
+        private String themaGroupNm;
+        private String collectTypeNm;
+        private String collectCycleNm;
+
 }

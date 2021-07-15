@@ -10,10 +10,20 @@ public interface JewThemaInfoService {
 
     List<?> selectThemaInfoList(JewThemaInfoVO vo)throws Exception;
 
+
     void insertThemaInfo(JewThemaInfoVO vo)throws Exception;
 
     void updateThemaInfo(JewThemaInfoVO vo)throws Exception;
 
     void deleteThemaInfo(JewThemaInfoVO vo)throws Exception;
+
+
+    /**
+     * 싸이트용
+     * @param vo
+     * @return
+     * @throws Exception
+     */
+    List<?> getSelectThemaInfoList(JewThemaInfoVO vo)throws Exception;
 
 }

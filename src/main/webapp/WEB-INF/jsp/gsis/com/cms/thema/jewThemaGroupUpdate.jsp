@@ -146,7 +146,7 @@
                     <td class="left">
                         <form:select path="useYn">
                             <form:option value="Y" label="사용"/>
-                            <form:option value="Y" label="사용안함"/>
+                            <form:option value="N" label="사용안함"/>
                         </form:select>
                         <div><form:errors path="useYn" cssClass="error" /></div>
                     </td>

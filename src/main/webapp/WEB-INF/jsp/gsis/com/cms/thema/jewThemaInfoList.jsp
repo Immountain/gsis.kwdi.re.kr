@@ -35,17 +35,17 @@
                 },
 
                 columns: [
+                    {key: "themaGroupNm", label: "테마통계관리그룹" ,width: 120},
                     {key: "themaId", label: "테마통계아이디"},
-                    {key: "themaGroupId", label: "테마통계관리그룹아이디"},
                     {key: "themaNm", label: "테마통계명"},
                     {key: "themaTitle", label: "테마통계타이틀"},
                     {key: "themaMemo", label: "메모"},
                     {key: "themaEtc", label: "기타"},
                     {key: "tblId", label: "통계표ID"},
-                    {key: "loadGubun", label: "조회구분(시계열,횡단면)"},
-                    {key: "loadTerm", label: "조회설정"},
-                    {key: "collectType", label: "수집타입"},
-                    {key: "collectCycle", label: "수집주기"},
+                    // {key: "loadGubun", label: "조회구분(시계열,횡단면)"},
+                    // {key: "loadTerm", label: "조회설정"},
+                    {key: "collectTypeNm", label: "수집타입"},
+                    {key: "collectCycleNm", label: "수집주기"},
                     {key: "apiUrl", label: "API_URL"},
                     {key: "htmlFile", label: "HTML_파일명"},
                     {key: "orderCnt", label: "정렬순번"},
@@ -85,6 +85,7 @@
         var searchCondition = $("#searchCondition option:selected").val();
         var searchKeyword = $("#searchKeyword").val();
         var themaGroupId = $('#themaGroupId').val();
+
 
         var p = {
             searchCondition: searchCondition,
@@ -170,8 +171,7 @@
     function gotoDelete(row){
 
         var formData ={
-
-            themaId : firstGrid.getList()[row].themaId
+              themaId : firstGrid.getList()[row].themaId
         }
 
         var API_SERVER = "<c:url value='/cms/gsis/thema/jewThemaInfoDelete.do' />";
@@ -236,7 +236,7 @@
             <select id="themaGroupId">
                 <option value="">그룹선택</option>
                 <c:forEach items="${jewGroupList}" var="item">
-                    <option value="${item.themaGroupId}">${item.themaGroupId}</option>
+                    <option value="${item.themaGroupId}">${item.themaGroupNm}</option>
                 </c:forEach>
             </select>
         </span>
@@ -266,6 +266,6 @@
         목록
     </h3>
     <div class="rows white-box">
-        <div data-ax5grid="first-grid" data-ax5grid-config="{}" style="height: 300px;"></div>
+        <div data-ax5grid="first-grid" data-ax5grid-config="{}" style="height: 500px;"></div>
     </div>
 </div>

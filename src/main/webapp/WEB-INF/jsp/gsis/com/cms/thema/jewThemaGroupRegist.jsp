@@ -127,7 +127,7 @@
                 <tr>
                     <th><label for="themaGroupId">테마통계관리그룹아이디<span class="pilsu">*</span></label></th>
                     <td class="left" >
-                        <form:input path="themaGroupId" title="${title} ${inputTxt}" maxlength="10"/>
+                        <form:input path="themaGroupId" title="${title} ${inputTxt}" maxlength="20"/>
                         <div><form:errors path="themaGroupId" cssClass="error"/></div>
                     </td>
                     <th><label for="themaGroupNm">테마그룹명<span class="pilsu">*</span></label></th>

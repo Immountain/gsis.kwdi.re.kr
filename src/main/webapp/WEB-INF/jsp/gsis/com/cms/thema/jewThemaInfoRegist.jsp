@@ -27,8 +27,8 @@
             var themaMemo = $('#themaMemo').val()
             var themaEtc = $('#themaEtc').val()
             var tblId = $('#tblId').val()
-            var loadGubun = $('#loadGubun').val()
-            var loadTerm = $('#loadTerm').val()
+          //  var loadGubun = $('#loadGubun').val()
+            // var loadTerm = $('#loadTerm').val()
             var collectType = $('#collectType').val()
             var collectCycle = $('#collectCycle').val()
             var apiUrl = $('#apiUrl').val()
@@ -70,15 +70,15 @@
                 return;
             }
 
-            if(!loadGubun){
-                alert('조회구분(시계열,횡단면) 입력하세요')
-                return;
-            }
+            // if(!loadGubun){
+            //     alert('조회구분(시계열,횡단면) 입력하세요')
+            //     return;
+            // }
 
-            if(!loadTerm){
-                alert('조회설정 입력하세요')
-                return;
-            }
+            // if(!loadTerm){
+            //     alert('조회설정 입력하세요')
+            //     return;
+            // }
 
             if(!collectType){
                 alert('수집타입 입력하세요')
@@ -90,10 +90,16 @@
                 return;
             }
 
-            if(!apiUrl){
-                alert('API_URL 입력하세요')
-                return;
+
+            if(collectType==1){
+
+                if(!apiUrl){
+                    alert('API_URL 입력하세요')
+                    return;
+                }
             }
+
+
 
             if(!htmlFile){
                 alert('HTML_파일명 입력하세요')
@@ -225,35 +231,37 @@
                         </form:select>
                     </td>
                 </tr>
-                <tr>
-                    <th>조회구분(시계열,횡단면)<span class="pilsu">*</span></th>
-                    <td>
-                        <form:select path="loadGubun">
-                            <form:option value="0" label="시계열"/>
-                            <form:option value="1" label="횡단면"/>
-                        </form:select>
-                    </td>
-                    <th>조회설정<span class="pilsu">*</span></th>
-                    <td>
-                        <form:select path="loadTerm">
-                            <form:option value="0" label="0"/>
-                            <form:option value="1" label="1"/>
-                        </form:select>
-                    </td>
-                </tr>
+                <%--<tr>--%>
+                    <%--<th>조회구분(시계열,횡단면)<span class="pilsu">*</span></th>--%>
+                    <%--<td>--%>
+                        <%--<form:select path="loadGubun">--%>
+                            <%--<form:option value="0" label="시계열"/>--%>
+                            <%--<form:option value="1" label="횡단면"/>--%>
+                        <%--</form:select>--%>
+                    <%--</td>--%>
+                    <%--<th>조회설정<span class="pilsu">*</span></th>--%>
+                    <%--<td>--%>
+                        <%--<form:select path="loadTerm">--%>
+                            <%--<form:option value="0" label="0"/>--%>
+                            <%--<form:option value="1" label="1"/>--%>
+                        <%--</form:select>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
                 <tr>
                     <th>수집타입<span class="pilsu">*</span></th>
                     <td>
                         <form:select path="collectType">
-                            <form:option value="0" label="0"/>
-                            <form:option value="1" label="1"/>
+                            <form:option value="0" label="엑셀"/>
+                            <form:option value="1" label="API"/>
                         </form:select>
                     </td>
                     <th>수집주기<span class="pilsu">*</span></th>
                     <td>
                         <form:select path="collectCycle">
-                            <form:option value="0" label="0"/>
-                            <form:option value="1" label="1"/>
+                            <form:option value="0" label="매일"/>
+                            <form:option value="1" label="주단위"/>
+                            <form:option value="2" label="월단위"/>
+                            <form:option value="3" label="년단위"/>
                         </form:select>
                     </td>
                 </tr>
