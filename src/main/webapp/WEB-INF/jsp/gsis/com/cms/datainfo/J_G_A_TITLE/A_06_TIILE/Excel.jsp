@@ -2,95 +2,32 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="info" uri="http://infomind.com/info" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+
+<script src="<c:url value="/assets/ax5/ax5core/ax5core.min.js"/>"></script>
+<script src="<c:url value="/assets/ax5/ax5ui-mask/ax5mask.min.js"/>"></script>
+<script src="<c:url value="/assets/ax5/ax5ui-grid/ax5grid.min.js"/>"></script>
+<script src="<c:url value="/assets/ax5/ax5ui-formatter/ax5formatter.min.js"/>"></script>
+<link rel="stylesheet" href="<c:url value="/assets/ax5/ax5ui-mask/ax5mask.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/ax5/ax5ui-grid/ax5grid.css"/>">
+
+
 <script type="text/javascript">
 
 
     var firstGrid = new ax5.ui.grid();
 
-    $(document).ready(function () {
+
+    $(document.body).ready(function () {
 
         genGrid();
-
-
-        $('#btn_regist_excel').click(function () {
-
-            var themaId = $('#themaId').val();
-            var p = {themaId:themaId};
-            var API_SERVER = "<c:url value='/cms/gsis/data/excel.do' />";
-            ax5modal.open({
-                theme: "primary",
-                height: 600,
-                width: 900,
-                header: {
-                    title: '${menuInfo.menuNm}'+' 엑셀업로드',
-                    btns: {
-                        close: {
-                            label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
-                                // modal.close();
-                                ax5modal.close();
-                            }
-                        }
-                    }
-                },
-                iframe: {
-                    method: "get",
-                    url: API_SERVER,
-                    param: p
-                },
-
-            }, function (d) {
-                Search();
-            });
-
-
-        });
-
-
-        $('#btn_regist_info').click(function () {
-
-            var themaId = $('#themaId').val();
-            var p = {themaId:themaId};
-            var API_SERVER = "<c:url value='/cms/gsis/data/View.do' />";
-            ax5modal.open({
-                theme: "primary",
-                height: 600,
-                width: 900,
-                header: {
-                    title: '${menuInfo.menuNm}'+' 내용',
-                    btns: {
-                        close: {
-                            label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
-                                // modal.close();
-                                ax5modal.close();
-                            }
-                        }
-                    }
-                },
-                iframe: {
-                    method: "get",
-                    url: API_SERVER,
-                    param: p
-                },
-
-            }, function (d) {
-                Search();
-            });
-
-
-        });
+     });
 
 
 
-
-
-
-    });
-
-
-
-    var firstGrid = new ax5.ui.grid();
     function genGrid() {
         firstGrid.setConfig({
             target: $('[data-ax5grid="first-grid"]'),
@@ -119,16 +56,28 @@
 
 
 
+    function gridExcelUplad() {
+        var formData = new FormData(document.excelForm);
+        $ifx.ajax('<c:url value="/cms/gsis/excel/upload.do"/>', {
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function(res){
+
+
+                console.log(res);
+                firstGrid.setData(res);
+            }
+        })
+    }
+
+
+
 </script>
 <div class="sub subView">
-    <nav class="navigation">
-        <i class='bx bxs-home'></i>${menuInfo.depthFullname}
-    </nav>
-    <h2 class="stitle">
-        <i class='bx bxs-dashboard'></i>${menuInfo.menuNm}
-    </h2>
     <h3 class="btitle">
-        검색
+        기준점
     </h3>
     <!-- 검색영역 -->
     <!-- 검색조건선택 -->
@@ -156,16 +105,22 @@
                </select>
          </span>
 
-
             <%--<input type="text" class="w100" class="main" name="searchKeyword" id="searchKeyword" size="35"--%>
-                   <%--title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''--%>
-                   <%--maxlength="155">--%>
-            <button type="button" class="button" name="btn_search" id="btn_search"><i class='bx bx-slider-alt'></i>조회</button>
-            <button type="button" class="button main" name="btn_regist_info" id="btn_regist_info">내용등록</button>
-            <button type="button" class="button main" name="btn_regist_excel" id="btn_regist_excel">엑셀업로드</button>
+            <%--title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''--%>
+            <%--maxlength="155">--%>
+            <button type="button" class="button" onclick="gridExcelUplad()"><i class="bx bx-slider-alt"></i>엑셀자료 업로드</button>
+            <button type="button" class="button main" name="btn_regist" id="btn_regist">저장처리</button>
             <input type="hidden" id="themaId" name="themaId" value="${view.themaId}">
 
         </div>
+        <div class="rows">
+
+            <form name="excelForm" enctype="multipart/form-data">
+                <input class="w100" type="file" name="uploadFile">
+            </form>
+        </div>
+
+
     </div>
     <h3 class="btitle">
         목록
@@ -174,4 +129,3 @@
         <div data-ax5grid="first-grid" data-ax5grid-config="{}" style="height: 500px;"></div>
     </div>
 </div>
-

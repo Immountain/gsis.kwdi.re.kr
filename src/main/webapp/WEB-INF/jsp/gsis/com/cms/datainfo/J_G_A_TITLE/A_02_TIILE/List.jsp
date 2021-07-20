@@ -14,11 +14,11 @@
         genGrid();
 
 
-        $('#btn_regist').click(function () {
+        $('#btn_regist_excel').click(function () {
 
             var themaId = $('#themaId').val();
             var p = {themaId:themaId};
-            var API_SERVER = "<c:url value='/cms/gsis/data/View.do' />";
+            var API_SERVER = "<c:url value='/cms/gsis/data/excel.do' />";
             ax5modal.open({
                 theme: "primary",
                 height: 600,
@@ -46,6 +46,41 @@
 
 
         });
+
+
+        $('#btn_regist_info').click(function () {
+
+            var themaId = $('#themaId').val();
+            var p = {themaId:themaId};
+            var API_SERVER = "<c:url value='/cms/gsis/data/View.do' />";
+            ax5modal.open({
+                theme: "primary",
+                height: 600,
+                width: 900,
+                header: {
+                    title: '${menuInfo.menuNm}'+' 내용',
+                    btns: {
+                        close: {
+                            label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
+                                // modal.close();
+                                ax5modal.close();
+                            }
+                        }
+                    }
+                },
+                iframe: {
+                    method: "get",
+                    url: API_SERVER,
+                    param: p
+                },
+
+            }, function (d) {
+                Search();
+            });
+
+
+        });
+
 
 
 
@@ -126,7 +161,8 @@
                    <%--title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''--%>
                    <%--maxlength="155">--%>
             <button type="button" class="button" name="btn_search" id="btn_search"><i class='bx bx-slider-alt'></i>조회</button>
-            <button type="button" class="button main" name="btn_regist" id="btn_regist">등록</button>
+            <button type="button" class="button main" name="btn_regist_info" id="btn_regist_info">내용등록</button>
+            <button type="button" class="button main" name="btn_regist_excel" id="btn_regist_excel">엑셀업로드</button>
             <input type="hidden" id="themaId" name="themaId" value="${view.themaId}">
 
         </div>

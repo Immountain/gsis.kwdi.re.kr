@@ -4,20 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="info" uri="http://infomind.com/info" %>
-
-
-
-
-<script src="<c:url value="/assets/ax5/ax5core/ax5core.min.js"/>"></script>
-<script src="<c:url value="/assets/ax5/ax5ui-mask/ax5mask.min.js"/>"></script>
-<script src="<c:url value="/assets/ax5/ax5ui-grid/ax5grid.min.js"/>"></script>
-<script src="<c:url value="/assets/ax5/ax5ui-formatter/ax5formatter.min.js"/>"></script>
-<link rel="stylesheet" href="<c:url value="/assets/ax5/ax5ui-mask/ax5mask.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/ax5/ax5ui-grid/ax5grid.css"/>">
-
-
-
-
 <script type="text/javascript">
 
 
@@ -26,6 +12,80 @@
     $(document).ready(function () {
 
         genGrid();
+
+
+        $('#btn_regist_excel').click(function () {
+
+            var themaId = $('#themaId').val();
+            var p = {themaId:themaId};
+            var API_SERVER = "<c:url value='/cms/gsis/data/excel.do' />";
+            ax5modal.open({
+                theme: "primary",
+                height: 600,
+                width: 900,
+                header: {
+                    title: '${menuInfo.menuNm}'+' 엑셀업로드',
+                    btns: {
+                        close: {
+                            label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
+                                // modal.close();
+                                ax5modal.close();
+                            }
+                        }
+                    }
+                },
+                iframe: {
+                    method: "get",
+                    url: API_SERVER,
+                    param: p
+                },
+
+            }, function (d) {
+                Search();
+            });
+
+
+        });
+
+
+        $('#btn_regist_info').click(function () {
+
+            var themaId = $('#themaId').val();
+            var p = {themaId:themaId};
+            var API_SERVER = "<c:url value='/cms/gsis/data/View.do' />";
+            ax5modal.open({
+                theme: "primary",
+                height: 600,
+                width: 900,
+                header: {
+                    title: '${menuInfo.menuNm}'+' 내용',
+                    btns: {
+                        close: {
+                            label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
+                                // modal.close();
+                                ax5modal.close();
+                            }
+                        }
+                    }
+                },
+                iframe: {
+                    method: "get",
+                    url: API_SERVER,
+                    param: p
+                },
+
+            }, function (d) {
+                Search();
+            });
+
+
+        });
+
+
+
+
+
+
     });
 
 
@@ -58,23 +118,6 @@
     }
 
 
-    function gridExcelUplad() {
-        var formData = new FormData(document.excelForm);
-        $ifx.ajax('<c:url value="/cms/gsis/excel/upload.do"/>', {
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            data: formData,
-            success: function(res){
-
-
-                 console.log(res);
-                firstGrid.setData(res);
-            }
-        })
-    }
-
-
 
 </script>
 <div class="sub subView">
@@ -92,65 +135,38 @@
     <div class="white-box">
         <div class="rows">
          <span class="select-outline">
-               기간: <select name="searchCondition" id="searchCondition"
+                <select name="strYear" id="strYear"
                         title="<spring:message code="title.searchCondition" />">
-                       <option selected value='2011'>2011</option><!-- 선택하세요 -->
-                       <option value="1">2020</option>
-                       <option value="2">2021</option>
-               </select>
-             ~
-             <select name="searchCondition" id="searchCondition2"
-                     title="<spring:message code="title.searchCondition" />">
-                       < <option selected value='2019'>2019</option><!-- 선택하세요 -->
-                       <option value="1">2020</option>
-                       <option value="2">2021</option>
+                       <option selected value=''>검색조건</option><!-- 선택하세요 -->
+                       <option value="1">2011</option>
+                    <!-- 코드ID -->
+                       <option value="2">2012</option>
+                    <!-- 코드ID -->
                </select>
          </span>
-         <form name="excelForm" enctype="multipart/form-data">
-                <input class="w100" type="file" name="uploadFile">
-            </form>
-            <button type="button" class="button main" onclick="gridExcelUplad()"><i class="bx bx-slider-alt"></i>엑셀자료 업로드</button>
-            <button type="button" class="button" ><i class="bx bx-slider-alt"></i>저장</button>
+            ~
+            <span class="select-outline">
+                <select name="endYear" id="endYear"
+                        title="<spring:message code="title.searchCondition" />">
+                       <option selected value=''>검색조건</option><!-- 선택하세요 -->
+                       <option value="1">2019</option>
+                    <!-- 코드ID -->
+                       <option value="2">2021</option>
+                    <!-- 코드ID -->
+               </select>
+         </span>
+
+
+            <%--<input type="text" class="w100" class="main" name="searchKeyword" id="searchKeyword" size="35"--%>
+                   <%--title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''--%>
+                   <%--maxlength="155">--%>
+            <button type="button" class="button" name="btn_search" id="btn_search"><i class='bx bx-slider-alt'></i>조회</button>
+            <button type="button" class="button main" name="btn_regist_info" id="btn_regist_info">내용등록</button>
+            <button type="button" class="button main" name="btn_regist_excel" id="btn_regist_excel">엑셀업로드</button>
+            <input type="hidden" id="themaId" name="themaId" value="${view.themaId}">
 
         </div>
     </div>
-    <h3 class="btitle">
-        내용 (업데이트 기준일 2021-07-17)
-    </h3>
-    <div class="white-box">
-
-        <table class="landscape" >
-            <tbody>
-
-
-            <tr>
-                <th>제목<span class="pilsu">*</span></th>
-                <td>
-                    <input type="text" value="여가활용 만족여부 및 불만족 이유(2011~2019)">
-                </td>
-                <th>제목 영문<span class="pilsu">*</span></th>
-                <td>
-                    <input type="text" value="Satisfaction about Leisure Activity and Reasons for Dissatisfaction(2011~2019)">
-                </td>
-
-            </tr>
-            <tr>
-                <th>내용<span class="pilsu">*</span></th>
-                <td><textarea >
-                    주 : 1) 만족은 '매우 만족'과 '약간 만족'을 합산한 것, 불만족은 '매우 불만족'과 '약간 불만족'을 합산한 것임
-                    2) 15세 이상 인구 대상임
-                    자료 : 통계청, '사회조사'; 한국여성정책연구원,｢성인지통계시스템｣(www.gsis.kwdi.re.kr)
-                    Source : Statistics Korea, Socia Survey; Korean Women's Development Institute, Gender Statistics Information System
-                </textarea>
-                </td>
-            </tr>
-
-
-            </tbody>
-        </table>
-
-    </div>
-
     <h3 class="btitle">
         목록
     </h3>

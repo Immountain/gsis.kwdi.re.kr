@@ -45,6 +45,22 @@ public class JejuDataController  extends BaseAjaxController {
 
 
 
+    /**엑셀업로드 */
+    @RequestMapping(value="/cms/gsis/data/excel.do")
+    public String excel(@ModelAttribute("searchVO") JewThemaInfoVO searchVO, ModelMap model) throws Exception{
+
+
+        JewThemaInfoVO jewThemaInfoVO =jewThemaInfoService.selectThemaInfo(searchVO);
+
+
+        String url = pagePath +jewThemaInfoVO.getThemaGroupId()+"/"+jewThemaInfoVO.getThemaId()+"/";
+
+        model.addAttribute("view",jewThemaInfoVO);
+
+        return InfoViewUtils.adminJsView(url,"Excel","axmodal");
+    }
+
+
     /**등록화면 */
     @RequestMapping(value="/cms/gsis/data/View.do")
     public String View(@ModelAttribute("searchVO") JewThemaInfoVO searchVO, ModelMap model) throws Exception{
@@ -59,8 +75,6 @@ public class JejuDataController  extends BaseAjaxController {
 
         return InfoViewUtils.adminJsView(url,"View","axmodal");
     }
-
-
 
 
 
