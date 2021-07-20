@@ -8,41 +8,41 @@ import lombok.ToString;
 @ToString
 public class ExcellVO {
 
-    @SheetColumn("기준일")
-    private String baseDay; // BASE_DAY     varchar(8)                           not null comment '기준일',
+    @SheetColumn("년도")
+    private String tw1; // BASE_DAY     varchar(8)                           not null comment '기준일',
 
-    @SheetColumn("JTP시설장비등록ID")
-    private String jtpEquipId; // JTP_EQUIP_ID varchar(30)                          not null comment 'JTP시설장비 등록ID(J-YYYYMMDD+일려번호12자리)',
+    @SheetColumn("구분")
+    private String tw2; // JTP_EQUIP_ID varchar(30)                          not null comment 'JTP시설장비 등록ID(J-YYYYMMDD+일려번호12자리)',
 
-    @SheetColumn("한글명")
-    private String korNm;
+    @SheetColumn("만족")
+    private String tw3;
 
-    @SheetColumn("영문명")
-    private String engNm;
+    @SheetColumn("불만족")
+    private String tw4;
 
-    @SheetColumn("이용기업코드")
-    private String comCd; // COM_CD       varchar(20)                          null comment '이용기업코드',
+    @SheetColumn("경제적부담")
+    private String tw5; // COM_CD       varchar(20)                          null comment '이용기업코드',
 
-    @SheetColumn("이용기업이름")
-    private String comNm; // COM_NM       varchar(20)                          null comment '이용기업이름',
+    @SheetColumn("시간부족")
+    private String tw6; // COM_NM       varchar(20)                          null comment '이용기업이름',
 
-    @SheetColumn("실제이용가능시간(H)")
-    private Integer kpiRet0; // KPI_RET1     big
+    @SheetColumn("교통혼잡")
+    private String tw7; // COM_NM       varchar(20)                          null comment '이용기업이름',
+    @SheetColumn("여가시설부족")
+    private String tw8; // COM_NM       varchar(20)                          null comment '이용기업이름',
+    @SheetColumn("여가정보부족")
+    private String tw9; // COM_NM       varchar(20)                          null comment '이용기업이름',
+    @SheetColumn("취미가 없어서")
+    private String tw10; // COM_NM       varchar(20)                          null comment '이용기업이름',
 
-    @SheetColumn("일간가동시간(H)")
-    private Integer kpiRet1; // KPI_RET1     bigint                               null comment '일간가동시간(H)',
 
-    @SheetColumn("일간유지보수시간(H)")
-    private Integer kpiRet2; // KPI_RET2     bigint                               null comment '일간유지보수시간(H)',
+    @SheetColumn("건강, 체력 부족여가를 함께 즐길 사람이 없음")
+    private String tw11; // COM_NM       varchar(20)                          null comment '이용기업이름',
 
-    @SheetColumn("장비수익금")
-    private Integer kpiRet3; // KPI_RET3     bigint                               null comment '장비수익금',
 
-    @SheetColumn("장비유지관리비")
-    private Integer kpiRet4; // KPI_RET4     bigint                               null comment '장비유지관리비',
+    @SheetColumn("기타")
+    private String tw12; // COM_NM       varchar(20)                          null comment '이용기업이름',
 
-    private String startBaseDay;
-    private String endBaseDay;
 
 
 }

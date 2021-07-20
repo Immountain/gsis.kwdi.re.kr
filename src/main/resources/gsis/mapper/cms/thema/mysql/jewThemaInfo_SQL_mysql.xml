@@ -146,6 +146,7 @@
             ,MOD_DT = NOW()
             ,MOD_ID = #{modId}
         WHERE THEMA_GROUP_ID = #{themaGroupId}
+        and THEMA_ID =#{themaId}
     </update>
 
     <update id="deleteThemaInfo">
@@ -156,3 +157,5 @@
     </update>
 
 </mapper>
+
+
