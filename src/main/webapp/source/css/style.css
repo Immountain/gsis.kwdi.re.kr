@@ -1999,7 +1999,7 @@ body {
       margin: 0 0 20px;
       border: 1px solid #ccc;
       border-radius: 0 0 8px 8px;
-      overflow: hidden;
+      /*overflow: hidden;*/
       -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
       -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
       box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1); }
