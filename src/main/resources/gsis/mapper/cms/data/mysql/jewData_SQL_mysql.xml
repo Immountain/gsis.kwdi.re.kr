@@ -29,8 +29,8 @@
 
          INSERT INTO JEW_THEMA_FILE_HIS(
 
-                     THEMA_FILE_HIS_SNO
-                    ,THEMA_ID
+
+                     THEMA_ID
                     ,THEMA_GROUP_ID
                     ,THEMA_TITLE
                     ,THEMA_SUB_TITLE
@@ -42,9 +42,7 @@
                     ,REG_ID
 
                     ) VALUES (
-
-                     #{themaFileHisSno}
-                    ,#{themaId}
+                    #{themaId}
                     ,#{themaGroupId}
                     ,#{themaTitle}
                     ,#{themaSubTitle}

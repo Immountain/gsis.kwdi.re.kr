@@ -88,9 +88,6 @@
     function gridExcelUplad() {
 
 
-        firstGrid.setData(null);
-
-
         var formData = new FormData(document.excelForm);
         $ifx.ajax('<c:url value="/cms/gsis/a03/upload.do"/>', {
             method: 'POST',
@@ -124,6 +121,14 @@
         //     alert("기준 종료 년도을 선택하세요");
         //     return;
         // }
+
+
+        if(firstGrid.getList().length==0){
+
+
+            alert("생성할 데이터가 없습니다.");
+            return;
+        }
 
 
         var List = firstGrid.getList();

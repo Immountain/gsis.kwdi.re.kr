@@ -108,24 +108,9 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "전체", align: "center", width: 80 ,formatter: "money"},
-                {key: "cdmData2", label: "0~4세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData3", label: "5~9세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData4", label: "10~14세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData5", label: "15~19세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData6", label: "20~24세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData7", label: "25~29세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData8", label: "30~34세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData9", label: "35~39세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData10", label: "40~44세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData11", label: "45~49세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData12", label: "50~54세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData13", label: "55~59세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData14", label: "60~64세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData15", label: "65~69세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData16", label: "70~74세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData17", label: "75~79세", align: "center", width: 80,formatter: "money"},
-                {key: "cdmData18", label: "80세이상", align: "center", width: 80,formatter: "money"}
+                {key: "cdmData1", label: "경제활동인구", align: "center", width: 80 ,formatter: "money"},
+                {key: "cdmData2", label: "경제활동참가율", align: "center", width: 80,formatter: "money"}
+
 
 
             ],

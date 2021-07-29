@@ -25,7 +25,7 @@ public class JejuDataServiceImpl extends EgovAbstractServiceImpl implements Jeju
     }
 
     @Override
-    public void insertJewThemaFileHis(JewThemaGroupVO vo) throws Exception {
+    public void insertJewThemaFileHis(JewThemaFileHisVO vo) throws Exception {
         jejuDataDAO.insertJewThemaFileHis(vo);
         
 

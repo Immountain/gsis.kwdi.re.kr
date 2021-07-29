@@ -14,7 +14,7 @@ public class JejuDataDAO extends EgovComAbstractDAO {
         return selectList("JejuDataDAO.selectJewThemaFileHis",vo);
     }
 
-    public void insertJewThemaFileHis(JewThemaGroupVO vo)throws Exception{
+    public void insertJewThemaFileHis(JewThemaFileHisVO vo)throws Exception{
         insert("JejuDataDAO.insertJewThemaFileHis",vo);
     }
 

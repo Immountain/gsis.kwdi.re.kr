@@ -9,6 +9,6 @@ public interface JejuDataService {
 
 
     List<JewThemaFileHisVO> selectJewThemaFileHis(JewThemaFileHisVO vo)throws Exception;
-    void insertJewThemaFileHis(JewThemaGroupVO vo)throws Exception;
+    void insertJewThemaFileHis(JewThemaFileHisVO vo)throws Exception;
 
 }
