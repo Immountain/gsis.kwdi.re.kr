@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JejuDataDAO">
+
+
+    <select id="selectJewThemaFileHis"  parameterType="gsis.com.cms.data.vo.JewThemaFileHisVO"   resultType="gsis.com.cms.data.vo.JewThemaFileHisVO">
+        SELECT
+             THEMA_FILE_HIS_SNO
+            ,THEMA_ID
+            ,THEMA_GROUP_ID
+            ,THEMA_TITLE
+            ,THEMA_SUB_TITLE
+            ,TXT_CONTENT
+            ,ETC
+            ,COLLECT_DAY
+            ,COLLECT_TIME
+            ,REG_DT
+            ,REG_ID
+
+        FROM JEW_THEMA_FILE_HIS JM
+        WHERE 1=1
+        and THEMA_ID =#{themaId}
+        order by THEMA_FILE_HIS_SNO desc
+    </select>
+
+
+    <insert id="insertJewThemaFileHis">
+
+
+         INSERT INTO JEW_THEMA_FILE_HIS(
+
+                     THEMA_FILE_HIS_SNO
+                    ,THEMA_ID
+                    ,THEMA_GROUP_ID
+                    ,THEMA_TITLE
+                    ,THEMA_SUB_TITLE
+                    ,TXT_CONTENT
+                    ,ETC
+                    ,COLLECT_DAY
+                    ,COLLECT_TIME
+                    ,REG_DT
+                    ,REG_ID
+
+                    ) VALUES (
+
+                     #{themaFileHisSno}
+                    ,#{themaId}
+                    ,#{themaGroupId}
+                    ,#{themaTitle}
+                    ,#{themaSubTitle}
+                    ,#{txtContent}
+                    ,#{etc}
+                    ,#{collectDay}
+                    ,#{collectTime}
+                    ,NOW()
+                    ,#{regId}
+
+                 )
+
+    </insert>
+
+</mapper>

@@ -25,7 +25,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 /**
  * Reader impletementation of {@link Workbook} for an OOXML .xlsx file. This implementation is
  * suitable for low memory sax parsing or similar.
- * 
+ *
  * @see XlsReader
  */
 public class XlsxReader extends AbstractSpreadsheetReader {

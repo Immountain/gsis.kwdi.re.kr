@@ -4,6 +4,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="info" uri="http://infomind.com/info" %>
+
+
+
 <script type="text/javascript">
 
 
@@ -21,8 +24,8 @@
             var API_SERVER = "<c:url value='/cms/gsis/data/excel.do' />";
             ax5modal.open({
                 theme: "primary",
-                height: 600,
-                width: 900,
+                height: 800,
+                width: 1000,
                 header: {
                     title: '${menuInfo.menuNm}'+' 엑셀업로드',
                     btns: {
@@ -84,7 +87,7 @@
 
 
 
-
+        Search();
 
     });
 
@@ -95,28 +98,52 @@
         firstGrid.setConfig({
             target: $('[data-ax5grid="first-grid"]'),
             columns: [
-                {key: "tw1", label: "년도", align: "center", width: 140},
-                {key: "tw2", label: "구분", align: "center", width: 180},
-                {key: "tw3", label: "만족", align: "center", width: 180},
-                {key: "tw4", label: "불만족", align: "center", width: 180},
-                {key: "tw5", label: "경제적부담", align: "center", width: 120},
-                {key: "tw6", label: "시간부족", align: "center", width: 120},
-                {key: "tw7", label: "교통 혼잡", align: "center", width: 120},
-                {key: "tw8", label: "여가시설부족", align: "center", width: 120},
-                {key: "tw9", label: "여가정보부족", align: "center", width: 120},
-                {key: "tw9", label: "취미가 없어서", align: "center", width: 120},
-                {key: "tw10", label: "건강, 체력 부족", align: "center", width: 120},
-                {key: "tw11", label: "여가를 함께 즐길 사람이 없음", align: "center", width: 120},
-                {key: "tw12", label: "기타", align: "center", width: 120}
+                {key: "dataYear", label: "년도", align: "center", width: 60},
+                {key: "dataGb", label: "구분", align: "center", width: 60},
+                {key: "cdmData1", label: "전체", align: "center", width: 80 ,formatter: "money"},
+                {key: "cdmData2", label: "0~4세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData3", label: "5~9세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData4", label: "10~14세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData5", label: "15~19세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData6", label: "20~24세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData7", label: "25~29세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData8", label: "30~34세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData9", label: "35~39세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData10", label: "40~44세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData11", label: "45~49세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData12", label: "50~54세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData13", label: "55~59세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData14", label: "60~64세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData15", label: "65~69세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData16", label: "70~74세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData17", label: "75~79세", align: "center", width: 80,formatter: "money"},
+                {key: "cdmData18", label: "80세이상", align: "center", width: 80,formatter: "money"}
 
 
             ],
             body:{
-                mergeCells: ["tw1", "tw2"]
+                mergeCells: ["dataYear", "dataGb"]
             }
         });
     }
 
+
+
+    // 조회
+    function Search() {
+
+        var p = {
+
+        };
+
+        $ifx.ajax('<c:url value='/cms/gsis/a03/List.do' />', {
+            method: "POST",
+            data: JSON.stringify(p),
+            success: function (res) {
+                firstGrid.setData(res.list);
+            }
+        })
+    }
 
 
 </script>
