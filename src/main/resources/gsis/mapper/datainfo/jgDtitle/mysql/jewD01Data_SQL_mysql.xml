@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JgD01TitleDAO">
+
+
+
+
+    <select id="selectList"  parameterType="gsis.com.cms.datainfo.jgDtitle.vo.JewD01TiileDataVO"   resultType="gsis.com.cms.datainfo.jgDtitle.vo.JewD01TiileDataVO">
+       SELECT
+             A.DATA_YEAR
+            ,A.DATA_GB
+            ,A.CDM_DATA1
+            ,A.CDM_DATA2
+            ,A.CDM_DATA3
+            ,A.CDM_DATA4
+            ,A.CDM_DATA5
+            ,A.CDM_DATA6
+            ,A.CDM_DATA7
+            ,A.CDM_DATA8
+            ,A.CDM_DATA9
+            ,A.CDM_DATA10
+            ,A.CDM_DATA11
+            ,A.CDM_DATA12
+            ,A.CDM_DATA13
+            ,A.CDM_DATA14
+            ,A.CDM_DATA15
+            ,A.CDM_DATA16
+            ,A.CDM_DATA17
+            ,A.CDM_DATA18
+            ,A.CDM_DATA19
+            ,A.CDM_DATA20
+            ,A.CDM_DATA21
+            ,A.CDM_DATA22
+            ,A.REG_ID
+            ,A.REG_DT
+            ,B.SORT_NO
+        FROM JEW_D_01_TIILE_DATA A
+        left join          (
+                    select *
+                    from COMTCCMMNDETAILCODE
+                    where 1=1
+                    and CODE_ID='d01'
+        ) B
+        on A.DATA_GB =B.CODE_NM
+        WHERE 1=1
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(strYear)">
+            <![CDATA[  AND A.DATA_YEAR >= #{strYear}  ]]>
+        </if>
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(endYear)">
+            <![CDATA[  AND A.DATA_YEAR <= #{endYear}  ]]>
+        </if>
+
+        ORDER BY DATA_YEAR asc ,B.SORT_NO asc
+
+
+    </select>
+
+
+
+    <insert id="insert">
+
+
+         INSERT INTO JEW_D_01_TIILE_DATA(
+
+                     DATA_YEAR
+                    ,DATA_GB
+                    ,CDM_DATA1
+                    ,CDM_DATA2
+                    ,CDM_DATA3
+                    ,CDM_DATA4
+                    ,CDM_DATA5
+                    ,CDM_DATA6
+                    ,CDM_DATA7
+                    ,CDM_DATA8
+                    ,CDM_DATA9
+                    ,CDM_DATA10
+                    ,CDM_DATA11
+                    ,CDM_DATA12
+                    ,CDM_DATA13
+                    ,CDM_DATA14
+                    ,CDM_DATA15
+                    ,CDM_DATA16
+                    ,CDM_DATA17
+                    ,CDM_DATA18
+                    ,CDM_DATA19
+                    ,CDM_DATA20
+                    ,CDM_DATA21
+                    ,CDM_DATA22
+                    ,REG_ID
+                    ,REG_DT
+
+                    ) VALUES (
+
+
+                     #{dataYear}
+                    ,#{dataGb}
+                    ,#{cdmData1}
+                    ,#{cdmData2}
+                    ,#{cdmData3}
+                    ,#{cdmData4}
+                    ,#{cdmData5}
+                    ,#{cdmData6}
+                    ,#{cdmData7}
+                    ,#{cdmData8}
+                    ,#{cdmData9}
+                    ,#{cdmData10}
+                    ,#{cdmData11}
+                    ,#{cdmData12}
+                    ,#{cdmData13}
+                    ,#{cdmData14}
+                    ,#{cdmData15}
+                    ,#{cdmData16}
+                    ,#{cdmData17}
+                    ,#{cdmData18}
+                    ,#{cdmData19}
+                    ,#{cdmData20}
+                    ,#{cdmData21}
+                    ,#{cdmData22}
+                    ,#{regId}
+                    ,NOW()
+
+
+                 )
+
+    </insert>
+
+
+    <delete id="delete">
+
+      DELETE FROM JEW_D_01_TIILE_DATA
+      WHERE 1=1
+      AND DATA_YEAR = #{dataYear}
+      AND DATA_GB =#{dataGb}
+
+
+
+    </delete>
+
+</mapper>
