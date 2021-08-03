@@ -21,6 +21,7 @@
 			     ,  A.CODE
 			     ,  A.CODE_NM
 			     ,  A.USE_AT
+			     , A.SORT_NO
 			  FROM  COMTCCMMNDETAILCODE A
 			     ,  COMTCCMMNCODE       B
 			 WHERE 	B.USE_AT  = 'Y'
@@ -69,6 +70,7 @@
                  ,  A.CODE_NM    codeNm
                  ,  A.CODE_DC    codeDc
                  ,  A.USE_AT     useAt
+                 ,  A.SORT_NO    as sortNo
               FROM  COMTCCMMNDETAILCODE A
                  ,  COMTCCMMNCODE       B
              WHERE  B.USE_AT  = 'Y'
@@ -93,6 +95,7 @@
 		         ,  FRST_REGISTER_ID
 		         ,  LAST_UPDT_PNTTM
 		         ,  LAST_UPDUSR_ID
+		         ,  SORT_NO
 		         )
 		    VALUES
 		         (  #{codeId}
@@ -104,6 +107,7 @@
 		         ,  #{frstRegisterId}
 		         ,  sysdate()
 		         ,  #{frstRegisterId}
+		         ,  Ifnull(#{sortNo},0)
 		         )
 		   ]]>
 
@@ -119,6 +123,7 @@
                  ,  USE_AT            = #{useAt}
                  ,  LAST_UPDT_PNTTM = sysdate()
                  ,  LAST_UPDUSR_ID    = #{lastUpdusrId}
+                 ,  SORT_NO           = Ifnull(#{sortNo},0)
              WHERE  CODE_ID   = #{codeId}
                AND  CODE      = #{code}
          ]]>

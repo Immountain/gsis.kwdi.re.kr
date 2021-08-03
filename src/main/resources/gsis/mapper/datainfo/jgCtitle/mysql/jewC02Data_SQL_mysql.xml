@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JgC02TitleDAO">
+
+
+
+
+    <select id="selectList"  parameterType="gsis.com.cms.datainfo.jgCtitle.vo.JewC02TiileDataVO"   resultType="gsis.com.cms.datainfo.jgCtitle.vo.JewC02TiileDataVO">
+        select  A.DATA_YEAR
+                ,A.DATA_GB
+                ,sum(CDM_DATA2) as CDM_DATA2
+                ,sum(CDM_DATA2_T) as CDM_DATA2_T
+                ,sum(CDM_DATA3) as CDM_DATA3
+                ,sum(CDM_DATA3_T) as CDM_DATA3_T
+                ,sum(CDM_DATA4) as CDM_DATA4
+                ,sum(CDM_DATA4_T) as CDM_DATA4_T
+                ,sum(CDM_DATA5) as CDM_DATA5
+                ,sum(CDM_DATA5_T) as CDM_DATA5_T
+                ,sum(CDM_DATA6) as CDM_DATA6
+                ,sum(CDM_DATA6_T) as CDM_DATA6_T
+                ,sum(CDM_DATA7) as CDM_DATA7
+                ,sum(CDM_DATA7_T) as CDM_DATA7_T
+                ,sum(CDM_DATA8) as CDM_DATA8
+                ,sum(CDM_DATA8_T) as CDM_DATA8_T
+                ,sum(CDM_DATA9) as CDM_DATA9
+                ,sum(CDM_DATA9_T) as CDM_DATA9_T
+                ,sum(CDM_DATA10) as CDM_DATA10
+                ,sum(CDM_DATA10_T) as CDM_DATA10_T
+                ,sum(CDM_DATA11) as CDM_DATA11
+                ,sum(CDM_DATA11_T) as CDM_DATA11_T
+                ,sum(CDM_DATA12) as CDM_DATA12
+                ,sum(CDM_DATA12_T) as CDM_DATA12_T
+        from (
+
+             SELECT
+                A.DATA_YEAR
+                ,A.DATA_GB
+                ,CASE  when A.CDM_DATA1 ='고용률' then CDM_DATA2 else 0  end   as CDM_DATA2
+                ,CASE  when A.CDM_DATA1 ='경제활동인구' then CDM_DATA2 else 0  end   as CDM_DATA2_T
+                ,CASE  when A.CDM_DATA1 ='고용률' then CDM_DATA3 else 0  end   as CDM_DATA3
+                ,CASE  when A.CDM_DATA1 ='경제활동인구' then CDM_DATA3 else 0  end   as CDM_DATA3_T
+                ,CASE  when A.CDM_DATA1 ='고용률' then CDM_DATA4 else 0  end   as CDM_DATA4
+                ,CASE  when A.CDM_DATA1 ='경제활동인구' then CDM_DATA4 else 0  end   as CDM_DATA4_T
+                ,CASE  when A.CDM_DATA1 ='고용률' then CDM_DATA5 else 0  end   as CDM_DATA5
+                ,CASE  when A.CDM_DATA1 ='경제활동인구' then CDM_DATA5 else 0  end   as CDM_DATA5_T
+                ,CASE  when A.CDM_DATA1 ='고용률' then CDM_DATA6 else 0  end   as CDM_DATA6
+                ,CASE  when A.CDM_DATA1 ='경제활동인구' then CDM_DATA6 else 0  end   as CDM_DATA6_T
+                ,CASE  when A.CDM_DATA1 ='고용률' then CDM_DATA7 else 0  end   as CDM_DATA7
+                ,CASE  when A.CDM_DATA1 ='경제활동인구' then CDM_DATA7 else 0  end   as CDM_DATA7_T
+                ,CASE  when A.CDM_DATA1 ='고용률' then CDM_DATA8 else 0  end   as CDM_DATA8
+                ,CASE  when A.CDM_DATA1 ='경제활동인구' then CDM_DATA8 else 0  end   as CDM_DATA8_T
+                ,CASE  when A.CDM_DATA1 ='고용률' then CDM_DATA9 else 0  end   as CDM_DATA9
+                ,CASE  when A.CDM_DATA1 ='경제활동인구' then CDM_DATA9 else 0  end   as CDM_DATA9_T
+                ,CASE  when A.CDM_DATA1 ='고용률' then CDM_DATA10 else 0  end   as CDM_DATA10
+                ,CASE  when A.CDM_DATA1 ='경제활동인구' then CDM_DATA10 else 0  end   as CDM_DATA10_T
+                ,CASE  when A.CDM_DATA1 ='고용률' then CDM_DATA11 else 0  end   as CDM_DATA11
+                ,CASE  when A.CDM_DATA1 ='경제활동인구' then CDM_DATA11 else 0  end   as CDM_DATA11_T
+                ,CASE  when A.CDM_DATA1 ='고용률' then CDM_DATA12 else 0  end   as CDM_DATA12
+                ,CASE  when A.CDM_DATA1 ='경제활동인구' then CDM_DATA12 else 0  end   as CDM_DATA12_T
+
+                FROM JEW_C_02_TIILE_DATA A
+                group by   A.DATA_YEAR ,A.DATA_GB,A.CDM_DATA1
+        ) a    left join  (
+                        select *
+                        from COMTCCMMNDETAILCODE
+                        where 1=1
+                        and CODE_ID='c02'
+                  ) B
+        on A.DATA_GB =B.CODE_NM
+
+        where 1=1
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(strYear)">
+            <![CDATA[  AND A.DATA_YEAR >= #{strYear}  ]]>
+        </if>
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(endYear)">
+            <![CDATA[  AND A.DATA_YEAR <= #{endYear}  ]]>
+        </if>
+
+
+        group by  A.DATA_YEAR
+        ,A.DATA_GB
+
+        ORDER BY DATA_YEAR asc ,B.SORT_NO asc
+
+
+
+    </select>
+
+
+
+    <insert id="insert">
+
+
+         INSERT INTO JEW_C_02_TIILE_DATA(
+
+                     DATA_YEAR
+                    ,DATA_GB
+                    ,CDM_DATA1
+                    ,CDM_DATA2
+                    ,CDM_DATA3
+                    ,CDM_DATA4
+                    ,CDM_DATA5
+                    ,CDM_DATA6
+                    ,CDM_DATA7
+                    ,CDM_DATA8
+                    ,CDM_DATA9
+                    ,CDM_DATA10
+                    ,CDM_DATA11
+                    ,CDM_DATA12
+                    ,REG_ID
+                    ,REG_DT
+
+                    ) VALUES (
+
+
+                     #{dataYear}
+                    ,#{dataGb}
+                    ,#{cdmData1}
+                    ,#{cdmData2}
+                    ,#{cdmData3}
+                    ,#{cdmData4}
+                    ,#{cdmData5}
+                    ,#{cdmData6}
+                    ,#{cdmData7}
+                    ,#{cdmData8}
+                    ,#{cdmData9}
+                    ,#{cdmData10}
+                    ,#{cdmData11}
+                    ,#{cdmData12}
+                    ,#{regId}
+                    ,NOW()
+
+
+                 )
+
+    </insert>
+
+
+    <delete id="delete">
+
+      DELETE FROM JEW_C_02_TIILE_DATA
+      WHERE 1=1
+      AND DATA_YEAR = #{dataYear}
+      AND DATA_GB =#{dataGb}
+      AND CDM_DATA1 =#{cdmData1}
+
+
+
+    </delete>
+
+</mapper>

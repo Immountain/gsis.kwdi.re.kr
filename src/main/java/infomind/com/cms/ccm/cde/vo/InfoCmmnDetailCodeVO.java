@@ -73,6 +73,16 @@ public class InfoCmmnDetailCodeVO extends CmsSearchVO implements Serializable{
 	private String lastUpdusrId   = "";
 
 
+	private int sortNo   = 0;
+
+	public int getSortNo() {
+		return sortNo;
+	}
+
+	public void setSortNo(int sortNo) {
+		this.sortNo = sortNo;
+	}
+
 	/**
 	 * clCode attribute 를 리턴한다.
 	 * @return String

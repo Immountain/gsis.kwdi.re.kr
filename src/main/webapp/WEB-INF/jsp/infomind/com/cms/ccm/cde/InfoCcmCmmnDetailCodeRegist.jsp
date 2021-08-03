@@ -207,6 +207,17 @@
 					</td>
 				</tr>
 
+
+				<tr>
+					<th><label for="codeNm">정렬<span class="pilsu">*</span></label></th>
+					<td class="left">
+						<form:input path="sortNo" size="70" maxlength="70"  />
+						<div><form:errors path="sortNo" cssClass="error" /></div>
+					</td>
+				</tr>
+
+
+
 				</tbody>
 			</table>
 
