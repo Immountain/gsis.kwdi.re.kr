@@ -35,7 +35,9 @@ public class IndicatorTag extends WpBaseHtmlTag {
             String depth3Title = "";
 
 
-
+            String depth1Url= "";
+            String depth2Url = "";
+            String depth3Url= "";
 
 
 
@@ -55,18 +57,21 @@ public class IndicatorTag extends WpBaseHtmlTag {
                         currentDeptMenu3 =cacheUserMenu.getMenuByCode(siteMemuId);
                         depth3List =cacheUserMenu.getMenuByParentId(currentDeptMenu3.getParentId(),currentDeptMenu3.getSiteMemuId());
                         depth3Title =currentDeptMenu3.getSiteMemuNm();
+                        depth3Url =currentDeptMenu3.getUrl();
+
 
 
                         InfoSiteMenuVO currentDeptMenu2 = cacheUserMenu.getMenuByCode(currentDeptMenu3.getParentId());
                         depth2List =cacheUserMenu.getMenuByParentId(currentDeptMenu2.getParentId(),currentDeptMenu2.getSiteMemuId());
                         depth2Title =currentDeptMenu2.getSiteMemuNm();
-
+                        depth2Url =currentDeptMenu2.getUrl();
 
 
 
                         InfoSiteMenuVO currentDeptMenu1 = cacheUserMenu.getMenuByCode(currentDeptMenu2.getParentId());
                         depth1List =cacheUserMenu.getMenuByParentId(currentDeptMenu1.getParentId(),currentDeptMenu1.getSiteMemuId());
                         depth1Title =currentDeptMenu1.getSiteMemuNm();
+                        depth1Url =currentDeptMenu1.getUrl();
 
 
 
@@ -76,11 +81,13 @@ public class IndicatorTag extends WpBaseHtmlTag {
                         InfoSiteMenuVO currentDeptMenu2 = cacheUserMenu.getMenuByCode(currentDeptMenu.getSiteMemuId());
                         depth2List =cacheUserMenu.getMenuByParentId(currentDeptMenu2.getParentId(),currentDeptMenu2.getSiteMemuId());
                         depth2Title =currentDeptMenu2.getSiteMemuNm();
+                        depth2Url =currentDeptMenu2.getUrl();
 
 
                         InfoSiteMenuVO currentDeptMenu1 = cacheUserMenu.getMenuByCode(currentDeptMenu2.getParentId());
                         depth1List =cacheUserMenu.getMenuByParentId(currentDeptMenu1.getParentId(),currentDeptMenu1.getSiteMemuId());
                         depth1Title =currentDeptMenu1.getSiteMemuNm();
+                        depth1Url =currentDeptMenu1.getUrl();
 
 
                     } else if (currentDeptMenu.getDepth() == 1) {
@@ -90,6 +97,8 @@ public class IndicatorTag extends WpBaseHtmlTag {
                         InfoSiteMenuVO currentDeptMenu1 = cacheUserMenu.getMenuByCode(currentDeptMenu.getSiteMemuId());
                         depth1List =cacheUserMenu.getMenuByParentId(currentDeptMenu1.getParentId(),currentDeptMenu1.getSiteMemuId());
                         depth1Title =currentDeptMenu1.getSiteMemuNm();
+                        depth1Url =currentDeptMenu1.getUrl();
+
                     }
 
 
@@ -111,6 +120,13 @@ public class IndicatorTag extends WpBaseHtmlTag {
             pageContext.getRequest().setAttribute("depth2Title", depth2Title);
             pageContext.getRequest().setAttribute("depth3Title", depth3Title);
 
+
+            pageContext.getRequest().setAttribute("depth1Url", depth1Url);
+            pageContext.getRequest().setAttribute("depth2Url", depth2Url);
+            pageContext.getRequest().setAttribute("depth3Url", depth3Url);
+
+
+           
 
             InfoWebRequestUtils.include(pageContext, pageContext.getOut(), "/menu/latest.do?skinName="+this.skinName);
         } catch (Exception e) {

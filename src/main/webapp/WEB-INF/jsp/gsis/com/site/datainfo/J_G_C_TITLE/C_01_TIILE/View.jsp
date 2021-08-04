@@ -97,57 +97,56 @@
                 shadow: false
             },
             series: [{
-                name: '출생아수',
+                name: '경제활동인구(여성)',
                 type: 'column',
                 yAxis: 0,
-                color: '#989f3b', //green
+                color: '#f5c082', //green
                 data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4],
 
 
             },{
-                    name: '사망자수',
-                    type: 'column',
-                    yAxis: 0,
-                    color: '#b3d78b', //green
-                    pointPlacement: -0.1,
-                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4],
+                name: '경제활동인구(남성)',
+                type: 'column',
+                yAxis: 0,
+                color: '#499cc0', //green
+                pointPlacement: -0.1,
+                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4],
 
 
-                },
+            },
                 {
-                    name: '조출생률',
+                    name: '경제활동참가율(여성)',
                     type: 'spline',
                     yAxis: 1,
-                    color: '#acbae0', //green
+                    color: '#f5c082', //green
                     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3],
                     marker: {
                         lineWidth: 1,
-                        lineColor: Highcharts.getOptions().colors[4],
+                        lineColor: '#f5c082',
                         fillColor: 'white',
                         radius: 7,
-                        symbol: 'square'
+                        symbol: 'circle'
                     }
 
                 },
                 {
-                    name: '조사망률',
+                    name: '경제활동참가율(남성)',
                     type: 'spline',
                     yAxis: 1,
-                    color: '#f40d14', //green
+                    color: '#499cc0', //green
                     data: [1.0, 2.9, 3.5, 10.5, 12.2, 18.5, 23.2, 23.5, 10.3],
                     marker: {
                         lineWidth: 1,
-                        lineColor: Highcharts.getOptions().colors[5],
+                        lineColor: '#499cc0',
                         fillColor: 'white',
                         radius: 7,
-                        symbol: 'circle'
+                        symbol: 'triangle'
                     }
 
                 }
 
             ]
         });
-
     }
 
 </script>
@@ -207,10 +206,10 @@
                         <thead>
                         <tr>
                             <th colspan="2">구분</th>
-                            <th>출생건수</th>
-                            <th>조출생률</th>
-                            <th>사망건수</th>
-                            <th>조사망률</th>
+
+                            <th>경제활동인구</th>
+                            <th>경제활동참가율</th>
+
                         </tr>
                         </thead>
                         <tbody>
@@ -219,8 +218,6 @@
                             <td>전체</td>
                             <td>100.0</td>
                             <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
 
 
                         </tr>
@@ -228,14 +225,10 @@
                             <td>전체</td>
                             <td>100.0</td>
                             <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
 
                         </tr>
                         <tr>
                             <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
                             <td>100.0</td>
                             <td>100.0</td>
 
@@ -245,66 +238,57 @@
                             <td>전체</td>
                             <td>100.0</td>
                             <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
+
                         </tr>
                         <tr>
                             <td>전체</td>
                             <td>100.0</td>
                             <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
+
                         </tr>
                         <tr>
                             <td>전체</td>
                             <td>100.0</td>
                             <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
+
                         </tr>
                         <tr>
                             <td rowspan="3">2014</td>
                             <td>전체</td>
                             <td>100.0</td>
                             <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
+
                         </tr>
                         <tr>
                             <td>전체</td>
                             <td>100.0</td>
                             <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
+
                         </tr>
                         <tr>
                             <td>전체</td>
                             <td>100.0</td>
                             <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
+
                         </tr>
                         <tr>
                             <td rowspan="3">2014</td>
                             <td>전체</td>
                             <td>100.0</td>
                             <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
+
                         </tr>
                         <tr>
                             <td>전체</td>
                             <td>100.0</td>
                             <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
+
                         </tr>
                         <tr>
                             <td>전체</td>
                             <td>100.0</td>
                             <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
+
                         </tr>
                         </tbody>
                     </table>

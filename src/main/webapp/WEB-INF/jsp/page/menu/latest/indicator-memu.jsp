@@ -6,7 +6,7 @@
 
 
 <c:if test="${fn:length(depth1List) != 0}">
-   <a href="">
+   <a href="${depth1Url}">
           ${depth1Title}
 
          <c:if test="${fn:length(depth2List) != 0}">

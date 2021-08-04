@@ -27,7 +27,7 @@
     });
 
 
-    var lastWeekDaysVisitCount;
+    var chartView;
 
     var chartColor = [
         '#e94235', '#fabb04'
@@ -39,7 +39,7 @@
     ];
 
     function initChartEl() {
-        lastWeekDaysVisitCount = Highcharts.chart('lastWeekDaysVisitCount', {
+        chartView = Highcharts.chart('chartView', {
             chart: {
                 zoomType: 'xy'
             },
@@ -148,7 +148,7 @@
     <section class="sub-content">
         <div class="container">
 
-            <h4 class="stitle">전반적 가족관계 만족도</h4>
+            <h4 class="stitle">${view.themaTitle}</h4>
 
             <article class="theme-view">
 
@@ -174,7 +174,7 @@
                 <div class="chart">
                     <!-- 챠트영역 -->
 
-                    <div id="lastWeekDaysVisitCount"></div>
+                    <div id="chartView"></div>
                 </div>
 
 
