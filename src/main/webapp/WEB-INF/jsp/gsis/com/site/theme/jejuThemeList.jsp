@@ -48,7 +48,7 @@
                         <div class="text">
 
                         <c:forEach items="${atitleList}" var="item" varStatus="status">
-                            <a href="/jejuTheme/view.do">${item.themaNm}</a>
+                            <a href="/jejuTheme/view.do?themaId=${item.themaId}">${item.themaNm}</a>
                         </c:forEach>
                         </div>
 
@@ -58,7 +58,7 @@
 
                         <div class="text">
                             <c:forEach items="${btitleList}" var="item" varStatus="status">
-                                <a href="/jejuTheme/view.do">${item.themaNm}</a>
+                                <a href="/jejuTheme/view.do?themaId=${item.themaId}">${item.themaNm}</a>
                             </c:forEach>
                         </div>
                     </li>
@@ -67,7 +67,7 @@
 
                         <div class="text">
                             <c:forEach items="${ctitleList}" var="item" varStatus="status">
-                                <a href="/jejuTheme/view.do">${item.themaNm}</a>
+                                <a href="/jejuTheme/view.do?themaId=${item.themaId}">${item.themaNm}</a>
                             </c:forEach>
                         </div>
                     </li>
@@ -75,7 +75,7 @@
                         <h5 class="category04">건강과 복지</h5>
                         <div class="text">
                             <c:forEach items="${dtitleList}" var="item" varStatus="status">
-                                <a href="/jejuTheme/view.do">${item.themaNm}</a>
+                                <a href="/jejuTheme/view.do?themaId=${item.themaId}">${item.themaNm}</a>
                             </c:forEach>
                         </div>
 
@@ -85,7 +85,7 @@
 
                         <div class="text">
                             <c:forEach items="${etitleList}" var="item" varStatus="status">
-                                <a href="/jejuTheme/view.do">${item.themaNm}</a>
+                                <a href="/jejuTheme/view.do?themaId=${item.themaId}">${item.themaNm}</a>
                             </c:forEach>
                         </div>
                     </li>
@@ -94,7 +94,7 @@
 
                         <div class="text">
                             <c:forEach items="${ftitleList}" var="item" varStatus="status">
-                                <a href="/jejuTheme/view.do">${item.themaNm}</a>
+                                <a href="/jejuTheme/view.do?themaId=${item.themaId}">${item.themaNm}</a>
                             </c:forEach>
                         </div>
                     </li>

@@ -30,6 +30,11 @@ public class JejuDataServiceImpl extends EgovAbstractServiceImpl implements Jeju
         
 
     }
+
+    @Override
+    public JewThemaFileHisVO getSelectJewThemaFileHisView(JewThemaFileHisVO vo) throws Exception {
+        return  jejuDataDAO.selectJewThemaFileHisView(vo);
+    }
 }
 
 

@@ -19,5 +19,11 @@ public class JejuDataDAO extends EgovComAbstractDAO {
     }
 
 
+    public JewThemaFileHisVO selectJewThemaFileHisView(JewThemaFileHisVO vo)throws Exception{
+      return   selectOne("JejuDataDAO.selectJewThemaFileHisView",vo);
+    }
+
+
+
 
 }

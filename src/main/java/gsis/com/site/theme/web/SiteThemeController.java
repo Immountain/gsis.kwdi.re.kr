@@ -1,6 +1,8 @@
 package gsis.com.site.theme.web;
 
 
+import gsis.com.cms.data.service.JejuDataService;
+import gsis.com.cms.data.vo.JewThemaFileHisVO;
 import gsis.com.cms.thema.service.JewThemaInfoService;
 import gsis.com.cms.thema.vo.JewThemaInfoVO;
 import gsis.com.site.jejudb.vo.JejuDbVO;
@@ -29,7 +31,8 @@ public class SiteThemeController extends BaseController {
     @Resource(name="JewThemaInfoService")
     private JewThemaInfoService jewThemaInfoService;
 
-
+    @Resource(name="JejuDataService")
+    private JejuDataService jejuDataService;
 
 
     @RequestMapping("/list.do")
@@ -111,8 +114,29 @@ public class SiteThemeController extends BaseController {
         }
 
 
+        JewThemaInfoVO jewThemaInfoVO = new JewThemaInfoVO();
+        jewThemaInfoVO.setThemaId(searchVO.getThemaId());
+        jewThemaInfoVO =jewThemaInfoService.selectThemaInfo(jewThemaInfoVO);
 
 
-        return InfoViewUtils.gsisPpageContentView("theme", "jejuThemeViewt", layout);
+        model.addAttribute("view",jewThemaInfoVO);
+
+        JewThemaFileHisVO tempVo =new JewThemaFileHisVO();
+        tempVo.setThemaGroupId(jewThemaInfoVO.getThemaGroupId());
+        tempVo.setThemaId(jewThemaInfoVO.getThemaId());
+
+
+        tempVo =jejuDataService.getSelectJewThemaFileHisView(tempVo);
+        model.addAttribute("viewFile",tempVo);
+
+
+
+     String url =jewThemaInfoVO.getThemaGroupId()+"/"+jewThemaInfoVO.getThemaId()+"/View";
+
+        System.out.println("url====>"+InfoViewUtils.gsisPpageContentView("datainfo", url, layout));
+
+
+
+        return InfoViewUtils.gsisPpageContentView("datainfo", url, layout);
     }
 }

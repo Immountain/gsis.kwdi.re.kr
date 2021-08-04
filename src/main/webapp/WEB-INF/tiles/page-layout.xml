@@ -26,5 +26,8 @@
     <definition name="*/*/*/*/*/*.page" extends="themeLayout">
         <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}.jsp" />
     </definition>
+    <definition name="*/*/*/*/*/*/*.page" extends="themeLayout">
+        <put-attribute name="content"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}/{7}.jsp" />
+    </definition>
 
 </tiles-definitions>
