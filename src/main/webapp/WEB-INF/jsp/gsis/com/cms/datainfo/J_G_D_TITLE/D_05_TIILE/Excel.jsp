@@ -53,17 +53,13 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "전체", align: "center", width: 60 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData2", label: "18~19세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData3", label: "20~24세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData4", label: "25~29세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData5", label: "30~34세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData6", label: "35~39세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData7", label: "40~44세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData8", label: "45~49세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData9", label: "50~54세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData10", label: "55~59세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData11", label: "60세 이상", align: "center", width: 60,formatter: "money",editor: {type: "text"}}
+                {key: "cdmData1", label: "출산전후 휴가급여 인원", align: "center", width: 100 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData2", label: "출산전후 휴가급여 지급액", align: "center", width: 100 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData3", label: "육아휴직급여 인원", align: "center", width: 100 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData4", label: "육아휴직급여 지급액", align: "center", width: 100 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData5", label: "육아기근단축급여 인원", align: "center", width: 100 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData6", label: "육아기근단축급여 지급액", align: "center", width: 100 ,formatter: "money",editor: {type: "text"}}
+
 
 
 
@@ -83,7 +79,7 @@
 
 
         var formData = new FormData(document.excelForm);
-        $ifx.ajax('<c:url value="/cms/gsis/d03/upload.do"/>', {
+        $ifx.ajax('<c:url value="/cms/gsis/d05/upload.do"/>', {
             method: 'POST',
             processData: false,
             contentType: false,
@@ -131,7 +127,7 @@
 
      if(!confirm('데이터을 생성 하시겠습니까?')) return false;
 
-        $ifx.ajax('<c:url value='/cms/gsis/d03/updateObject.do' />', {
+        $ifx.ajax('<c:url value='/cms/gsis/d05/updateObject.do' />', {
             method: "POST",
             data: JSON.stringify(p),
             success: function (res) {
@@ -167,7 +163,7 @@
         var form = document.createElement("form");
         form.setAttribute("charset", "UTF-8");
         form.setAttribute("method", "POST");  //Post 방식
-        form.setAttribute("action", "<c:url value="/cms/gsis/d03/download.do"/>"); //요청 보낼 주소
+        form.setAttribute("action", "<c:url value="/cms/gsis/d05/download.do"/>"); //요청 보낼 주소
 
         // var hiddenField = document.createElement("input");
         // hiddenField.setAttribute("type", "hidden");
@@ -229,11 +225,8 @@
            ,cdmData4:0
            ,cdmData5:0
            ,cdmData6:0
-           ,cdmData7:0
-           ,cdmData8:0
-           ,cdmData9:0
-           ,cdmData10:0
-           ,cdmData11:0
+
+
 
 
 
@@ -293,9 +286,10 @@
     </h3>
     <input type="text" id="strYear" name="strYear" value="" />
     <select id="dataGb" name="dataGb">
-        <option value="계">계</option>
+        <option value="전체">전체</option>
         <option value="여성">여성</option>
-        <option value="여성 비율">여성 비율</option>
+        <option value="남성">남성</option>
+        <option value="남성비율">남성비율</option>
     </select>
 
     <button type="button" class="button" onclick="btn_add()">로우추가</button>
