@@ -574,6 +574,12 @@
         reader.readAsDataURL(event.target.files[0]);
     }
 
+    var numberComma = function (_number) {
+        if (this.isNotEmpty(_number)) {
+            return _number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        }
+    }
+
     var $ifx = {
         contextPath: contextPath,
         $: $,
@@ -585,7 +591,8 @@
         convertJsonToFormData: convertJsonToFormData,
         isEmpty: isEmpty,
         isNotEmpty: isNotEmpty,
-        setThumbnail: setThumbnail
+        setThumbnail: setThumbnail,
+        numberComma: numberComma
     }
     window.$ifx = $ifx;
 })(jQuery);

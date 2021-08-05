@@ -21,18 +21,10 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-
         initChartEl();
-
         Search();
-
-
-
     });
-
-
     var chartView;
-
     var chartColor = [
         '#e94235', '#fabb04'
         ,'#34a853', '#4285f4'
@@ -41,7 +33,6 @@
         ,'#e94235', '#fabb04'
         , '#34a853', '#4285f4'
     ];
-
     function initChartEl() {
         chartView = Highcharts.chart('chartView', {
             chart: {
@@ -54,7 +45,9 @@
                 text: '서브 타이틀'
             },
             xAxis: [{
-                categories: ['0~9세', '10~19세', '20~29세', '30~39세', '40~49세', '50~59세', '60~69세', '70~79세', '80세이상'],
+                categories: [
+                    '0~4세', '5~9세', '10~14세', '15~19세', '20~24세', '25~29세', '30~34세', '35~39세', '40~44세', '45~49세', '50~54세', '55~59세', '60~64세', '65~69세', '70~74세', '75~79세', '80세이상'
+                ],
                 crosshair: true
             }],
             yAxis: [{ // Primary yAxis
@@ -113,67 +106,145 @@
                 type: 'column',
                 color: '#fabb04', //green
                 yAxis: 0,
-                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4],
+                data: [],
 
             }, {
                 name: '남성',
                 type: 'column',
                 color: '#4285f4', //green
                 yAxis: 0,
-                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4],
+                data: [],
 
             },
+            {
+                name: '여성비율',
+                type: 'spline',
+                color: '#e94235', //green
+                yAxis: 1,
+                data: [],
+
+            }]
+        });
+    }
+
+    function Search() {
+        var strYear ="";
+        var endYear ="";
+        var p = {
+            strYear:strYear,endYear:endYear
+        };
+
+        $ifx.promise()
+        .then(function (ok, fail, data) {
+            $ifx.ajax('<c:url value='/site/gsis/a03/List.do' />', {
+                method: "POST",
+                data: JSON.stringify(p),
+                success: function (res) {
+                    var $tbody = $('.table-outline table tbody');
+                    $tbody.empty();
+
+                    var groupData = groupBy(res.list, 'dataYear');
+
+                    var count = 0;
+                    $.each(groupData, function(key, item) {
+
+                        item.forEach(function(v, i) {
+                            var $tr = $('<tr />');
+                            if(i == 0 ) {
+                                $tr.append($('<td />', {
+                                    'rowspan': item.length,
+                                    'text': key
+                                }))
+                            }
+
+                            $tr.append('<td>' + (v['dataGb'] || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData1']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData2']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData3']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData4']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData5']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData6']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData7']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData8']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData9']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData10']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData11']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData12']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData13']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData14']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData15']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData16']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData17']) || '' ) +  '</td>')
+                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData18']) || '' ) +  '</td>')
+                            $tbody.append($tr);
+                        })
+                        console.log(count, Object.keys(groupData).length)
+                        if(count == Object.keys(groupData).length -1) {
+                            ok(item);
+                        }
+                        count++;
+                    });
+                }
+            })
+        })
+        .then(function (ok, fail, data) {
+            /**
+             {dataYear: "2020", dataGb: "전체", cdmData1: "671316", cdmData2: "26128", cdmData3: "35316", …}
+             {dataYear: "2020", dataGb: "여성", cdmData1: "333973", cdmData2: "12617", cdmData3: "17260", …}
+             {dataYear: "2020", dataGb: "남성", cdmData1: "337343", cdmData2: "13511", cdmData3: "18056", …}
+             {dataYear: "2020", dataGb: "여성 비율", cdmData1: "49.7", cdmData2: "48.2", cdmData3: "48.8", …}
+             */
+            chartView.update({
+                series: [{
+                    name: '여성',
+                    type: 'column',
+                    color: '#fabb04', //green
+                    yAxis: 0,
+                    data: function(){
+                        var arr = [];
+                        for(var i=2; i<=18; i++) arr.push(Number(data[1]['cdmData' + i]))
+                        console.log(arr)
+                        return arr
+                    }(),
+
+                }, {
+                    name: '남성',
+                    type: 'column',
+                    color: '#4285f4', //green
+                    yAxis: 0,
+                    data: function(){
+                        var arr = [];
+                        for(var i=2; i<=18; i++) arr.push(Number(data[2]['cdmData' + i]))
+                        return arr
+                    }()
+                },
                 {
                     name: '여성비율',
                     type: 'spline',
                     color: '#e94235', //green
                     yAxis: 1,
-                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3],
-
+                    data: function(){
+                        var arr = [];
+                        for(var i=2; i<=18; i++) arr.push(Number(data[3]['cdmData' + i]))
+                        return arr
+                    }()
                 }]
-        });
-    }
-
-    function Search() {
-
-        var strYear ="";
-        var endYear ="";
-
-
-        var p = {
-            strYear:strYear,endYear:endYear
-        };
-
-        $ifx.ajax('<c:url value='/site/gsis/a03/List.do' />', {
-            method: "POST",
-            data: JSON.stringify(p),
-            success: function (res) {
-                console.log(res.list);
-
-
-                test(res.list);
-                //firstGrid.setData(res.list);
-            }
+            }, true, true);
+            console.log(data)
         })
+        ;
     }
 
-
-   function test(data) {
-
-       $.each(data, function (index, object){
-
-           if(index ==data.length -1 ){
-
-
-
-               console.log(object);
-           }
-
-
-
-       });
-
-   }
+    function groupBy (data, key) {
+        return data.reduce(function (carry, el) {
+            var group = el[key];
+            if (carry[group] === undefined) {
+                carry[group] = []
+            }
+            carry[group].push(el)
+            return carry
+        }, {})
+    }
 
 </script>
 <div id="content" class="sub">

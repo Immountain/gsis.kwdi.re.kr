@@ -57,6 +57,30 @@ if (!Object.entries) {
     };
 }
 
+if (!Object.keys) {
+    Object.keys = function () {
+        var hwp = Object.prototype.hasOwnProperty,
+            hdeb = !{ toString: null }.propertyIsEnumerable('toString'),
+            de = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'constructor'],
+            del = de.length;
+
+        return function (obj) {
+            if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) !== 'object' && (typeof obj !== 'function' || obj === null)) throw new TypeError('type err');
+            var r = [],
+                prop,
+                i;
+            for (prop in obj) {
+                if (hwp.call(obj, prop)) r.push(prop);
+            }if (hdeb) {
+                for (i = 0; i < del; i++) {
+                    if (hwp.call(obj, de[i])) r.push(de[i]);
+                }
+            }
+            return r;
+        };
+    }();
+}
+
 // String.js - liberated from MicrosoftAjax.js on 03/28/10 by Sky Sanders
 // permalink: http://stackoverflow.com/a/2534834/2343
 
