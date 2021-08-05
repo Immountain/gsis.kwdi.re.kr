@@ -24,6 +24,10 @@
 
         initChartEl();
 
+        Search();
+
+
+
     });
 
 
@@ -129,6 +133,28 @@
                 }]
         });
     }
+
+    function Search() {
+
+        var strYear ="";
+        var endYear ="";
+
+
+        var p = {
+            strYear:strYear,endYear:endYear
+        };
+
+        $ifx.ajax('<c:url value='/cms/gsis/a03/List.do' />', {
+            method: "POST",
+            data: JSON.stringify(p),
+            success: function (res) {
+                console.log(res.list);
+
+                //firstGrid.setData(res.list);
+            }
+        })
+    }
+
 
 </script>
 <div id="content" class="sub">
