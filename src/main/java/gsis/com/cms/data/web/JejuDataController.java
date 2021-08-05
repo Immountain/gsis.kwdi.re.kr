@@ -121,6 +121,17 @@ public class JejuDataController  extends BaseAjaxController {
         return ok();
     }
 
+    @RequestMapping(value="/cms/gsis/data/fileHisUdate.do")
+    @ResponseBody
+    public ApiResponse updateJewThemaFileHis(JewThemaFileHisVO jewThemaFileHisVO) throws Exception{
+
+        LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+        jewThemaFileHisVO.setModId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
+
+        jejuDataService.updateJewThemaFileHis(jewThemaFileHisVO);
+
+        return ok();
+    }
 
 
 

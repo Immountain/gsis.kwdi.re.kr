@@ -62,6 +62,8 @@
                     ,COLLECT_TIME
                     ,REG_DT
                     ,REG_ID
+                    ,MOD_DT
+                    ,MOD_ID
 
                     ) VALUES (
                     #{themaId}
@@ -74,9 +76,27 @@
                     ,#{collectTime}
                     ,NOW()
                     ,#{regId}
+                    ,NOW()
+                    ,#{regId}
 
                  )
 
     </insert>
+
+
+    <update id="updateJewThemaFileHis">
+    UPDATE  JEW_THEMA_FILE_HIS
+        SET  THEMA_TITLE        = #{themaTitle}
+            ,THEMA_SUB_TITLE    = #{themaSubTitle}
+            ,TXT_CONTENT        = #{txtContent}
+            ,ETC                = #{etc}
+            ,MOD_DT             = NOW()
+            ,MOD_ID             = #{modDt}
+
+      WHERE 1=1
+      and THEMA_FILE_HIS_SNO =#{themaFileHisSno}
+
+
+    </update>
 
 </mapper>

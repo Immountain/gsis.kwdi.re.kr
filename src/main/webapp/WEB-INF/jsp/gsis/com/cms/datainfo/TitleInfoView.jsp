@@ -115,9 +115,35 @@
                 {key: "regDt", label: "업데이트 일", align: "center", width: 140},
                 {key: "themaTitle", label: "제목", align: "center", width: 180},
                 {key: "themaSubTitle", label: "메모", align: "center", width: 180},
-                {key: "txtContent", label: "내용", align: "center", width: 180}
+                {key: "txtContent", label: "내용", align: "center", width: 180},
+                {
+                    key: "themaFileHisSno", label: "수정", width:60 ,formatter: function () {
+
+                        // console.log(this.item);
+                        return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoUpdt(" + this.dindex + ");'> 수정 </button>";
+                    }
+                },
             ]
         });
+    }
+
+
+    function gotoUpdt(row) {
+
+        var themaTitle = firstGrid.getList()[row].themaTitle;
+        var themaSubTitle = firstGrid.getList()[row].themaSubTitle;
+        var txtContent = firstGrid.getList()[row].txtContent;
+        var etc = firstGrid.getList()[row].etc;
+        var themaFileHisSno = firstGrid.getList()[row].themaFileHisSno;
+
+
+
+        $('#themaTitle').val(themaTitle);
+        $('#themaSubTitle').val(themaSubTitle);
+        $('#txtContent').val(txtContent);
+        $('#etc').val(etc);
+        $('#themaFileHisSno').val(themaFileHisSno);
+
     }
 
 
@@ -207,10 +233,14 @@
                     <input type="hidden" id="themaGroupId" name="themaGroupId" value="${view.themaGroupId}">
 
                 </table>
+
+            <input type="hidden" id="themaFileHisSno" name="themaFileHisSno">
         </form>
 
         <div class="rows">
             <button type="button" class="button main" name="btn_save" id="btn_save">저장처리</button>
+            <button type="button" class="button main" name="btn_save" id="btn_update">수정처리</button>
+            <button type="button" class="button" name="btn_save" id="btn_cancel">초기화</button>
 
         </div>
 

@@ -18,5 +18,7 @@ public class JewThemaFileHisVO {
     private String collectTime="";
     private String regDt="";
     private String regId="";
+    private String modDt="";
+    private String modId="";
 
 }

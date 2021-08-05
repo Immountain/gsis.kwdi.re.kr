@@ -23,6 +23,11 @@ public class JejuDataDAO extends EgovComAbstractDAO {
       return   selectOne("JejuDataDAO.selectJewThemaFileHisView",vo);
     }
 
+    public void updateJewThemaFileHis(JewThemaFileHisVO vo)throws Exception{
+        insert("JejuDataDAO.updateJewThemaFileHis",vo);
+    }
+
+
 
 
 

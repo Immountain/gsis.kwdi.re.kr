@@ -14,4 +14,5 @@ public interface JejuDataService {
 
     JewThemaFileHisVO getSelectJewThemaFileHisView(JewThemaFileHisVO vo)throws Exception;
 
+    void updateJewThemaFileHis(JewThemaFileHisVO vo)throws Exception;
 }
