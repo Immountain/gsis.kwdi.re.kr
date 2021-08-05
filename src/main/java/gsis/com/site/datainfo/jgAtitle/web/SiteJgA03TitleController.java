@@ -34,7 +34,14 @@ public class SiteJgA03TitleController extends BaseAjaxController {
     public ModelAndView List(@RequestBody JewA03TiileDataVO searchVO) throws Exception{
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("jsonView");
-        modelAndView.addObject("list",jgA03TitleService.selectList(searchVO));
+
+
+        List<JewA03TiileDataVO> list =jgA03TitleService.getSelectList(searchVO);
+
+
+
+
+        modelAndView.addObject("list",list);
 
         return modelAndView;
     }

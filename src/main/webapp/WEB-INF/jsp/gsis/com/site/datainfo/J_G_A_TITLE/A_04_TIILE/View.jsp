@@ -24,6 +24,7 @@
 
         initChartEl();
 
+
     });
 
 
@@ -149,6 +150,9 @@
         });
 
     }
+
+
+
 
 </script>
 <div id="content" class="sub">

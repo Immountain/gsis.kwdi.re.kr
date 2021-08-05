@@ -150,11 +150,30 @@
             success: function (res) {
                 console.log(res.list);
 
+
+                test(res.list);
                 //firstGrid.setData(res.list);
             }
         })
     }
 
+
+   function test(data) {
+
+       $.each(data, function (index, object){
+
+           if(index ==data.length -1 ){
+
+
+
+               console.log(object);
+           }
+
+
+
+       });
+
+   }
 
 </script>
 <div id="content" class="sub">
