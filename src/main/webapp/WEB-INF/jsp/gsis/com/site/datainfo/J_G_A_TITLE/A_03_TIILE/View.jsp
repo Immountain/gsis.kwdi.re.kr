@@ -144,7 +144,7 @@
             strYear:strYear,endYear:endYear
         };
 
-        $ifx.ajax('<c:url value='/cms/gsis/a03/List.do' />', {
+        $ifx.ajax('<c:url value='/site/gsis/a03/List.do' />', {
             method: "POST",
             data: JSON.stringify(p),
             success: function (res) {
