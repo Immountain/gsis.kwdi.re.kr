@@ -23,6 +23,7 @@
     $(document).ready(function(){
 
         initChartEl();
+        Search();
 
 
     });
@@ -42,16 +43,16 @@
     function initChartEl() {
         chartView = Highcharts.chart('chartView', {
             chart: {
-                zoomType: 'xy'
+                type: 'line'
             },
             title: {
-                text: '제목'
+                text: '출생과 사망'
             },
-            subtitle: {
-                text: '서브제목'
-            },
+            // subtitle: {
+            //     text: '서브제목'
+            // },
             xAxis: [{
-                categories: ['2010', '2011', '2012', '2013', '2015', '2016', '2017', '2018', '2019'],
+                categories: [],
                 crosshair: true
             }],
             yAxis: [{ // Primary yAxis
@@ -62,14 +63,26 @@
                     }
                 },
                 title: {
-                    text: '왼쪽',
+                    text: '(명)',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
-                }
+                },
+                min: 0,
+                tickInterval: 1000,
+                // tickWidth: 0,
+                // gridLineWidth:1,
+                // reversed:false,
+                // visible:true,
+                // endOnTick:false,
+                // startOnTick:false,
+                // alignTicks:false,
+
+              //  lineWidth: 5,
+
             }, { // Secondary yAxis
                 title: {
-                    text: '오른쪽',
+                    text: '(명/인구 1천명당)',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
@@ -78,31 +91,61 @@
                     format: '{value}',
                     style: {
                         color: Highcharts.getOptions().colors[1]
-                    }
+                    },
+                    // formatter: function() {
+                    //     return parseInt((this.value  * 100 ) + 2);
+                    // }
                 },
-                opposite: true
+                opposite: true,
+                min: 0,
+                tickInterval: 2,
+                tickWidth: 0,
+                gridLineWidth:1,
+                endOnTick:false,
+                startOnTick:false,
+                alignTicks:false,
+              // lineWidth: 5,
+                // ceiling: 100,
+                // floor: 10
             }],
             tooltip: {
+
                 shared: true
+
+            },
+            plotOptions: {
+                spline: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                },
+                column: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
             },
             legend: {
-                align: 'right',
-                x: -30,
+                align: 'center',
                 verticalAlign: 'top',
-                y: 25,
-                floating: true,
-                backgroundColor:
-                    Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                borderColor: '#CCC',
-                borderWidth: 1,
-                shadow: false
+                borderWidth: 0
             },
             series: [{
                 name: '출생아수',
                 type: 'column',
                 yAxis: 0,
+
                 color: '#989f3b', //green
-                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4],
+                data: [],
+                dataLabels: {//바 상단의 수치값 개별 지정.
+                    enabled: true,
+                    format: '{y}',//수치 표현 포맷
+                    align: 'center',
+                    verticalAlign: 'top',
+                    //위치 지정
+                    y: 10,
+                }
 
 
             },{
@@ -111,7 +154,15 @@
                     yAxis: 0,
                     color: '#b3d78b', //green
                     pointPlacement: -0.1,
-                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4],
+                    data: [],
+                    dataLabels: {//바 상단의 수치값 개별 지정.
+                    enabled: true,
+                    format: '{y}',//수치 표현 포맷
+                    align: 'center',
+                    verticalAlign: 'top',
+                    //위치 지정
+                    y: 10,
+                }
 
 
                 },
@@ -120,7 +171,7 @@
                     type: 'spline',
                     yAxis: 1,
                     color: '#acbae0', //green
-                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3],
+                    data: [],
                     marker: {
                         lineWidth: 1,
                         lineColor: Highcharts.getOptions().colors[4],
@@ -135,7 +186,7 @@
                     type: 'spline',
                     yAxis: 1,
                     color: '#f40d14', //green
-                    data: [1.0, 2.9, 3.5, 10.5, 12.2, 18.5, 23.2, 23.5, 10.3],
+                    data: [],
                     marker: {
                         lineWidth: 1,
                         lineColor: Highcharts.getOptions().colors[5],
@@ -152,7 +203,153 @@
     }
 
 
+    function Search() {
+        var strYear ="";
+        var endYear ="";
+        var p = {
+            strYear:strYear,endYear:endYear
+        };
 
+        var groupArr = [];
+        var cdmData1 = []; //출생아수
+        var cdmData2 = [];//사망자수
+        var cdmData3 = [];//조출생률
+        var cdmData4 = [];//조사망률
+
+
+        $ifx.promise()
+            .then(function (ok, fail, data) {
+                $ifx.ajax('<c:url value='/site/gsis/a04/List.do' />', {
+                    method: "POST",
+                    data: JSON.stringify(p),
+                    success: function (res) {
+                        var $tbody = $('.table-outline table tbody');
+                        $tbody.empty();
+
+                        var groupData = groupBy(res.list, 'dataYear');
+
+                        var count = 0;
+                        $.each(groupData, function(key, item) {
+
+                          //  console.log("-->",item[0].dataYear);
+                            groupArr.push(item[0].dataYear);
+
+                            item.forEach(function(v, i) {
+                                var $tr = $('<tr />');
+                                if(i == 0 ) {
+                                    $tr.append($('<td />', {
+                                        'rowspan': item.length,
+                                        'text': key
+                                    }))
+                                }
+
+                                $tr.append('<td>' + (v['dataGb'] || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData1']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData2']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData3']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData4']) || '' ) +  '</td>')
+
+                                if(v['dataGb']=="전체"){
+
+                                    cdmData1.push(Number(v['cdmData1']));
+                                    cdmData2.push(Number(v['cdmData3']));
+                                    cdmData3.push(Number(v['cdmData2']));
+                                    cdmData4.push(Number(v['cdmData4']));
+                                }
+
+
+
+                                $tbody.append($tr);
+                            })
+                           // console.log(count, Object.keys(groupData).length)
+                            if(count == Object.keys(groupData).length -1) {
+
+                            }
+                            count++;
+                        });
+                        ok(groupData);
+
+                    }
+                })
+            })
+            .then(function (ok, fail, data) {
+             //   console.log(data)
+              //  console.log(cdmData1)
+
+                chartView.update({
+
+                    xAxis: [{
+                        categories: groupArr,
+                        crosshair: true
+                    }],
+
+
+                    series: [{
+                        name: '출생아수',
+                        type: 'column',
+                        yAxis: 0,
+                        color: '#989f3b', //green
+                        data: cdmData1,
+
+
+                    },{
+                        name: '사망자수',
+                        type: 'column',
+                        yAxis: 0,
+                        color: '#b3d78b', //green
+                        pointPlacement: -0.1,
+                        data: cdmData2,
+
+
+                    },
+                        {
+                            name: '조출생률',
+                            type: 'spline',
+                            yAxis: 1,
+                            color: '#acbae0', //green
+                            data: cdmData3,
+                            marker: {
+                                lineWidth: 1,
+                                lineColor: Highcharts.getOptions().colors[4],
+                                fillColor: 'white',
+                                radius: 7,
+                                symbol: 'square'
+                            }
+
+                        },
+                        {
+                            name: '조사망률',
+                            type: 'spline',
+                            yAxis: 1,
+                            color: '#f40d14', //green
+                            data: cdmData4,
+                            marker: {
+                                lineWidth: 1,
+                                lineColor: Highcharts.getOptions().colors[5],
+                                fillColor: 'white',
+                                radius: 7,
+                                symbol: 'circle'
+                            }
+
+                        }
+
+                    ]
+                }, true, true);
+               // console.log(data)
+            })
+        ;
+    }
+
+    function groupBy (data, key) {
+        return data.reduce(function (carry, el) {
+            var group = el[key];
+            if (carry[group] === undefined) {
+                carry[group] = []
+            }
+            carry[group].push(el)
+            return carry
+        }, {})
+    }
 
 </script>
 <div id="content" class="sub">
@@ -204,13 +401,14 @@
 
                 <p class="info">
                     좌우터치로 스크롤 가능합니다.
-                    <span>단위 %</span>
+                    <span>단위 명,%</span>
                 </p>
                 <div class="table-outline">
                     <table>
                         <thead>
                         <tr>
-                            <th colspan="2">구분</th>
+                            <th >년도</th>
+                            <th >구분</th>
                             <th>출생건수</th>
                             <th>조출생률</th>
                             <th>사망건수</th>
@@ -218,98 +416,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td rowspan="3">2014</td>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
 
-
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-
-                        </tr>
-                        <tr>
-                            <td rowspan="3">2014</td>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="3">2014</td>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="3">2014</td>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>

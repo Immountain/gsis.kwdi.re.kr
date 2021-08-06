@@ -39,11 +39,11 @@
                 zoomType: 'xy'
             },
             title: {
-                text: '타이틀'
+                text: '연령별 인구'
             },
-            subtitle: {
-                text: '서브 타이틀'
-            },
+            // subtitle: {
+            //     text: '서브 타이틀'
+            // },
             xAxis: [{
                 categories: [
                     '0~4세', '5~9세', '10~14세', '15~19세', '20~24세', '25~29세', '30~34세', '35~39세', '40~44세', '45~49세', '50~54세', '55~59세', '60~64세', '65~69세', '70~74세', '75~79세', '80세이상'
@@ -58,14 +58,14 @@
                     }
                 },
                 title: {
-                    text: '왼쪽',
+                    text: '(명)',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
                 }
             }, { // Secondary yAxis
                 title: {
-                    text: '오른쪽',
+                    text: '(%)',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
@@ -90,16 +90,9 @@
                 }
             },
             legend: {
-                align: 'right',
-                x: -30,
+                align: 'center',
                 verticalAlign: 'top',
-                y: 25,
-                floating: true,
-                backgroundColor:
-                    Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                borderColor: '#CCC',
-                borderWidth: 1,
-                shadow: false
+                borderWidth: 0
             },
             series: [{
                 name: '여성',
@@ -134,6 +127,7 @@
             strYear:strYear,endYear:endYear
         };
 
+
         $ifx.promise()
         .then(function (ok, fail, data) {
             $ifx.ajax('<c:url value='/site/gsis/a03/List.do' />', {
@@ -145,8 +139,12 @@
 
                     var groupData = groupBy(res.list, 'dataYear');
 
+
                     var count = 0;
                     $.each(groupData, function(key, item) {
+
+
+
 
                         item.forEach(function(v, i) {
                             var $tr = $('<tr />');
@@ -194,6 +192,10 @@
              {dataYear: "2020", dataGb: "남성", cdmData1: "337343", cdmData2: "13511", cdmData3: "18056", …}
              {dataYear: "2020", dataGb: "여성 비율", cdmData1: "49.7", cdmData2: "48.2", cdmData3: "48.8", …}
              */
+
+
+
+
             chartView.update({
                 series: [{
                     name: '여성',
@@ -324,263 +326,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td rowspan="3">2014</td>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
 
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="3">2014</td>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="3">2014</td>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="3">2014</td>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
-                        <tr>
-                            <td>전체</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                            <td>100.0</td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>

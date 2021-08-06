@@ -87,4 +87,9 @@ public class JgA04TitleServiceImpl extends EgovAbstractServiceImpl implements Jg
         }
 
     }
+
+    @Override
+    public List<JewA04TiileDataVO> getSelectList(JewA04TiileDataVO vo) throws Exception {
+        return jgA04TitleDAO.selectList(vo);
+    }
 }
