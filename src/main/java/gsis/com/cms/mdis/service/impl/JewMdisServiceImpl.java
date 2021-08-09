@@ -2,6 +2,8 @@ package gsis.com.cms.mdis.service.impl;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
+import gsis.com.cms.data.dao.JejuDataDAO;
+import gsis.com.cms.data.vo.JewThemaFileHisVO;
 import gsis.com.cms.mdis.dao.JewMdisDAO;
 import gsis.com.cms.mdis.service.JewMdisService;
 import gsis.com.cms.mdis.vo.JewMdisVO;
@@ -22,6 +24,11 @@ public class JewMdisServiceImpl extends EgovAbstractServiceImpl implements JewMd
 
     @Resource(name = "InfoFileMngUtil")
     private InfoFileMngUtil infoFileMngUtil;
+
+
+    @Resource(name="JejuDataDAO")
+    private JejuDataDAO jejuDataDAO;
+
 
     @Override
     public JewMdisVO selectMdis(JewMdisVO vo) throws Exception {
@@ -58,6 +65,15 @@ public class JewMdisServiceImpl extends EgovAbstractServiceImpl implements JewMd
         //여기서 파일 경로 체인지
         infoFileMngUtil.copyFile(vo.getEtc());
         infoFileMngUtil.copyFile(vo.getDataFile());
+
+
+        JewThemaFileHisVO jewThemaFileHisVO = new JewThemaFileHisVO();
+        jewThemaFileHisVO.setUpdateKeepType("M");
+        jewThemaFileHisVO.setUpdateKeepId(key);
+        jewThemaFileHisVO.setTitle(vo.getMdisKorNm());
+        jejuDataDAO.getInsertJewUpdateKeep(jewThemaFileHisVO);
+
+
     }
 
     @Override

@@ -15,4 +15,11 @@ public interface JejuDataService {
     JewThemaFileHisVO getSelectJewThemaFileHisView(JewThemaFileHisVO vo)throws Exception;
 
     void updateJewThemaFileHis(JewThemaFileHisVO vo)throws Exception;
+
+
+    void getInsertJewUpdateKeep(JewThemaFileHisVO vo)throws Exception;
+
+
+    void getInsertJewThemaVisit(JewThemaFileHisVO vo)throws Exception;
+
 }

@@ -19,6 +19,7 @@ public class JejuDataServiceImpl extends EgovAbstractServiceImpl implements Jeju
     private JejuDataDAO jejuDataDAO;
 
 
+
     @Override
     public List<JewThemaFileHisVO> selectJewThemaFileHis(JewThemaFileHisVO vo) throws Exception {
         return jejuDataDAO.selectJewThemaFileHis(vo);
@@ -26,6 +27,14 @@ public class JejuDataServiceImpl extends EgovAbstractServiceImpl implements Jeju
 
     @Override
     public void insertJewThemaFileHis(JewThemaFileHisVO vo) throws Exception {
+
+
+
+        vo.setUpdateKeepId(vo.getThemaId());
+        vo.setTitle(vo.getThemaTitle());
+        vo.setUpdateKeepType("T");
+
+        jejuDataDAO.getInsertJewUpdateKeep(vo);
         jejuDataDAO.insertJewThemaFileHis(vo);
         
 
@@ -39,6 +48,16 @@ public class JejuDataServiceImpl extends EgovAbstractServiceImpl implements Jeju
     @Override
     public void updateJewThemaFileHis(JewThemaFileHisVO vo) throws Exception {
         jejuDataDAO.updateJewThemaFileHis(vo);
+    }
+
+    @Override
+    public void getInsertJewUpdateKeep(JewThemaFileHisVO vo) throws Exception {
+        jejuDataDAO.getInsertJewUpdateKeep(vo);
+    }
+
+    @Override
+    public void getInsertJewThemaVisit(JewThemaFileHisVO vo) throws Exception {
+        jejuDataDAO.getInsertJewThemaVisit(vo);
     }
 }
 

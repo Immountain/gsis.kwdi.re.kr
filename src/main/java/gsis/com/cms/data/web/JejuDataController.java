@@ -114,7 +114,7 @@ public class JejuDataController  extends BaseAjaxController {
     public ApiResponse fileHisSave(JewThemaFileHisVO jewThemaFileHisVO) throws Exception{
 
         LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-        jewThemaFileHisVO.setRegId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
+        jewThemaFileHisVO.setModId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
 
         jejuDataService.insertJewThemaFileHis(jewThemaFileHisVO);
 

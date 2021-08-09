@@ -38,10 +38,10 @@
                 thousandsSep: ','
             },
             title: {
-                text: '연령별 경제활동인구 및 고용률'
+                text: '제목'
             },
             xAxis: [{
-                categories: ['15~19세', '20~24세', '25~29세', '30~34세', '35~39세', '40~44세', '45~49세', '50~54세', '55~59세','60~64세','65세이상'],
+                categories: [],
                 crosshair: true
             }],
             yAxis: [{ // Primary yAxis
@@ -52,14 +52,14 @@
                     }
                 },
                 title: {
-                    text: '(%)',
+                    text: '(천명)',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
                 }
             }, { // Secondary yAxis
                 title: {
-                    text: '(백명)',
+                    text: '(%)',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
@@ -70,15 +70,17 @@
                         color: Highcharts.getOptions().colors[1]
                     }
                 },
-                opposite: true
+                opposite: true,
+                min: 0,
+              //  tickInterval: 2,
+                // tickWidth: 0,
+                // gridLineWidth:1,
+                // endOnTick:false,
+                // startOnTick:false,
+                // alignTicks:false,
             }],
             tooltip: {
                 shared: true
-            },
-            legend: {
-                align: 'center',
-                verticalAlign: 'top',
-                borderWidth: 0
             },
             plotOptions: {
                 spline: {
@@ -93,6 +95,11 @@
                     }
                 }
             },
+            legend: {
+                align: 'center',
+                verticalAlign: 'top',
+                borderWidth: 0
+            },
             series: []
         });
     }
@@ -106,10 +113,16 @@
         };
 
         var groupArr = [];
+        var cdmData1 = []; //출산전 휴사
+        var cdmData2 = [];//육아휴직(여)
+        var cdmData3 = [];//육아기근로단축(여)
+        var cdmData4 = [];//육아휴직(넘성비율)
+        var cdmData5 = [];//육아기근로단축(넘성비율)
+
 
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value='/site/gsis/c02/List.do' />', {
+                $ifx.ajax('<c:url value='/site/gsis/d05/List.do' />', {
                     method: "POST",
                     data: JSON.stringify(p),
                     success: function (res) {
@@ -134,28 +147,29 @@
                                 }
 
                                 $tr.append('<td>' + (v['dataGb'] || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData2T']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData3T']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData4T']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData5T']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData6T']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData7T']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData8T']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData9T']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData10T']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData11T']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData12T']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData1']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData2']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData3']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData4']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData5']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData6']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData7']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData8']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData9']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData10']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData11']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData12']) || '' ) +  '</td>')
+
+
+                                if(v['dataGb']=="전체"){
+
+                                    cdmData1.push(Number(v['cdmData1']));
+
+
+                                }else if(v['dataGb']=="여성"){
+
+                                    cdmData2.push(Number(v['cdmData3']));
+                                    cdmData3.push(Number(v['cdmData5']));
+
+                                }else if(v['dataGb']=="남성비율"){
+
+                                    cdmData4.push(Number(v['cdmData3']));
+                                    cdmData5.push(Number(v['cdmData5']));
+                                }
 
 
 
@@ -163,11 +177,11 @@
                             })
                             // console.log(count, Object.keys(groupData).length)
                             if(count == Object.keys(groupData).length -1) {
-                                ok(item);
+
                             }
                             count++;
                         });
-
+                        ok(groupData);
 
                     }
                 })
@@ -175,94 +189,19 @@
             .then(function (ok, fail, data) {
 
 
-                var cdmData1 = []; //경제활동인구(여성)
-                var cdmData2 = [];//경제활동인구(남성)
-                var cdmData3 = [];//고용률(여성)
-                var cdmData4 = [];//고용률(남성)
-
-
-                $.each(data, function(key, item) {
-
-                    console.log(key,item);
-                    if(item.dataGb=="여성"){
-
-
-                        console.log(key,item.cdmData2T);
-
-
-
-                        cdmData1.push(Number(item.cdmData2T))
-                        cdmData1.push(Number(item.cdmData3T))
-                        cdmData1.push(Number(item.cdmData4T))
-                        cdmData1.push(Number(item.cdmData5T))
-                        cdmData1.push(Number(item.cdmData6T))
-                        cdmData1.push(Number(item.cdmData7T))
-                        cdmData1.push(Number(item.cdmData8T))
-                        cdmData1.push(Number(item.cdmData9T))
-                        cdmData1.push(Number(item.cdmData10T))
-                        cdmData1.push(Number(item.cdmData11T))
-                        cdmData1.push(Number(item.cdmData12T))
-
-
-
-                        cdmData3.push(Number(item.cdmData2))
-                        cdmData3.push(Number(item.cdmData3))
-                        cdmData3.push(Number(item.cdmData4))
-                        cdmData3.push(Number(item.cdmData5))
-                        cdmData3.push(Number(item.cdmData6))
-                        cdmData3.push(Number(item.cdmData7))
-                        cdmData3.push(Number(item.cdmData8))
-                        cdmData3.push(Number(item.cdmData9))
-                        cdmData3.push(Number(item.cdmData10))
-                        cdmData3.push(Number(item.cdmData11))
-                        cdmData3.push(Number(item.cdmData12))
-
-
-
-
-                    }
-                   else if(item.dataGb=="남성"){
-
-                      //  for(var i=2; i<=12; i++) cdmData2.push(Number(data[1]['cdmData' + i]));
-                       // for(var i=2; i<=12; i++) cdmData4.push(Number(data[1]['cdmDataT' + i]));
-
-                        cdmData2.push(Number(item.cdmData2T))
-                        cdmData2.push(Number(item.cdmData3T))
-                        cdmData2.push(Number(item.cdmData4T))
-                        cdmData2.push(Number(item.cdmData5T))
-                        cdmData2.push(Number(item.cdmData6T))
-                        cdmData2.push(Number(item.cdmData7T))
-                        cdmData2.push(Number(item.cdmData8T))
-                        cdmData2.push(Number(item.cdmData9T))
-                        cdmData2.push(Number(item.cdmData10T))
-                        cdmData2.push(Number(item.cdmData11T))
-                        cdmData2.push(Number(item.cdmData12T))
-
-
-
-                        cdmData4.push(Number(item.cdmData2))
-                        cdmData4.push(Number(item.cdmData3))
-                        cdmData4.push(Number(item.cdmData4))
-                        cdmData4.push(Number(item.cdmData5))
-                        cdmData4.push(Number(item.cdmData6))
-                        cdmData4.push(Number(item.cdmData7))
-                        cdmData4.push(Number(item.cdmData8))
-                        cdmData4.push(Number(item.cdmData9))
-                        cdmData4.push(Number(item.cdmData10))
-                        cdmData4.push(Number(item.cdmData11))
-                        cdmData4.push(Number(item.cdmData12))
-
-                    }
-
-
-                });
-
                 chartView.update({
+
+                    xAxis: [{
+                        categories: groupArr,
+                        crosshair: true
+                    }],
+
+
                     series: [{
-                        name: '경제활동인구(여성)',
+                        name: '출산전후 휴가',
                         type: 'column',
                         yAxis: 0,
-                        color: '#fae7d0', //green
+                        color: '#ace2ff', //green
                         data: cdmData1,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -274,11 +213,12 @@
                         }
 
 
+
                     },{
-                        name: '경제활동인구(남성)',
+                        name: '육아휴직(여)',
                         type: 'column',
                         yAxis: 0,
-                        color: '#499cc0', //green
+                        color: '#bca3cc', //green
                         pointPlacement: -0.1,
                         data: cdmData2,
                         dataLabels: {//바 상단의 수치값 개별 지정.
@@ -291,33 +231,52 @@
                         }
 
 
-                    },
+
+                    },{
+                        name: '육아기근로단축(여)',
+                        type: 'column',
+                        yAxis: 0,
+                        color: '#c04848', //green
+                        pointPlacement: -0.1,
+                        data: cdmData3,
+                        dataLabels: {//바 상단의 수치값 개별 지정.
+                            enabled: true,
+                            format: '{y}',//수치 표현 포맷
+                            align: 'center',
+                            verticalAlign: 'top',
+                            //위치 지정
+                            y: 10,
+                            }
+                        },
                         {
-                            name: '고용률(여성)',
+                            name: '육아휴직(남성비율)',
                             type: 'spline',
                             yAxis: 1,
-                            color: '#ffb2b1', //green
+                            color: '#f5c082', //green
                             data: cdmData3,
                             marker: {
                                 lineWidth: 1,
-                                lineColor: '#ffb2b1',
+                                lineColor: '#f5c082',
+                                fillColor: 'white',
                                 radius: 7,
                                 symbol: 'circle'
                             }
 
                         },
                         {
-                            name: '고용률(남성)',
+                            name: '육아기근로단축(남성 비율)',
                             type: 'spline',
                             yAxis: 1,
-                            color: '#ddf1ff', //green
+                            color: '#499cc0', //green
                             data: cdmData4,
                             marker: {
                                 lineWidth: 1,
-                                lineColor: '#ddf1ff',
+                                lineColor: '#499cc0',
+                                fillColor: 'white',
                                 radius: 7,
-                                symbol: 'square'
+                                symbol: 'circle'
                             }
+
                         }
 
                     ]
@@ -390,45 +349,22 @@
 
                 <p class="info">
                     좌우터치로 스크롤 가능합니다.
-                    <span>단위 천명</span>
+                    <span>단위 %</span>
                 </p>
                 <div class="table-outline">
                     <table>
                         <thead>
                         <tr>
-                            <th colspan="2" rowspan="2"></th>
-                            <th colspan="11" >경제활동인구</th>
-                            <th colspan="11" >고용율</th>
+                            <th colspan="2">구분</th>
+
+                            <th>출산전후 휴가급여 인원</th>
+                            <th>출산전후 휴가급여 지급액</th>
+                            <th>육아휴직급여 인원</th>
+                            <th>육아휴직급여 지급액</th>
+                            <th>육아기근단축급여 인원</th>
+                            <th>육아기근단축급여 지급액</th>
 
                         </tr>
-                        </thead>
-                        <thead>
-                            <tr>
-                                <th colspan="2">구분</th>
-                                <th>15~19세</th>
-                                <th>20~24세</th>
-                                <th>25~29세</th>
-                                <th>30~34세</th>
-                                <th>35~39세</th>
-                                <th>40~44세</th>
-                                <th>45~49세</th>
-                                <th>50~54세</th>
-                                <th>55~59세</th>
-                                <th>60~64세</th>
-                                <th>65세이상</th>
-                                <th>15~19세</th>
-                                <th>20~24세</th>
-                                <th>25~29세</th>
-                                <th>30~34세</th>
-                                <th>35~39세</th>
-                                <th>40~44세</th>
-                                <th>45~49세</th>
-                                <th>50~54세</th>
-                                <th>55~59세</th>
-                                <th>60~64세</th>
-                                <th>65세이상</th>
-
-                            </tr>
                         </thead>
                         <tbody>
 

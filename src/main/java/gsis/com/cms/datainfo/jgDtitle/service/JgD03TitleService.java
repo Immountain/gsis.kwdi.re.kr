@@ -13,4 +13,6 @@ public interface JgD03TitleService {
      void insert(JewD03TiileDataVO vo)throws Exception;
      void delete(JewD03TiileDataVO vo)throws Exception;
      void excelDownload(JewD03TiileDataVO searchVO, HttpServletResponse response);
+
+     List<JewD03TiileDataVO> getSelectList(JewD03TiileDataVO vo)throws Exception;
 }

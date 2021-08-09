@@ -84,6 +84,75 @@
     </insert>
 
 
+
+    <insert id="insertJewUpdateKeep">
+
+
+         INSERT INTO JEW_UPDATE_KEEP(
+                     UPDATE_KEEP_TYPE
+                    ,UPDATE_KEEP_ID
+                    ,TITLE
+                    ,MEMO
+                    ,REG_DT
+                    ,REG_ID
+
+                    ) VALUES (
+                    #{updateKeepType}
+                    ,#{updateKeepId}
+                    ,#{title}
+                    ,#{memo}
+                    ,NOW()
+                    ,#{regId}
+                 )
+
+    </insert>
+
+
+
+    <insert id="insertJewThemaVisit">
+
+
+         INSERT INTO JEW_THEMA_VISIT(
+
+                     IP
+                    ,V_DATE
+                    ,THEMA_ID
+                    ,OS
+                    ,BROWSER
+                    ,USER_AGENT
+                    ,SITE_ID
+                    ,BROWSER_S
+                    ,LOC
+                    ,VISIT_TYPE
+                    ,PAGE_TYPE
+                    ,TARGET_ID
+                    ,SITE_URL
+                    ,REFERER_URL
+                    ,IS_DEVIEC
+
+                    ) VALUES (
+
+                     #{ip}
+                    ,NOW()
+                    ,#{themaId}
+                    ,#{os}
+                    ,#{browser}
+                    ,#{userAgent}
+                    ,#{siteId}
+                    ,#{browserS}
+                    ,#{loc}
+                    ,#{visitType}
+                    ,#{pageType}
+                    ,#{targetId}
+                    ,#{siteUrl}
+                    ,#{refererUrl}
+                    ,#{isDeviec}
+                 )
+
+    </insert>
+
+
+
     <update id="updateJewThemaFileHis">
     UPDATE  JEW_THEMA_FILE_HIS
         SET  THEMA_TITLE        = #{themaTitle}

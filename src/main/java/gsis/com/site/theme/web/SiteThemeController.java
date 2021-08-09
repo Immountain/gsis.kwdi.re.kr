@@ -1,6 +1,7 @@
 package gsis.com.site.theme.web;
 
 
+import gsis.com.cmm.visit.GsisVisitFactory;
 import gsis.com.cms.data.service.JejuDataService;
 import gsis.com.cms.data.vo.JewThemaFileHisVO;
 import gsis.com.cms.thema.service.JewThemaInfoService;
@@ -8,6 +9,7 @@ import gsis.com.cms.thema.vo.JewThemaInfoVO;
 import gsis.com.site.jejudb.vo.JejuDbVO;
 import gsis.com.site.jewmdis.vo.SiteJewMdisVO;
 import gsis.com.site.theme.vo.SiteJewThemaInfoVO;
+import infomind.com.cmm.visit.InfoVisitFactory;
 import infomind.com.cmm.web.BaseController;
 import infomind.com.cms.info.site.vo.InfoSiteMenuVO;
 import infomind.com.cms.info.site.vo.InfoSiteVO;
@@ -33,6 +35,8 @@ public class SiteThemeController extends BaseController {
 
     @Resource(name="JejuDataService")
     private JejuDataService jejuDataService;
+
+
 
 
     @RequestMapping("/list.do")
@@ -131,7 +135,16 @@ public class SiteThemeController extends BaseController {
 
 
 
-     String url =jewThemaInfoVO.getThemaGroupId()+"/"+jewThemaInfoVO.getThemaId()+"/View";
+        //저장 차리
+        JewThemaFileHisVO hisVo = new JewThemaFileHisVO();
+        hisVo = GsisVisitFactory.ThemaFileHis(request);
+        hisVo.setThemaId(jewThemaInfoVO.getThemaId());
+        jejuDataService.getInsertJewThemaVisit(hisVo);
+
+
+
+
+        String url =jewThemaInfoVO.getThemaGroupId()+"/"+jewThemaInfoVO.getThemaId()+"/View";
 
         System.out.println("url====>"+InfoViewUtils.gsisPpageContentView("datainfo", url, layout));
 

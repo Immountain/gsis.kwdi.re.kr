@@ -23,9 +23,112 @@
 
     $(document.body).ready(function () {
 
+        $('#btn_update').attr("disabled", true);
+
         genGrid();
 
         Search();
+
+
+
+
+        $('#btn_cancel').click(function() {
+
+            $('#themaTitle').val("");
+            $('#themaSubTitle').val("");
+            $('#txtContent').val("");
+            $('#etc').val("");
+            $('#themaFileHisSno').val("");
+
+
+            $('#btn_save').attr("disabled", false);
+            $('#btn_update').attr("disabled", true);
+
+        });
+
+        $('#btn_update').click(function() {
+
+            var themaTitle = $('#themaTitle').val();
+            var themaSubTitle = $('#themaSubTitle').val();
+            var txtContent = $('#txtContent').val();
+            var themaFileHisSno = $('#themaFileHisSno').val();
+
+            if(!themaFileHisSno){
+                alert("선택한 내용이 없습니다.")
+                return;
+
+            }
+
+
+            if(!themaTitle){
+                alert("제목을 입력하세요")
+                return;
+            }
+
+            if(!themaSubTitle){
+                alert("메모을 입력하세요")
+                return;
+            }
+
+            if(!txtContent){
+                alert("내용을 입력하세요")
+                return;
+            }
+
+            var formData = $("#view").serializeObject();
+
+            var API_SERVER = "<c:url value='/cms/gsis/data/fileHisUdate.do' />";
+            var saveQuestion = confirm("수정 하시겠습니까?");
+            if (saveQuestion) {
+                $.ajax({
+                    url : API_SERVER,
+                    type : 'post',
+                    data : formData,
+                    dateType:'json',
+
+                    beforeSend: function(xhr) {
+
+                        xhr.setRequestHeader("AJAX", "true");
+
+                    },
+                    success : function(data) {
+
+                        var jsonObj = JSON.stringify(data);
+                        if(data.status=="0"){
+                            if(data.message=="SUCCESS"){
+
+
+
+                                alert("수정처리 완료했습니다.");
+
+                                $('#themaTitle').val("");
+                                $('#themaSubTitle').val("");
+                                $('#txtContent').val("");
+                                $('#etc').val("");
+                                $('#themaFileHisSno').val("");
+
+                                $('#btn_update').attr("disabled", true);
+                                $('#btn_save').attr("disabled", false);
+
+
+                                Search();
+
+                            }else{
+                                alert(data.message);
+
+                            }
+                        }else{
+
+                            alert("처리중 오류가 발생했습니다.");
+                        }
+                    }, // success
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            }
+
+    });
+
 
 
         $('#btn_save').click(function() {
@@ -81,7 +184,10 @@
                               $('#themaSubTitle').val("");
                               $('#txtContent').val("");
                               $('#etc').val("");
+                              $('#themaFileHisSno').val("");
 
+                              $('#btn_update').attr("disabled", true);
+                              $('#btn_save').attr("disabled", false);
 
 
                                 Search();
@@ -143,6 +249,10 @@
         $('#txtContent').val(txtContent);
         $('#etc').val(etc);
         $('#themaFileHisSno').val(themaFileHisSno);
+
+
+        $('#btn_save').attr("disabled", true);
+        $('#btn_update').attr("disabled", false);
 
     }
 
@@ -239,8 +349,8 @@
 
         <div class="rows">
             <button type="button" class="button main" name="btn_save" id="btn_save">저장처리</button>
-            <button type="button" class="button main" name="btn_save" id="btn_update">수정처리</button>
-            <button type="button" class="button" name="btn_save" id="btn_cancel">초기화</button>
+            <button type="button" class="button main" name="btn_update" id="btn_update">수정처리</button>
+            <button type="button" class="button" name="btn_cancel" id="btn_cancel">초기화</button>
 
         </div>
 

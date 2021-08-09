@@ -21,4 +21,30 @@ public class JewThemaFileHisVO {
     private String modDt="";
     private String modId="";
 
+
+    private String updateKeepSno="";
+    private String updateKeepType="";
+    private String updateKeepId="";
+    private String title="";
+    private String memo="";
+
+
+
+    private String themaVisitSno="";
+    private String ip="";
+    private String vDate="";
+    private String os="";
+    private String browser="";
+    private String userAgent="";
+    private String siteId="";
+    private String browserS="";
+    private String loc="";
+    private String visitType="";
+    private String pageType="";
+    private String targetId="";
+    private String siteUrl="";
+    private String refererUrl="";
+    private String isDeviec="";
+
+
 }

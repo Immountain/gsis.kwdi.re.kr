@@ -1,4 +1,5 @@
 package infomind.com.cmm.visit;
+import gsis.com.cms.data.vo.JewThemaFileHisVO;
 import infomind.com.cmm.InfoConstants;
 import infomind.com.cms.info.site.vo.InfoSiteVO;
 import infomind.com.cms.info.site.vo.InfoSiteVisitVO;
@@ -102,6 +103,7 @@ public class InfoVisitFactory {
 
         return v;
     }
+
 
 
     /**
