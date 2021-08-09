@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JewBannerDAO">
+
+
+    <select id="selectJewBannerList"  parameterType="gsis.com.cms.banner.vo.JewBannerVO"   resultType="gsis.com.cms.banner.vo.JewBannerVO">
+      SELECT BANNER_SNO
+            ,BANNER_TYPE
+            ,BANNER_NM
+            ,BANNER_MEMO
+            ,BANNER_TXT
+            ,BANNER_IMAGE
+            ,SORT_ORDR
+            ,DATE_FORMAT(STR_TO_DATE(STR_DT, '%Y%m%d'),'%Y-%m-%d') as STR_DT
+            ,DATE_FORMAT(STR_TO_DATE(END_DT, '%Y%m%d'),'%Y-%m-%d') as END_DT
+            ,LINK_TYPE
+            ,LINK_URL
+            ,USE_YN
+            ,DELETE_YN
+            ,REG_ID
+            ,REG_DT
+            ,MOD_ID
+            ,MOD_DT
+        FROM JEW_BANNER
+        WHERE 1=1
+        AND  DELETE_YN ='N'
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(searchKeyword)">
+            AND BANNER_NM LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        <if test="searchCondition == 0">
+         AND BANNER_TYPE ='IMAGE'
+        </if>
+        <if test="searchCondition == 1">
+            AND BANNER_TYPE ='LIST'
+        </if>
+
+
+    </select>
+
+
+    <select id="selectJewBannerView"  parameterType="gsis.com.cms.banner.vo.JewBannerVO"   resultType="gsis.com.cms.banner.vo.JewBannerVO">
+      SELECT BANNER_SNO
+            ,BANNER_TYPE
+            ,BANNER_NM
+            ,BANNER_MEMO
+            ,BANNER_TXT
+            ,BANNER_IMAGE
+            ,SORT_ORDR
+            ,DATE_FORMAT(STR_TO_DATE(STR_DT, '%Y%m%d'),'%Y-%m-%d') as STR_DT
+            ,DATE_FORMAT(STR_TO_DATE(END_DT, '%Y%m%d'),'%Y-%m-%d') as END_DT
+            ,LINK_TYPE
+            ,LINK_URL
+            ,USE_YN
+            ,DELETE_YN
+            ,REG_ID
+            ,REG_DT
+            ,MOD_ID
+            ,MOD_DT
+        FROM JEW_BANNER
+        WHERE 1=1
+        AND BANNER_SNO =#{bannerSno}
+    </select>
+
+
+    <insert id="insertJewBanner">
+
+
+         INSERT INTO JEW_BANNER(
+
+
+                     BANNER_TYPE
+                    ,BANNER_NM
+                    ,BANNER_MEMO
+                    ,BANNER_TXT
+                    ,BANNER_IMAGE
+                    ,SORT_ORDR
+                    ,STR_DT
+                    ,END_DT
+                    ,LINK_TYPE
+                    ,LINK_URL
+                    ,USE_YN
+                    ,DELETE_YN
+                    ,REG_ID
+                    ,REG_DT
+                    ,MOD_ID
+                    ,MOD_DT
+
+                    ) VALUES (
+
+                     #{bannerType}
+                    ,#{bannerNm}
+                    ,#{bannerMemo}
+                    ,#{bannerTxt}
+                    ,#{bannerImage}
+                    ,#{sortOrdr}
+                    ,REPLACE(#{strDt},"-","")
+                    ,REPLACE(#{endDt},"-","")
+                    ,#{linkType}
+                    ,#{linkUrl}
+                    ,#{useYn}
+                    ,'N'
+                    ,#{regId}
+                    ,NOW()
+                    ,#{regId}
+                    ,NOW()
+                 )
+
+    </insert>
+
+
+    <update id="updateJewBanner">
+    UPDATE  JEW_BANNER
+        SET
+
+             BANNER_TYPE    =#{bannerType}
+            ,BANNER_NM      =#{bannerNm}
+            ,BANNER_MEMO    =#{bannerMemo}
+            ,BANNER_TXT     =#{bannerTxt}
+            ,BANNER_IMAGE   =#{bannerImage}
+            ,SORT_ORDR      =#{sortOrdr}
+            ,STR_DT         =REPLACE(#{strDt},"-","")
+            ,END_DT         =REPLACE(#{endDt},"-","")
+            ,LINK_TYPE      =#{linkType}
+            ,LINK_URL       =#{linkUrl}
+            ,USE_YN         =#{useYn}
+            ,MOD_ID         =#{modId}
+            ,MOD_DT         =NOW()
+      WHERE 1=1
+      and BANNER_SNO =#{bannerSno}
+
+
+    </update>
+
+
+    <update id="deleteJewBanner">
+    UPDATE  JEW_BANNER
+        SET
+
+            DELETE_YN      ='Y'
+            ,MOD_ID         =#{modId}
+            ,MOD_DT         =NOW()
+      WHERE 1=1
+      and BANNER_SNO =#{bannerSno}
+
+
+    </update>
+
+</mapper>

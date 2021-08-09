@@ -15,6 +15,7 @@
             ,JTG.REG_ID
             ,JTG.MOD_DT
             ,JTG.MOD_ID
+            ,JTG.DIV_CSS
         FROM JEW_THEMA_GROUP JTG
         WHERE 1=1
           AND JTG.THEMA_GROUP_ID =#{themaGroupId}
@@ -33,6 +34,7 @@
             ,JTG.REG_ID
             ,JTG.MOD_DT
             ,JTG.MOD_ID
+            ,JTG.DIV_CSS
         FROM JEW_THEMA_GROUP JTG
         WHERE 1=1
         AND
@@ -56,6 +58,7 @@
                 ,DELETE_YN
                 ,REG_DT
                 ,REG_ID
+                ,DIV_CSS
 
             ) VALUES (
                  #{themaGroupId}
@@ -65,7 +68,8 @@
                 ,'N'
                 ,NOW()
                 ,#{regId}
-                     )
+                ,#{divCss}
+               )
         ]]>
     </insert>
 
@@ -77,6 +81,7 @@
             ,USE_YN =#{useYn}
             ,MOD_DT = NOW()
             ,MOD_ID =#{modId}
+            ,DIV_CSS =#{divCss}
         WHERE THEMA_GROUP_ID = #{themaGroupId}
     </update>
 

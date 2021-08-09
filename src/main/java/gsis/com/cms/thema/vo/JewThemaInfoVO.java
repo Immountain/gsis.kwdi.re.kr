@@ -34,5 +34,6 @@ public class JewThemaInfoVO extends CmsSearchVO {
         private String themaGroupNm;
         private String collectTypeNm;
         private String collectCycleNm;
+        private String divCss;
 
 }

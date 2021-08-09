@@ -146,10 +146,19 @@
                     <td class="left">
                         <form:select path="useYn">
                             <form:option value="Y" label="사용"/>
-                            <form:option value="Y" label="사용안함"/>
+                            <form:option value="N" label="사용안함"/>
                         </form:select>
                         <div><form:errors path="useYn" cssClass="error" /></div>
                     </td>
+                </tr>
+
+                <tr>
+                    <th><label for="divCss">스타일</label></th>
+                    <td class="left" colspan="3" >
+                        <form:input path="divCss" maxlength="20"/>
+                        <div><form:errors path="divCss" cssClass="error"/></div>
+                    </td>
+
                 </tr>
                 </tbody>
             </table>

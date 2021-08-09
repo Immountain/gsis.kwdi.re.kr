@@ -326,7 +326,7 @@
                         ${viewFile.themaTitle}
                     </h5>
 
-                    <div class="text category01">
+                    <div class="text ${view.divCss}">
                         <!-- category 1 ~ 6 까지 클래스명 적용 -->
 
                         ${viewFile.themaSubTitle}

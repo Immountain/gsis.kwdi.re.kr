@@ -151,6 +151,14 @@
                         <div><form:errors path="useYn" cssClass="error" /></div>
                     </td>
                 </tr>
+                <tr>
+                    <th><label for="divCss">스타일</label></th>
+                    <td class="left" colspan="3" >
+                        <form:input path="divCss" maxlength="20"/>
+                        <div><form:errors path="divCss" cssClass="error"/></div>
+                    </td>
+
+                </tr>
                 </tbody>
             </table>
         </div>
