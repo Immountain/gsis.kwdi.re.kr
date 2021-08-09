@@ -50,11 +50,12 @@ body {
 
     /* header */
     header {
-        background:url(../images/header-background.svg) no-repeat #423B84 center / 100%;
+        background:#423B84;
         text-align:center;
 
         .container {
             height:62px;
+            background:url(../images/header-background.svg) no-repeat right top / auto 100%;
 
             @media (min-width: $screen-size-pc) {
                 height:100px;
@@ -320,7 +321,7 @@ body {
             top:100px;
             max-height:0px;
             @include ani(0.2s);
-            background:url(../images/header-background.svg) no-repeat #0E0752 right top / 174%;
+            background:url(../images/header-background.svg) no-repeat #0E0752 center bottom / 174%;
 
             h2 {
                 display:none;
@@ -839,20 +840,6 @@ body {
         position:relative;
         text-align:center;
 
-        &::before {
-            content:"";
-            display:block;
-            position:absolute;
-            top:0;
-            left:0;
-            right:0;
-            z-index:-1;
-            height:28px;
-            background:#0E0752;
-            @include drop-shadow($x:0,$y: 3px, $blur: 6px, $spread: 0, $alpha: 0.25);
-        }
-
-
 
 
 
@@ -861,22 +848,29 @@ body {
 
 
             section.main-issue {
-                margin-top:28px;
-                padding-bottom:140px;
-                background:#E3E3E3;
-                @include inner-shadow($x:0,$y: 3px, $blur: 6px, $spread: 0, $alpha: 0.25);
+                // margin-top:28px;
+                padding-bottom:176px;
+                background:#423B84;
+                // background:#E3E3E3;
+                // @include inner-shadow($x:0,$y: 3px, $blur: 6px, $spread: 0, $alpha: 0.25);
 
                 @media (min-width: $screen-size-pc) {
-                    padding-bottom:60px;
+                    padding-bottom:80px;
                 }
 
 
                 div.container {
                     position:relative;
-                    top:-28px;
+                    // top:-28px;
                     padding:0;
                     font-size:0;
                     @include drop-shadow($x:0,$y: 3px, $blur: 6px, $spread: 0, $alpha: 0.25);
+
+                    @media (min-width: $screen-size-pc) {
+                        overflow:hidden;
+                        border-radius:0 0 18px 18px;
+                    }
+    
 
                     div.slider {
                         overflow:hidden;
@@ -1066,7 +1060,7 @@ body {
                     position:absolute;
                     left:0;
                     right:0;
-                    top:-154px;
+                    top:-152px;
 
                     @media (min-width: $screen-size-pc) {
                         top:-60px;
@@ -1095,6 +1089,7 @@ body {
                                 height:136px;
                                 background:#fff;
                                 margin-right:10px;
+                                border-radius:18px;
                                 @include drop-shadow($x:0,$y: 3px, $blur: 6px, $spread: 0, $alpha: 0.25);
                                 text-align:center;
                                 border:5px solid transparent;
@@ -1112,7 +1107,7 @@ body {
                                 }
 
                                 &:hover {
-                                    border-color:#FF9900;
+                                    border-color:#9692C0;
                                     @include drop-shadow($x:0,$y: 10px, $blur: 15px, $spread: 0, $alpha: 0.25);
                                 }
 
@@ -1409,6 +1404,20 @@ body {
 
         /* SUB */
         &.sub {
+
+        &::before {
+            content:"";
+            display:block;
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            z-index:-1;
+            height:28px;
+            background:#0E0752;
+            @include drop-shadow($x:0,$y: 3px, $blur: 6px, $spread: 0, $alpha: 0.25);
+        }
+
 
             h4.stitle {
                 margin:30px 0 30px;

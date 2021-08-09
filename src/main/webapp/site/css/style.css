@@ -1394,12 +1394,13 @@ body .container {
 }
 
 body header {
-  background: url(../images/header-background.svg) no-repeat #423B84 center/100%;
+  background: #423B84;
   text-align: center;
 }
 
 body header .container {
   height: 62px;
+  background: url(../images/header-background.svg) no-repeat right top/auto 100%;
 }
 
 @media (min-width: 1200px) {
@@ -1625,7 +1626,7 @@ body header .container button.main-menu i {
     max-height: 0px;
     -webkit-transition: all 0.2s linear;
     transition: all 0.2s linear;
-    background: url(../images/header-background.svg) no-repeat #0E0752 right top/174%;
+    background: url(../images/header-background.svg) no-repeat #0E0752 center bottom/174%;
   }
   body nav#main-menu h2 {
     display: none;
@@ -2096,41 +2097,30 @@ body div#content {
   /* SUB */
 }
 
-body div#content::before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: -1;
-  height: 28px;
-  background: #0E0752;
-  -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
-}
-
 body div#content.main section.main-issue {
-  margin-top: 28px;
-  padding-bottom: 140px;
-  background: #E3E3E3;
-  -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25) inset;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25) inset;
+  padding-bottom: 176px;
+  background: #423B84;
 }
 
 @media (min-width: 1200px) {
   body div#content.main section.main-issue {
-    padding-bottom: 60px;
+    padding-bottom: 80px;
   }
 }
 
 body div#content.main section.main-issue div.container {
   position: relative;
-  top: -28px;
   padding: 0;
   font-size: 0;
   -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
+}
+
+@media (min-width: 1200px) {
+  body div#content.main section.main-issue div.container {
+    overflow: hidden;
+    border-radius: 0 0 18px 18px;
+  }
 }
 
 body div#content.main section.main-issue div.container div.slider {
@@ -2321,7 +2311,7 @@ body div#content.main section.main-category div.container {
   position: absolute;
   left: 0;
   right: 0;
-  top: -154px;
+  top: -152px;
 }
 
 @media (min-width: 1200px) {
@@ -2356,6 +2346,7 @@ body div#content.main section.main-category div.container ul li a {
   height: 136px;
   background: #fff;
   margin-right: 10px;
+  border-radius: 18px;
   -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
   text-align: center;
@@ -2377,7 +2368,7 @@ body div#content.main section.main-category div.container ul li a::before {
 }
 
 body div#content.main section.main-category div.container ul li a:hover {
-  border-color: #FF9900;
+  border-color: #9692C0;
   -webkit-box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.25);
   box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.25);
 }
@@ -2643,6 +2634,20 @@ body div#content.main section.outsite-slider div.container button.arrow.left {
 
 body div#content.main section.outsite-slider div.container button.arrow.right {
   right: 10px;
+}
+
+body div#content.sub::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 28px;
+  background: #0E0752;
+  -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
 }
 
 body div#content.sub h4.stitle {
