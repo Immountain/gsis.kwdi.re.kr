@@ -38,7 +38,7 @@
                 thousandsSep: ','
             },
             title: {
-                text: '제목'
+                text: '출산전･후 휴가, 육아휴직, 육아기근로단축 수급자 현황'
             },
             xAxis: [{
                 categories: [],
@@ -52,7 +52,7 @@
                     }
                 },
                 title: {
-                    text: '(천명)',
+                    text: '(명)',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
