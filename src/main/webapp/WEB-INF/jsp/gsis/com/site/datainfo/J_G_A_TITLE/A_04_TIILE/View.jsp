@@ -392,7 +392,13 @@
                     </div>
                 </div>
 
-                <div class="chart">
+                <div class="chart dual left">
+                    <!-- 챠트영역 -->
+
+                    <div id="chartView"></div>
+                </div>
+
+                <div class="chart dual right">
                     <!-- 챠트영역 -->
 
                     <div id="chartView"></div>

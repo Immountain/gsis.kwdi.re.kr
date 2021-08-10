@@ -3116,7 +3116,19 @@ body {
                     background:#ccc;
 
                     @media (min-width: $screen-size-pc) {
-                        min-height:380px;
+                        min-height:400px;
+
+                        &.dual {
+                            display:block;
+                            float:left;
+                            vertical-align:top;
+                            width:calc(50% - 10px);
+
+                            &.left {
+                                margin-right:20px;
+                            }
+
+                        }
                     }
 
                 }
