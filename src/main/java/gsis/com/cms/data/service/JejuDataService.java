@@ -22,4 +22,7 @@ public interface JejuDataService {
 
     void getInsertJewThemaVisit(JewThemaFileHisVO vo)throws Exception;
 
+
+    List<JewThemaFileHisVO> getSelectMainUpdateList(JewThemaFileHisVO vo)throws Exception;
+
 }

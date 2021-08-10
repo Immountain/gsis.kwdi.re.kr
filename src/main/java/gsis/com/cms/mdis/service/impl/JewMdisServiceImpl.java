@@ -71,6 +71,7 @@ public class JewMdisServiceImpl extends EgovAbstractServiceImpl implements JewMd
         jewThemaFileHisVO.setUpdateKeepType("M");
         jewThemaFileHisVO.setUpdateKeepId(key);
         jewThemaFileHisVO.setTitle(vo.getMdisKorNm());
+        jewThemaFileHisVO.setRegId(vo.getRegId());
         jejuDataDAO.getInsertJewUpdateKeep(jewThemaFileHisVO);
 
 

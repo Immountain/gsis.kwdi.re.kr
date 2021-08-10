@@ -34,6 +34,7 @@ public class JejuDataServiceImpl extends EgovAbstractServiceImpl implements Jeju
         vo.setTitle(vo.getThemaTitle());
         vo.setUpdateKeepType("T");
 
+
         jejuDataDAO.getInsertJewUpdateKeep(vo);
         jejuDataDAO.insertJewThemaFileHis(vo);
         
@@ -58,6 +59,11 @@ public class JejuDataServiceImpl extends EgovAbstractServiceImpl implements Jeju
     @Override
     public void getInsertJewThemaVisit(JewThemaFileHisVO vo) throws Exception {
         jejuDataDAO.getInsertJewThemaVisit(vo);
+    }
+
+    @Override
+    public List<JewThemaFileHisVO> getSelectMainUpdateList(JewThemaFileHisVO vo) throws Exception {
+        return jejuDataDAO.getSelectMainUpdateList(vo);
     }
 }
 

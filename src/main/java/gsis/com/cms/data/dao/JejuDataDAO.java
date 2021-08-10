@@ -37,4 +37,11 @@ public class JejuDataDAO extends EgovComAbstractDAO {
         insert("JejuDataDAO.insertJewThemaVisit",vo);
     }
 
+
+    public List<JewThemaFileHisVO> getSelectMainUpdateList(JewThemaFileHisVO vo)throws Exception{
+        return selectList("JejuDataDAO.getSelectMainUpdateList",vo);
+    }
+
+
+
 }

@@ -3,7 +3,6 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="info" uri="http://infomind.com/info" %>
 <script type="text/javascript">
 
@@ -35,48 +34,29 @@
                 },
 
                 columns: [
-                    {key: "themaGroupNm", label: "테마통계관리그룹" ,width: 120},
-                    {key: "themaId", label: "테마통계아이디"},
-                    {key: "themaNm", label: "테마통계명"},
-                    {key: "themaTitle", label: "테마통계타이틀"},
-                    {key: "themaMemo", label: "메모"},
-                    {key: "themaEtc", label: "기타"},
-                    {key: "tblId", label: "통계표ID"},
-                    // {key: "loadGubun", label: "조회구분(시계열,횡단면)"},
-                    // {key: "loadTerm", label: "조회설정"},
-                    {key: "collectTypeNm", label: "수집타입"},
-                    {key: "collectCycleNm", label: "수집주기"},
-                    {key: "apiUrl", label: "API_URL"},
-                    {key: "htmlFile", label: "HTML_파일명"},
-                    {key: "orderCnt", label: "정렬순번"},
+                    {key: "bannerType", label: "배너 타입"},
+                    {key: "bannerNm", label: "제목"},
+                    {key: "strDt", label: "시작일"},
+                    {key: "endDt", label: "종료일"},
+                    {key: "bannerNm", label: "제목"},
+                    {key: "linkType", label: "링크타입"},
+                    {key: "linkUrl", label: "링크URL"},
                     {key: "useYn", label: "사용여부"},
                     {
-                        key: "themaId", label: "수정", width:60 ,formatter: function () {
+                        key: "themaGroupId", label: "수정", width:60 ,formatter: function () {
 
                             // console.log(this.item);
                             return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoUpdt(" + this.dindex + ");'> 수정 </button>";
                         }
                     },
                     {
-                        key: "themaId", label: "삭제", width:60 ,formatter: function () {
+                        key: "categoryId", label: "삭제", width:60 ,formatter: function () {
                             // console.log(this.item);
                             return "<button type='button' class='btn btn-xs btn-default' onclick=" + "'gotoDelete(" + this.dindex + ");'> 삭제 </button>";
                         }
                     }
 
-                ],
-                    page: {
-                        navigationItemCount: 10,
-                        height: 30,
-                        display: true,
-                        firstIcon: '|<',
-                        prevIcon: '<',
-                        nextIcon: '>',
-                        lastIcon: '>|',
-                        onChange: function () {
-                            Search(this.page.selectPage);
-                        }
-                    },
+                ]
             }
         );
 
@@ -89,44 +69,24 @@
             gotoRegist();
         });
 
-        Search(1);
+        Search();
     });
 
     // 조회
-    function Search(_pageNo) {
+    function Search() {
         var searchCondition = $("#searchCondition option:selected").val();
         var searchKeyword = $("#searchKeyword").val();
-        var themaGroupId = $('#themaGroupId').val();
-
 
         var p = {
             searchCondition: searchCondition,
             searchKeyword: searchKeyword,
-            themaGroupId: themaGroupId
         };
 
-        $ifx.ajax('<c:url value='/cms/gsis/thema/jewThemaInfoListObject.do' />', {
+        $ifx.ajax('<c:url value='/cms/gsis/banner/ObjList.do' />', {
             method: "POST",
             data: JSON.stringify(p),
             success: function (res) {
-
-
-                firstGrid.setData(
-                    {
-                        list: res.list,
-                        page: {
-                            currentPage: _pageNo,
-                            pageSize: 10,
-                            totalElements: 10,
-                            totalPages: 50
-                        }
-                    }
-                );
-
-
-
-
-               // firstGrid.setData(res.list);
+                firstGrid.setData(res.list);
             }
         })
     }
@@ -135,13 +95,13 @@
     function gotoRegist() {
 
         var p = {};
-        var API_SERVER = "<c:url value='/cms/gsis/thema/jewThemaInfoRegistView.do' />";
+        var API_SERVER = "<c:url value='/cms/gsis/banner/Regist.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 664,
-            width: 896,
+            height: 800,
+            width: 800,
             header: {
-                title: '테마통계관리 등록',
+                title: '배너 등록',
                 btns: {
                     close: {
                         label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
@@ -165,19 +125,19 @@
     //수정화면
     function gotoUpdt(row) {
 
-        var themaId = firstGrid.getList()[row].themaId;
+        var bannerSno = firstGrid.getList()[row].bannerSno;
 
         var p = {
-            themaId: themaId
+            bannerSno: bannerSno
         };
 
-        var API_SERVER = "<c:url value='/cms/gsis/thema/jewThemaInfoUpdtView.do' />";
+        var API_SERVER = "<c:url value='/cms/gsis/banner/view.do' />";
         ax5modal.open({
             theme: "primary",
-            height: 664,
-            width: 896,
+            height: 800,
+            width: 800,
             header: {
-                title: '테마통계관리 수정',
+                title: '배너 수정',
                 btns: {
                     close: {
                         label: '<i class="bx bx-x" aria-hidden="true"></i>', onClick: function () {
@@ -200,10 +160,11 @@
     function gotoDelete(row){
 
         var formData ={
-              themaId : firstGrid.getList()[row].themaId
+
+            bannerSno : firstGrid.getList()[row].bannerSno
         }
 
-        var API_SERVER = "<c:url value='/cms/gsis/thema/jewThemaInfoDelete.do' />";
+        var API_SERVER = "<c:url value='/cms/gsis/banner/deleteJewBanner.do' />";
         var saveQuestion = confirm("삭제 하시겠습니까?");
         if (saveQuestion) {
             $.ajax({
@@ -240,13 +201,15 @@
 
     };
 
+
+
 </script>
 <div class="sub subView">
     <nav class="navigation">
         <i class='bx bxs-home'></i>${menuInfo.depthFullname}
     </nav>
     <h2 class="stitle">
-        <i class='bx bxs-dashboard'></i>테마통계관리<spring:message code="title.list"/>
+        <i class='bx bxs-dashboard'></i>메인배너<spring:message code="title.list"/>
     </h2>
     <h3 class="btitle">
         검색
@@ -255,30 +218,17 @@
     <!-- 검색조건선택 -->
     <div class="white-box">
         <div class="rows">
-        <span class="select-outline">
-<%--            <form:select path="themaGroupId">--%>
-<%--                <form:option value="" label="선택"/>--%>
-<%--                <c:forEach items="${jewGroupList}" var="item">--%>
-<%--                    <form:option value="${item.themaGroupId}" label="${item.themaGroupId}"/>--%>
-<%--                </c:forEach>--%>
-<%--            </form:select>--%>
-            <select id="themaGroupId">
-                <option value="">그룹선택</option>
-                <c:forEach items="${jewGroupList}" var="item">
-                    <option value="${item.themaGroupId}">${item.themaGroupNm}</option>
-                </c:forEach>
-            </select>
-        </span>
          <span class="select-outline">
                 <select name="searchCondition" id="searchCondition"
                         title="<spring:message code="title.searchCondition" />">
-                       <option selected value=''>검색조건</option><!-- 선택하세요 -->
-                       <option value="1">테마통계아이디</option>
+                       <option value='-1'>전체</option><!-- 선택하세요 -->
+                       <option value="0">배너이미지</option>
                     <!-- 코드ID -->
-                       <option value="2">테마통계명</option>
+                       <option value="1">배너 리스트</option>
                     <!-- 코드ID -->
                </select>
          </span>
+            제목:
             <input type="text" class="w100" class="main" name="searchKeyword" id="searchKeyword" size="35"
                    title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''
                    maxlength="155">
@@ -295,6 +245,6 @@
         목록
     </h3>
     <div class="rows white-box">
-        <div data-ax5grid="first-grid" data-ax5grid-config="{}" style="height: 500px;"></div>
+        <div data-ax5grid="first-grid" data-ax5grid-config="{}" style="height: 300px;"></div>
     </div>
 </div>
