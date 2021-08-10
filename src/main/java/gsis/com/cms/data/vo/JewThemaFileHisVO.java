@@ -47,4 +47,12 @@ public class JewThemaFileHisVO {
     private String isDeviec="";
 
 
+
+
+
+    private String updateKeepNm="";
+    private String updateKeepUrl="";
+    private String themaNm="";
+
+
 }

@@ -168,4 +168,33 @@
 
     </update>
 
+
+    <select id="getSelectMainUpdateList"  parameterType="gsis.com.cms.data.vo.JewThemaFileHisVO"   resultType="gsis.com.cms.data.vo.JewThemaFileHisVO">
+
+            select a.UPDATE_KEEP_NM
+                  ,a.UPDATE_KEEP_URL
+                  ,a.UPDATE_KEEP_TYPE
+                  ,a.TITLE
+                  ,a.MEMO
+                  ,a.UPDATE_KEEP_ID
+                  ,a.REG_DT
+                  ,case when UPDATE_KEEP_TYPE ='M' then a.TITLE else b.THEMA_NM end  as THEMA_NM
+            from (
+            select case when UPDATE_KEEP_TYPE ='M' then '마이크로데이터' else '테마통계' end  as UPDATE_KEEP_NM
+                  ,case when UPDATE_KEEP_TYPE ='M' then '/mdis/view.do?jewMdisSno=' else '/jejuTheme/view.do?themaId=' end  as UPDATE_KEEP_URL
+                  ,UPDATE_KEEP_TYPE
+                  ,TITLE
+                  ,MEMO
+                  ,UPDATE_KEEP_ID
+                  ,DATE_FORMAT(REG_DT,'%Y-%m-%d') as REG_DT
+            from jew_update_keep
+            order by REG_DT desc
+            LIMIT 5
+            ) a left join jew_thema_info b
+            on a.UPDATE_KEEP_ID =b.THEMA_ID
+
+
+    </select>
+
+
 </mapper>

@@ -64,7 +64,19 @@
                         }
                     }
 
-                ]
+                ],
+                    page: {
+                        navigationItemCount: 10,
+                        height: 30,
+                        display: true,
+                        firstIcon: '|<',
+                        prevIcon: '<',
+                        nextIcon: '>',
+                        lastIcon: '>|',
+                        onChange: function () {
+                            Search(this.page.selectPage);
+                        }
+                    },
             }
         );
 
@@ -77,11 +89,11 @@
             gotoRegist();
         });
 
-        Search();
+        Search(1);
     });
 
     // 조회
-    function Search() {
+    function Search(_pageNo) {
         var searchCondition = $("#searchCondition option:selected").val();
         var searchKeyword = $("#searchKeyword").val();
         var themaGroupId = $('#themaGroupId').val();
@@ -97,7 +109,24 @@
             method: "POST",
             data: JSON.stringify(p),
             success: function (res) {
-                firstGrid.setData(res.list);
+
+
+                firstGrid.setData(
+                    {
+                        list: res.list,
+                        page: {
+                            currentPage: _pageNo,
+                            pageSize: 10,
+                            totalElements: 10,
+                            totalPages: 50
+                        }
+                    }
+                );
+
+
+
+
+               // firstGrid.setData(res.list);
             }
         })
     }

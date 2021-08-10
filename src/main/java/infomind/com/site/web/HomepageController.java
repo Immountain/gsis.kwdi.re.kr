@@ -1,9 +1,14 @@
 package infomind.com.site.web;
 
 import egovframework.rte.fdl.property.EgovPropertyService;
+import gsis.com.cms.data.service.JejuDataService;
+import gsis.com.cms.data.vo.JewThemaFileHisVO;
+import infomind.com.cmm.visit.InfoVisitFactory;
 import infomind.com.cms.info.popup.service.InfoPopupManageService;
+import infomind.com.cms.info.popup.vo.InfoPopupManageVO;
 import infomind.com.cms.info.site.service.InfoSiteVisitService;
 import infomind.com.cms.info.site.vo.InfoSiteVO;
+import infomind.com.cms.info.site.vo.InfoSiteVisitVO;
 import infomind.com.file.service.InfoFileService;
 import infomind.com.utils.web.InfoViewUtils;
 import infomind.com.utils.web.InfoWebUtils;
@@ -18,6 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 
 @Controller
@@ -44,6 +50,8 @@ public class HomepageController {
     private InfoSiteVisitService infoSiteVisitService;
 
 
+    @Resource(name="JejuDataService")
+    private JejuDataService jejuDataService;
 
 
     @Resource(name = "InfoFileService")
@@ -57,18 +65,22 @@ public class HomepageController {
     public String getIndexPage(ModelMap model, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //try {
-        //    InfoSiteVisitVO visit = InfoVisitFactory.fromRequest(request);
-        //    visit.setPageType("INDEX");
-        //    visit.setVisitType("MAIN");
-        //    infoSiteVisitService.insertSiteVisit(visit);
-        //} catch (Exception e) {
-        //    e.printStackTrace();
-        //}
+        try {
+            //메인 업데이트 리스트
+            List<JewThemaFileHisVO> updateList =jejuDataService.getSelectMainUpdateList(null);
+            model.addAttribute("updateList", updateList);
+
+        } catch (Exception e) {
+          //  e.printStackTrace();
+        }
 
         //팝업 리스트
-        //List<InfoPopupManageVO> popupList =infoPopupManageService.getPopList(null);
-        //model.addAttribute("popupList", popupList);
+        List<InfoPopupManageVO> popupList =infoPopupManageService.getPopList(null);
+        model.addAttribute("popupList", popupList);
+
+
+
+
 
         //SimpleDateFormat format = new SimpleDateFormat( "yyyy.MM.dd일 HH시");
         //Date time = new Date();

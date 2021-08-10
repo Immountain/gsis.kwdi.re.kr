@@ -115,6 +115,7 @@ public class JejuDataController  extends BaseAjaxController {
 
         LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
         jewThemaFileHisVO.setModId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
+        jewThemaFileHisVO.setRegId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
 
         jejuDataService.insertJewThemaFileHis(jewThemaFileHisVO);
 
