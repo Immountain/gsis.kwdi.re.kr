@@ -65,18 +65,18 @@
                     }
 
                 ],
-                    page: {
-                        navigationItemCount: 10,
-                        height: 30,
-                        display: true,
-                        firstIcon: '|<',
-                        prevIcon: '<',
-                        nextIcon: '>',
-                        lastIcon: '>|',
-                        onChange: function () {
-                            Search(this.page.selectPage);
-                        }
-                    },
+                page: {
+                    navigationItemCount: 10,
+                    height: 30,
+                    display: true,
+                    firstIcon: '|<',
+                    prevIcon: '<',
+                    nextIcon: '>',
+                    lastIcon: '>|',
+                    onChange: function () {
+                        Search(this.page.selectPage);
+                    }
+                },
             }
         );
 
@@ -89,7 +89,7 @@
             gotoRegist();
         });
 
-        Search(1);
+        Search(0);
     });
 
     // 조회
@@ -100,6 +100,7 @@
 
 
         var p = {
+            pageIndex: _pageNo,
             searchCondition: searchCondition,
             searchKeyword: searchKeyword,
             themaGroupId: themaGroupId
@@ -109,24 +110,8 @@
             method: "POST",
             data: JSON.stringify(p),
             success: function (res) {
-
-
-                firstGrid.setData(
-                    {
-                        list: res.list,
-                        page: {
-                            currentPage: _pageNo,
-                            pageSize: 10,
-                            totalElements: 10,
-                            totalPages: 50
-                        }
-                    }
-                );
-
-
-
-
-               // firstGrid.setData(res.list);
+                firstGrid.setData(res);
+                // firstGrid.setData(res.list);
             }
         })
     }
@@ -238,7 +223,7 @@
             });
         }
 
-    };
+    }
 
 </script>
 <div class="sub subView">

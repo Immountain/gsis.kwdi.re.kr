@@ -32,8 +32,29 @@
           AND JTI.THEMA_ID =#{themaId}
     </select>
 
-    <select id="selectThemaInfoList"
-        parameterType="gsis.com.cms.thema.vo.JewThemaInfoVO"
+    <select id="selectThemaInfoTotalCount"
+            parameterType="gsis.com.cms.thema.vo.JewThemaInfoVO"
+            resultType="int">
+        SELECT COUNT(*) totcnt
+        FROM JEW_THEMA_INFO JTI ,JEW_THEMA_GROUP A
+        WHERE 1=1
+        AND JTI.THEMA_GROUP_ID =A.THEMA_GROUP_ID
+        AND JTI.DELETE_YN = 'N'
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(themaGroupId)">
+            AND JTI.THEMA_GROUP_ID = #{themaGroupId}
+        </if>
+        <if test="searchCondition == 1"> AND
+            JTI.THEMA_ID LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        <if test="searchCondition == 2"> AND
+            JTI.THEMA_NM LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(useYn)">
+            AND JTI.USE_YN = #{useYn}
+        </if>
+    </select>
+
+    <select id="selectThemaInfoList" parameterType="gsis.com.cms.thema.vo.JewThemaInfoVO"
         resultType="gsis.com.cms.thema.vo.JewThemaInfoVO">
         SELECT
              JTI.THEMA_GROUP_ID
@@ -78,8 +99,9 @@
             AND JTI.USE_YN = #{useYn}
         </if>
 
+        ORDER BY JTI.ORDER_CNT ASC
 
-        order by JTI.ORDER_CNT asc
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
     </select>
 
     <insert id="insertThemaInfo">

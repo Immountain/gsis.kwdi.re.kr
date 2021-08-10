@@ -3,10 +3,13 @@ package gsis.com.cms.thema.web;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.annotation.IncludedInfo;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import gsis.com.cms.thema.service.JewThemaGroupService;
 import gsis.com.cms.thema.vo.JewThemaGroupVO;
 import infomind.com.cmm.api.ApiResponse;
 import infomind.com.cmm.web.BaseAjaxController;
+import infomind.com.ext.vo.AxGridDataVO;
+import infomind.com.ext.vo.AxGridPageVO;
 import infomind.com.utils.web.InfoViewUtils;
 import gsis.com.cms.thema.service.JewThemaInfoService;
 import gsis.com.cms.thema.vo.JewThemaInfoVO;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 public class JewThemaInfoController extends BaseAjaxController {
@@ -29,7 +33,7 @@ public class JewThemaInfoController extends BaseAjaxController {
     @Resource(name="JewThemaGroupService")
     private JewThemaGroupService jewThemaGroupService;
 
-    private String pagePath = "thema/";
+    private final String pagePath = "thema/";
 
     /**테마통계관리 목록*/
     @IncludedInfo(name="테마통계관리", listUrl = "/cms/gsis/thema/jewThemaInfoList.do", order = 1111, gid = 60)
@@ -44,12 +48,22 @@ public class JewThemaInfoController extends BaseAjaxController {
 
     /**테마통계관리 grid ajax */
     @RequestMapping(value="/cms/gsis/thema/jewThemaInfoListObject.do")
-    public ModelAndView jewThemaInfoListObject(@RequestBody JewThemaInfoVO searchVO) throws Exception{
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("jsonView");
-        modelAndView.addObject("list",jewThemaInfoService.selectThemaInfoList(searchVO));
+    @ResponseBody
+    public Object jewThemaInfoListObject(@RequestBody JewThemaInfoVO searchVO) throws Exception{
 
-        return modelAndView;
+        searchVO.setPageIndex(searchVO.getPageIndex() + 1);
+        PaginationInfo paginationInfo = initPagination(searchVO, jewThemaInfoService.selectThemaInfoTotalCount(searchVO));
+
+        AxGridDataVO<JewThemaInfoVO> data = new AxGridDataVO();
+
+        data.setList((List<JewThemaInfoVO>) jewThemaInfoService.selectThemaInfoList(searchVO));
+        data.setPage(AxGridPageVO.builder()
+                .currentPage(searchVO.getPageIndex() - 1)
+                .pageSize(searchVO.getPageUnit())
+                .totalElements(paginationInfo.getTotalRecordCount())
+                .totalPages(paginationInfo.getTotalPageCount())
+                .build());
+        return data;
     }
 
     /** 테마통계관리 등록화면 */

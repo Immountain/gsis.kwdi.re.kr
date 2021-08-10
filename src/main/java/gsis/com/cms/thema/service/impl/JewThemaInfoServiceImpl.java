@@ -21,6 +21,11 @@ public class JewThemaInfoServiceImpl extends EgovAbstractServiceImpl implements 
     }
 
     @Override
+    public Integer selectThemaInfoTotalCount(JewThemaInfoVO vo) throws Exception {
+        return jewThemaInfoDAO.selectThemaInfoTotalCount(vo);
+    }
+
+    @Override
     public List<?> selectThemaInfoList(JewThemaInfoVO vo) throws Exception {
         return jewThemaInfoDAO.selectThemaInfoList(vo);
     }

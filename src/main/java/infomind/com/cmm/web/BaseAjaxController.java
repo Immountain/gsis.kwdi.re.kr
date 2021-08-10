@@ -1,13 +1,20 @@
 package infomind.com.cmm.web;
 
+import egovframework.rte.fdl.property.EgovPropertyService;
+import egovframework.rte.fdl.property.impl.EgovPropertyServiceImpl;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import infomind.com.cmm.api.ApiException;
 import infomind.com.cmm.api.ApiResponse;
 import infomind.com.cmm.api.ApiStatus;
+import infomind.com.cmm.support.ApplicationContextProvider;
+import infomind.com.cms.info.layout.service.InfoLayoutInfoService;
+import infomind.com.ext.vo.CmsSearchVO;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
@@ -18,17 +25,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.sql.SQLException;
 
 public class BaseAjaxController {
-
-
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
-
 
     //    @Inject
 //    protected LocalValidatorFactoryBean validator;
@@ -43,6 +48,28 @@ public class BaseAjaxController {
 //    public void initBinder(WebDataBinder binder) {
 //        binder.addValidators(new Validator[]{new CollectionValidator(this.validator)});
 //    }
+
+    public PaginationInfo initPagination(CmsSearchVO searchVO, int totalRecordCount) {
+        ApplicationContext applicationContext = ApplicationContextProvider.getApplicationContext();
+        EgovPropertyService propertiesService = (EgovPropertyService) applicationContext.getBean("propertiesService");
+
+        /** EgovPropertyService.sample */
+        searchVO.setPageUnit(propertiesService.getInt("pageUnit"));
+        searchVO.setPageSize(propertiesService.getInt("pageSize"));
+
+        /** pageing */
+        PaginationInfo paginationInfo = new PaginationInfo();
+        paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
+        paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
+        paginationInfo.setPageSize(searchVO.getPageSize());
+        paginationInfo.setTotalRecordCount(totalRecordCount);
+
+        searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+        searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
+        searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+        return paginationInfo;
+    }
 
     public ApiResponse ok() {
         return ApiResponse.of(ApiStatus.SUCCESS, "SUCCESS");
@@ -60,6 +87,7 @@ public class BaseAjaxController {
 
         return ApiResponse.error(ApiStatus.FORBIDDEN, e.getMessage());
     }
+
     //디비 에서 캐취
     @ExceptionHandler({DataAccessException.class})
     @ResponseBody
@@ -103,8 +131,6 @@ public class BaseAjaxController {
     }
 
 
-
-
     @ExceptionHandler({Throwable.class})
     @ResponseBody
     public ApiResponse handleException(Throwable throwable) {
@@ -138,7 +164,7 @@ public class BaseAjaxController {
     @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseBody
     public Object processValidationError(MethodArgumentNotValidException ex) {
-        FieldError fieldError = (FieldError)ex.getBindingResult().getFieldErrors().get(0);
+        FieldError fieldError = ex.getBindingResult().getFieldErrors().get(0);
         ApiResponse error = ApiResponse.error(ApiStatus.SYSTEM_ERROR, fieldError.getDefaultMessage());
         error.getError().setRequiredKey(fieldError.getField());
         return error;

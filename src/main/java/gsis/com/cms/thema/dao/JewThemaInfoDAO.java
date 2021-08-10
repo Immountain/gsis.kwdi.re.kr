@@ -9,23 +9,27 @@ import java.util.List;
 @Repository("JewThemaInfoDAO")
 public class JewThemaInfoDAO extends EgovComAbstractDAO {
 
-    public JewThemaInfoVO selectThemaInfo(JewThemaInfoVO vo)throws Exception{
-        return selectOne("JewThemaInfoDAO.selectThemaInfo",vo);
+    public JewThemaInfoVO selectThemaInfo(JewThemaInfoVO vo) throws Exception {
+        return selectOne("JewThemaInfoDAO.selectThemaInfo", vo);
     }
 
-    public List<?> selectThemaInfoList(JewThemaInfoVO vo)throws Exception{
-        return selectList("JewThemaInfoDAO.selectThemaInfoList",vo);
+    public Integer selectThemaInfoTotalCount(JewThemaInfoVO vo) throws Exception {
+        return selectOne("JewThemaInfoDAO.selectThemaInfoTotalCount", vo);
     }
 
-    public void insertThemaInfo(JewThemaInfoVO vo)throws Exception{
-        insert("JewThemaInfoDAO.insertThemaInfo",vo);
+    public List<?> selectThemaInfoList(JewThemaInfoVO vo) throws Exception {
+        return selectList("JewThemaInfoDAO.selectThemaInfoList", vo);
     }
 
-    public void updateThemaInfo(JewThemaInfoVO vo)throws Exception{
-        insert("JewThemaInfoDAO.updateThemaInfo",vo);
+    public void insertThemaInfo(JewThemaInfoVO vo) throws Exception {
+        insert("JewThemaInfoDAO.insertThemaInfo", vo);
     }
 
-    public void deleteThemaInfo(JewThemaInfoVO vo)throws Exception{
-        insert("JewThemaInfoDAO.deleteThemaInfo",vo);
+    public void updateThemaInfo(JewThemaInfoVO vo) throws Exception {
+        insert("JewThemaInfoDAO.updateThemaInfo", vo);
+    }
+
+    public void deleteThemaInfo(JewThemaInfoVO vo) throws Exception {
+        insert("JewThemaInfoDAO.deleteThemaInfo", vo);
     }
 }
