@@ -54,23 +54,16 @@
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
                 {key: "cdmData1", label: "전체", align: "center", width: 60 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData2", label: "0~4세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData3", label: "5~9세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData4", label: "10~14세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData5", label: "15~19세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData6", label: "20~24세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData7", label: "25~29세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData8", label: "30~34세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData9", label: "35~39세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData10", label: "40~44세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData11", label: "45~49세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData12", label: "50~54세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData13", label: "55~59세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData14", label: "60~64세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData15", label: "65~69세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData16", label: "70~74세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData17", label: "75~79세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData18", label: "80세이상", align: "center", width: 60,formatter: "money",editor: {type: "text"}}
+                {key: "cdmData2", label: "0~9세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData3", label: "10~19세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData4", label: "20~29세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData5", label: "30~39세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData6", label: "40~49세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData7", label: "50~59세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData8", label: "60~69세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData9", label: "70~79세", align: "center", width: 60,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData10", label: "80세이상", align: "center", width: 60,formatter: "money",editor: {type: "text"}}
+
 
 
 
@@ -198,6 +191,11 @@
         var strYear =  $('#strYear').val();
         var dataGb =  $('#dataGb').val();
 
+        if(!strYear){
+
+            alert("기준년도을 입력하세요.");
+            return;
+        }
 
 
 
@@ -239,14 +237,6 @@
            ,cdmData8:0
            ,cdmData9:0
            ,cdmData10:0
-           ,cdmData11:0
-           ,cdmData12:0
-           ,cdmData13:0
-           ,cdmData14:0
-           ,cdmData15:0
-           ,cdmData16:0
-           ,cdmData17:0
-           ,cdmData18:0
 
 
 

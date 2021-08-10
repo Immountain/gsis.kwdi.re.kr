@@ -92,6 +92,9 @@
         });
 
 
+        $('#btn_down_excel').click(function () {
+            firstGrid.exportExcel("1-7(출생과 사망).xls");
+        });
 
 
 
@@ -151,7 +154,7 @@
         <i class='bx bxs-home'></i>${menuInfo.depthFullname}
     </nav>
     <h2 class="stitle">
-        <i class='bx bxs-dashboard'></i>${menuInfo.menuNm}
+        <i class='bx bxs-dashboard'></i>${menuInfo.menuNm}(${view.themaId})
     </h2>
     <h3 class="btitle">
         검색
@@ -168,6 +171,7 @@
             <button type="button" class="button" name="btn_search" id="btn_search" onclick="Search()">조회</button>
             <button type="button" class="button main" name="btn_regist_info" id="btn_regist_info">내용등록</button>
             <button type="button" class="button main" name="btn_regist_excel" id="btn_regist_excel">엑셀업로드</button>
+            <button type="button" class="button main" name="btn_down_excel" id="btn_down_excel">엑셀 다운로드</button>
             <input type="hidden" id="themaId" name="themaId" value="${view.themaId}">
 
         </div>
