@@ -18,6 +18,7 @@ public interface JewBannerService {
 
     void deleteJewBanner(JewBannerVO vo)throws Exception;
 
+    List<JewBannerVO> getSelectMainJewBannerList(JewBannerVO vo)throws Exception;
 
 
 }

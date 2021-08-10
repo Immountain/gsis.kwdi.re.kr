@@ -4,6 +4,7 @@ import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import gsis.com.cms.banner.dao.JewBannerDAO;
 import gsis.com.cms.banner.service.JewBannerService;
 import gsis.com.cms.banner.vo.JewBannerVO;
+import infomind.com.utils.file.InfoFileMngUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,7 +17,8 @@ public class JewBannerServiceImpl extends EgovAbstractServiceImpl implements Jew
     @Resource(name="JewBannerDAO")
     private JewBannerDAO jewBannerDAO;
 
-
+    @Resource(name = "InfoFileMngUtil")
+    private InfoFileMngUtil infoFileMngUtil;
 
 
     @Override
@@ -26,7 +28,16 @@ public class JewBannerServiceImpl extends EgovAbstractServiceImpl implements Jew
 
     @Override
     public void insertJewBanner(JewBannerVO vo) throws Exception {
+
+
+
+
+
+
         jewBannerDAO.insertJewBanner(vo);
+
+        infoFileMngUtil.copyFile(vo.getBannerImage(),"Y");
+
     }
 
     @Override
@@ -38,11 +49,18 @@ public class JewBannerServiceImpl extends EgovAbstractServiceImpl implements Jew
     public void updateJewBanner(JewBannerVO vo) throws Exception {
         jewBannerDAO.updateJewBanner(vo);
 
+        infoFileMngUtil.copyFile(vo.getBannerImage(),"Y");
+
     }
 
     @Override
     public void deleteJewBanner(JewBannerVO vo) throws Exception {
         jewBannerDAO.deleteJewBanner(vo);
 
+    }
+
+    @Override
+    public List<JewBannerVO> getSelectMainJewBannerList(JewBannerVO vo) throws Exception {
+        return jewBannerDAO.getSelectMainJewBannerList(vo);
     }
 }

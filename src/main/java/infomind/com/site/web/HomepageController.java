@@ -1,6 +1,8 @@
 package infomind.com.site.web;
 
 import egovframework.rte.fdl.property.EgovPropertyService;
+import gsis.com.cms.banner.service.JewBannerService;
+import gsis.com.cms.banner.vo.JewBannerVO;
 import gsis.com.cms.data.service.JejuDataService;
 import gsis.com.cms.data.vo.JewThemaFileHisVO;
 import infomind.com.cmm.visit.InfoVisitFactory;
@@ -23,6 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,6 +57,10 @@ public class HomepageController {
     private JejuDataService jejuDataService;
 
 
+    @Resource(name="JewBannerService")
+    private JewBannerService jewBannerService;
+
+
     @Resource(name = "InfoFileService")
     private InfoFileService infoFileService;
 
@@ -65,10 +72,30 @@ public class HomepageController {
     public String getIndexPage(ModelMap model, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+
+
+        List<JewThemaFileHisVO> updateList = new ArrayList<>();
+        List<JewBannerVO> txtList = new ArrayList<>();
+        List<JewBannerVO> imageList = new ArrayList<>();
         try {
             //메인 업데이트 리스트
-            List<JewThemaFileHisVO> updateList =jejuDataService.getSelectMainUpdateList(null);
+            updateList =jejuDataService.getSelectMainUpdateList(null);
             model.addAttribute("updateList", updateList);
+            JewBannerVO jewBannerVO = new JewBannerVO();
+            jewBannerVO.setBannerType("LIST");
+            jewBannerVO.setSearchCondition("1");
+
+            txtList =jewBannerService.selectJewBannerList(jewBannerVO);
+            model.addAttribute("txtList", txtList);
+
+            jewBannerVO = new JewBannerVO();
+            jewBannerVO.setBannerType("IMAGE");
+
+            imageList =jewBannerService.selectJewBannerList(jewBannerVO);
+            model.addAttribute("imageList", imageList);
+
+
+
 
         } catch (Exception e) {
           //  e.printStackTrace();

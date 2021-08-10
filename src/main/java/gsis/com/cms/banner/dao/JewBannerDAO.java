@@ -32,5 +32,11 @@ public class JewBannerDAO extends EgovComAbstractDAO {
     public void deleteJewBanner(JewBannerVO vo)throws Exception{
         update("JewBannerDAO.deleteJewBanner",vo);
     }
+
+    public List<JewBannerVO> getSelectMainJewBannerList(JewBannerVO vo)throws Exception{
+        return selectList("JewBannerDAO.getSelectMainJewBannerList",vo);
+    }
+
+
 }
 

@@ -28,4 +28,6 @@ public class JewBannerVO extends CmsSearchVO {
     private String modDt="";
 
 
+
+
 }

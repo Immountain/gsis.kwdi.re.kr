@@ -145,4 +145,42 @@
 
     </update>
 
+    <select id="getSelectMainJewBannerList"  parameterType="gsis.com.cms.banner.vo.JewBannerVO"   resultType="gsis.com.cms.banner.vo.JewBannerVO">
+
+
+        select BANNER_SNO
+            ,BANNER_TYPE
+            ,BANNER_NM
+            ,BANNER_MEMO
+            ,BANNER_TXT
+            ,BANNER_IMAGE
+            ,SORT_ORDR
+            ,STR_DT
+            ,END_DT
+            ,LINK_TYPE
+            ,LINK_URL
+            ,USE_YN
+            ,DELETE_YN
+            ,REG_ID
+            ,REG_DT
+            ,MOD_ID
+            ,MOD_DT
+        from jew_banner
+        where 1=1
+        and USE_YN ='Y'
+        and DELETE_YN ='N'
+        and BANNER_TYPE =#{bannerType}
+
+       <![CDATA[
+            and STR_DT <=DATE_FORMAT(NOW(),'%Y%m%d')
+            and END_DT >=DATE_FORMAT(NOW(),'%Y%m%d')
+         ]]>
+        order by SORT_ORDR asc
+        <if test="searchCondition == 1">
+            LIMIT 4
+        </if>
+
+
+    </select>
+
 </mapper>
