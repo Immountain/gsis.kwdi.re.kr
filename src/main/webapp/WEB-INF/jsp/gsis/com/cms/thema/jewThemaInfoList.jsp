@@ -82,7 +82,7 @@
 
 
         $('#btn_search').click(function () {
-            Search();
+            Search(0);
         });
 
         $('#btn_regist').click(function () {
