@@ -166,14 +166,6 @@
                             $tr.append('<td>' + ($ifx.numberComma(v['cdmData8']) || '' ) +  '</td>')
                             $tr.append('<td>' + ($ifx.numberComma(v['cdmData9']) || '' ) +  '</td>')
                             $tr.append('<td>' + ($ifx.numberComma(v['cdmData10']) || '' ) +  '</td>')
-                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData11']) || '' ) +  '</td>')
-                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData12']) || '' ) +  '</td>')
-                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData13']) || '' ) +  '</td>')
-                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData14']) || '' ) +  '</td>')
-                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData15']) || '' ) +  '</td>')
-                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData16']) || '' ) +  '</td>')
-                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData17']) || '' ) +  '</td>')
-                            $tr.append('<td>' + ($ifx.numberComma(v['cdmData18']) || '' ) +  '</td>')
                             $tbody.append($tr);
                         })
                         console.log(count, Object.keys(groupData).length)
@@ -204,7 +196,7 @@
                     yAxis: 0,
                     data: function(){
                         var arr = [];
-                        for(var i=2; i<=18; i++) arr.push(Number(data[1]['cdmData' + i]))
+                        for(var i=2; i<=10; i++) arr.push(Number(data[1]['cdmData' + i]))
                         console.log(arr)
                         return arr
                     }(),
@@ -216,7 +208,7 @@
                     yAxis: 0,
                     data: function(){
                         var arr = [];
-                        for(var i=2; i<=18; i++) arr.push(Number(data[2]['cdmData' + i]))
+                        for(var i=2; i<=10; i++) arr.push(Number(data[2]['cdmData' + i]))
                         return arr
                     }()
                 },
@@ -227,7 +219,7 @@
                     yAxis: 1,
                     data: function(){
                         var arr = [];
-                        for(var i=2; i<=18; i++) arr.push(Number(data[3]['cdmData' + i]))
+                        for(var i=2; i<=10; i++) arr.push(Number(data[3]['cdmData' + i]))
                         return arr
                     }()
                 }]
@@ -306,23 +298,16 @@
                         <tr>
                             <th colspan="2">구분</th>
                             <th>전체</th>
-                            <th>0~4세</th>
-                            <th>5~9세</th>
-                            <th>10~14세</th>
-                            <th>15~19세</th>
-                            <th>20~24세</th>
-                            <th>25~29세</th>
-                            <th>30~34세</th>
-                            <th>35~39세</th>
-                            <th>40~44세</th>
-                            <th>45~49세</th>
-                            <th>50~54세</th>
-                            <th>55~59세</th>
-                            <th>60~64세</th>
-                            <th>65~69세</th>
-                            <th>70~74세</th>
-                            <th>75~79세</th>
+                            <th>0~9세</th>
+                            <th>10~19세</th>
+                            <th>20~29세</th>
+                            <th>30~39세</th>
+                            <th>40~49세</th>
+                            <th>50~59세</th>
+                            <th>60~69세</th>
+                            <th>70~79세</th>
                             <th>80세이상</th>
+
                         </tr>
                         </thead>
                         <tbody>

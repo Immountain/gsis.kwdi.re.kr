@@ -30,23 +30,16 @@
 
 
     var chartView;
-
-    var chartColor = [
-        '#e94235', '#fabb04'
-        ,'#34a853', '#4285f4'
-        ,'#e94235', '#fabb04'
-        ,'#34a853', '#4285f4'
-        ,'#e94235', '#fabb04'
-        , '#34a853', '#4285f4'
-    ];
-
     function initChartEl() {
+
+
+
         chartView = Highcharts.chart('chartView', {
             chart: {
                 type: 'line'
             },
             title: {
-                text: '출생과 사망'
+                text: '석·박사과정 졸업자 수'
             },
             // subtitle: {
             //     text: '서브제목'
@@ -63,26 +56,17 @@
                     }
                 },
                 title: {
-                    text: '(명)',
+                    text: '명',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
                 },
                 min: 0,
-                tickInterval: 1000,
-                // tickWidth: 0,
-                // gridLineWidth:1,
-                // reversed:false,
-                // visible:true,
-                // endOnTick:false,
-                // startOnTick:false,
-                // alignTicks:false,
 
-              //  lineWidth: 5,
 
             }, { // Secondary yAxis
                 title: {
-                    text: '(명/인구 1천명당)',
+                    text: '%',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
@@ -98,7 +82,7 @@
                 },
                 opposite: true,
                 min: 0,
-                tickInterval: 2,
+                tickInterval: 10,
                 tickWidth: 0,
                 gridLineWidth:1,
                 endOnTick:false,
@@ -121,6 +105,7 @@
                     enableMouseTracking: true
                 },
                 column: {
+
                     dataLabels: {
                         enabled: true
                     }
@@ -131,73 +116,7 @@
                 verticalAlign: 'top',
                 borderWidth: 0
             },
-            series: [{
-                name: '출생아수',
-                type: 'column',
-                yAxis: 0,
-
-                color: '#989f3b', //green
-                data: [],
-                dataLabels: {//바 상단의 수치값 개별 지정.
-                    enabled: true,
-                    format: '{y}',//수치 표현 포맷
-                    align: 'center',
-                    verticalAlign: 'top',
-                    //위치 지정
-                    y: 10,
-                }
-
-
-            },{
-                    name: '사망자수',
-                    type: 'column',
-                    yAxis: 0,
-                    color: '#b3d78b', //green
-                    pointPlacement: -0.1,
-                    data: [],
-                    dataLabels: {//바 상단의 수치값 개별 지정.
-                    enabled: true,
-                    format: '{y}',//수치 표현 포맷
-                    align: 'center',
-                    verticalAlign: 'top',
-                    //위치 지정
-                    y: 10,
-                }
-
-
-                },
-                {
-                    name: '조출생률',
-                    type: 'spline',
-                    yAxis: 1,
-                    color: '#acbae0', //green
-                    data: [],
-                    marker: {
-                        lineWidth: 1,
-                        lineColor: Highcharts.getOptions().colors[4],
-                        fillColor: 'white',
-                        radius: 7,
-                        symbol: 'square'
-                    }
-
-                },
-                {
-                    name: '조사망률',
-                    type: 'spline',
-                    yAxis: 1,
-                    color: '#f40d14', //green
-                    data: [],
-                    marker: {
-                        lineWidth: 1,
-                        lineColor: Highcharts.getOptions().colors[5],
-                        fillColor: 'white',
-                        radius: 7,
-                        symbol: 'circle'
-                    }
-
-                }
-
-            ]
+            series: []
         });
 
     }
@@ -211,15 +130,15 @@
         };
 
         var groupArr = [];
-        var cdmData1 = []; //출생아수
-        var cdmData2 = [];//사망자수
-        var cdmData3 = [];//조출생률
-        var cdmData4 = [];//조사망률
+        var cdmData1 = []; //석사학위취득자
+        var cdmData2 = [];//박사학위취득다
+        var cdmData3 = [];//석사학위취득자 여성비율
+        var cdmData4 = [];//박사학위취득다 여성비율
 
 
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value='/site/gsis/a04/List.do' />', {
+                $ifx.ajax('<c:url value='/site/gsis/b05/List.do' />', {
                     method: "POST",
                     data: JSON.stringify(p),
                     success: function (res) {
@@ -246,15 +165,20 @@
                                 $tr.append('<td>' + (v['dataGb'] || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData1']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData2']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData3']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData4']) || '' ) +  '</td>')
 
-                                if(v['dataGb']=="전체"){
 
-                                    cdmData1.push(Number(v['cdmData1']));
-                                    cdmData2.push(Number(v['cdmData3']));
-                                    cdmData3.push(Number(v['cdmData2']));
-                                    cdmData4.push(Number(v['cdmData4']));
+                                if(v['dataGb']=="여성"){
+
+                                      cdmData1.push(Number(v['cdmData1']));
+                                      cdmData2.push(Number(v['cdmData2']));
+
+
+
+                                 }else if(v['dataGb']=="여성 비율"){
+
+
+                                    cdmData3.push(Number(v['cdmData1']));
+                                    cdmData4.push(Number(v['cdmData2']));
                                 }
 
 
@@ -285,7 +209,7 @@
 
 
                     series: [{
-                        name: '출생아수',
+                        name: '석사학위취득자',
                         type: 'column',
                         yAxis: 0,
                         color: '#989f3b', //green
@@ -293,18 +217,20 @@
 
 
                     },{
-                        name: '사망자수',
+                        name: '박사학위취득자',
                         type: 'column',
                         yAxis: 0,
                         color: '#b3d78b', //green
-                        pointPlacement: -0.1,
                         data: cdmData2,
+                        pointPlacement: -0.1,
+
+
 
 
                     },
                         {
-                            name: '조출생률',
-                            type: 'spline',
+                            name: '석사학위취득자 여성 비율',
+                            type: 'line',
                             yAxis: 1,
                             color: '#acbae0', //green
                             data: cdmData3,
@@ -313,19 +239,19 @@
                                 lineColor: Highcharts.getOptions().colors[4],
                                 fillColor: 'white',
                                 radius: 7,
-                                symbol: 'square'
+                                symbol: 'circle'
                             }
 
                         },
                         {
-                            name: '조사망률',
-                            type: 'spline',
+                            name: '박사학위취득자 여성 비율',
+                            type: 'line',
                             yAxis: 1,
-                            color: '#f40d14', //green
+                            color: '#e0d11b', //green
                             data: cdmData4,
                             marker: {
                                 lineWidth: 1,
-                                lineColor: Highcharts.getOptions().colors[5],
+                                lineColor: '#e0d11b',
                                 fillColor: 'white',
                                 radius: 7,
                                 symbol: 'circle'
@@ -335,7 +261,9 @@
 
                     ]
                 }, true, true);
-               // console.log(data)
+
+
+
             })
         ;
     }
@@ -398,22 +326,11 @@
                     <div id="chartView"></div>
                 </div>
 
-                <%--<div class="chart dual left">--%>
-                    <%--<!-- 챠트영역 -->--%>
-
-                    <%--<div id="chartView"></div>--%>
-                <%--</div>--%>
-
-                <%--<div class="chart dual right">--%>
-                    <%--<!-- 챠트영역 -->--%>
-
-                    <%--<div id="chartView"></div>--%>
-                <%--</div>--%>
 
 
                 <p class="info">
                     좌우터치로 스크롤 가능합니다.
-                    <span>단위 명,%</span>
+                    <span>단위 명, %</span>
                 </p>
                 <div class="table-outline">
                     <table>
@@ -421,10 +338,8 @@
                         <tr>
                             <th >년도</th>
                             <th >구분</th>
-                            <th>출생건수</th>
-                            <th>조출생률</th>
-                            <th>사망건수</th>
-                            <th>조사망률</th>
+                            <th>석사학위취득자</th>
+                            <th>박사학위취득자</th>
                         </tr>
                         </thead>
                         <tbody>

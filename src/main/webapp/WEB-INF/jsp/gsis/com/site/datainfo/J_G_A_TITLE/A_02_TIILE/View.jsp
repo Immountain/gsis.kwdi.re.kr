@@ -30,23 +30,17 @@
 
 
     var chartView;
-
-    var chartColor = [
-        '#e94235', '#fabb04'
-        ,'#34a853', '#4285f4'
-        ,'#e94235', '#fabb04'
-        ,'#34a853', '#4285f4'
-        ,'#e94235', '#fabb04'
-        , '#34a853', '#4285f4'
-    ];
-
+    var chartView2;
     function initChartEl() {
+
+
+
         chartView = Highcharts.chart('chartView', {
             chart: {
                 type: 'line'
             },
             title: {
-                text: '출생과 사망'
+                text: '농가인구'
             },
             // subtitle: {
             //     text: '서브제목'
@@ -63,13 +57,13 @@
                     }
                 },
                 title: {
-                    text: '(명)',
+                    text: '명',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
                 },
                 min: 0,
-                tickInterval: 1000,
+                tickInterval: 2000,
                 // tickWidth: 0,
                 // gridLineWidth:1,
                 // reversed:false,
@@ -82,7 +76,7 @@
 
             }, { // Secondary yAxis
                 title: {
-                    text: '(명/인구 1천명당)',
+                    text: '%',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
@@ -98,7 +92,7 @@
                 },
                 opposite: true,
                 min: 0,
-                tickInterval: 2,
+                tickInterval: 10,
                 tickWidth: 0,
                 gridLineWidth:1,
                 endOnTick:false,
@@ -121,6 +115,7 @@
                     enableMouseTracking: true
                 },
                 column: {
+                    stacking: 'normal',
                     dataLabels: {
                         enabled: true
                     }
@@ -131,73 +126,94 @@
                 verticalAlign: 'top',
                 borderWidth: 0
             },
-            series: [{
-                name: '출생아수',
-                type: 'column',
-                yAxis: 0,
-
-                color: '#989f3b', //green
-                data: [],
-                dataLabels: {//바 상단의 수치값 개별 지정.
-                    enabled: true,
-                    format: '{y}',//수치 표현 포맷
-                    align: 'center',
-                    verticalAlign: 'top',
-                    //위치 지정
-                    y: 10,
-                }
+            series: []
+        });
 
 
-            },{
-                    name: '사망자수',
-                    type: 'column',
-                    yAxis: 0,
-                    color: '#b3d78b', //green
-                    pointPlacement: -0.1,
-                    data: [],
-                    dataLabels: {//바 상단의 수치값 개별 지정.
-                    enabled: true,
-                    format: '{y}',//수치 표현 포맷
-                    align: 'center',
-                    verticalAlign: 'top',
-                    //위치 지정
-                    y: 10,
-                }
-
-
-                },
-                {
-                    name: '조출생률',
-                    type: 'spline',
-                    yAxis: 1,
-                    color: '#acbae0', //green
-                    data: [],
-                    marker: {
-                        lineWidth: 1,
-                        lineColor: Highcharts.getOptions().colors[4],
-                        fillColor: 'white',
-                        radius: 7,
-                        symbol: 'square'
+        chartView2 = Highcharts.chart('chartView2', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: '어가인구'
+            },
+            // subtitle: {
+            //     text: '서브제목'
+            // },
+            xAxis: [{
+                categories: [],
+                crosshair: true
+            }],
+            yAxis: [{ // Primary yAxis
+                labels: {
+                    format: '{value}',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
                     }
-
                 },
-                {
-                    name: '조사망률',
-                    type: 'spline',
-                    yAxis: 1,
-                    color: '#f40d14', //green
-                    data: [],
-                    marker: {
-                        lineWidth: 1,
-                        lineColor: Highcharts.getOptions().colors[5],
-                        fillColor: 'white',
-                        radius: 7,
-                        symbol: 'circle'
+                title: {
+                    text: '명',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
                     }
+                },
 
+                min: 0,
+                tickInterval: 2000,
+
+            }, { // Secondary yAxis
+                title: {
+                    text: '%',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                labels: {
+                    format: '{value}',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    },
+                    // formatter: function() {
+                    //     return parseInt((this.value  * 100 ) + 2);
+                    // }
+                },
+                opposite: true,
+                min: 0,
+                tickInterval: 10,
+                tickWidth: 0,
+                gridLineWidth:1,
+                endOnTick:false,
+                startOnTick:false,
+                alignTicks:false,
+                // lineWidth: 5,
+                // ceiling: 100,
+                // floor: 10
+            }],
+            tooltip: {
+
+                shared: true
+
+            },
+            plotOptions: {
+                spline: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                },
+                column: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true
+                    }
                 }
-
-            ]
+            },
+            legend: {
+                align: 'center',
+                verticalAlign: 'top',
+                borderWidth: 0
+            },
+            series: []
         });
 
     }
@@ -211,15 +227,19 @@
         };
 
         var groupArr = [];
-        var cdmData1 = []; //출생아수
-        var cdmData2 = [];//사망자수
-        var cdmData3 = [];//조출생률
-        var cdmData4 = [];//조사망률
+        var cdmData1 = []; //여성 농가인구
+        var cdmData2 = [];//여성 어가인구
+        var cdmData3 = [];//남성 농가인구
+        var cdmData4 = [];//남성 어가인구
+
+
+        var cdmData5 = [];//여성 농가인구 비율
+        var cdmData6 = [];//여성 농가인구 비율
 
 
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value='/site/gsis/a04/List.do' />', {
+                $ifx.ajax('<c:url value='/site/gsis/a02/List.do' />', {
                     method: "POST",
                     data: JSON.stringify(p),
                     success: function (res) {
@@ -246,15 +266,20 @@
                                 $tr.append('<td>' + (v['dataGb'] || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData1']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData2']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData3']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData4']) || '' ) +  '</td>')
 
-                                if(v['dataGb']=="전체"){
 
-                                    cdmData1.push(Number(v['cdmData1']));
-                                    cdmData2.push(Number(v['cdmData3']));
-                                    cdmData3.push(Number(v['cdmData2']));
-                                    cdmData4.push(Number(v['cdmData4']));
+                                if(v['dataGb']=="여성"){
+
+                                      cdmData1.push(Number(v['cdmData1']));
+                                      cdmData2.push(Number(v['cdmData2']));
+                                 }else if(v['dataGb']=="남성"){
+
+                                    cdmData3.push(Number(v['cdmData1']));
+                                    cdmData4.push(Number(v['cdmData2']));
+                                }else if(v['dataGb']=="여성비율"){
+
+                                    cdmData5.push(Number(v['cdmData1']));
+                                    cdmData6.push(Number(v['cdmData2']));
                                 }
 
 
@@ -285,7 +310,7 @@
 
 
                     series: [{
-                        name: '출생아수',
+                        name: '여성',
                         type: 'column',
                         yAxis: 0,
                         color: '#989f3b', //green
@@ -293,39 +318,23 @@
 
 
                     },{
-                        name: '사망자수',
+                        name: '남성',
                         type: 'column',
                         yAxis: 0,
                         color: '#b3d78b', //green
-                        pointPlacement: -0.1,
-                        data: cdmData2,
+                        data: cdmData3,
 
 
                     },
                         {
-                            name: '조출생률',
+                            name: '여성비율',
                             type: 'spline',
                             yAxis: 1,
                             color: '#acbae0', //green
-                            data: cdmData3,
+                            data: cdmData5,
                             marker: {
                                 lineWidth: 1,
                                 lineColor: Highcharts.getOptions().colors[4],
-                                fillColor: 'white',
-                                radius: 7,
-                                symbol: 'square'
-                            }
-
-                        },
-                        {
-                            name: '조사망률',
-                            type: 'spline',
-                            yAxis: 1,
-                            color: '#f40d14', //green
-                            data: cdmData4,
-                            marker: {
-                                lineWidth: 1,
-                                lineColor: Highcharts.getOptions().colors[5],
                                 fillColor: 'white',
                                 radius: 7,
                                 symbol: 'circle'
@@ -335,7 +344,52 @@
 
                     ]
                 }, true, true);
-               // console.log(data)
+
+
+                chartView2.update({
+
+                    xAxis: [{
+                        categories: groupArr,
+                        crosshair: true
+                    }],
+
+
+                    series: [{
+                        name: '여성',
+                        type: 'column',
+                        yAxis: 0,
+                        color: '#989f3b', //green
+                        data: cdmData2,
+
+
+                    },{
+                        name: '남성',
+                        type: 'column',
+                        yAxis: 0,
+                        color: '#b3d78b', //green
+                        data: cdmData4,
+
+
+                    },
+                        {
+                            name: '여성비율',
+                            type: 'spline',
+                            yAxis: 1,
+                            color: '#acbae0', //green
+                            data: cdmData6,
+                            marker: {
+                                lineWidth: 1,
+                                lineColor: Highcharts.getOptions().colors[4],
+                                fillColor: 'white',
+                                radius: 7,
+                                symbol: 'circle'
+                            }
+
+                        }
+
+                    ]
+                }, true, true);
+
             })
         ;
     }
@@ -392,28 +446,22 @@
                     </div>
                 </div>
 
-                <div class="chart">
+                <div class="chart dual left">
                     <!-- 챠트영역 -->
 
                     <div id="chartView"></div>
                 </div>
 
-                <%--<div class="chart dual left">--%>
-                    <%--<!-- 챠트영역 -->--%>
+                <div class="chart dual right">
+                    <!-- 챠트영역 -->
 
-                    <%--<div id="chartView"></div>--%>
-                <%--</div>--%>
-
-                <%--<div class="chart dual right">--%>
-                    <%--<!-- 챠트영역 -->--%>
-
-                    <%--<div id="chartView"></div>--%>
-                <%--</div>--%>
+                    <div id="chartView2"></div>
+                </div>
 
 
                 <p class="info">
                     좌우터치로 스크롤 가능합니다.
-                    <span>단위 명,%</span>
+                    <span>단위 가구, 명, %</span>
                 </p>
                 <div class="table-outline">
                     <table>
@@ -421,10 +469,8 @@
                         <tr>
                             <th >년도</th>
                             <th >구분</th>
-                            <th>출생건수</th>
-                            <th>조출생률</th>
-                            <th>사망건수</th>
-                            <th>조사망률</th>
+                            <th>농가인구</th>
+                            <th>어가인구</th>
                         </tr>
                         </thead>
                         <tbody>

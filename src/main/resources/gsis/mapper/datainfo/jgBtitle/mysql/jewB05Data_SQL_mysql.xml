@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="JgA03TitleDAO">
+<mapper namespace="JgB05TitleDAO">
 
 
 
 
-    <select id="selectList"  parameterType="gsis.com.cms.datainfo.jgAtitle.vo.JewA03TiileDataVO"   resultType="gsis.com.cms.datainfo.jgAtitle.vo.JewA03TiileDataVO">
+    <select id="selectList"  parameterType="gsis.com.cms.datainfo.jgBtitle.vo.JewB05TiileDataVO"   resultType="gsis.com.cms.datainfo.jgBtitle.vo.JewB05TiileDataVO">
         SELECT
              A.DATA_YEAR
             ,A.DATA_GB
             ,A.CDM_DATA1
             ,A.CDM_DATA2
-            ,A.CDM_DATA3
-            ,A.CDM_DATA4
-            ,A.CDM_DATA5
-            ,A.CDM_DATA6
-            ,A.CDM_DATA7
-            ,A.CDM_DATA8
-            ,A.CDM_DATA9
-            ,A.CDM_DATA10
             ,A.REG_ID
             ,A.REG_DT
             ,B.SORT_NO
-        FROM JEW_A_03_TIILE_DATA A
+        FROM JEW_B_05_TIILE_DATA A
         left join          (
                     select *
                     from COMTCCMMNDETAILCODE
                     where 1=1
-                    and CODE_ID='a03'
+                    and CODE_ID='b05'
         ) B
         on A.DATA_GB =B.CODE_NM
         WHERE 1=1
@@ -49,20 +41,12 @@
     <insert id="insert">
 
 
-         INSERT INTO JEW_A_03_TIILE_DATA(
+         INSERT INTO JEW_B_05_TIILE_DATA(
 
                      DATA_YEAR
                     ,DATA_GB
                     ,CDM_DATA1
                     ,CDM_DATA2
-                    ,CDM_DATA3
-                    ,CDM_DATA4
-                    ,CDM_DATA5
-                    ,CDM_DATA6
-                    ,CDM_DATA7
-                    ,CDM_DATA8
-                    ,CDM_DATA9
-                    ,CDM_DATA10
                     ,REG_ID
                     ,REG_DT
 
@@ -73,14 +57,6 @@
                     ,#{dataGb}
                     ,#{cdmData1}
                     ,#{cdmData2}
-                    ,#{cdmData3}
-                    ,#{cdmData4}
-                    ,#{cdmData5}
-                    ,#{cdmData6}
-                    ,#{cdmData7}
-                    ,#{cdmData8}
-                    ,#{cdmData9}
-                    ,#{cdmData10}
                     ,#{regId}
                     ,NOW()
 
@@ -92,7 +68,7 @@
 
     <delete id="delete">
 
-      DELETE FROM JEW_A_03_TIILE_DATA
+      DELETE FROM JEW_B_05_TIILE_DATA
       WHERE 1=1
       AND DATA_YEAR = #{dataYear}
       AND DATA_GB =#{dataGb}

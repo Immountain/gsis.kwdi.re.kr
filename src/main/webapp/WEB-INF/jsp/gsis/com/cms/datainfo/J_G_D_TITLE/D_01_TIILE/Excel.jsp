@@ -203,6 +203,11 @@
         var dataGb =  $('#dataGb').val();
 
 
+        if(!strYear){
+
+            alert("기준년도을 입력하세요.");
+            return;
+        }
 
 
         var check =false;

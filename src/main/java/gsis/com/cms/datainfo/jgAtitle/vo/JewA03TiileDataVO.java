@@ -21,40 +21,25 @@ public class JewA03TiileDataVO {
 
     @SheetColumn("전체")
     private String cdmData1;
-    @SheetColumn("0~4세")
+    @SheetColumn("0~9세")
     private String cdmData2;
-    @SheetColumn("5~9세")
+    @SheetColumn("10~19세")
     private String cdmData3;
-    @SheetColumn("10~14세")
+    @SheetColumn("20~29세")
     private String cdmData4;
-    @SheetColumn("15~19세")
+    @SheetColumn("30~39세")
     private String cdmData5;
-    @SheetColumn("20~24세")
+    @SheetColumn("40~49세")
     private String cdmData6;
-    @SheetColumn("25~29세")
+    @SheetColumn("50~59세")
     private String cdmData7;
-    @SheetColumn("30~34세")
+    @SheetColumn("60~69세")
     private String cdmData8;
-    @SheetColumn("35~39세")
+    @SheetColumn("70~79세")
     private String cdmData9;
-    @SheetColumn("40~44세")
-    private String cdmData10;
-    @SheetColumn("45~49세")
-    private String cdmData11;
-    @SheetColumn("50~54세")
-    private String cdmData12;
-    @SheetColumn("55~59세")
-    private String cdmData13;
-    @SheetColumn("60~64세")
-    private String cdmData14;
-    @SheetColumn("65~69세")
-    private String cdmData15;
-    @SheetColumn("70~74세")
-    private String cdmData16;
-    @SheetColumn("75~79세")
-    private String cdmData17;
     @SheetColumn("80세이상")
-    private String cdmData18;
+    private String cdmData10;
+
 
 
     private String regId="";
