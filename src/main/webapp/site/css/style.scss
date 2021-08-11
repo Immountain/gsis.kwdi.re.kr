@@ -3196,14 +3196,24 @@ body {
                 div.information {
                     background:#F4F4F4;
                     padding:20px;
-
+        
                     p {
                         margin:0;
                         line-height:1.6;
                         word-break:keep-all;
+        
+                        a {
+                            color:#0066CC;
+                            text-decoration:underline;
+        
+                            i {
+                                position:relative;
+                                top:2px;
+                                margin:0 5px;
+                            }
+                        }
                     }
                 }
-
 
 
             }

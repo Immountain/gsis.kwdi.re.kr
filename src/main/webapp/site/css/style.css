@@ -3866,6 +3866,15 @@ body div#content.sub article.theme-view div.information p {
   line-height: 1.6;
   word-break: keep-all;
 }
+body div#content.sub article.theme-view div.information p a {
+  color: #0066CC;
+  text-decoration: underline;
+}
+body div#content.sub article.theme-view div.information p a i {
+  position: relative;
+  top: 2px;
+  margin: 0 5px;
+}
 body div#content.sub article.micro-list ul.list {
   list-style: none;
   padding: 0;
