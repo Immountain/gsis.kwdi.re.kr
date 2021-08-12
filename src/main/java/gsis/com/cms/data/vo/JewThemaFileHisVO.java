@@ -55,4 +55,7 @@ public class JewThemaFileHisVO {
     private String themaNm="";
 
 
+    private String linkUrl="";
+    private String strDt="";
+    private String endDt="";
 }

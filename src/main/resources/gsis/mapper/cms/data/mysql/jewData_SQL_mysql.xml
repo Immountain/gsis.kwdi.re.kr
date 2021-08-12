@@ -16,6 +16,9 @@
             ,COLLECT_TIME
             ,REG_DT
             ,REG_ID
+            ,LINK_URL
+            ,STR_DT
+            ,END_DT
 
         FROM JEW_THEMA_FILE_HIS JM
         WHERE 1=1
@@ -33,6 +36,9 @@
               ,THEMA_SUB_TITLE
               ,TXT_CONTENT
               ,ETC
+              ,LINK_URL
+              ,STR_DT
+              ,END_DT
 
         from JEW_THEMA_FILE_HIS
         where 1=1
@@ -64,6 +70,9 @@
                     ,REG_ID
                     ,MOD_DT
                     ,MOD_ID
+                    ,LINK_URL
+                    ,STR_DT
+                    ,END_DT
 
                     ) VALUES (
                     #{themaId}
@@ -78,6 +87,9 @@
                     ,#{regId}
                     ,NOW()
                     ,#{regId}
+                    ,#{linkUrl}
+                    ,#{strDt}
+                    ,#{endDt}
 
                  )
 
@@ -161,6 +173,9 @@
             ,ETC                = #{etc}
             ,MOD_DT             = NOW()
             ,MOD_ID             = #{modDt}
+            ,LINK_URL           = #{linkUrl}
+            ,STR_DT             = #{strDt}
+            ,END_DT             = #{endDt}
 
       WHERE 1=1
       and THEMA_FILE_HIS_SNO =#{themaFileHisSno}

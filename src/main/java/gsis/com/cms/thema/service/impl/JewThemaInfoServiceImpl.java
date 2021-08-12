@@ -47,6 +47,6 @@ public class JewThemaInfoServiceImpl extends EgovAbstractServiceImpl implements 
 
     @Override
     public List<?> getSelectThemaInfoList(JewThemaInfoVO vo) throws Exception {
-        return jewThemaInfoDAO.selectThemaInfoList(vo);
+        return jewThemaInfoDAO.selectSiteThemaInfoList(vo);
     }
 }

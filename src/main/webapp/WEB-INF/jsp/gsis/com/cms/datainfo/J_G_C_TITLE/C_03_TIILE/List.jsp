@@ -92,6 +92,9 @@
         });
 
 
+        $('#btn_down_excel').click(function () {
+            firstGrid.exportExcel("경력단절 여성 규모.xls");
+        });
 
 
 
@@ -108,8 +111,11 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "경제활동인구", align: "center", width: 80 ,formatter: "money"},
-                {key: "cdmData2", label: "경제활동참가율", align: "center", width: 80,formatter: "money"}
+                {key: "cdmData1", label: "15-54세 기혼여성 인구", align: "center", width: 120 ,formatter: "money"},
+                {key: "cdmData2", label: "비취업여성 인구", align: "center", width: 120,formatter: "money"},
+                {key: "cdmData3", label: "비취업 여성 비율", align: "center", width: 120,formatter: "money"},
+                {key: "cdmData4", label: "경력단절 여성 인구", align: "center", width: 120,formatter: "money"},
+                {key: "cdmData5", label: "제주 경력단절 여성 비율", align: "center", width: 120,formatter: "money"}
 
 
 
@@ -133,7 +139,7 @@
             strYear:strYear,endYear:endYear
         };
 
-        $ifx.ajax('<c:url value='/cms/gsis/a03/List.do' />', {
+        $ifx.ajax('<c:url value='/cms/gsis/c03/List.do' />', {
             method: "POST",
             data: JSON.stringify(p),
             success: function (res) {
@@ -161,11 +167,12 @@
             <input type="text" id="strYear" name="strYear" value="" maxlength="4"/> ~<input type="text" id="endYear" name="endYear" value="" maxlength="4"/>
 
             <%--<input type="text" class="w100" class="main" name="searchKeyword" id="searchKeyword" size="35"--%>
-                   <%--title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''--%>
-                   <%--maxlength="155">--%>
+            <%--title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''--%>
+            <%--maxlength="155">--%>
             <button type="button" class="button" name="btn_search" id="btn_search" onclick="Search()">조회</button>
             <button type="button" class="button main" name="btn_regist_info" id="btn_regist_info">내용등록</button>
             <button type="button" class="button main" name="btn_regist_excel" id="btn_regist_excel">엑셀업로드</button>
+            <button type="button" class="button main" name="btn_down_excel" id="btn_down_excel">엑셀 다운로드</button>
             <input type="hidden" id="themaId" name="themaId" value="${view.themaId}">
 
         </div>

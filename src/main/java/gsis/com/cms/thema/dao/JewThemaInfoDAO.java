@@ -32,4 +32,10 @@ public class JewThemaInfoDAO extends EgovComAbstractDAO {
     public void deleteThemaInfo(JewThemaInfoVO vo) throws Exception {
         insert("JewThemaInfoDAO.deleteThemaInfo", vo);
     }
+
+    public List<?> selectSiteThemaInfoList(JewThemaInfoVO vo) throws Exception {
+        return selectList("JewThemaInfoDAO.selectSiteThemaInfoList", vo);
+    }
+
+
 }

@@ -182,6 +182,11 @@
         var strYear =  $('#strYear').val();
         var dataGb =  $('#dataGb').val();
 
+        if(!strYear){
+
+            alert("기준년도을 입력하세요.");
+            return;
+        }
 
 
 
@@ -271,7 +276,7 @@
     <h3 class="btitle">
         목록
     </h3>
-    <input type="text" id="strYear" name="strYear" value="" />
+    <input type="text" id="strYear" name="strYear" value="" maxlength="4"/>
     <select id="dataGb" name="dataGb">
         <option value="전체">전체</option>
         <option value="여성">여성</option>

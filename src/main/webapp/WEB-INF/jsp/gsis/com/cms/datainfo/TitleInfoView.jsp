@@ -41,6 +41,11 @@
             $('#themaFileHisSno').val("");
 
 
+            $('#strDt').val("");
+            $('#endDt').val("");
+            $('#linkUrl').val("");
+
+
             $('#btn_save').attr("disabled", false);
             $('#btn_update').attr("disabled", true);
 
@@ -106,6 +111,11 @@
                                 $('#txtContent').val("");
                                 $('#etc').val("");
                                 $('#themaFileHisSno').val("");
+
+                                $('#strDt').val("");
+                                $('#endDt').val("");
+                                $('#linkUrl').val("");
+
 
                                 $('#btn_update').attr("disabled", true);
                                 $('#btn_save').attr("disabled", false);
@@ -186,6 +196,16 @@
                               $('#etc').val("");
                               $('#themaFileHisSno').val("");
 
+
+                              $('#strDt').val("");
+                              $('#endDt').val("");
+                              $('#linkUrl').val("");
+
+
+
+
+
+
                               $('#btn_update').attr("disabled", true);
                               $('#btn_save').attr("disabled", false);
 
@@ -242,6 +262,10 @@
         var etc = firstGrid.getList()[row].etc;
         var themaFileHisSno = firstGrid.getList()[row].themaFileHisSno;
 
+        var strDt = firstGrid.getList()[row].strDt;
+        var endDt = firstGrid.getList()[row].endDt;
+        var linkUrl = firstGrid.getList()[row].linkUrl;
+
 
 
         $('#themaTitle').val(themaTitle);
@@ -249,6 +273,10 @@
         $('#txtContent').val(txtContent);
         $('#etc').val(etc);
         $('#themaFileHisSno').val(themaFileHisSno);
+
+        $('#strDt').val(strDt);
+        $('#endDt').val(endDt);
+        $('#linkUrl').val(linkUrl);
 
 
         $('#btn_save').attr("disabled", true);
@@ -312,32 +340,51 @@
 
                     <tr>
                         <th><label for="themaTitle">제목<span class="pilsu">*</span></label></th>
-                        <td class="left" >
+                        <td class="left" colspan="3">
                             <input type="text" id="themaTitle" name="themaTitle" class="w500">
                         </td>
 
                     </tr>
                     <tr>
                         <th><label for="themaSubTitle">메모<span class="pilsu">*</span></label></th>
-                        <td class="left">
+                        <td class="left" colspan="3">
                             <input type="text" id="themaSubTitle" name="themaSubTitle" class="w500">
                         </td>
 
                     </tr>
                     <tr>
                         <th>내용<span class="pilsu">*</span></th>
-                        <td colspan="4">
+                        <td colspan="3">
                            <textarea name="txtContent" id="txtContent" ></textarea>
                         </td>
 
                     </tr>
                     <tr>
                         <th>하단내용<span class="pilsu">*</span></th>
-                        <td colspan="4">
+                        <td colspan="3">
                             <textarea id="etc" name="etc"></textarea>
                         </td>
 
                     </tr>
+
+                    <tr>
+                        <th>기준시작</th>
+                        <td style="width: 100px">
+                            <input type="text" id="strDt" name="strDt" class="w100" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                        </td>
+                        <th style="width: 50px">기준종료일</th>
+                        <td  >
+                            <input type="text" id="endDt" name="endDt" class="w100" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>링크URL</th>
+                        <td colspan="3">
+                            <input type="text" id="linkUrl" name="linkUrl" class="w400" >
+                        </td>
+
+                    </tr>
+
                     </tbody>
                     <input type="hidden" id="themaId" name="themaId" value="${view.themaId}">
                     <input type="hidden" id="themaGroupId" name="themaGroupId" value="${view.themaGroupId}">

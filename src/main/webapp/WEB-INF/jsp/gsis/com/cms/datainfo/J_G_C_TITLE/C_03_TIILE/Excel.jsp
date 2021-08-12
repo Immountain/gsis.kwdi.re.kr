@@ -43,7 +43,7 @@
 
 
         genGrid();
-     });
+    });
 
 
 
@@ -53,8 +53,11 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "경제활동인구", align: "center", width: 60 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData2", label: "경제활동참가율", align: "center", width: 60,formatter: "money",editor: {type: "text"}}
+                {key: "cdmData1", label: "15-54세 기혼여성 인구", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData2", label: "비취업여성 인구", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData3", label: "비취업 여성 비율", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData4", label: "경력단절 여성 인구", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData5", label: "제주 경력단절 여성 비율", align: "center", width: 120,formatter: "money",editor: {type: "text"}}
 
 
 
@@ -73,7 +76,7 @@
 
 
         var formData = new FormData(document.excelForm);
-        $ifx.ajax('<c:url value="/cms/gsis/c01/upload.do"/>', {
+        $ifx.ajax('<c:url value="/cms/gsis/c03/upload.do"/>', {
             method: 'POST',
             processData: false,
             contentType: false,
@@ -119,9 +122,9 @@
         var p = {strYear:strYear,endYear:endYear,listData:List}
 
 
-     if(!confirm('데이터을 생성 하시겠습니까?')) return false;
+        if(!confirm('데이터을 생성 하시겠습니까?')) return false;
 
-        $ifx.ajax('<c:url value='/cms/gsis/c01/updateObject.do' />', {
+        $ifx.ajax('<c:url value='/cms/gsis/c03/updateObject.do' />', {
             method: "POST",
             data: JSON.stringify(p),
             success: function (res) {
@@ -157,7 +160,7 @@
         var form = document.createElement("form");
         form.setAttribute("charset", "UTF-8");
         form.setAttribute("method", "POST");  //Post 방식
-        form.setAttribute("action", "<c:url value="/cms/gsis/c01/download.do"/>"); //요청 보낼 주소
+        form.setAttribute("action", "<c:url value="/cms/gsis/c03/download.do"/>"); //요청 보낼 주소
 
         // var hiddenField = document.createElement("input");
         // hiddenField.setAttribute("type", "hidden");
@@ -175,13 +178,18 @@
         document.body.appendChild(form);
         form.submit();
     }
-    
+
     function btn_add() {
 
 
         var strYear =  $('#strYear').val();
         var dataGb =  $('#dataGb').val();
 
+        if(!strYear){
+
+            alert("기준년도을 입력하세요.");
+            return;
+        }
 
 
 
@@ -212,9 +220,12 @@
         var p ={
 
             dataYear: strYear
-           ,dataGb:dataGb
-           ,cdmData1:0
-           ,cdmData2:0
+            ,dataGb:dataGb
+            ,cdmData1:0
+            ,cdmData2:0
+            ,cdmData3:0
+            ,cdmData4:0
+            ,cdmData5:0
 
 
 
@@ -271,11 +282,9 @@
     <h3 class="btitle">
         목록
     </h3>
-    <input type="text" id="strYear" name="strYear" value="" />
+    <input type="text" id="strYear" name="strYear" value="" maxlength="4" />
     <select id="dataGb" name="dataGb">
-        <option value="전체">전체</option>
-        <option value="여성">여성</option>
-        <option value="남성">남성</option>
+        <option value="인구">인구</option>
     </select>
 
     <button type="button" class="button" onclick="btn_add()">로우추가</button>

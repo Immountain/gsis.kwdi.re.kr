@@ -106,8 +106,8 @@
 
 
     function Search() {
-        var strYear ="";
-        var endYear ="";
+        var strYear =$('#strDt').val();
+        var endYear =$('#endDt').val();
         var p = {
             strYear:strYear,endYear:endYear
         };
@@ -349,6 +349,8 @@
                     <c:out value="${fn:replace(viewFile.etc , crlf , '<br/>') }" escapeXml="false"/>
 
                 </div>
+                <input type="hidden" id="strDt" name="strDt" value="${viewFile.strDt}">
+                <input type="hidden" id="endDt" name="endDt" value="${viewFile.endDt}">
 
             </article>
 

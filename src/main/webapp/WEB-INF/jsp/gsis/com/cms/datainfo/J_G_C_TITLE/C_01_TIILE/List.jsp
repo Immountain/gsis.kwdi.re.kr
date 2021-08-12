@@ -91,6 +91,10 @@
 
         });
 
+        $('#btn_down_excel').click(function () {
+            firstGrid.exportExcel("경제활동참가율.xls");
+        });
+
 
 
 
@@ -166,6 +170,7 @@
             <button type="button" class="button" name="btn_search" id="btn_search" onclick="Search()">조회</button>
             <button type="button" class="button main" name="btn_regist_info" id="btn_regist_info">내용등록</button>
             <button type="button" class="button main" name="btn_regist_excel" id="btn_regist_excel">엑셀업로드</button>
+            <button type="button" class="button main" name="btn_down_excel" id="btn_down_excel">엑셀 다운로드</button>
             <input type="hidden" id="themaId" name="themaId" value="${view.themaId}">
 
         </div>

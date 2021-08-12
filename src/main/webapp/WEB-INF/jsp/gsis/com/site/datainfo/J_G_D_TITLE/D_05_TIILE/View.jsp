@@ -71,7 +71,7 @@
                     }
                 },
                 opposite: true,
-                min: 0,
+             //   min: 0,
               //  tickInterval: 2,
                 // tickWidth: 0,
                 // gridLineWidth:1,
@@ -250,10 +250,10 @@
                         },
                         {
                             name: '육아휴직(남성비율)',
-                            type: 'spline',
+                            type: 'line',
                             yAxis: 1,
                             color: '#f5c082', //green
-                            data: cdmData3,
+                            data: cdmData4,
                             marker: {
                                 lineWidth: 1,
                                 lineColor: '#f5c082',
@@ -265,10 +265,10 @@
                         },
                         {
                             name: '육아기근로단축(남성 비율)',
-                            type: 'spline',
+                            type: 'line',
                             yAxis: 1,
                             color: '#499cc0', //green
-                            data: cdmData4,
+                            data: cdmData5,
                             marker: {
                                 lineWidth: 1,
                                 lineColor: '#499cc0',

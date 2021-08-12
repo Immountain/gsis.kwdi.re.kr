@@ -71,7 +71,7 @@
                     }
                 },
                 opposite: true,
-                min: 0,
+              //  min: 0,
               //  tickInterval: 2,
                 // tickWidth: 0,
                 // gridLineWidth:1,

@@ -58,21 +58,21 @@ public class SiteThemeController extends BaseController {
         jewThemaInfoVO = new JewThemaInfoVO();
         jewThemaInfoVO.setThemaGroupId("J_G_A_TITLE");
         jewThemaInfoVO.setUseYn("Y");
-        model.addAttribute("atitleList",jewThemaInfoService.selectThemaInfoList(jewThemaInfoVO));
+        model.addAttribute("atitleList",jewThemaInfoService.getSelectThemaInfoList(jewThemaInfoVO));
 
 
         //보육과 교육
         jewThemaInfoVO = new JewThemaInfoVO();
         jewThemaInfoVO.setThemaGroupId("J_G_B_TITLE");
         jewThemaInfoVO.setUseYn("Y");
-        model.addAttribute("btitleList",jewThemaInfoService.selectThemaInfoList(jewThemaInfoVO));
+        model.addAttribute("btitleList",jewThemaInfoService.getSelectThemaInfoList(jewThemaInfoVO));
 
 
         //경제 활동
         jewThemaInfoVO = new JewThemaInfoVO();
         jewThemaInfoVO.setThemaGroupId("J_G_C_TITLE");
         jewThemaInfoVO.setUseYn("Y");
-        model.addAttribute("ctitleList",jewThemaInfoService.selectThemaInfoList(jewThemaInfoVO));
+        model.addAttribute("ctitleList",jewThemaInfoService.getSelectThemaInfoList(jewThemaInfoVO));
 
 
 
@@ -80,21 +80,21 @@ public class SiteThemeController extends BaseController {
         jewThemaInfoVO = new JewThemaInfoVO();
         jewThemaInfoVO.setThemaGroupId("J_G_D_TITLE");
         jewThemaInfoVO.setUseYn("Y");
-        model.addAttribute("dtitleList",jewThemaInfoService.selectThemaInfoList(jewThemaInfoVO));
+        model.addAttribute("dtitleList",jewThemaInfoService.getSelectThemaInfoList(jewThemaInfoVO));
 
 
         //사회참여와 문화
         jewThemaInfoVO = new JewThemaInfoVO();
         jewThemaInfoVO.setThemaGroupId("J_G_E_TITLE");
         jewThemaInfoVO.setUseYn("Y");
-        model.addAttribute("etitleList",jewThemaInfoService.selectThemaInfoList(jewThemaInfoVO));
+        model.addAttribute("etitleList",jewThemaInfoService.getSelectThemaInfoList(jewThemaInfoVO));
 
 
         //안정과 환경
         jewThemaInfoVO = new JewThemaInfoVO();
         jewThemaInfoVO.setThemaGroupId("J_G_F_TITLE");
         jewThemaInfoVO.setUseYn("Y");
-        model.addAttribute("ftitleList",jewThemaInfoService.selectThemaInfoList(jewThemaInfoVO));
+        model.addAttribute("ftitleList",jewThemaInfoService.getSelectThemaInfoList(jewThemaInfoVO));
 
 
 
