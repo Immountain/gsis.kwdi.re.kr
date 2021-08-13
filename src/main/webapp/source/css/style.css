@@ -983,7 +983,8 @@ div.rows:last-of-type {
 
 /* widget layout */
 div.widget {
-  display: inline-block;
+  display: block;
+  float: left;
   vertical-align: top;
   margin: 0 0 10px;
   padding: 0 5px;
@@ -1163,6 +1164,12 @@ div.widget div.inline div.box.board ul li i {
 }
 div.widget.h02 div.inline {
   min-height: 280px;
+}
+div.widget.h03 div.inline {
+  min-height: 504px;
+}
+div.widget.h04 div.inline {
+  min-height: 570px;
 }
 div.widget.wall div.inline div.box {
   margin: 0;

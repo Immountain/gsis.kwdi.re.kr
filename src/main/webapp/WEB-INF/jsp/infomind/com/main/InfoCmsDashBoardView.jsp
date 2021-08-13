@@ -22,7 +22,7 @@
 
 
     <h2 class="stitle"><i class="bx bxs-dashboard"></i>Dashboard</h2>
-    <div class="widget c05 h02 gray-l wall">
+    <div class="widget c06 h03 wall">
         <div class="inline">
             <h3>
                 사이트별 방문
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div class="widget c05 h02 gray-l wall">
+    <div class="widget c06 h03 wall">
         <div class="inline">
             <h3>
                 테마별 관심 방문
@@ -52,7 +52,7 @@
     </div>
 
     <div>
-        <div class="widget c03 h02">
+        <div class="widget c03 h04">
             <div class="inline">
                 <h3>마이크로파일</h3>
                 <div class="box">
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="widget c03 h02">
+        <div class="widget c03 h04">
             <div class="inline">
                 <h3>메뉴별</h3>
                 <div class="box">
@@ -71,7 +71,7 @@
     </div>
 
 
-    <div class="widget c05 h02 ">
+    <div class="widget c06 h02 ">
         <div class="inline">
             <h3>
                 공지사항
@@ -87,7 +87,7 @@
     </div>
 
 
-    <div class="widget c05 h02">
+    <div class="widget c06 h02">
         <div class="inline">
             <h3>
                 업데이트 내용
@@ -135,7 +135,7 @@
                 enabled: false
             },
             chart: {
-                height: '180px',
+                height: '400px',
                 backgroundColor: null,
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
@@ -197,7 +197,7 @@
                 enabled: false
             },
             chart: {
-                height: '300px',
+                height: '400px',
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false,
@@ -246,7 +246,7 @@
                 enabled: false
             },
             chart: {
-                height: '300px',
+                height: '400px',
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false,
