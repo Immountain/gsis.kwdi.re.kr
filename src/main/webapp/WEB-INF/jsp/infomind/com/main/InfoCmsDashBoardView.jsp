@@ -186,7 +186,11 @@
 
 
         themaInfoVisitCount = Highcharts.chart('themaInfoVisitCount', {
-
+            chart: {
+                marginRight: -200,
+                marginLeft: -200,
+                marginBottom: 0
+            },
             accessibility: {
                 screenReaderSection: {
                     beforeChartFormat: '<h5>{chartTitle}</h5>' +
@@ -194,6 +198,9 @@
                         '<div>{chartLongdesc}</div>' +
                         '<div>{viewTableButton}</div>'
                 }
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.value}</b>'
             },
             series: [],
             title: {
@@ -358,19 +365,36 @@
 
                 var convertData = [];
                 var cdmData = [];
+                var cnt =50
+                var size =data.length;
+               // var sum =data.length;
+
+
+
+
+
                 $.each(data, function(key, item) {
-                    var data = { name: item.themaNm, weight: item.cnt};
+
+                  //  var tempCnt =value:item
+
+                    var data = { name: item.themaNm, weight:cnt+ (key+5),value:item.cnt};
 
                     convertData.push(data);
 
                 });
+
+
+
+
                 //
                 themaInfoVisitCount.update({
 
                     series: [{
                         type: 'wordcloud',
                         data: convertData,
-                        name: '방문수'
+                        name: '방문수',
+
+
                     }],
 
 
