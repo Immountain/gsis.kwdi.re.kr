@@ -55,4 +55,16 @@ public interface InfoSiteStatsService {
     List<?> getSiteMenuTotYear(InfoSiteStatsVO vo) throws Exception ;
 
 
+
+    /**
+     * 일주일 써이트 방문 기록
+     * @param vo
+     * @return
+     * @throws Exception
+     */
+    List<?> getLastWeekDaysVisitCount(InfoSiteStatsVO vo) throws Exception ;
+
+
+
+
 }

@@ -47,4 +47,9 @@ public class InfoSiteStatsServiceImpl extends EgovAbstractServiceImpl implements
     public List<?> getSiteMenuTotYear(InfoSiteStatsVO vo) throws Exception {
         return infoSiteStatsDAO.getSiteMenuTotYear(vo);
     }
+
+    @Override
+    public List<?> getLastWeekDaysVisitCount(InfoSiteStatsVO vo) throws Exception {
+        return infoSiteStatsDAO.getLastWeekDaysVisitCount(vo);
+    }
 }

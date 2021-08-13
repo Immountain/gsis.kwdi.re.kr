@@ -230,6 +230,29 @@
 
     </select>
 
+
+
+    <select id="selectDashBoardThemaInfo" parameterType="gsis.com.cms.thema.vo.JewThemaInfoVO"
+            resultType="gsis.com.cms.thema.vo.JewThemaInfoVO">
+
+            select a.THEMA_ID
+                  ,a.cnt
+                  ,b.THEMA_NM
+            from (
+              select THEMA_ID
+                      ,count(*) as cnt
+              from jew_thema_visit A
+              where 1=1
+              AND DATE_FORMAT(A.V_DATE,'%Y%m%d') BETWEEN CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'0101') AND      CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'1231')
+              group by THEMA_ID
+            ) A inner join jew_thema_info b
+            on A.THEMA_ID =b.THEMA_ID
+
+
+
+    </select>
+
+
 </mapper>
 
 

@@ -73,6 +73,16 @@ public class InfoSiteStatsDAO extends EgovComAbstractDAO {
     }
 
 
+    /**
+     * 일주일 써이트 방문 기록
+     * @param vo
+     * @return
+     * @throws Exception
+     */
+    public List<?> getLastWeekDaysVisitCount(InfoSiteStatsVO vo) throws Exception {
+        return selectList("InfoSiteStatsDAO.getWeekDaySiteMain", vo);
+    }
+
 
 
 }

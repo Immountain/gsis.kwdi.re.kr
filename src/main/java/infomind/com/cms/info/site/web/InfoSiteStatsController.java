@@ -84,5 +84,13 @@ public class InfoSiteStatsController {
     }
 
 
+    @RequestMapping(value = "/cms/info/site/stats/getLastWeekDaysVisitCount.do")
+    @ResponseBody
+    public Object getLastWeekDaysVisitCount(InfoSiteStatsVO vo) throws Exception {
+        //파인 차트
+        return infoSiteStatsService.getLastWeekDaysVisitCount(vo);
+    }
+
+
 
 }

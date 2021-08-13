@@ -28,4 +28,6 @@ public interface JewThemaInfoService {
      */
     List<?> getSelectThemaInfoList(JewThemaInfoVO vo) throws Exception;
 
+
+    List<?> getDashBoardThemaInfo(JewThemaInfoVO vo) throws Exception ;
 }

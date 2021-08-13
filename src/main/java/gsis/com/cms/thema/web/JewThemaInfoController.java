@@ -8,6 +8,7 @@ import gsis.com.cms.thema.service.JewThemaGroupService;
 import gsis.com.cms.thema.vo.JewThemaGroupVO;
 import infomind.com.cmm.api.ApiResponse;
 import infomind.com.cmm.web.BaseAjaxController;
+import infomind.com.cms.info.site.vo.InfoSiteStatsVO;
 import infomind.com.ext.vo.AxGridDataVO;
 import infomind.com.ext.vo.AxGridPageVO;
 import infomind.com.utils.web.InfoViewUtils;
@@ -114,5 +115,12 @@ public class JewThemaInfoController extends BaseAjaxController {
         jewThemaInfoService.deleteThemaInfo(jewThemaInfoVO);
 
         return ok();
+    }
+
+    @RequestMapping(value = "/cms/gsis/thema/getDashBoardThemaInfo.do")
+    @ResponseBody
+    public Object getSiteMenuTotYear(JewThemaInfoVO vo) throws Exception {
+        //파인 차트
+        return jewThemaInfoService.getDashBoardThemaInfo(vo);
     }
 }

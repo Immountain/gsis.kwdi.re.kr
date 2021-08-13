@@ -16,4 +16,9 @@ public class InfoSiteStatsVO {
     private String siteId ="";
 
 
+    private String targetId ="";
+    private String  siteNm="";
+    private String  visitCount="";
+    private String  visitDay="";
+
 }

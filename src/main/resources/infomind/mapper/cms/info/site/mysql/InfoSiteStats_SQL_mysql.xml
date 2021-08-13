@@ -159,5 +159,29 @@
 
     </select>
 
+    <select id="getWeekDaySiteMain"   parameterType="infomind.com.cms.info.site.vo.InfoSiteStatsVO" resultType="infomind.com.cms.info.site.vo.InfoSiteStatsVO">
+        SELECT
+               TARGET_ID
+             , SITE_NM
+             , VISIT_COUNT
+             , VISIT_DAY
+        FROM (
+                 SELECT TARGET_ID
+                      , CONCAT(ISI.HOST, '/', ISI.SUB_PATH) AS SITE_NM
+                      , COUNT(*)                      AS    VISIT_COUNT
+                      , DATE_FORMAT(V_DATE, '%Y%m%d') AS    VISIT_DAY
+                 FROM INFO_SITE_VISIT SV
+                          INNER JOIN INFO_SITE ISI ON ISI.SITE_ID = SV.SITE_ID
+                 WHERE 1 = 1
+                   AND V_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -7 DAY) AND NOW()
+                   AND SV.PAGE_TYPE = 'main'
+                 GROUP BY TARGET_ID, DATE_FORMAT(V_DATE, '%Y%m%d'), ISI.HOST, ISI.SUB_PATH
+             ) A
+        WHERE 1 = 1
+        ORDER BY VISIT_DAY ASC, TARGET_ID ASC
+    </select>
+
+
+
 
 </mapper>

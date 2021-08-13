@@ -38,4 +38,10 @@ public class JewThemaInfoDAO extends EgovComAbstractDAO {
     }
 
 
+    public List<?> selectDashBoardThemaInfo(JewThemaInfoVO vo) throws Exception {
+        return selectList("JewThemaInfoDAO.selectDashBoardThemaInfo", vo);
+    }
+
+
+
 }
