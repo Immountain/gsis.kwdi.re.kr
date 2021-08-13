@@ -370,7 +370,7 @@
                     series: [{
                         type: 'wordcloud',
                         data: convertData,
-                        name: '방문수 '
+                        name: '방문수'
                     }],
 
 
@@ -400,8 +400,8 @@
                             series: [{
                                 name: '마이크로파일',
                                 data: res.map(function (x) {
-                                    console.log(x.orignlFileNm)
-                                    console.log(x.cnt)
+                                  //  console.log(x.orignlFileNm)
+                                   // console.log(x.cnt)
 
                                     return {
                                         name: x.orignlFileNm,
