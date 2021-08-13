@@ -90,4 +90,9 @@ public class JewMdisServiceImpl extends EgovAbstractServiceImpl implements JewMd
     public void deleteMdis(JewMdisVO vo) throws Exception {
         jewMdisDAO.deleteMdis(vo);
     }
+
+    @Override
+    public List<?> getSelectDashboardMdis(JewMdisVO vo) throws Exception {
+        return jewMdisDAO.getSelectDashboardMdis(vo);
+    }
 }

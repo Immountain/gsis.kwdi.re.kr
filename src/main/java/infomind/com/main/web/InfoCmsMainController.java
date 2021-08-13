@@ -5,6 +5,10 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.Globals;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
 import egovframework.com.utl.fcc.service.EgovStringUtil;
+import gsis.com.cms.banner.vo.JewBannerVO;
+import gsis.com.cms.data.dao.JejuDataDAO;
+import gsis.com.cms.data.service.JejuDataService;
+import gsis.com.cms.data.vo.JewThemaFileHisVO;
 import infomind.com.cms.mnu.mpm.service.InfoMenuManageService;
 import infomind.com.cms.mnu.mpm.vo.InfoMenuManageVO;
 import org.slf4j.Logger;
@@ -16,10 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -41,6 +42,9 @@ public class InfoCmsMainController {
      */
     @Resource(name = "infoMenuManageService")
     private InfoMenuManageService menuManageService;
+
+    @Resource(name="JejuDataService")
+    private JejuDataService jejuDataService;
 
 
 
@@ -142,7 +146,15 @@ public class InfoCmsMainController {
         model.addAttribute("formatTime", formatTime);
 
 
-     //   model.addAttribute("wjMainDashBoardVOList", wjMainDashBoardVOList);
+        List<JewThemaFileHisVO> updateList = new ArrayList<>();
+        updateList =jejuDataService.getSelectMainUpdateList(null);
+        model.addAttribute("updateList", updateList);
+
+
+
+
+
+        //   model.addAttribute("wjMainDashBoardVOList", wjMainDashBoardVOList);
         return "infomind/com/main/InfoCmsDashBoardView.sub";
     }
 

@@ -21,6 +21,7 @@
             ,REG_DT
             ,MOD_ID
             ,MOD_DT
+            ,MOBILE_BANNER_IMAGE
         FROM JEW_BANNER
         WHERE 1=1
         AND  DELETE_YN ='N'
@@ -56,6 +57,7 @@
             ,REG_DT
             ,MOD_ID
             ,MOD_DT
+            ,MOBILE_BANNER_IMAGE
         FROM JEW_BANNER
         WHERE 1=1
         AND BANNER_SNO =#{bannerSno}
@@ -84,6 +86,7 @@
                     ,REG_DT
                     ,MOD_ID
                     ,MOD_DT
+                    ,MOBILE_BANNER_IMAGE
 
                     ) VALUES (
 
@@ -103,6 +106,7 @@
                     ,NOW()
                     ,#{regId}
                     ,NOW()
+                    ,#{mobileBannerImage}
                  )
 
     </insert>
@@ -125,6 +129,7 @@
             ,USE_YN         =#{useYn}
             ,MOD_ID         =#{modId}
             ,MOD_DT         =NOW()
+            ,MOBILE_BANNER_IMAGE  =#{mobileBannerImage}
       WHERE 1=1
       and BANNER_SNO =#{bannerSno}
 
@@ -165,6 +170,7 @@
             ,REG_DT
             ,MOD_ID
             ,MOD_DT
+            ,MOBILE_BANNER_IMAGE
         from jew_banner
         where 1=1
         and USE_YN ='Y'

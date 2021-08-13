@@ -3,6 +3,7 @@ package gsis.com.cms.mdis.web;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.annotation.IncludedInfo;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
+import gsis.com.cms.thema.vo.JewThemaInfoVO;
 import infomind.com.cmm.api.ApiResponse;
 import infomind.com.cmm.web.BaseAjaxController;
 import infomind.com.utils.web.InfoViewUtils;
@@ -90,6 +91,13 @@ public class JewMdisController extends BaseAjaxController {
 
         jewMdisService.deleteMdis(jewMdisVO);
         return ok();
+    }
+
+    @RequestMapping(value = "/cms/gsis/stats/getSelectDashboardMdis.do")
+    @ResponseBody
+    public Object getSiteMenuTotYear(JewMdisVO vo) throws Exception {
+        //파인 차트
+        return jewMdisService.getSelectDashboardMdis(vo);
     }
 
 }

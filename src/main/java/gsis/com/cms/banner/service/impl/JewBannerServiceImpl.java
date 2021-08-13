@@ -37,6 +37,8 @@ public class JewBannerServiceImpl extends EgovAbstractServiceImpl implements Jew
         jewBannerDAO.insertJewBanner(vo);
 
         infoFileMngUtil.copyFile(vo.getBannerImage(),"Y");
+        infoFileMngUtil.copyFile(vo.getMobileBannerImage());
+
 
     }
 
@@ -50,6 +52,7 @@ public class JewBannerServiceImpl extends EgovAbstractServiceImpl implements Jew
         jewBannerDAO.updateJewBanner(vo);
 
         infoFileMngUtil.copyFile(vo.getBannerImage(),"Y");
+        infoFileMngUtil.copyFile(vo.getMobileBannerImage());
 
     }
 

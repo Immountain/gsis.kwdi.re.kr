@@ -16,4 +16,7 @@ public interface JewMdisService {
 
      void deleteMdis(JewMdisVO vo)throws Exception;
 
+
+     List<?> getSelectDashboardMdis(JewMdisVO vo)throws Exception;
+
      }

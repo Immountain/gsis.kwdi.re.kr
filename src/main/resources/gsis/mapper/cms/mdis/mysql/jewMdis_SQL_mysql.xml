@@ -272,4 +272,36 @@
             DELETE_YN = 'Y'
         WHERE JEW_MDIS_SNO = #{jewMdisSno}
     </update>
+
+
+    <select id="getSelectDashboardMdis"
+            parameterType="gsis.com.cms.mdis.vo.JewMdisVO"
+            resultType="gsis.com.cms.mdis.vo.JewMdisVO">
+
+        select a.JEW_MDIS_SNO
+               ,b.MDIS_KOR_NM
+               ,a.FILE_SN
+               ,a.DATA_FILE
+               ,c.ORIGNL_FILE_NM
+               ,count(*) as cnt
+
+        from jew_file_download a
+             ,jew_mdis b
+             ,info_file_detail c
+         where 1=1
+         and a.JEW_MDIS_SNO =b.JEW_MDIS_SNO
+         and a.DATA_FILE =c.ATCH_FILE_ID
+         and a.FILE_SN =c.FILE_SN
+          AND      DATE_FORMAT(A.REG_DT,'%Y%m%d') BETWEEN CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'0101') AND      CONCAT(DATE_FORMAT(SYSDATE(),'%Y'),'1231')
+         group by
+         a.JEW_MDIS_SNO
+               ,b.MDIS_KOR_NM
+               ,a.FILE_SN
+               ,a.DATA_FILE
+               ,c.ORIGNL_FILE_NM
+
+
+    </select>
+
+
 </mapper>

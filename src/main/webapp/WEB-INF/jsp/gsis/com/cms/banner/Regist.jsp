@@ -89,6 +89,79 @@
             }
         });
 
+
+
+        $("#mobileFileuploader").uploadFile({
+            url: "<c:url value="/"/>cms/info/file/upload.do",
+            atchFileId:$("#mobileBannerImage").val(),
+            viewUrl:"<c:url value='/cms/info/file/ImageView.do' />",
+            multiple:true,
+            dragDrop:true,
+            fileName:"uploadfile",
+            maxFileCount:1,
+            returnType:"json",
+            showPreview:true,
+            previewHeight: "100px",
+            previewWidth: "100px",
+            showDelete: true,
+            showDownload:true,
+            sequential:true,
+            sequentialCount:1,
+            onLoad:function(obj) {
+                $.ajax({
+                    cache: false,
+                    url: "<c:url value="/"/>cms/info/file/tempList.do",
+                    dataType: "json",
+                    data:{atchFileId:$("#mobileBannerImage").val()},
+                    success: function(data) {
+                        for(var i=0;i<data.length;i++) {
+                            obj.createProgress(data[i]);
+                        }
+                    }
+                });
+            },
+            onSubmit:function(files) {
+            },
+            onSuccess:function(files,data,xhr,pd) {
+
+
+                var url ="<c:url value='/site/info/file/ImageView.do?atchFileId=' />"+data.atchFileId+"&fileSn="+data.fileSn;
+
+
+                var testVal =data.orignlFileNm+"("+getSizeStr(data.fileSize)+")</br>"+url;
+
+
+                pd.filename.html(testVal)
+
+                $("#mobileBannerImage").val(data.atchFileId);
+            },
+            afterUploadAll:function(obj) {
+            },
+            dynamicFormData: function() {
+                var data ={atchFileId:$("#mobileBannerImage").val(),prixFixe:'B_'}
+                return data;
+            },
+            onError: function(files,status,errMsg,pd) {
+            },
+            deleteCallback: function (data, pd) {
+                $.ajax({
+                    cache: false,
+                    url: "<c:url value="/"/>cms/info/file/delete.do",
+                    dataType: "json",
+                    data:{atchFileId:data.atchFileId,fileSn:data.fileSn},
+                    success: function(data) {
+                        pd.statusbar.hide(); //You choice.
+                    }
+                });
+            },
+            downloadCallback:function(data,pd) {
+                location.href="/cms/info/file/fileDown.do?atchFileId="+data.atchFileId+"&fileSn="+data.fileSn;
+            }
+        });
+
+
+
+
         $('#btn_save').click(function() {
 
 
@@ -316,13 +389,22 @@
 
 
                 <tr>
-                    <th><label >이미지파일 업로드<span class="pilsu">*</span></label></th>
+                    <th><label >PC 이미지 업로드<span class="pilsu">*</span></label></th>
                     <td class="left" colspan="3">
                         <div id="fileuploader">Upload</div>
                     </td>
                 </tr>
+                <tr>
+                    <th><label >모바일 이미지 업로드<span class="pilsu">*</span></label></th>
+                    <td class="left" colspan="3">
+                        <div id="mobileFileuploader">Upload</div>
+                    </td>
+                </tr>
+
+
                 </tbody>
                 <form:hidden path="bannerImage"></form:hidden>
+                <form:hidden path="mobileBannerImage"></form:hidden>
             </table>
         </div>
     </form:form>

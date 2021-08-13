@@ -25,7 +25,7 @@
     <div class="widget c06 h03 wall">
         <div class="inline">
             <h3>
-                사이트별 방문
+                사이트 방문
                 <small>
                     ${formatTime} 기준
                     <button type="button" onclick="getSearchChartData()"><i class="bx bx-refresh"></i>새로고침</button>
@@ -56,7 +56,7 @@
             <div class="inline">
                 <h3>마이크로파일</h3>
                 <div class="box">
-                    <div id="getSiteMenuYearStats_en"></div>
+                    <div id="getSelectDashboardMdis"></div>
                 </div>
             </div>
         </div>
@@ -96,7 +96,18 @@
                 <%--</small>--%>
             </h3>
             <div class="box board">
-                <info:boardLatest boardId="media" skinName="dashboard" listCount="5" urlType="CMS"/>
+
+
+                <ul>
+                    <c:forEach items="${updateList}" var="item">
+                        <li>
+                            <a href="#">
+                                    ${item.themaNm} (${item.updateKeepNm})
+                                <i>${item.regDt}</i>
+                            </a>
+                        </li>
+                    </c:forEach>
+                </ul>
             </div>
 
         </div>
@@ -125,7 +136,7 @@
         '#e94235', '#fabb04', '#34a853', '#4285f4',
         '#e94235', '#fabb04', '#34a853', '#4285f4'
     ];
-    var getSiteMenuYearStats_en, getSiteMenuYearStats= null;
+    var getSelectDashboardMdis, getSiteMenuYearStats= null;
     var lastWeekDaysVisitCount;
     var themaInfoVisitCount;
 
@@ -192,7 +203,7 @@
 
 
 
-        getSiteMenuYearStats_en = Highcharts.chart('getSiteMenuYearStats_en', {
+        getSelectDashboardMdis = Highcharts.chart('getSelectDashboardMdis', {
             credits: {
                 enabled: false
             },
@@ -378,16 +389,22 @@
         var data = {};
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value="/cms/info/site/stats/getSiteMenuTotYear.do"/>', {
+                $ifx.ajax('<c:url value="/cms/gsis/stats/getSelectDashboardMdis.do"/>', {
                     method: 'GET',
-                    data: {siteId: 'globaljejuin-en'},
+                    data: {},
                     success: function (res) {
-                        getSiteMenuYearStats_en.update({
+
+                      //  console.log(res);
+
+                        getSelectDashboardMdis.update({
                             series: [{
-                                name: '영문',
+                                name: '마이크로파일',
                                 data: res.map(function (x) {
+                                    console.log(x.orignlFileNm)
+                                    console.log(x.cnt)
+
                                     return {
-                                        name: x.siteMemuTile,
+                                        name: x.orignlFileNm,
                                         y: x.cnt
                                     }
                                 })
@@ -404,7 +421,7 @@
                     success: function (res) {
                         getSiteMenuYearStats.update({
                             series: [{
-                                name: '일문',
+                                name: '메뉴',
                                 data: res.map(function (x) {
                                     return {
                                         name: x.siteMemuTile,

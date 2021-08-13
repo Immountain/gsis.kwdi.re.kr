@@ -28,4 +28,9 @@ public class JewMdisDAO extends EgovComAbstractDAO {
     public void deleteMdis(JewMdisVO vo)throws Exception{
         insert("JewMdisDAO.deleteMdis",vo);
     }
+
+    public List<?> getSelectDashboardMdis(JewMdisVO vo)throws Exception{
+        return selectList("JewMdisDAO.getSelectDashboardMdis", vo);
+    }
+
 }

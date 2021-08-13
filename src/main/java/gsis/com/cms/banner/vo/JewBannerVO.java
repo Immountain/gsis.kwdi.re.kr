@@ -26,6 +26,7 @@ public class JewBannerVO extends CmsSearchVO {
     private String regDt="";
     private String modId="";
     private String modDt="";
+    private String mobileBannerImage="";
 
 
 
