@@ -189,7 +189,8 @@
             chart: {
                 marginRight: -200,
                 marginLeft: -200,
-                marginBottom: 0
+                marginBottom: 0,
+
             },
             accessibility: {
                 screenReaderSection: {

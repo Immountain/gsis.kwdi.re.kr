@@ -235,7 +235,7 @@
     <select id="selectDashBoardThemaInfo" parameterType="gsis.com.cms.thema.vo.JewThemaInfoVO"
             resultType="gsis.com.cms.thema.vo.JewThemaInfoVO">
 
-            select a.THEMA_ID
+          select a.THEMA_ID
                   ,a.cnt
                   ,b.THEMA_NM
             from (
@@ -247,7 +247,7 @@
               group by THEMA_ID
             ) A inner join jew_thema_info b
             on A.THEMA_ID =b.THEMA_ID
-
+			order by a.cnt asc
 
 
     </select>
