@@ -111,11 +111,19 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "0~5세 인구", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData2", label: "여아", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData3", label: "남아", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData4", label: "여아 성비", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData5", label: "제주 0~5세 비율", align: "center", width: 120,formatter: "money",editor: {type: "text"}}
+                {key: "cdmData1", label: "인구 1인당 평균 독서 권수", align: "center", width: 150 ,formatter: "money"},
+                {key: "cdmData2", label: "독서인구 비율", align: "center", width: 130 ,formatter: "money"},
+                {key: "cdmData3", label: "독서 평균권수", align: "center", width: 130 ,formatter: "money"},
+                {key: "cdmData4", label: "잡지류", align: "center", width: 130 ,formatter: "money"},
+                {key: "cdmData5", label: "잡지류 평균권수", align: "center", width: 130 ,formatter: "money"},
+                {key: "cdmData6", label: "교양서적", align: "center", width: 130 ,formatter: "money"},
+                {key: "cdmData7", label: "교양서적 평균권수", align: "center", width: 130 ,formatter: "money"},
+                {key: "cdmData8", label: "직업관련서적", align: "center", width: 130 ,formatter: "money"},
+                {key: "cdmData9", label: "직업관련서적 평균권수", align: "center", width: 130 ,formatter: "money"},
+                {key: "cdmData10", label: "생활취미 정보서적", align: "center", width: 130 ,formatter: "money"},
+                {key: "cdmData11", label: "생활취미 정보서적 평균권수", align: "center", width: 160 ,formatter: "money"},
+                {key: "cdmData12", label: "기타", align: "center", width: 130 ,formatter: "money"},
+                {key: "cdmData13", label: "기타 평균권수", align: "center", width: 130 ,formatter: "money"},
 
 
             ],
@@ -138,7 +146,7 @@
             strYear:strYear,endYear:endYear
         };
 
-        $ifx.ajax('<c:url value='/cms/gsis/b01/List.do' />', {
+        $ifx.ajax('<c:url value='/cms/gsis/e05/List.do' />', {
             method: "POST",
             data: JSON.stringify(p),
             success: function (res) {
@@ -166,8 +174,8 @@
             <input type="text" id="strYear" name="strYear" value="" maxlength="4"/> ~<input type="text" id="endYear" name="endYear" value="" maxlength="4"/>
 
             <%--<input type="text" class="w100" class="main" name="searchKeyword" id="searchKeyword" size="35"--%>
-            <%--title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''--%>
-            <%--maxlength="155">--%>
+                   <%--title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''--%>
+                   <%--maxlength="155">--%>
             <button type="button" class="button" name="btn_search" id="btn_search" onclick="Search()">조회</button>
             <button type="button" class="button main" name="btn_regist_info" id="btn_regist_info">내용등록</button>
             <button type="button" class="button main" name="btn_regist_excel" id="btn_regist_excel">엑셀업로드</button>

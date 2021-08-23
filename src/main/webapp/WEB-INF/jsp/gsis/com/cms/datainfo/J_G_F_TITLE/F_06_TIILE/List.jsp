@@ -111,11 +111,15 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "0~5세 인구", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData2", label: "여아", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData3", label: "남아", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData4", label: "여아 성비", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData5", label: "제주 0~5세 비율", align: "center", width: 120,formatter: "money",editor: {type: "text"}}
+                {key: "cdmData1", label: "대중교통 이용", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData2", label: "재활용품 분리배출", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData3", label: "음식물 쓰레기 줄이기", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData4", label: "합성세제 사용 줄이기", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData5", label: "일회용품 사용하지 않기", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData6", label: "친환경 제품 구입·사용하기", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData7", label: "자연보호 및 환경보전활동 참여하기", align: "center", width: 200 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData8", label: "물 절약하기", align: "center", width: 100 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData9", label: "가정 내 대기전력 줄이기", align: "center", width: 200 ,formatter: "money",editor: {type: "text"}}
 
 
             ],
@@ -138,7 +142,7 @@
             strYear:strYear,endYear:endYear
         };
 
-        $ifx.ajax('<c:url value='/cms/gsis/b01/List.do' />', {
+        $ifx.ajax('<c:url value='/cms/gsis/f06/List.do' />', {
             method: "POST",
             data: JSON.stringify(p),
             success: function (res) {
@@ -166,8 +170,8 @@
             <input type="text" id="strYear" name="strYear" value="" maxlength="4"/> ~<input type="text" id="endYear" name="endYear" value="" maxlength="4"/>
 
             <%--<input type="text" class="w100" class="main" name="searchKeyword" id="searchKeyword" size="35"--%>
-            <%--title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''--%>
-            <%--maxlength="155">--%>
+                   <%--title="<spring:message code="title.search" /> <spring:message code="input.input" />" value=''--%>
+                   <%--maxlength="155">--%>
             <button type="button" class="button" name="btn_search" id="btn_search" onclick="Search()">조회</button>
             <button type="button" class="button main" name="btn_regist_info" id="btn_regist_info">내용등록</button>
             <button type="button" class="button main" name="btn_regist_excel" id="btn_regist_excel">엑셀업로드</button>
