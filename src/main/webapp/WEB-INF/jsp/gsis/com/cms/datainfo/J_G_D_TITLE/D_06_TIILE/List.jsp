@@ -92,7 +92,7 @@
         });
 
         $('#btn_down_excel').click(function () {
-            firstGrid.exportExcel("4-12(고용보험 피보험자 추이).xls");
+            firstGrid.exportExcel("등록 장애인 수.xls");
         });
 
 
@@ -153,7 +153,7 @@
         <i class='bx bxs-home'></i>${menuInfo.depthFullname}
     </nav>
     <h2 class="stitle">
-        <i class='bx bxs-dashboard'></i>${menuInfo.menuNm}
+        <i class='bx bxs-dashboard'></i>${menuInfo.menuNm}(${view.themaId})
     </h2>
     <h3 class="btitle">
         검색

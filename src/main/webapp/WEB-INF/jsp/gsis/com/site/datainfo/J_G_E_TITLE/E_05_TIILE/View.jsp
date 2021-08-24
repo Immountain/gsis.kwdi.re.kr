@@ -38,10 +38,10 @@
                 thousandsSep: ','
             },
             title: {
-                text: '주관적 건강인지율'
+                text: '1인당 평균 독서권수'
             },
             xAxis: [{
-                categories: ['매우 좋음','좋은 편임','보 통','나쁜 편임','매우 나쁨'],
+                categories: [],
                 crosshair: true
             }],
             yAxis: [{ // Primary yAxis
@@ -52,7 +52,7 @@
                     }
                 },
                 title: {
-                    text: '(세)',
+                    text: '',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
@@ -62,7 +62,14 @@
                 shared: true
             },
             plotOptions: {
+                spline: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                },
                 column: {
+                    // stacking: 'normal',
                     dataLabels: {
                         enabled: true
                     }
@@ -85,13 +92,14 @@
             strYear:strYear,endYear:endYear
         };
 
-      // var groupArr = [];
-
+        var groupArr = [];
+        var cdmData1 = []; //여성
+        var cdmData2 = [];//남성
 
 
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value='/site/gsis/d02/List.do' />', {
+                $ifx.ajax('<c:url value='/site/gsis/e05/List.do' />', {
                     method: "POST",
                     data: JSON.stringify(p),
                     success: function (res) {
@@ -99,16 +107,12 @@
                         $tbody.empty();
 
                         var groupData = groupBy(res.list, 'dataYear');
-                       // var groupData2 = groupBy(res.list, 'dataGb');
-
-                       // console.log(groupData);
-                        //console.log(groupData2);
 
                         var count = 0;
                         $.each(groupData, function(key, item) {
 
                             //  console.log("-->",item[0].dataYear);
-                          //  groupArr.push(item[0].dataYear);
+                            groupArr.push(item[0].dataYear);
 
                             item.forEach(function(v, i) {
                                 var $tr = $('<tr />');
@@ -126,19 +130,40 @@
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData4']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData5']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData6']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData7']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData8']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData9']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData10']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData11']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData12']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData13']) || '' ) +  '</td>')
 
 
+
+
+
+                                if(v['dataGb']=="여성"){
+
+                                    cdmData1.push(Number(v['cdmData1']));
+
+
+                                }else if(v['dataGb']=="남성"){
+
+                                    cdmData2.push(Number(v['cdmData1']));
+
+
+                                }
 
 
                                 $tbody.append($tr);
                             })
                             // console.log(count, Object.keys(groupData).length)
                             if(count == Object.keys(groupData).length -1) {
-                                ok(item);
+
                             }
                             count++;
                         });
-                      //  ok(groupData);
+                        ok(groupData);
 
                     }
                 })
@@ -146,53 +171,19 @@
             .then(function (ok, fail, data) {
 
 
-
-
-
-                var cdmData1 = []; //여
-                var cdmData2 = [];//남성
-
-
-                $.each(data, function(key, item) {
-
-
-                 //   console.log(item.dataGb,item.cdmData1);
-
-                  if(item.dataGb=="여성" && item.cdmData1=="전체") {
-
-
-
-                     cdmData1.push(Number(item.cdmData2));
-                     cdmData1.push(Number(item.cdmData3));
-                     cdmData1.push(Number(item.cdmData4));
-                     cdmData1.push(Number(item.cdmData5));
-                     cdmData1.push(Number(item.cdmData6));
-                  }
-                 if(item.dataGb=="남성" && item.cdmData1=="전체") {
-
-
-
-                     cdmData2.push(Number(item.cdmData2));
-                     cdmData2.push(Number(item.cdmData3));
-                     cdmData2.push(Number(item.cdmData4));
-                     cdmData2.push(Number(item.cdmData5));
-                     cdmData2.push(Number(item.cdmData6));
-                    }
-
-
-
-                });
-
-
-              //  console.log(cdmData1);
-
                 chartView.update({
-ㅍ
+
+                    xAxis: [{
+                        categories: groupArr,
+                        crosshair: true
+                    }],
+
+
                     series: [{
                         name: '여성',
                         type: 'column',
                         yAxis: 0,
-                        color: '#2a2af5', //green
+                        color: '#ff9517', //green
                         data: cdmData1,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -201,13 +192,15 @@
                             verticalAlign: 'top',
                             //위치 지정
                             y: 10,
-                        }
+                        },
+
+
+
                     },{
                         name: '남성',
                         type: 'column',
                         yAxis: 0,
-                        color: '#c05123', //green
-                        pointPlacement: -0.1,
+                        color: '#11aecc', //green
                         data: cdmData2,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -216,7 +209,8 @@
                             verticalAlign: 'top',
                             //위치 지정
                             y: 10,
-                        }
+                        },
+                        pointPlacement: -0.1,
 
 
 
@@ -292,23 +286,26 @@
 
                 <p class="info">
                     좌우터치로 스크롤 가능합니다.
-                    <span>단위 %</span>
+                    <span>단위 명, %</span>
                 </p>
                 <div class="table-outline">
                     <table>
                         <thead>
                         <tr>
                             <th colspan="2">구분</th>
-
-                            <th>연령</th>
-                            <th>매우 좋음</th>
-                            <th>좋은 편임</th>
-                            <th>보 통</th>
-                            <th>나쁜 편임</th>
-                            <th>매우 나쁨</th>
-
-
-
+                             <th>인구 1인당 평균 독서 권수</th>
+                            <th>독서인구 비율</th>
+                            <th>평균권수</th>
+                            <th>잡지류</th>
+                            <th>평균권수</th>
+                            <th>교양서적</th>
+                            <th>평균권수</th>
+                            <th>직업관련서적</th>
+                            <th>평균권수</th>
+                            <th>생활취미 정보서적</th>
+                            <th>평균권수</th>
+                            <th>기타</th>
+                            <th>평균권수</th>
                         </tr>
                         </thead>
                         <tbody>

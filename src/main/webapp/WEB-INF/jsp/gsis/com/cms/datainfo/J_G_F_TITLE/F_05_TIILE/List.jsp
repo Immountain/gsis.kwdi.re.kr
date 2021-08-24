@@ -92,7 +92,7 @@
         });
 
         $('#btn_down_excel').click(function () {
-            firstGrid.exportExcel("5-5(5급 이상 관리직 여성 공무원 현황).xls");
+            firstGrid.exportExcel("환경체감 만족도.xls");
         });
 
 
@@ -154,7 +154,7 @@
         <i class='bx bxs-home'></i>${menuInfo.depthFullname}
     </nav>
     <h2 class="stitle">
-        <i class='bx bxs-dashboard'></i>${menuInfo.menuNm}
+        <i class='bx bxs-dashboard'></i>${menuInfo.menuNm}(${view.themaId})
     </h2>
     <h3 class="btitle">
         검색

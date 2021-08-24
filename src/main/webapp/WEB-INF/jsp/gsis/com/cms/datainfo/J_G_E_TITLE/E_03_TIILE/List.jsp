@@ -92,7 +92,7 @@
         });
 
         $('#btn_down_excel').click(function () {
-            firstGrid.exportExcel("5-4(주요부서 여성공무원 현황).xls");
+            firstGrid.exportExcel("주요부서 여성공무원 현황.xls");
         });
 
 
@@ -158,7 +158,7 @@
         <i class='bx bxs-home'></i>${menuInfo.depthFullname}
     </nav>
     <h2 class="stitle">
-        <i class='bx bxs-dashboard'></i>${menuInfo.menuNm}
+        <i class='bx bxs-dashboard'></i>${menuInfo.menuNm}(${view.themaId})
     </h2>
     <h3 class="btitle">
         검색

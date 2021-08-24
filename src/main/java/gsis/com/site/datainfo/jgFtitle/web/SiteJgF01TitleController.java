@@ -27,7 +27,7 @@ public class SiteJgF01TitleController extends BaseAjaxController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value="/site/gsis/f05/List.do")
+    @RequestMapping(value="/site/gsis/f01/List.do")
     public ModelAndView List(@RequestBody JewF01TiileDataVO searchVO) throws Exception{
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("jsonView");

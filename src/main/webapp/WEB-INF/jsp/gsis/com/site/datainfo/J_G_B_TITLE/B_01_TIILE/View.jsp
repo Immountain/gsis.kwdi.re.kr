@@ -25,23 +25,27 @@
         initChartEl();
         Search();
 
+
     });
 
 
     var chartView;
     function initChartEl() {
+
+
+
         chartView = Highcharts.chart('chartView', {
             chart: {
-                zoomType: 'xy'
-            },
-            lang: {
-                thousandsSep: ','
+                type: 'line'
             },
             title: {
-                text: '주관적 건강인지율'
+                text: '영유아 인구'
             },
+            // subtitle: {
+            //     text: '서브제목'
+            // },
             xAxis: [{
-                categories: ['매우 좋음','좋은 편임','보 통','나쁜 편임','매우 나쁨'],
+                categories: [],
                 crosshair: true
             }],
             yAxis: [{ // Primary yAxis
@@ -52,17 +56,41 @@
                     }
                 },
                 title: {
-                    text: '(세)',
+                    text: '',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
                 }
+            }, { // Secondary yAxis
+                title: {
+                    text: '',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                labels: {
+                    format: '{value}',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                opposite: true,
+                min: 0,
             }],
             tooltip: {
+
                 shared: true
+
             },
             plotOptions: {
+                spline: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                },
                 column: {
+                    stacking: 'normal',
                     dataLabels: {
                         enabled: true
                     }
@@ -75,23 +103,27 @@
             },
             series: []
         });
+
     }
 
 
     function Search() {
-        var strYear ="";
-        var endYear ="";
+        var strYear =$('#strDt').val();
+        var endYear =$('#endDt').val();
         var p = {
             strYear:strYear,endYear:endYear
         };
 
-      // var groupArr = [];
+        var groupArr = [];
+        var cdmData1 = []; //여아
+        var cdmData2 = [];//남아
+        var cdmData3 = [];//제주 0~5세 비율
 
 
 
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value='/site/gsis/d02/List.do' />', {
+                $ifx.ajax('<c:url value='/site/gsis/b01/List.do' />', {
                     method: "POST",
                     data: JSON.stringify(p),
                     success: function (res) {
@@ -99,16 +131,12 @@
                         $tbody.empty();
 
                         var groupData = groupBy(res.list, 'dataYear');
-                       // var groupData2 = groupBy(res.list, 'dataGb');
-
-                       // console.log(groupData);
-                        //console.log(groupData2);
 
                         var count = 0;
                         $.each(groupData, function(key, item) {
 
-                            //  console.log("-->",item[0].dataYear);
-                          //  groupArr.push(item[0].dataYear);
+                          //  console.log("-->",item[0].dataYear);
+                            groupArr.push(item[0].dataYear);
 
                             item.forEach(function(v, i) {
                                 var $tr = $('<tr />');
@@ -119,112 +147,88 @@
                                     }))
                                 }
 
-                                $tr.append('<td>' + (v['dataGb'] || '' ) +  '</td>')
+                             //   $tr.append('<td>' + (v['dataGb'] || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData1']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData2']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData3']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData4']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData5']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData6']) || '' ) +  '</td>')
+
+
+                                cdmData1.push(Number(v['cdmData2']));
+                                cdmData2.push(Number(v['cdmData3']));
+                                cdmData3.push(Number(v['cdmData5']));
+
 
 
 
 
                                 $tbody.append($tr);
                             })
-                            // console.log(count, Object.keys(groupData).length)
+                           // console.log(count, Object.keys(groupData).length)
                             if(count == Object.keys(groupData).length -1) {
-                                ok(item);
+
                             }
                             count++;
                         });
-                      //  ok(groupData);
+                        ok(groupData);
 
                     }
                 })
             })
             .then(function (ok, fail, data) {
-
-
-
-
-
-                var cdmData1 = []; //여
-                var cdmData2 = [];//남성
-
-
-                $.each(data, function(key, item) {
-
-
-                 //   console.log(item.dataGb,item.cdmData1);
-
-                  if(item.dataGb=="여성" && item.cdmData1=="전체") {
-
-
-
-                     cdmData1.push(Number(item.cdmData2));
-                     cdmData1.push(Number(item.cdmData3));
-                     cdmData1.push(Number(item.cdmData4));
-                     cdmData1.push(Number(item.cdmData5));
-                     cdmData1.push(Number(item.cdmData6));
-                  }
-                 if(item.dataGb=="남성" && item.cdmData1=="전체") {
-
-
-
-                     cdmData2.push(Number(item.cdmData2));
-                     cdmData2.push(Number(item.cdmData3));
-                     cdmData2.push(Number(item.cdmData4));
-                     cdmData2.push(Number(item.cdmData5));
-                     cdmData2.push(Number(item.cdmData6));
-                    }
-
-
-
-                });
-
-
-              //  console.log(cdmData1);
+             //   console.log(data)
+              //  console.log(cdmData1)
 
                 chartView.update({
-ㅍ
+
+                    xAxis: [{
+                        categories: groupArr,
+                        crosshair: true
+                    }],
+
+
                     series: [{
-                        name: '여성',
+                        name: '여아',
                         type: 'column',
                         yAxis: 0,
-                        color: '#2a2af5', //green
+                        color: '#306c9f', //green
                         data: cdmData1,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                            y: 10,
-                        }
+
+
                     },{
-                        name: '남성',
+                        name: '남아',
                         type: 'column',
                         yAxis: 0,
-                        color: '#c05123', //green
-                        pointPlacement: -0.1,
+                        color: '#d77c06', //green
                         data: cdmData2,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                            y: 10,
+                        // pointPlacement: -0.1,
+
+
+
+
+                    },
+                        {
+                            name: '제주 0~5세 비율',
+                            type: 'spline',
+                            yAxis: 1,
+                            color: '#e0c413', //green
+                            data: cdmData3,
+                            marker: {
+                                lineWidth: 1,
+                                lineColor: '#e0c413',
+                                fillColor: 'white',
+                                radius: 7,
+                                symbol: 'circle'
+                            }
+
                         }
 
-
-
-                    }
 
                     ]
                 }, true, true);
-                // console.log(data)
+
+
             })
         ;
     }
@@ -239,8 +243,6 @@
             return carry
         }, {})
     }
-
-
 
 </script>
 <div id="content" class="sub">
@@ -290,25 +292,21 @@
                 </div>
 
 
+
                 <p class="info">
                     좌우터치로 스크롤 가능합니다.
-                    <span>단위 %</span>
+                    <%--<span>단위 명, %</span>--%>
                 </p>
                 <div class="table-outline">
                     <table>
                         <thead>
                         <tr>
-                            <th colspan="2">구분</th>
-
-                            <th>연령</th>
-                            <th>매우 좋음</th>
-                            <th>좋은 편임</th>
-                            <th>보 통</th>
-                            <th>나쁜 편임</th>
-                            <th>매우 나쁨</th>
-
-
-
+                            <th >년도</th>
+                            <th>0~5세 인구</th>
+                            <th>여아</th>
+                            <th>남아</th>
+                            <th>여아 성비</th>
+                            <th>제주 0~5세 비율</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -322,7 +320,8 @@
                     <c:out value="${fn:replace(viewFile.etc , crlf , '<br/>') }" escapeXml="false"/>
 
                 </div>
-
+                <input type="hidden" id="strDt" name="strDt" value="${viewFile.strDt}">
+                <input type="hidden" id="endDt" name="endDt" value="${viewFile.endDt}">
             </article>
 
 

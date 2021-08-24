@@ -29,6 +29,7 @@
 
 
     var chartView;
+    var chartView2;
     function initChartEl() {
         chartView = Highcharts.chart('chartView', {
             chart: {
@@ -38,10 +39,10 @@
                 thousandsSep: ','
             },
             title: {
-                text: '주관적 건강인지율'
+                text: '환경오염 방지 노력'
             },
             xAxis: [{
-                categories: ['매우 좋음','좋은 편임','보 통','나쁜 편임','매우 나쁨'],
+                categories: ['대중교통 이용','재활용품 분리배출','음식물 쓰레기 줄이기','합성세제 사용 줄이기','일회용품 사용하지 않기','친환경 제품 구입·사용하기','자연보호 및 환경보전활동 참여하기','물 절약하기','가정 내 대기전력 줄이기'],
                 crosshair: true
             }],
             yAxis: [{ // Primary yAxis
@@ -52,7 +53,7 @@
                     }
                 },
                 title: {
-                    text: '(세)',
+                    text: '',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
@@ -62,7 +63,14 @@
                 shared: true
             },
             plotOptions: {
+                spline: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                },
                 column: {
+                    // stacking: 'normal',
                     dataLabels: {
                         enabled: true
                     }
@@ -75,6 +83,8 @@
             },
             series: []
         });
+
+
     }
 
 
@@ -85,13 +95,13 @@
             strYear:strYear,endYear:endYear
         };
 
-      // var groupArr = [];
+        var groupArr = [];
 
 
 
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value='/site/gsis/d02/List.do' />', {
+                $ifx.ajax('<c:url value='/site/gsis/f06/List.do' />', {
                     method: "POST",
                     data: JSON.stringify(p),
                     success: function (res) {
@@ -99,16 +109,12 @@
                         $tbody.empty();
 
                         var groupData = groupBy(res.list, 'dataYear');
-                       // var groupData2 = groupBy(res.list, 'dataGb');
-
-                       // console.log(groupData);
-                        //console.log(groupData2);
 
                         var count = 0;
                         $.each(groupData, function(key, item) {
 
                             //  console.log("-->",item[0].dataYear);
-                          //  groupArr.push(item[0].dataYear);
+                            groupArr.push(item[0].dataYear);
 
                             item.forEach(function(v, i) {
                                 var $tr = $('<tr />');
@@ -126,6 +132,11 @@
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData4']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData5']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData6']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData7']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData8']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData9']) || '' ) +  '</td>')
+
+
 
 
 
@@ -138,7 +149,7 @@
                             }
                             count++;
                         });
-                      //  ok(groupData);
+
 
                     }
                 })
@@ -147,52 +158,64 @@
 
 
 
-
-
-                var cdmData1 = []; //여
+                var cdmData1 = []; //여성
                 var cdmData2 = [];//남성
-
 
                 $.each(data, function(key, item) {
 
-
-                 //   console.log(item.dataGb,item.cdmData1);
-
-                  if(item.dataGb=="여성" && item.cdmData1=="전체") {
+                    console.log(key,item);
+                    if(item.dataGb=="여자"){
 
 
 
-                     cdmData1.push(Number(item.cdmData2));
-                     cdmData1.push(Number(item.cdmData3));
-                     cdmData1.push(Number(item.cdmData4));
-                     cdmData1.push(Number(item.cdmData5));
-                     cdmData1.push(Number(item.cdmData6));
-                  }
-                 if(item.dataGb=="남성" && item.cdmData1=="전체") {
+
+                        cdmData1.push(Number(item.cdmData1))
+                        cdmData1.push(Number(item.cdmData2))
+                        cdmData1.push(Number(item.cdmData3))
+                        cdmData1.push(Number(item.cdmData4))
+                        cdmData1.push(Number(item.cdmData5))
+                        cdmData1.push(Number(item.cdmData6))
+                        cdmData1.push(Number(item.cdmData7))
+                        cdmData1.push(Number(item.cdmData8))
+                        cdmData1.push(Number(item.cdmData9))
 
 
 
-                     cdmData2.push(Number(item.cdmData2));
-                     cdmData2.push(Number(item.cdmData3));
-                     cdmData2.push(Number(item.cdmData4));
-                     cdmData2.push(Number(item.cdmData5));
-                     cdmData2.push(Number(item.cdmData6));
+
+
+
                     }
+                    else if(item.dataGb=="남자"){
 
+                        cdmData2.push(Number(item.cdmData1))
+                        cdmData2.push(Number(item.cdmData2))
+                        cdmData2.push(Number(item.cdmData3))
+                        cdmData2.push(Number(item.cdmData4))
+                        cdmData2.push(Number(item.cdmData5))
+                        cdmData2.push(Number(item.cdmData6))
+                        cdmData2.push(Number(item.cdmData7))
+                        cdmData2.push(Number(item.cdmData8))
+                        cdmData2.push(Number(item.cdmData9))
+
+                    }
 
 
                 });
 
 
-              //  console.log(cdmData1);
-
                 chartView.update({
-ㅍ
+
+                    // xAxis: [{
+                    //     categories: groupArr,
+                    //     crosshair: true
+                    // }],
+
+
                     series: [{
                         name: '여성',
                         type: 'column',
                         yAxis: 0,
-                        color: '#2a2af5', //green
+                        color: '#fff54c', //green
                         data: cdmData1,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -200,14 +223,16 @@
                             align: 'center',
                             verticalAlign: 'top',
                             //위치 지정
-                            y: 10,
-                        }
+                           // y: 10,
+                        },
+
+
+
                     },{
                         name: '남성',
                         type: 'column',
                         yAxis: 0,
-                        color: '#c05123', //green
-                        pointPlacement: -0.1,
+                        color: '#9acc0e', //green
                         data: cdmData2,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -215,16 +240,16 @@
                             align: 'center',
                             verticalAlign: 'top',
                             //위치 지정
-                            y: 10,
-                        }
-
-
-
+                           // y: 10,
+                        },
+                        pointPlacement: -0.1,
                     }
 
                     ]
                 }, true, true);
-                // console.log(data)
+
+
+
             })
         ;
     }
@@ -283,11 +308,13 @@
                     </div>
                 </div>
 
+
                 <div class="chart">
                     <!-- 챠트영역 -->
 
                     <div id="chartView"></div>
                 </div>
+
 
 
                 <p class="info">
@@ -299,15 +326,15 @@
                         <thead>
                         <tr>
                             <th colspan="2">구분</th>
-
-                            <th>연령</th>
-                            <th>매우 좋음</th>
-                            <th>좋은 편임</th>
-                            <th>보 통</th>
-                            <th>나쁜 편임</th>
-                            <th>매우 나쁨</th>
-
-
+                            <th>대중교통</br>이용</th>
+                             <th>재활용품</br>분리배출</th>
+                             <th>음식물 쓰레기</br>줄이기</th>
+                             <th>합성세제 사용</br>줄이기</th>
+                             <th>일회용품 사용하지</br>않기</th>
+                             <th>친환경 제품</br>구입·사용하기</th>
+                             <th>자연보호 및 환경보전활동</br>참여하기</th>
+                             <th>물 절약하기</th>
+                             <th>가정 내 대기전력</br>줄이기</th>
 
                         </tr>
                         </thead>

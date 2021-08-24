@@ -29,6 +29,7 @@
 
 
     var chartView;
+    var chartView2;
     function initChartEl() {
         chartView = Highcharts.chart('chartView', {
             chart: {
@@ -38,10 +39,10 @@
                 thousandsSep: ','
             },
             title: {
-                text: '주관적 건강인지율'
+                text: '여성'
             },
             xAxis: [{
-                categories: ['매우 좋음','좋은 편임','보 통','나쁜 편임','매우 나쁨'],
+                categories: [],
                 crosshair: true
             }],
             yAxis: [{ // Primary yAxis
@@ -52,7 +53,7 @@
                     }
                 },
                 title: {
-                    text: '(세)',
+                    text: '',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
@@ -62,7 +63,68 @@
                 shared: true
             },
             plotOptions: {
+                spline: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                },
                 column: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: {
+                align: 'center',
+                verticalAlign: 'top',
+                borderWidth: 0
+            },
+            series: []
+        });
+
+
+        chartView2 = Highcharts.chart('chartView2', {
+            chart: {
+                zoomType: 'xy'
+            },
+            lang: {
+                thousandsSep: ','
+            },
+            title: {
+                text: '남자'
+            },
+            xAxis: [{
+                categories: [],
+                crosshair: true
+            }],
+            yAxis: [{ // Primary yAxis
+                labels: {
+                    format: '{value}',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                title: {
+                    text: '',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                }
+            }],
+            tooltip: {
+                shared: true
+            },
+            plotOptions: {
+                spline: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                },
+                column: {
+                    stacking: 'normal',
                     dataLabels: {
                         enabled: true
                     }
@@ -85,13 +147,20 @@
             strYear:strYear,endYear:endYear
         };
 
-      // var groupArr = [];
+        var groupArr = [];
+        var cdmData1 = []; //여성 안전
+        var cdmData2 = [];//여성 보통
+        var cdmData3 = [];//여성 불안
 
 
+
+        var cdmData4 = []; //남성 안전
+        var cdmData5 = [];//남성 보통
+        var cdmData6 = [];//남성 불안
 
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value='/site/gsis/d02/List.do' />', {
+                $ifx.ajax('<c:url value='/site/gsis/f01/List.do' />', {
                     method: "POST",
                     data: JSON.stringify(p),
                     success: function (res) {
@@ -99,16 +168,12 @@
                         $tbody.empty();
 
                         var groupData = groupBy(res.list, 'dataYear');
-                       // var groupData2 = groupBy(res.list, 'dataGb');
-
-                       // console.log(groupData);
-                        //console.log(groupData2);
 
                         var count = 0;
                         $.each(groupData, function(key, item) {
 
                             //  console.log("-->",item[0].dataYear);
-                          //  groupArr.push(item[0].dataYear);
+                            groupArr.push(item[0].dataYear);
 
                             item.forEach(function(v, i) {
                                 var $tr = $('<tr />');
@@ -123,22 +188,34 @@
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData1']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData2']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData3']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData4']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData5']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData6']) || '' ) +  '</td>')
 
 
+
+
+
+                                if(v['dataGb']=="여자"){
+
+                                    cdmData1.push(Number(v['cdmData1']));
+                                    cdmData2.push(Number(v['cdmData2']));
+                                    cdmData3.push(Number(v['cdmData3']));
+
+                                }else if(v['dataGb']=="남자"){
+
+                                    cdmData4.push(Number(v['cdmData1']));
+                                    cdmData5.push(Number(v['cdmData2']));
+                                    cdmData6.push(Number(v['cdmData3']));
+                                }
 
 
                                 $tbody.append($tr);
                             })
                             // console.log(count, Object.keys(groupData).length)
                             if(count == Object.keys(groupData).length -1) {
-                                ok(item);
+
                             }
                             count++;
                         });
-                      //  ok(groupData);
+                        ok(groupData);
 
                     }
                 })
@@ -146,53 +223,19 @@
             .then(function (ok, fail, data) {
 
 
-
-
-
-                var cdmData1 = []; //여
-                var cdmData2 = [];//남성
-
-
-                $.each(data, function(key, item) {
-
-
-                 //   console.log(item.dataGb,item.cdmData1);
-
-                  if(item.dataGb=="여성" && item.cdmData1=="전체") {
-
-
-
-                     cdmData1.push(Number(item.cdmData2));
-                     cdmData1.push(Number(item.cdmData3));
-                     cdmData1.push(Number(item.cdmData4));
-                     cdmData1.push(Number(item.cdmData5));
-                     cdmData1.push(Number(item.cdmData6));
-                  }
-                 if(item.dataGb=="남성" && item.cdmData1=="전체") {
-
-
-
-                     cdmData2.push(Number(item.cdmData2));
-                     cdmData2.push(Number(item.cdmData3));
-                     cdmData2.push(Number(item.cdmData4));
-                     cdmData2.push(Number(item.cdmData5));
-                     cdmData2.push(Number(item.cdmData6));
-                    }
-
-
-
-                });
-
-
-              //  console.log(cdmData1);
-
                 chartView.update({
-ㅍ
+
+                    xAxis: [{
+                        categories: groupArr,
+                        crosshair: true
+                    }],
+
+
                     series: [{
-                        name: '여성',
+                        name: '안전',
                         type: 'column',
                         yAxis: 0,
-                        color: '#2a2af5', //green
+                        color: '#ff8004', //green
                         data: cdmData1,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -200,14 +243,16 @@
                             align: 'center',
                             verticalAlign: 'top',
                             //위치 지정
-                            y: 10,
-                        }
+                           // y: 10,
+                        },
+
+
+
                     },{
-                        name: '남성',
+                        name: '보통',
                         type: 'column',
                         yAxis: 0,
-                        color: '#c05123', //green
-                        pointPlacement: -0.1,
+                        color: '#cca026', //green
                         data: cdmData2,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -215,16 +260,86 @@
                             align: 'center',
                             verticalAlign: 'top',
                             //위치 지정
-                            y: 10,
-                        }
-
-
-
+                           // y: 10,
+                        },
+                      },{
+                        name: '불안',
+                        type: 'column',
+                        yAxis: 0,
+                        color: '#ccb874', //green
+                        data: cdmData3,
+                        dataLabels: {//바 상단의 수치값 개별 지정.
+                            enabled: true,
+                            format: '{y}',//수치 표현 포맷
+                            align: 'center',
+                            verticalAlign: 'top',
+                            //위치 지정
+                           // y: 10,
+                        },
                     }
 
                     ]
                 }, true, true);
-                // console.log(data)
+
+
+                chartView2.update({
+
+                    xAxis: [{
+                        categories: groupArr,
+                        crosshair: true
+                    }],
+
+
+                    series: [{
+                        name: '안전',
+                        type: 'column',
+                        yAxis: 0,
+                        color: '#1d2bff', //green
+                        data: cdmData4,
+                        dataLabels: {//바 상단의 수치값 개별 지정.
+                            enabled: true,
+                            format: '{y}',//수치 표현 포맷
+                            align: 'center',
+                            verticalAlign: 'top',
+                            //위치 지정
+                           // y: 10,
+                        },
+
+
+
+                    },{
+                        name: '보통',
+                        type: 'column',
+                        yAxis: 0,
+                        color: '#5a7ecc', //green
+                        data: cdmData5,
+                        dataLabels: {//바 상단의 수치값 개별 지정.
+                            enabled: true,
+                            format: '{y}',//수치 표현 포맷
+                            align: 'center',
+                            verticalAlign: 'top',
+                            //위치 지정
+                           // y: 10,
+                        },
+                     },{
+                        name: '불안',
+                        type: 'column',
+                        yAxis: 0,
+                        color: '#11aecc', //green
+                        data: cdmData6,
+                        dataLabels: {//바 상단의 수치값 개별 지정.
+                            enabled: true,
+                            format: '{y}',//수치 표현 포맷
+                            align: 'center',
+                            verticalAlign: 'top',
+                            //위치 지정
+                            //y: 10,
+                        },
+                    }
+
+                    ]
+                }, true, true);
+
             })
         ;
     }
@@ -283,31 +398,31 @@
                     </div>
                 </div>
 
-                <div class="chart">
+                <div class="chart dual left">
                     <!-- 챠트영역 -->
 
                     <div id="chartView"></div>
                 </div>
 
+                <div class="chart dual right">
+                    <!-- 챠트영역 -->
+
+                    <div id="chartView2"></div>
+                </div>
+
 
                 <p class="info">
                     좌우터치로 스크롤 가능합니다.
-                    <span>단위 %</span>
+                    <span>단위 명, %</span>
                 </p>
                 <div class="table-outline">
                     <table>
                         <thead>
                         <tr>
                             <th colspan="2">구분</th>
-
-                            <th>연령</th>
-                            <th>매우 좋음</th>
-                            <th>좋은 편임</th>
-                            <th>보 통</th>
-                            <th>나쁜 편임</th>
-                            <th>매우 나쁨</th>
-
-
+                             <th>안전</th>
+                             <th>보통</th>
+                             <th>불안</th>
 
                         </tr>
                         </thead>

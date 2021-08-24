@@ -29,6 +29,7 @@
 
 
     var chartView;
+    var chartView2;
     function initChartEl() {
         chartView = Highcharts.chart('chartView', {
             chart: {
@@ -38,10 +39,10 @@
                 thousandsSep: ','
             },
             title: {
-                text: '주관적 건강인지율'
+                text: '환경체감 만족도'
             },
             xAxis: [{
-                categories: ['매우 좋음','좋은 편임','보 통','나쁜 편임','매우 나쁨'],
+                categories: ['대기','수질','토양','소음·진동','녹지환경'],
                 crosshair: true
             }],
             yAxis: [{ // Primary yAxis
@@ -52,7 +53,7 @@
                     }
                 },
                 title: {
-                    text: '(세)',
+                    text: '',
                     style: {
                         color: Highcharts.getOptions().colors[1]
                     }
@@ -62,7 +63,14 @@
                 shared: true
             },
             plotOptions: {
+                spline: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                },
                 column: {
+                    // stacking: 'normal',
                     dataLabels: {
                         enabled: true
                     }
@@ -75,6 +83,8 @@
             },
             series: []
         });
+
+
     }
 
 
@@ -85,13 +95,13 @@
             strYear:strYear,endYear:endYear
         };
 
-      // var groupArr = [];
+        var groupArr = [];
 
 
 
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value='/site/gsis/d02/List.do' />', {
+                $ifx.ajax('<c:url value='/site/gsis/f05/List.do' />', {
                     method: "POST",
                     data: JSON.stringify(p),
                     success: function (res) {
@@ -99,16 +109,12 @@
                         $tbody.empty();
 
                         var groupData = groupBy(res.list, 'dataYear');
-                       // var groupData2 = groupBy(res.list, 'dataGb');
-
-                       // console.log(groupData);
-                        //console.log(groupData2);
 
                         var count = 0;
                         $.each(groupData, function(key, item) {
 
                             //  console.log("-->",item[0].dataYear);
-                          //  groupArr.push(item[0].dataYear);
+                            groupArr.push(item[0].dataYear);
 
                             item.forEach(function(v, i) {
                                 var $tr = $('<tr />');
@@ -125,7 +131,8 @@
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData3']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData4']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData5']) || '' ) +  '</td>')
-                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData6']) || '' ) +  '</td>')
+
+
 
 
 
@@ -138,7 +145,7 @@
                             }
                             count++;
                         });
-                      //  ok(groupData);
+
 
                     }
                 })
@@ -147,52 +154,55 @@
 
 
 
-
-
-                var cdmData1 = []; //여
+                var cdmData1 = []; //여성
                 var cdmData2 = [];//남성
-
 
                 $.each(data, function(key, item) {
 
-
-                 //   console.log(item.dataGb,item.cdmData1);
-
-                  if(item.dataGb=="여성" && item.cdmData1=="전체") {
+                    console.log(key,item);
+                    if(item.dataGb=="여성"){
 
 
 
-                     cdmData1.push(Number(item.cdmData2));
-                     cdmData1.push(Number(item.cdmData3));
-                     cdmData1.push(Number(item.cdmData4));
-                     cdmData1.push(Number(item.cdmData5));
-                     cdmData1.push(Number(item.cdmData6));
-                  }
-                 if(item.dataGb=="남성" && item.cdmData1=="전체") {
+
+                        cdmData1.push(Number(item.cdmData1))
+                        cdmData1.push(Number(item.cdmData2))
+                        cdmData1.push(Number(item.cdmData3))
+                        cdmData1.push(Number(item.cdmData4))
+                        cdmData1.push(Number(item.cdmData5))
 
 
 
-                     cdmData2.push(Number(item.cdmData2));
-                     cdmData2.push(Number(item.cdmData3));
-                     cdmData2.push(Number(item.cdmData4));
-                     cdmData2.push(Number(item.cdmData5));
-                     cdmData2.push(Number(item.cdmData6));
+
+
                     }
+                    else if(item.dataGb=="남성"){
 
+                        cdmData2.push(Number(item.cdmData1))
+                        cdmData2.push(Number(item.cdmData2))
+                        cdmData2.push(Number(item.cdmData3))
+                        cdmData2.push(Number(item.cdmData4))
+                        cdmData2.push(Number(item.cdmData5))
+
+                    }
 
 
                 });
 
 
-              //  console.log(cdmData1);
-
                 chartView.update({
-ㅍ
+
+                    // xAxis: [{
+                    //     categories: groupArr,
+                    //     crosshair: true
+                    // }],
+
+
                     series: [{
                         name: '여성',
                         type: 'column',
                         yAxis: 0,
-                        color: '#2a2af5', //green
+                        color: '#fff54c', //green
                         data: cdmData1,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -200,14 +210,16 @@
                             align: 'center',
                             verticalAlign: 'top',
                             //위치 지정
-                            y: 10,
-                        }
+                           // y: 10,
+                        },
+
+
+
                     },{
                         name: '남성',
                         type: 'column',
                         yAxis: 0,
-                        color: '#c05123', //green
-                        pointPlacement: -0.1,
+                        color: '#9acc0e', //green
                         data: cdmData2,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -215,16 +227,16 @@
                             align: 'center',
                             verticalAlign: 'top',
                             //위치 지정
-                            y: 10,
-                        }
-
-
-
+                           // y: 10,
+                        },
+                        pointPlacement: -0.1,
                     }
 
                     ]
                 }, true, true);
-                // console.log(data)
+
+
+
             })
         ;
     }
@@ -283,11 +295,13 @@
                     </div>
                 </div>
 
+
                 <div class="chart">
                     <!-- 챠트영역 -->
 
                     <div id="chartView"></div>
                 </div>
+
 
 
                 <p class="info">
@@ -299,15 +313,11 @@
                         <thead>
                         <tr>
                             <th colspan="2">구분</th>
-
-                            <th>연령</th>
-                            <th>매우 좋음</th>
-                            <th>좋은 편임</th>
-                            <th>보 통</th>
-                            <th>나쁜 편임</th>
-                            <th>매우 나쁨</th>
-
-
+                             <th>대기</th>
+                             <th>수질</th>
+                             <th>토양</th>
+                             <th>소음·진동</th>
+                             <th>녹지환경</th>
 
                         </tr>
                         </thead>
