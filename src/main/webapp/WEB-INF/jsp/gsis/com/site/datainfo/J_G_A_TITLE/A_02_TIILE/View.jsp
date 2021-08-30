@@ -90,17 +90,7 @@
                     //     return parseInt((this.value  * 100 ) + 2);
                     // }
                 },
-                opposite: true,
-                min: 0,
-                tickInterval: 10,
-                tickWidth: 0,
-                gridLineWidth:1,
-                endOnTick:false,
-                startOnTick:false,
-                alignTicks:false,
-              // lineWidth: 5,
-                // ceiling: 100,
-                // floor: 10
+
             }],
             tooltip: {
 

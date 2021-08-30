@@ -92,9 +92,12 @@
         });
 
         $('#btn_down_excel').click(function () {
-            firstGrid.exportExcel("야간보행에 대한 두려움.xls");
+            firstGrid.exportExcel("2020년도 이전 야간보행에 대한 두려움.xls");
         });
 
+        $('#btn_down_excel2').click(function () {
+            firstGrid2.exportExcel("2020년도 이후 야간보행에 대한 두려움.xls");
+        });
 
 
 
@@ -212,7 +215,8 @@
             <button type="button" class="button" name="btn_search" id="btn_search" onclick="Search()">조회</button>
             <button type="button" class="button main" name="btn_regist_info" id="btn_regist_info">내용등록</button>
             <button type="button" class="button main" name="btn_regist_excel" id="btn_regist_excel">엑셀업로드</button>
-            <button type="button" class="button main" name="btn_down_excel" id="btn_down_excel">엑셀 다운로드</button>
+            <button type="button" class="button main" name="btn_down_excel" id="btn_down_excel">이전 엑셀 다운로드</button>
+            <button type="button" class="button main" name="btn_down_excel2" id="btn_down_excel2">이후 엑셀 다운로드</button>
             <input type="hidden" id="themaId" name="themaId" value="${view.themaId}">
 
         </div>
