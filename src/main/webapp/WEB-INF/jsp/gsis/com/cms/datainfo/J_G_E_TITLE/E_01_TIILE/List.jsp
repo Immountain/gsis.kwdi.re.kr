@@ -111,7 +111,7 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "선거명", align: "center", width: 130 ,formatter: "money"},
+                {key: "cdmData1", label: "선거명", align: "center", width: 130 },
                 {key: "cdmData2", label: "선거인", align: "center", width: 130 ,formatter: "money"},
                 {key: "cdmData3", label: "투표율", align: "center", width: 130 ,formatter: "money"}
 
