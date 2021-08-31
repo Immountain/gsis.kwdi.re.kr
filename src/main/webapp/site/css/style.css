@@ -3793,14 +3793,17 @@ body div#content.sub article.theme-view div.chart {
   body div#content.sub article.theme-view div.chart {
     min-height: 400px;
   }
-  body div#content.sub article.theme-view div.chart.dual {
+  body div#content.sub article.theme-view div.chart.count2 {
     display: block;
     float: left;
     vertical-align: top;
     width: calc(50% - 10px);
   }
-  body div#content.sub article.theme-view div.chart.dual.left {
-    margin-right: 20px;
+  body div#content.sub article.theme-view div.chart.count3 {
+    display: block;
+    float: left;
+    vertical-align: top;
+    width: calc((100% - 40px) / 3);
   }
 }
 body div#content.sub article.theme-view > p.info {

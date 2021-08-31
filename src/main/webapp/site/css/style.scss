@@ -3118,16 +3118,20 @@ body {
                     @media (min-width: $screen-size-pc) {
                         min-height:400px;
 
-                        &.dual {
+                        &.count2 {
                             display:block;
                             float:left;
                             vertical-align:top;
                             width:calc(50% - 10px);
 
-                            &.left {
-                                margin-right:20px;
-                            }
 
+                        }
+
+                        &.count3 {
+                            display:block;
+                            float:left;
+                            vertical-align:top;
+                            width:calc((100% - 40px) / 3);
                         }
                     }
 
