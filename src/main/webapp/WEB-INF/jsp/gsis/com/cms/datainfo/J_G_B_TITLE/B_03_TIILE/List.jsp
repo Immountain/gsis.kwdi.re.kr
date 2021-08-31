@@ -125,9 +125,7 @@
                     {key: "cdmData7", label: "고등학교 학생수", align: "center", width: 120,formatter: "money"},
                     {key: "cdmData8", label: "고등학교 여성", align: "center", width: 120,formatter: "money"},
                     {key: "cdmData9", label: "고등학교 여성비율", align: "center", width: 120,formatter: "money"}
-                ]},
-
-
+                ]}
             ],
             body:{
                 mergeCells: ["dataYear", "dataGb"]
