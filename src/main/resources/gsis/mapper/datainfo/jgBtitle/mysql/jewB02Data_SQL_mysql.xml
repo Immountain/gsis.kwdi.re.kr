@@ -15,9 +15,6 @@
             ,A.CDM_DATA4
             ,A.CDM_DATA5
             ,A.CDM_DATA6
-            ,A.CDM_DATA7
-            ,A.CDM_DATA8
-            ,A.CDM_DATA9
             ,A.REG_ID
             ,A.REG_DT
             ,B.SORT_NO
@@ -58,9 +55,6 @@
                     ,CDM_DATA4
                     ,CDM_DATA5
                     ,CDM_DATA6
-                    ,CDM_DATA7
-                    ,CDM_DATA8
-                    ,CDM_DATA9
                     ,REG_ID
                     ,REG_DT
 
@@ -75,9 +69,6 @@
                     ,#{cdmData4}
                     ,#{cdmData5}
                     ,#{cdmData6}
-                    ,#{cdmData7}
-                    ,#{cdmData8}
-                    ,#{cdmData9}
                     ,#{regId}
                     ,NOW()
 

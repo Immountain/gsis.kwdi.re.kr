@@ -53,7 +53,7 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "강력범죄 피해자", align: "center", width: 200 ,formatter: "money"}
+                {key: "cdmData1", label: "강력범죄 피해자", align: "center", width: 200 ,formatter: "money",editor: {type: "text"}}
 
             ]
             // ,

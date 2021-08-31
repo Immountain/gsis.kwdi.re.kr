@@ -53,9 +53,9 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "발생건수", align: "center", width: 200 ,formatter: "money"},
-                {key: "cdmData2", label: "검거건수", align: "center", width: 200 ,formatter: "money"},
-                {key: "cdmData3", label: "검거비율", align: "center", width: 200 ,formatter: "money"}
+                {key: "cdmData1", label: "발생건수", align: "center", width: 200 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData2", label: "검거건수", align: "center", width: 200 ,formatter: "money",editor: {type: "text"}},
+                {key: "cdmData3", label: "검거비율", align: "center", width: 200 ,formatter: "money",editor: {type: "text"}}
 
             ]
             // ,

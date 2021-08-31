@@ -10,8 +10,6 @@
              A.DATA_YEAR
             ,A.DATA_GB
             ,A.CDM_DATA1
-            ,A.CDM_DATA2
-            ,A.CDM_DATA3
             ,A.REG_ID
             ,A.REG_DT
             ,B.SORT_NO
@@ -47,8 +45,6 @@
                      DATA_YEAR
                     ,DATA_GB
                     ,CDM_DATA1
-                    ,CDM_DATA2
-                    ,CDM_DATA3
                     ,REG_ID
                     ,REG_DT
 
@@ -58,8 +54,6 @@
                      #{dataYear}
                     ,#{dataGb}
                     ,#{cdmData1}
-                    ,#{cdmData2}
-                    ,#{cdmData3}
                     ,#{regId}
                     ,NOW()
 
