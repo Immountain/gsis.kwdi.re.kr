@@ -92,7 +92,7 @@
         });
 
         $('#btn_down_excel').click(function () {
-            firstGrid.exportExcel("5-5(5급 이상 관리직 여성 공무원 현황).xls");
+            firstGrid.exportExcel("영유아(0~5세) 인구.xls");
         });
 
 
@@ -111,11 +111,11 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "0~5세 인구", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData2", label: "여아", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData3", label: "남아", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData4", label: "여아 성비", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData5", label: "제주 0~5세 비율", align: "center", width: 120,formatter: "money",editor: {type: "text"}}
+                {key: "cdmData1", label: "0~5세 인구", align: "center", width: 120 ,formatter: "money"},
+                {key: "cdmData2", label: "여아", align: "center", width: 120 ,formatter: "money"},
+                {key: "cdmData3", label: "남아", align: "center", width: 120 ,formatter: "money"},
+                {key: "cdmData4", label: "여아 성비", align: "center", width: 120 ,formatter: "money"},
+                {key: "cdmData5", label: "제주 0~5세 비율", align: "center", width: 120,formatter: "money"}
 
 
             ],

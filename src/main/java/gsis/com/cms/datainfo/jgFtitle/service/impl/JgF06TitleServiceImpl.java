@@ -61,7 +61,7 @@ public class JgF06TitleServiceImpl extends EgovAbstractServiceImpl implements Jg
         try {
 
 
-            InputStream templateStream = resourceLoader.getResource("classpath:/gsis/excel/jgEtitle/e06.xlsx").getInputStream();
+            InputStream templateStream = resourceLoader.getResource("classpath:/gsis/excel/jgFtitle/f06.xlsx").getInputStream();
             OutputStream targetStream = response.getOutputStream();
 
             Context context = new Context();
@@ -71,7 +71,7 @@ public class JgF06TitleServiceImpl extends EgovAbstractServiceImpl implements Jg
 
 
             SimpleDateFormat sdf = new SimpleDateFormat( "yyyyMMddHHmmss");
-            String fileName = java.net.URLEncoder.encode("5-5(5급 이상 관리직 여성 공무원 현황)_" +sdf.format(System.currentTimeMillis()), "UTF-8");
+            String fileName = java.net.URLEncoder.encode("6-6(환경오염 방지 노력)_" +sdf.format(System.currentTimeMillis()), "UTF-8");
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             response.setHeader("Content-Disposition", "attachment;filename=" +fileName +".xlsx");
             JxlsHelper.getInstance().processTemplate(templateStream, targetStream, context);

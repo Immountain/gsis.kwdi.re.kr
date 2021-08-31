@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JgE01TitleDAO">
+
+
+
+
+    <select id="selectList"  parameterType="gsis.com.cms.datainfo.jgEtitle.vo.JewE01TiileDataVO"   resultType="gsis.com.cms.datainfo.jgEtitle.vo.JewE01TiileDataVO">
+       SELECT
+             A.DATA_YEAR
+            ,A.DATA_GB
+            ,A.CDM_DATA1
+            ,A.CDM_DATA2
+            ,A.CDM_DATA3
+            ,A.REG_ID
+            ,A.REG_DT
+            ,B.SORT_NO
+        FROM JEW_E_01_TIILE_DATA A
+        left join          (
+                    select *
+                    from COMTCCMMNDETAILCODE
+                    where 1=1
+                    and CODE_ID='e01'
+        ) B
+        on A.DATA_GB =B.CODE_NM
+        WHERE 1=1
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(strYear)">
+            <![CDATA[  AND A.DATA_YEAR >= #{strYear}  ]]>
+        </if>
+
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(endYear)">
+            <![CDATA[  AND A.DATA_YEAR <= #{endYear}  ]]>
+        </if>
+
+        ORDER BY DATA_YEAR asc ,B.SORT_NO asc
+
+
+    </select>
+
+
+
+    <insert id="insert">
+
+
+         INSERT INTO JEW_E_01_TIILE_DATA(
+
+                     DATA_YEAR
+                    ,DATA_GB
+                    ,CDM_DATA1
+                    ,CDM_DATA2
+                    ,CDM_DATA3
+                    ,REG_ID
+                    ,REG_DT
+
+                    ) VALUES (
+
+
+                     #{dataYear}
+                    ,#{dataGb}
+                    ,#{cdmData1}
+                    ,#{cdmData2}
+                    ,#{cdmData3}
+                    ,#{regId}
+                    ,NOW()
+
+
+                 )
+
+    </insert>
+
+
+    <delete id="delete">
+
+      DELETE FROM JEW_E_01_TIILE_DATA
+      WHERE 1=1
+      AND DATA_YEAR = #{dataYear}
+      AND DATA_GB =#{dataGb}
+
+
+
+    </delete>
+
+</mapper>

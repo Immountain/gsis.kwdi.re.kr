@@ -111,15 +111,15 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "대중교통 이용", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData2", label: "재활용품 분리배출", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData3", label: "음식물 쓰레기 줄이기", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData4", label: "합성세제 사용 줄이기", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData5", label: "일회용품 사용하지 않기", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData6", label: "친환경 제품 구입·사용하기", align: "center", width: 150 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData7", label: "자연보호 및 환경보전활동 참여하기", align: "center", width: 200 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData8", label: "물 절약하기", align: "center", width: 100 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData9", label: "가정 내 대기전력 줄이기", align: "center", width: 200 ,formatter: "money",editor: {type: "text"}}
+                {key: "cdmData1", label: "대중교통 이용", align: "center", width: 150 ,formatter: "money"},
+                {key: "cdmData2", label: "재활용품 분리배출", align: "center", width: 150 ,formatter: "money"},
+                {key: "cdmData3", label: "음식물 쓰레기 줄이기", align: "center", width: 150 ,formatter: "money"},
+                {key: "cdmData4", label: "합성세제 사용 줄이기", align: "center", width: 150 ,formatter: "money"},
+                {key: "cdmData5", label: "일회용품 사용하지 않기", align: "center", width: 150 ,formatter: "money"},
+                {key: "cdmData6", label: "친환경 제품 구입·사용하기", align: "center", width: 150 ,formatter: "money"},
+                {key: "cdmData7", label: "자연보호 및 환경보전활동 참여하기", align: "center", width: 200 ,formatter: "money"},
+                {key: "cdmData8", label: "물 절약하기", align: "center", width: 100 ,formatter: "money"},
+                {key: "cdmData9", label: "가정 내 대기전력 줄이기", align: "center", width: 200 ,formatter: "money"}
 
 
             ],

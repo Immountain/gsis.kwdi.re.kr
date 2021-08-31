@@ -78,7 +78,7 @@ public class JgB01TitleServiceImpl extends EgovAbstractServiceImpl implements Jg
 
 
             SimpleDateFormat sdf = new SimpleDateFormat( "yyyyMMddHHmmss");
-            String fileName = java.net.URLEncoder.encode("2-9(여성 석‧박사과정 졸업자 현황)_" +sdf.format(System.currentTimeMillis()), "UTF-8");
+            String fileName = java.net.URLEncoder.encode("2-1(영유아(0~5세) 인구_" +sdf.format(System.currentTimeMillis()), "UTF-8");
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             response.setHeader("Content-Disposition", "attachment;filename=" +fileName +".xlsx");
             JxlsHelper.getInstance().processTemplate(templateStream, targetStream, context);
