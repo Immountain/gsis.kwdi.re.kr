@@ -25,22 +25,27 @@
         initChartEl();
         Search();
 
+
     });
 
 
     var chartView;
     var chartView2;
+    var chartView3;
     function initChartEl() {
+
+
+
         chartView = Highcharts.chart('chartView', {
             chart: {
-                zoomType: 'xy'
-            },
-            lang: {
-                thousandsSep: ','
+                type: 'line'
             },
             title: {
-                text: '여성'
+                text: '초등학교 학생 수 변화'
             },
+            // subtitle: {
+            //     text: '서브제목'
+            // },
             xAxis: [{
                 categories: [],
                 crosshair: true
@@ -58,9 +63,26 @@
                         color: Highcharts.getOptions().colors[1]
                     }
                 }
+            }, { // Secondary yAxis
+                title: {
+                    text: '',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                labels: {
+                    format: '{value}',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                opposite: true,
+                min: 0,
             }],
             tooltip: {
+
                 shared: true
+
             },
             plotOptions: {
                 spline: {
@@ -85,16 +107,17 @@
         });
 
 
+
         chartView2 = Highcharts.chart('chartView2', {
             chart: {
-                zoomType: 'xy'
-            },
-            lang: {
-                thousandsSep: ','
+                type: 'line'
             },
             title: {
-                text: '남자'
+                text: '중학교 학생 수 변화'
             },
+            // subtitle: {
+            //     text: '서브제목'
+            // },
             xAxis: [{
                 categories: [],
                 crosshair: true
@@ -112,9 +135,98 @@
                         color: Highcharts.getOptions().colors[1]
                     }
                 }
+            }, { // Secondary yAxis
+                title: {
+                    text: '',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                labels: {
+                    format: '{value}',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                opposite: true,
+                min: 0,
             }],
             tooltip: {
+
                 shared: true
+
+            },
+            plotOptions: {
+                spline: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                },
+                column: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: {
+                align: 'center',
+                verticalAlign: 'top',
+                borderWidth: 0
+            },
+            series: []
+        });
+
+
+
+        chartView3 = Highcharts.chart('chartView3', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: '고등학교 학생 수 변화'
+            },
+            // subtitle: {
+            //     text: '서브제목'
+            // },
+            xAxis: [{
+                categories: [],
+                crosshair: true
+            }],
+            yAxis: [{ // Primary yAxis
+                labels: {
+                    format: '{value}',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                title: {
+                    text: '',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                }
+            }, { // Secondary yAxis
+                title: {
+                    text: '',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                labels: {
+                    format: '{value}',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                opposite: true,
+                min: 0,
+            }],
+            tooltip: {
+
+                shared: true
+
             },
             plotOptions: {
                 spline: {
@@ -141,26 +253,25 @@
 
 
     function Search() {
-        var strYear ="";
-        var endYear ="";
+        var strYear =$('#strDt').val();
+        var endYear =$('#endDt').val();
         var p = {
             strYear:strYear,endYear:endYear
         };
 
         var groupArr = [];
-        var cdmData1 = []; //여성 안전
-        var cdmData2 = [];//여성 보통
-        var cdmData3 = [];//여성 불안
+        var cdmData1 = []; //초등학교 학생수
+        var cdmData2 = [];//초등학교 여성 비
+        var cdmData3 = [];//중학교 학생수
+        var cdmData4 = [];//중학교 여성비율
+        var cdmData5 = [];//고등학교 학생수
+        var cdmData6 = [];//고등학교 여성비율
 
 
-
-        var cdmData4 = []; //남성 안전
-        var cdmData5 = [];//남성 보통
-        var cdmData6 = [];//남성 불안
 
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value='/site/gsis/f01/List.do' />', {
+                $ifx.ajax('<c:url value='/site/gsis/b03/List.do' />', {
                     method: "POST",
                     data: JSON.stringify(p),
                     success: function (res) {
@@ -172,7 +283,7 @@
                         var count = 0;
                         $.each(groupData, function(key, item) {
 
-                            //  console.log("-->",item[0].dataYear);
+                          //  console.log("-->",item[0].dataYear);
                             groupArr.push(item[0].dataYear);
 
                             item.forEach(function(v, i) {
@@ -184,32 +295,35 @@
                                     }))
                                 }
 
-                                $tr.append('<td>' + (v['dataGb'] || '' ) +  '</td>')
+                             //   $tr.append('<td>' + (v['dataGb'] || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData1']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData2']) || '' ) +  '</td>')
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData3']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData4']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData5']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData6']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData7']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData8']) || '' ) +  '</td>')
+                                $tr.append('<td>' + ($ifx.numberComma(v['cdmData9']) || '' ) +  '</td>')
 
 
+                                cdmData1.push(Number(v['cdmData1']));
+                                cdmData2.push(Number(v['cdmData3']));
+                             //   cdmData3.push(Number(v['cdmData5']));
 
 
+                                cdmData3.push(Number(v['cdmData4']));
+                                cdmData4.push(Number(v['cdmData6']));
 
-                                if(v['dataGb']=="여자"){
 
-                                    cdmData1.push(Number(v['cdmData1']));
-                                    cdmData2.push(Number(v['cdmData2']));
-                                    cdmData3.push(Number(v['cdmData3']));
+                                cdmData5.push(Number(v['cdmData7']));
+                                cdmData6.push(Number(v['cdmData9']));
 
-                                }else if(v['dataGb']=="남자"){
-
-                                    cdmData4.push(Number(v['cdmData1']));
-                                    cdmData5.push(Number(v['cdmData2']));
-                                    cdmData6.push(Number(v['cdmData3']));
-                                }
 
 
                                 $tbody.append($tr);
                             })
-                            // console.log(count, Object.keys(groupData).length)
+                           // console.log(count, Object.keys(groupData).length)
                             if(count == Object.keys(groupData).length -1) {
 
                             }
@@ -221,7 +335,8 @@
                 })
             })
             .then(function (ok, fail, data) {
-
+             //   console.log(data)
+              //  console.log(cdmData1)
 
                 chartView.update({
 
@@ -232,51 +347,30 @@
 
 
                     series: [{
-                        name: '안전',
+                        name: '학생수',
                         type: 'column',
                         yAxis: 0,
-                        color: '#ff8004', //green
+                        color: '#306c9f', //green
                         data: cdmData1,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
 
 
+                    },
+                        {
+                            name: '여성비율',
+                            type: 'spline',
+                            yAxis: 1,
+                            color: '#e0642b', //green
+                            data: cdmData2,
+                            marker: {
+                                lineWidth: 1,
+                                lineColor: '#e0642b',
+                                fillColor: 'white',
+                                radius: 7,
+                                symbol: 'circle'
+                            }
 
-                    },{
-                        name: '보통',
-                        type: 'column',
-                        yAxis: 0,
-                        color: '#cca026', //green
-                        data: cdmData2,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
-                      },{
-                        name: '불안',
-                        type: 'column',
-                        yAxis: 0,
-                        color: '#ccb874', //green
-                        data: cdmData3,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
-                    }
+                        }
+
 
                     ]
                 }, true, true);
@@ -291,51 +385,68 @@
 
 
                     series: [{
-                        name: '안전',
+                        name: '학생수',
                         type: 'column',
                         yAxis: 0,
-                        color: '#1d2bff', //green
-                        data: cdmData4,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
+                        color: '#306c9f', //green
+                        data: cdmData3,
 
 
+                    },
+                        {
+                            name: '여성비율',
+                            type: 'spline',
+                            yAxis: 1,
+                            color: '#e0642b', //green
+                            data: cdmData4,
+                            marker: {
+                                lineWidth: 1,
+                                lineColor: '#e0642b',
+                                fillColor: 'white',
+                                radius: 7,
+                                symbol: 'circle'
+                            }
 
-                    },{
-                        name: '보통',
+                        }
+
+
+                    ]
+                }, true, true);
+
+
+                chartView3.update({
+
+                    xAxis: [{
+                        categories: groupArr,
+                        crosshair: true
+                    }],
+
+
+                    series: [{
+                        name: '학생수',
                         type: 'column',
                         yAxis: 0,
-                        color: '#5a7ecc', //green
+                        color: '#306c9f', //green
                         data: cdmData5,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
-                     },{
-                        name: '불안',
-                        type: 'column',
-                        yAxis: 0,
-                        color: '#11aecc', //green
-                        data: cdmData6,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                            //y: 10,
-                        },
-                    }
+
+
+                    },
+                        {
+                            name: '여성비율',
+                            type: 'spline',
+                            yAxis: 1,
+                            color: '#e0642b', //green
+                            data: cdmData6,
+                            marker: {
+                                lineWidth: 1,
+                                lineColor: '#e0642b',
+                                fillColor: 'white',
+                                radius: 7,
+                                symbol: 'circle'
+                            }
+
+                        }
+
 
                     ]
                 }, true, true);
@@ -354,8 +465,6 @@
             return carry
         }, {})
     }
-
-
 
 </script>
 <div id="content" class="sub">
@@ -398,31 +507,49 @@
                     </div>
                 </div>
 
-                <div class="chart count2">
+                <div class="chart count3">
                     <!-- 챠트영역 -->
 
                     <div id="chartView"></div>
                 </div>
 
-                <div class="chart count2">
+                <div class="chart count3">
                     <!-- 챠트영역 -->
 
                     <div id="chartView2"></div>
                 </div>
 
+                <div class="chart count3">
+                    <!-- 챠트영역 -->
+
+                    <div id="chartView3"></div>
+                </div>
 
                 <p class="info">
                     좌우터치로 스크롤 가능합니다.
-                    <span>단위 명, %</span>
+                    <%--<span>단위 명, %</span>--%>
                 </p>
                 <div class="table-outline">
                     <table>
                         <thead>
                         <tr>
-                            <th colspan="2">구분</th>
-                             <th>안전</th>
-                             <th>보통</th>
-                             <th>불안</th>
+                            <th rowspan="2" >년도</th>
+                            <th colspan="3">초등학교</th>
+                            <th colspan="3">중학교</th>
+                            <th colspan="3">고등학교</th>
+
+                        </tr>
+                        <tr>
+
+                            <th>학생수</th>
+                            <th>여성</th>
+                            <th>여성비율</th>
+                            <th>학생수</th>
+                            <th>여성</th>
+                            <th>여성비율</th>
+                            <th>학생수</th>
+                            <th>여성</th>
+                            <th>여성비율</th>
 
                         </tr>
                         </thead>
@@ -437,7 +564,8 @@
                     <c:out value="${fn:replace(viewFile.etc , crlf , '<br/>') }" escapeXml="false"/>
 
                 </div>
-
+                <input type="hidden" id="strDt" name="strDt" value="${viewFile.strDt}">
+                <input type="hidden" id="endDt" name="endDt" value="${viewFile.endDt}">
             </article>
 
 

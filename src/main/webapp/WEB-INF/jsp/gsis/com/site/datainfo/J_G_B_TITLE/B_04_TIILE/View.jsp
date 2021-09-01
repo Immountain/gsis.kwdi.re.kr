@@ -39,7 +39,7 @@
                 thousandsSep: ','
             },
             title: {
-                text: '여성'
+                text: '대학교 진학률'
             },
             xAxis: [{
                 categories: [],
@@ -70,7 +70,7 @@
                     enableMouseTracking: true
                 },
                 column: {
-                    stacking: 'normal',
+                    // stacking: 'normal',
                     dataLabels: {
                         enabled: true
                     }
@@ -85,58 +85,6 @@
         });
 
 
-        chartView2 = Highcharts.chart('chartView2', {
-            chart: {
-                zoomType: 'xy'
-            },
-            lang: {
-                thousandsSep: ','
-            },
-            title: {
-                text: '남자'
-            },
-            xAxis: [{
-                categories: [],
-                crosshair: true
-            }],
-            yAxis: [{ // Primary yAxis
-                labels: {
-                    format: '{value}',
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                },
-                title: {
-                    text: '',
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                }
-            }],
-            tooltip: {
-                shared: true
-            },
-            plotOptions: {
-                spline: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: true
-                },
-                column: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            legend: {
-                align: 'center',
-                verticalAlign: 'top',
-                borderWidth: 0
-            },
-            series: []
-        });
     }
 
 
@@ -148,19 +96,14 @@
         };
 
         var groupArr = [];
-        var cdmData1 = []; //여성 안전
-        var cdmData2 = [];//여성 보통
-        var cdmData3 = [];//여성 불안
+        var cdmData1 = []; //제주특별자치도
+        var cdmData2 = [];//여학생
+        var cdmData3 = [];//남학생
 
-
-
-        var cdmData4 = []; //남성 안전
-        var cdmData5 = [];//남성 보통
-        var cdmData6 = [];//남성 불안
 
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value='/site/gsis/f01/List.do' />', {
+                $ifx.ajax('<c:url value='/site/gsis/b04/List.do' />', {
                     method: "POST",
                     data: JSON.stringify(p),
                     success: function (res) {
@@ -190,37 +133,44 @@
                                 $tr.append('<td>' + ($ifx.numberComma(v['cdmData3']) || '' ) +  '</td>')
 
 
+                                if(v['dataGb']=="전체"){
 
 
+                                    cdmData1.push(Number(v['cdmData3']));
 
-                                if(v['dataGb']=="여자"){
+                                }else if(v['dataGb']=="여자"){
 
-                                    cdmData1.push(Number(v['cdmData1']));
-                                    cdmData2.push(Number(v['cdmData2']));
-                                    cdmData3.push(Number(v['cdmData3']));
 
+                                    cdmData2.push(Number(v['cdmData3']));
                                 }else if(v['dataGb']=="남자"){
 
-                                    cdmData4.push(Number(v['cdmData1']));
-                                    cdmData5.push(Number(v['cdmData2']));
-                                    cdmData6.push(Number(v['cdmData3']));
+
+                                    cdmData3.push(Number(v['cdmData3']));
                                 }
+
+
+
 
 
                                 $tbody.append($tr);
                             })
                             // console.log(count, Object.keys(groupData).length)
                             if(count == Object.keys(groupData).length -1) {
-
+                                ok(item);
                             }
                             count++;
                         });
-                        ok(groupData);
+
 
                     }
                 })
             })
             .then(function (ok, fail, data) {
+
+
+
+
+
 
 
                 chartView.update({
@@ -232,10 +182,10 @@
 
 
                     series: [{
-                        name: '안전',
+                        name: '제주특별자치도',
                         type: 'column',
                         yAxis: 0,
-                        color: '#ff8004', //green
+                        color: '#405eff', //green
                         data: cdmData1,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -249,10 +199,10 @@
 
 
                     },{
-                        name: '보통',
+                        name: '여학생',
                         type: 'column',
                         yAxis: 0,
-                        color: '#cca026', //green
+                        color: '#cc7316', //green
                         data: cdmData2,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -262,11 +212,12 @@
                             //위치 지정
                            // y: 10,
                         },
-                      },{
-                        name: '불안',
+                       // pointPlacement: -0.1,
+                    },{
+                        name: '남학생',
                         type: 'column',
                         yAxis: 0,
-                        color: '#ccb874', //green
+                        color: '#ccc1ca', //green
                         data: cdmData3,
                         dataLabels: {//바 상단의 수치값 개별 지정.
                             enabled: true,
@@ -274,71 +225,15 @@
                             align: 'center',
                             verticalAlign: 'top',
                             //위치 지정
-                           // y: 10,
+                            // y: 10,
                         },
+                       // pointPlacement: -0.1,
                     }
 
                     ]
                 }, true, true);
 
 
-                chartView2.update({
-
-                    xAxis: [{
-                        categories: groupArr,
-                        crosshair: true
-                    }],
-
-
-                    series: [{
-                        name: '안전',
-                        type: 'column',
-                        yAxis: 0,
-                        color: '#1d2bff', //green
-                        data: cdmData4,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
-
-
-
-                    },{
-                        name: '보통',
-                        type: 'column',
-                        yAxis: 0,
-                        color: '#5a7ecc', //green
-                        data: cdmData5,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
-                     },{
-                        name: '불안',
-                        type: 'column',
-                        yAxis: 0,
-                        color: '#11aecc', //green
-                        data: cdmData6,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                            //y: 10,
-                        },
-                    }
-
-                    ]
-                }, true, true);
 
             })
         ;
@@ -398,32 +293,27 @@
                     </div>
                 </div>
 
-                <div class="chart count2">
+
+                <div class="chart">
                     <!-- 챠트영역 -->
 
                     <div id="chartView"></div>
                 </div>
 
-                <div class="chart count2">
-                    <!-- 챠트영역 -->
-
-                    <div id="chartView2"></div>
-                </div>
 
 
                 <p class="info">
                     좌우터치로 스크롤 가능합니다.
-                    <span>단위 명, %</span>
+                    <span>단위 명,%</span>
                 </p>
                 <div class="table-outline">
                     <table>
                         <thead>
                         <tr>
                             <th colspan="2">구분</th>
-                             <th>안전</th>
-                             <th>보통</th>
-                             <th>불안</th>
-
+                            <th>졸업자수</th>
+                             <th>진학자수</th>
+                             <th>진학률</th>
                         </tr>
                         </thead>
                         <tbody>

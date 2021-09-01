@@ -25,21 +25,24 @@
         initChartEl();
         Search();
 
+
     });
 
 
     var chartView;
-    var chartView2;
     function initChartEl() {
+
+
+
         chartView = Highcharts.chart('chartView', {
             chart: {
-                zoomType: 'xy'
+                type: 'line'
             },
             lang: {
                 thousandsSep: ','
             },
             title: {
-                text: '여성'
+                text: '전반적 가족관계 만족도'
             },
             xAxis: [{
                 categories: [],
@@ -70,11 +73,11 @@
                     enableMouseTracking: true
                 },
                 column: {
-                    stacking: 'normal',
                     dataLabels: {
                         enabled: true
                     }
                 }
+
             },
             legend: {
                 align: 'center',
@@ -84,83 +87,26 @@
             series: []
         });
 
-
-        chartView2 = Highcharts.chart('chartView2', {
-            chart: {
-                zoomType: 'xy'
-            },
-            lang: {
-                thousandsSep: ','
-            },
-            title: {
-                text: '남자'
-            },
-            xAxis: [{
-                categories: [],
-                crosshair: true
-            }],
-            yAxis: [{ // Primary yAxis
-                labels: {
-                    format: '{value}',
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                },
-                title: {
-                    text: '',
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                }
-            }],
-            tooltip: {
-                shared: true
-            },
-            plotOptions: {
-                spline: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: true
-                },
-                column: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            legend: {
-                align: 'center',
-                verticalAlign: 'top',
-                borderWidth: 0
-            },
-            series: []
-        });
     }
 
 
     function Search() {
-        var strYear ="";
-        var endYear ="";
+        var strYear =$('#strDt').val();
+        var endYear =$('#endDt').val();
         var p = {
             strYear:strYear,endYear:endYear
         };
 
         var groupArr = [];
-        var cdmData1 = []; //여성 안전
-        var cdmData2 = [];//여성 보통
-        var cdmData3 = [];//여성 불안
+        var cdmData1 = []; //여성가구주 가구
+        var cdmData2 = [];//남성가구주 가구
+        var cdmData3 = [];//여성가구주 가구 비율
 
 
-
-        var cdmData4 = []; //남성 안전
-        var cdmData5 = [];//남성 보통
-        var cdmData6 = [];//남성 불안
 
         $ifx.promise()
             .then(function (ok, fail, data) {
-                $ifx.ajax('<c:url value='/site/gsis/f01/List.do' />', {
+                $ifx.ajax('<c:url value='/site/gsis/a08/List.do' />', {
                     method: "POST",
                     data: JSON.stringify(p),
                     success: function (res) {
@@ -172,7 +118,7 @@
                         var count = 0;
                         $.each(groupData, function(key, item) {
 
-                            //  console.log("-->",item[0].dataYear);
+                          //  console.log("-->",item[0].dataYear);
                             groupArr.push(item[0].dataYear);
 
                             item.forEach(function(v, i) {
@@ -191,25 +137,20 @@
 
 
 
-
-
-                                if(v['dataGb']=="여자"){
-
-                                    cdmData1.push(Number(v['cdmData1']));
-                                    cdmData2.push(Number(v['cdmData2']));
-                                    cdmData3.push(Number(v['cdmData3']));
-
-                                }else if(v['dataGb']=="남자"){
-
-                                    cdmData4.push(Number(v['cdmData1']));
-                                    cdmData5.push(Number(v['cdmData2']));
-                                    cdmData6.push(Number(v['cdmData3']));
+                                if(v['dataGb']=="여성"){
+                                    cdmData1.push(Number(v['cdmData1']))
                                 }
+
+                                if(v['dataGb']=="남성"){
+
+                                    cdmData2.push(Number(v['cdmData1']))
+                                }
+
 
 
                                 $tbody.append($tr);
                             })
-                            // console.log(count, Object.keys(groupData).length)
+                           // console.log(count, Object.keys(groupData).length)
                             if(count == Object.keys(groupData).length -1) {
 
                             }
@@ -221,7 +162,8 @@
                 })
             })
             .then(function (ok, fail, data) {
-
+             //   console.log(data)
+              //  console.log(cdmData1)
 
                 chartView.update({
 
@@ -232,113 +174,19 @@
 
 
                     series: [{
-                        name: '안전',
-                        type: 'column',
-                        yAxis: 0,
-                        color: '#ff8004', //green
+                        name: '여성',
                         data: cdmData1,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
-
-
-
-                    },{
-                        name: '보통',
+                        color: '#d76c2b', //green
                         type: 'column',
-                        yAxis: 0,
-                        color: '#cca026', //green
+                    }, {
+                        name: '남성',
                         data: cdmData2,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
-                      },{
-                        name: '불안',
+                        color: '#6786d7', //green
                         type: 'column',
-                        yAxis: 0,
-                        color: '#ccb874', //green
-                        data: cdmData3,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
-                    }
-
-                    ]
-                }, true, true);
-
-
-                chartView2.update({
-
-                    xAxis: [{
-                        categories: groupArr,
-                        crosshair: true
                     }],
 
-
-                    series: [{
-                        name: '안전',
-                        type: 'column',
-                        yAxis: 0,
-                        color: '#1d2bff', //green
-                        data: cdmData4,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
-
-
-
-                    },{
-                        name: '보통',
-                        type: 'column',
-                        yAxis: 0,
-                        color: '#5a7ecc', //green
-                        data: cdmData5,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                           // y: 10,
-                        },
-                     },{
-                        name: '불안',
-                        type: 'column',
-                        yAxis: 0,
-                        color: '#11aecc', //green
-                        data: cdmData6,
-                        dataLabels: {//바 상단의 수치값 개별 지정.
-                            enabled: true,
-                            format: '{y}',//수치 표현 포맷
-                            align: 'center',
-                            verticalAlign: 'top',
-                            //위치 지정
-                            //y: 10,
-                        },
-                    }
-
-                    ]
                 }, true, true);
+
 
             })
         ;
@@ -354,8 +202,6 @@
             return carry
         }, {})
     }
-
-
 
 </script>
 <div id="content" class="sub">
@@ -398,32 +244,26 @@
                     </div>
                 </div>
 
-                <div class="chart count2">
+                <div class="chart">
                     <!-- 챠트영역 -->
 
                     <div id="chartView"></div>
                 </div>
 
-                <div class="chart count2">
-                    <!-- 챠트영역 -->
-
-                    <div id="chartView2"></div>
-                </div>
 
 
                 <p class="info">
                     좌우터치로 스크롤 가능합니다.
-                    <span>단위 명, %</span>
+                    <span>단위 %</span>
                 </p>
                 <div class="table-outline">
                     <table>
                         <thead>
                         <tr>
-                            <th colspan="2">구분</th>
-                             <th>안전</th>
-                             <th>보통</th>
-                             <th>불안</th>
-
+                            <th colspan="2" >구분</th>
+                            <th>만족</th>
+                            <th>보통</th>
+                            <th>불만족</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -437,7 +277,8 @@
                     <c:out value="${fn:replace(viewFile.etc , crlf , '<br/>') }" escapeXml="false"/>
 
                 </div>
-
+                <input type="hidden" id="strDt" name="strDt" value="${viewFile.strDt}">
+                <input type="hidden" id="endDt" name="endDt" value="${viewFile.endDt}">
             </article>
 
 

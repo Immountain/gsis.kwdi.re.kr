@@ -376,13 +376,13 @@
                     </div>
                 </div>
 
-                <div class="chart dual left">
+                <div class="chart count2">
                     <!-- 챠트영역 -->
 
                     <div id="chartView"></div>
                 </div>
 
-                <div class="chart dual right">
+                <div class="chart count2">
                     <!-- 챠트영역 -->
 
                     <div id="chartView2"></div>
