@@ -53,15 +53,26 @@
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
                 {key: "dataGb", label: "구분", align: "center", width: 60},
-                {key: "cdmData1", label: "초등학교 학생수", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData2", label: "초등학교 여성", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData3", label: "초등학교 여성비율", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData4", label: "중학교 학생수", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData5", label: "중학교 여성", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData6", label: "중학교 여성비율", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData7", label: "고등학교 학생수", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData8", label: "고등학교 여성", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
-                {key: "cdmData9", label: "고등학교 여성비율", align: "center", width: 120,formatter: "money",editor: {type: "text"}}
+                {key: undefined, label:"초등학교",align: "center", columns:[
+                        {key: "cdmData1", label: "학생수", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
+                        {key: "cdmData2", label: "여성", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
+                        {key: "cdmData3", label: "여성비율", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}}
+                    ]
+                },
+                {key: undefined, label:"중학교",align: "center", columns:[
+                        {key: "cdmData4", label: "학생수", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
+                        {key: "cdmData5", label: "여성", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
+                        {key: "cdmData6", label: "여성비율", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
+                    ]
+                },
+                {key: undefined, label:"고등학교",align: "center", columns:[
+                        {key: "cdmData7", label: "학생수", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
+                        {key: "cdmData8", label: "여성", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
+                        {key: "cdmData9", label: "여성비율", align: "center", width: 120,formatter: "money",editor: {type: "text"}}
+                    ]
+                }
+
+
 
 
 
