@@ -282,6 +282,8 @@
     <input type="text" id="strYear" name="strYear" value="" />
     <select id="dataGb" name="dataGb">
         <option value="전체">전체</option>
+        <option value="여성">여성</option>
+        <option value="남성">남성</option>
     </select>
 
     <button type="button" class="button" onclick="btn_add()">로우추가</button>
