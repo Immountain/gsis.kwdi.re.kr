@@ -52,7 +52,7 @@
             target: $('[data-ax5grid="first-grid"]'),
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
-                {key: "dataGb", label: "구분", align: "center", width: 60},
+                {key: "dataGb", label: "구분", align: "center", width: 100},
                 {key: "cdmData1", label: "결혼", align: "center", width: 120 ,formatter: "money",editor: {type: "text"}},
                 {key: "cdmData2", label: "임신/출산", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
                 {key: "cdmData3", label: "육아", align: "center", width: 120,formatter: "money",editor: {type: "text"}},
@@ -284,7 +284,11 @@
     </h3>
     <input type="text" id="strYear" name="strYear" value="" maxlength="4" />
     <select id="dataGb" name="dataGb">
-        <option value="인구">인구</option>
+        <option value="전체">전체</option>
+        <option value="15세~29세">15세~29세</option>
+        <option value="30-39세">30-39세</option>
+        <option value="40-49세">40-49세</option>
+        <option value="50-54세">50-54세</option>
     </select>
 
     <button type="button" class="button" onclick="btn_add()">로우추가</button>

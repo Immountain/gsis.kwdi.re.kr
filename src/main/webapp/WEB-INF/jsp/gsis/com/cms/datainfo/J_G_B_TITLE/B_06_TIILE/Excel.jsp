@@ -294,8 +294,7 @@
     <select id="dataGb" name="dataGb">
         <option value="전체">전체</option>
         <option value="여성">여성</option>
-        <option value="남성">남성</option>
-        <option value="여성 비율">여성 비율</option>
+        <option value="여성비율">여성비율</option>
     </select>
 
     <select id="cdmData1" name="cdmData1">
