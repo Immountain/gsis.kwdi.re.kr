@@ -110,7 +110,6 @@
             target: $('[data-ax5grid="first-grid"]'),
             columns: [
                 {key: "dataYear", label: "년도", align: "center", width: 60},
-                {key: "dataGb", label: "구분", align: "center", width: 60},
                 {key: "cdmData1", label: "전 체", align: "center", width: 60 ,formatter: "money"},
                 {key: "cdmData2", label: "여 성", align: "center", width: 60,formatter: "money"},
                 {key: "cdmData3", label: "남 성", align: "center", width: 60,formatter: "money"},
