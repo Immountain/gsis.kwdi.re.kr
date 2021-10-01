@@ -7,9 +7,34 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
 <c:set var="pageTitle">통계DB카테고리</c:set>
+
+<!-- datePicker -->
+<link rel="stylesheet" href="<c:url value="/js/infomind/com/common-ui/pickadate/lib/themes/classic.css"/>">
+<link rel="stylesheet" href="<c:url value="/js/infomind/com/common-ui/pickadate/lib/themes/classic.date.css"/>">
+<link rel="stylesheet" href="<c:url value="/js/infomind/com/common-ui/pickadate/lib/themes/classic.time.css"/>">
+<script src="<c:url value="/js/infomind/com/common-ui/pickadate/lib/picker.js"/>"></script>
+<script src="<c:url value="/js/infomind/com/common-ui/pickadate/lib/picker.date.js"/>"></script>
+<script src="<c:url value="/js/infomind/com/common-ui/pickadate/lib/picker.time.js"/>"></script>
+<script src="<c:url value="/js/infomind/com/common-ui/pickadate/lib/translations/ko_KR.js"/>"></script>
+<script src="<c:url value="/js/infomind/com/moment.js"/>"></script>
+
 <script type="text/javascript">
 
     $(document.body).ready(function () {
+
+        $('#strDay').pickadate({
+            format: 'yyyy-mm-dd',
+            formatSubmit: 'yyyymmdd',
+            selectMonths: true,
+            selectYears: true
+
+        });
+        $('#endDay').pickadate({
+            format: 'yyyy-mm-dd',
+            formatSubmit: 'yyyymmdd',
+            selectMonths: true,
+            selectYears: true
+        });
 
         //닫기
         $('#modal-close').click(function () {
@@ -18,6 +43,12 @@
 
 
         $('#btn_save').click(function() {
+
+            var strDay =$('#strDay').val().replaceAll("-","");
+            var endDay =$('#endDay').val().replaceAll("-","");
+
+            $('#collectionStrDay').val(strDay);
+            $('#collectionEndDay').val(endDay)
 
             var mdisNum = $('#mdisNum').val()
             var mdisType = $('#mdisType').val()
@@ -110,6 +141,8 @@
             }else{
                 $("#onlineSurvey").val("N");
             }
+
+
 
             var formData = $("#jewMdisVO").serializeObject();
 
@@ -343,6 +376,8 @@
                 <c:set var="inputYes"><spring:message code="input.yes" /></c:set>
                 <c:set var="inputNo"><spring:message code="input.no" /></c:set>
                 <tr>
+                    <input type="hidden" name="collectionStrDay" id="collectionStrDay" value="" />
+                    <input type="hidden" name="collectionEndDay" id="collectionEndDay" value="" />
                     <form:hidden path="jewMdisSno"/>
                     <th style="width:100px"><label for="mdisType">자료유형<span class="pilsu">*</span></label></th>
                     <td class="left" >
@@ -387,7 +422,7 @@
                 <tr>
                     <th>연구책임자<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="pi" maxlength="50" cssClass="w200"/>
+                        <form:input path="pi" maxlength="10" cssClass="w200"/>
                     </td>
                     <th>공동연구자<span class="pilsu">*</span></th>
                     <td>
@@ -429,13 +464,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>자료수집시작일</th>
+                    <th>자료수집기간</th>
                     <td>
-                        <form:input path="collectionStrDay" type="date"/>
-                    </td>
-                    <th>자료수집종료일</th>
-                    <td>
-                        <form:input path="collectionEndDay" type="date"/>
+                        <input class="date" type="date" id="strDay" name="strDay" max="9999-12-31" value="${jewMdisVO.collectionStrDay}">
+                        <span>~</span>
+                        <input class="date" type="date" id="endDay" name="endDay" max="9999-12-31" value="${jewMdisVO.collectionEndDay}">
                     </td>
                 </tr>
                 <tr>
@@ -465,7 +498,7 @@
                     </td>
                     <th>표본추출방법<span class="pilsu">*</span></th>
                     <td>
-                        <form:input path="extraction"/>
+                        <form:input path="extraction" maxlength="50"/>
                     </td>
                 </tr>
                 <tr>

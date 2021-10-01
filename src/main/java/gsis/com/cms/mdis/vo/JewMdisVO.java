@@ -63,4 +63,21 @@ public class JewMdisVO extends CmsSearchVO {
         private String orignlFileNm="";
         private int cnt=0;
 
+        private String tempStrDay;
+        private String tempEndDay;
+
+        public String getTempStrDay(){
+
+                this.tempStrDay = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+
+                return this.tempStrDay;
+        }
+
+        public String getTempEndDay(){
+
+                this.tempEndDay = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+
+                return this.tempEndDay;
+        }
+
 }

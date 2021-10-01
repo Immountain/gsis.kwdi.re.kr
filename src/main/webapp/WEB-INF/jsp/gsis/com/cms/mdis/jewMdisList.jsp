@@ -127,7 +127,7 @@
         ax5modal.open({
             theme: "primary",
             height: 791,
-            width: 930,
+            width: 1150,
             header: {
                 title: '마이크로데이터 등록',
                 btns: {
@@ -163,7 +163,7 @@
         ax5modal.open({
             theme: "primary",
             height: 791,
-            width: 930,
+            width: 1150,
             header: {
                 title: '마이크로데이터 수정',
                 btns: {
