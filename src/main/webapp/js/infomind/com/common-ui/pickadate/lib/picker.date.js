@@ -1279,6 +1279,8 @@ DatePicker.defaults = (function( prefix ) {
         // The title label to use for the month nav buttons
         labelMonthNext: 'Next month',
         labelMonthPrev: 'Previous month',
+        selectMonths: true,
+        selectYears: true,
 
         // The title label to use for the dropdown selectors
         labelMonthSelect: 'Select a month',

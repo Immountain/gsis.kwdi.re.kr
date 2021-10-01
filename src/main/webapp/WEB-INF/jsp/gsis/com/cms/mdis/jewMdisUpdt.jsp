@@ -24,16 +24,11 @@
 
         $('#strDay').pickadate({
             format: 'yyyy-mm-dd',
-            formatSubmit: 'yyyymmdd',
-            selectMonths: true,
-            selectYears: true
-
+            formatSubmit: 'yyyymmdd'
         });
         $('#endDay').pickadate({
             format: 'yyyy-mm-dd',
-            formatSubmit: 'yyyymmdd',
-            selectMonths: true,
-            selectYears: true
+            formatSubmit: 'yyyymmdd'
         });
 
         //닫기
